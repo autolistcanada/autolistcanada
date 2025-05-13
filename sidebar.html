@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada - Sidebar Preview</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      font-family: Arial, sans-serif;
+    }
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background-color: #e05a13;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+    }
+    .menu-item {
+      color: #ffffff;
+      padding: 15px 20px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .menu-item:hover {
+      background-color: #f4b242;
+      color: #ffffff;
+    }
+    .menu-item.active {
+      background-color: #f4b242;
+      font-weight: bold;
+    }
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <a href="#" class="menu-item active">Dashboard</a>
+    <a href="#" class="menu-item">Listings</a>
+    <a href="#" class="menu-item">Import</a>
+    <a href="#" class="menu-item">Sync</a>
+    <a href="#" class="menu-item">Settings</a>
+  </div>
+  <div class="content">
+    <h1>Welcome to AutoList Canada</h1>
+    <p>This is your sidebar layout preview. The active section is highlighted.</p>
+  </div>
+</body>
+</html>
