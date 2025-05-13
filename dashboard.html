@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada | Dashboard Preview</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #F4EAD5;
+      color: #1A1A1A;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #E45826;
+      padding: 1rem;
+      color: #FFF;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .field {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #E45826;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background-color: #cc471f;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AutoList Canada - Dashboard Preview</h1>
+  </header>
+  <div class="container">
+    <div class="field">
+      <label for="title">AI Title Preview</label>
+      <input type="text" id="title" value="Vintage 90s Levi's Denim Jacket">
+    </div>
+    <div class="field">
+      <label for="tags">AI Tags Preview</label>
+      <input type="text" id="tags" value="denim, vintage, levi's, 90s, unisex">
+    </div>
+    <div class="field">
+      <label for="description">AI Description Preview</label>
+      <textarea id="description" rows="4">Classic 90s Levi's denim jacket with signature button front and faded wash. Unisex fit, perfect for layering year-round.</textarea>
+    </div>
+    <button>Process Listing</button>
+  </div>
+</body>
+</html>
