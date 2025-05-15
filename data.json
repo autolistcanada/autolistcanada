@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Vintage Blue Ceramic Teapot",
+    "price": "37.77",
+    "platform": "eBay",
+    "description": "Vintage Brass Deer Figurines",
+    "image": "https://example.com/image1.jpg",
+    "ai_tags": ["vintage", "ceramic", "kitchenware"]
+  },
+  {
+    "title": "Retro Wooden Radio",
+    "price": "58.25",
+    "platform": "Etsy",
+    "description": "Retro-style wooden AM/FM radio",
+    "image": "https://example.com/image2.jpg",
+    "ai_tags": ["retro", "radio", "wooden"]
+  }
+]
