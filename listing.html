@@ -43,6 +43,41 @@
   <div style="text-align:center; margin-top: 30px;">
     <button style="background-color: #e05a13; color: white; padding: 10px 20px; border: none; border-radius: 8px;">Crosslist to Platforms</button>
   </div>
+<div id="listings" style="margin-top: 40px;"></div>
+  <div style="text-align:center; margin-top: 30px;">
+    <button style="background-color: #e05a13; color: white; padding: 10px 20px; border: none; border-radius: 8px;">Crosslist to Platforms</button>
+  </div>
+
+  <!-- Listings Output -->
+  <div id="listings" style="margin-top: 40px;"></div>
+
+  <!-- Listings Output -->
+<div id="listings" style="margin-top: 40px;"></div>
+
+<script>
+  fetch('https://autolistcanada.github.io/data.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('listings');
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.innerHTML = `
+          <h2>${item.title}</h2>
+          <img src="${item.image}" alt="${item.title}" style="width:200px;">
+          <p><strong>Price:</strong> ${item.price}</p>
+          <p><strong>Platform:</strong> ${item.platform}</p>
+          <p><strong>Description:</strong> ${item.description}</p>
+          <p><strong>AI Tags:</strong> ${item.ai_tags.join(', ')}</p>
+          <hr>
+        `;
+        container.appendChild(card);
+      });
+    })
+    .catch(error => console.error('Error loading data:', error));
+</script>
+
+</body>
+</html>
 
 </body>
 </html>
