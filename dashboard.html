@@ -2,92 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoList Canada | Dashboard Preview</title>
+  <title>AutoList Canada | Success Dashboard</title>
   <style>
-    body {
-      <div class="topnav" style="background-color: #e05a13; overflow: hidden; display: flex; padding: 10px 20px; align-items: center;">
-  <div class="logo" style="font-weight: bold; color: white; margin-right: auto;">AutoList Canada</div>
-  <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Home</a>
-  <a href="dashboard.html" style="color: white; text-decoration: none; padding: 10px 15px;">Dashboard</a>
-  <a href="features.html" style="color: white; text-decoration: none; padding: 10px 15px;">Features</a>
-  <a href="pricing.html" style="color: white; text-decoration: none; padding: 10px 15px;">Pricing</a>
-  <a href="contact.html" style="color: white; text-decoration: none; padding: 10px 15px;">Contact</a>
-</div>
-
-      font-family: sans-serif;
-      background-color: #F4EAD5;
-      color: #1A1A1A;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #E45826;
-      padding: 1rem;
-      color: #FFF;
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .field {
-      margin-bottom: 1rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    button {
-      background-color: #E45826;
+    body { font-family: Arial, sans-serif; margin: 0; background: #fff; }
+    .sidebar {
+      background: #e05a13;
       color: #fff;
-      cursor: pointer;
-      border: none;
-      margin-top: 1rem;
+      width: 220px;
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
     }
-    button:hover {
-      background-color: #cc471f;
-    }
+    .sidebar h2 { margin-top: 0; }
+    .sidebar a { display: block; color: #fff; margin: 15px 0; text-decoration: none; }
+    .content { margin-left: 240px; padding: 20px; }
+    .card { background: #f5c88d; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+    .footer-badges { display: flex; justify-content: center; gap: 20px; margin-top: 40px; }
+    .footer-badges img { height: 50px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>AutoList Canada - Dashboard Preview</h1>
-  </header>
-  <div class="container">
-    <div class="field">
-      <label for="title">AI Title Preview</label>
-      <input type="text" id="title" value="Vintage 90s Levi's Denim Jacket">
-    </div>
-    <div class="field">
-      <label for="tags">AI Tags Preview</label>
-      <input type="text" id="tags" value="denim, vintage, levi's, 90s, unisex">
-    </div>
-    <div class="field">
-      <label for="description">AI Description Preview</label>
-      <textarea id="description" rows="4">Classic 90s Levi's denim jacket with signature button front and faded wash. Unisex fit, perfect for layering year-round.</textarea>
-    </div>
-    <button>Process Listing</button>
+
+  <div class="sidebar">
+    <h2>AutoList Canada</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Listings</a>
+    <a href="#">Import</a>
+    <a href="#">Sync</a>
+    <a href="#">Settings</a>
   </div>
-    <a href="index.html">Return to Home</a>
-  
-  <footer style="background-color: #e05a13; padding: 20px; text-align: center; color: white;">
-    <a href="terms.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Terms of Use</a>
-    <a href="privacy.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Privacy Policy</a>
-    <a href="contact.html" style="color: #f5b748; text-decoration: none;">Contact</a>
-    <p style="margin-top: 10px; font-size: 0.8em;">&copy; 2025 AutoList Canada. All rights reserved.</p>
-  </footer>
+
+  <div class="content">
+    <h1>Success Dashboard</h1>
+
+    <div class="card"><h2>Earnings Overview</h2><p>$12,430 in the last 30 days</p></div>
+    <div class="card"><h2>Crosslists This Month</h2><p>Graph Placeholder</p></div>
+    <div class="card"><h2>AI Health Score</h2><p>92 - Healthy</p></div>
+
+    <h2>Advanced Seller Success Lab</h2>
+
+    <div class="card"><h3>Buyer Psychology Insights</h3><p>Use $49.99 instead of $50 for psychological pricing impact.</p></div>
+
+    <div class="card">
+      <h3>Market Demand Predictor</h3>
+      <p>Top 5 Rising Search Terms: "Vintage Levi's", "Retro Nike Shoes", "Eco Fashion"</p>
+      <p>Trending Product Types: "Denim Jackets, Graphic Tees, Ceramic Mugs"</p>
+    </div>
+
+    <div class="card">
+      <h3>AI-Generated Social Captions + Hashtags</h3>
+      <p>"Level up your vintage vibes with this 90s Levi’s gem. #CanadianVintage #EcoFashion #ShopLocal"</p>
+    </div>
+
+    <div class="card">
+      <h3>Listing Engagement Heatmap</h3>
+      <p>Buyers spend most time on: Photos > Price > Title > Description</p>
+    </div>
+
+    <div class="card">
+      <h3>Competitor Benchmarking</h3>
+      <p>Your listings perform 12% above the industry average. Suggested areas for improvement: Photo Quality, Pricing Strategy.</p>
+    </div>
+
+    <div class="card">
+      <h3>Sustainability Impact Tracker</h3>
+      <p>You've saved 125 items from landfill this month.</p>
+    </div>
+
+    <div class="card">
+      <h3>AI-Powered Customer Persona Generator</h3>
+      <p>Most likely buyers: Eco-conscious women 25-35 in Vancouver.</p>
+    </div>
+
+    <div class="footer-badges">
+      <img src="canadian-owned-badge.png" alt="Canadian Owned">
+      <img src="privacy-first-badge.png" alt="Privacy First">
+      <img src="ai-powered-tools-badge.png" alt="AI Powered Tools">
+    </div>
+
+  </div>
+
 </body>
 </html>
