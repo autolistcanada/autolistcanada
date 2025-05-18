@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live AI Listing Tools - AutoList Canada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #f5b748, #e05a13, #848f67, #e77512);
+      padding: 40px;
+      color: #fff;
+    }
+    h1, h2, p {
+      text-align: center;
+    }
+    .tool-box {
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    button {
+      background-color: #e05a13;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AutoList Canada - Live AI Listing Tools</h1>
+  <p>Use these AI-powered tools to optimize your product listings before publishing.</p>
+
+  <div class="tool-box">
+    <h2>Generate AI Listing</h2>
+    <textarea id="productInput" rows="4" placeholder="Paste your product details here..."></textarea>
+    <button onclick="generateAIContent()">Generate Listing</button>
+
+    <h3>AI Title</h3>
+    <input type="text" id="aiTitle" readonly>
+
+    <h3>AI Description</h3>
+    <textarea id="aiDescription" rows="4" readonly></textarea>
+
+    <h3>AI Tags</h3>
+    <input type="text" id="aiTags" readonly>
+
+    <h3>AI Suggested Price</h3>
+    <input type="text" id="aiPrice" readonly>
+  </div>
+
+  <script>
+    async function generateAIContent() {
+      const productDetails = document.getElementById('productInput').value;
+      
+      const response = await fetch('YOUR_MAKE_WEBHOOK_URL', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: productDetails })
+      });
+
+      const result = await response.json();
+
+      document.getElementById('aiTitle').value = result.title || 'Error generating title';
+      document.getElementById('aiDescription').value = result.description || 'Error generating description';
+      document.getElementById('aiTags').value = result.tags || 'Error generating tags';
+      document.getElementById('aiPrice').value = result.suggested_price || 'Error generating price';
+    }
+  </script>
+
+</body>
+</html>
