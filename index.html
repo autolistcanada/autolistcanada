@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('homepage-background.png') no-repeat center top;
+      background-size: cover;
+      color: #2e2e2e;
+    }
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: url('sidebar-background.png') no-repeat center center;
+      background-size: cover;
+      padding: 20px 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 10;
+    }
+    .sidebar-logo {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+    .sidebar-title {
+      width: 120px;
+      margin-bottom: 30px;
+    }
+    .menu-item {
+      color: #fff;
+      font-weight: 500;
+      text-decoration: none;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .hero {
+      margin-left: 240px;
+      height: 500px;
+      background: url('hero-background.png') no-repeat center center;
+      background-size: cover;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+      font-family: 'DM Serif Display', serif;
+    }
+    .hero h1 {
+      font-size: 48px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      font-family: 'Roboto', sans-serif;
+    }
+    .cta-button {
+      padding: 12px 28px;
+      background-color: #f5b748;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #fff;
+      text-decoration: none;
+      width: fit-content;
+    }
+    .main-content {
+      margin-left: 240px;
+      padding: 40px;
+    }
+    .main-content h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+    .main-content p {
+      max-width: 700px;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    details {
+      margin-bottom: 10px;
+      background: #fff3dd;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    footer {
+      margin-left: 240px;
+      background-color: #e05a13;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+    .badges img {
+      height: 32px;
+    }
+    footer a {
+      color: #f5c88d;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="autolist-logo.png" alt="AutoList Logo" class="sidebar-logo" />
+    <img src="autolist-title.png" alt="AutoList Canada" class="sidebar-title" />
+    <a href="dashboard.html" class="menu-item">Dashboard</a>
+    <a href="listing.html" class="menu-item">Listings</a>
+    <a href="import.html" class="menu-item">Import</a>
+    <a href="sync.html" class="menu-item">Sync</a>
+    <a href="settings.html" class="menu-item">Settings</a>
+  </div>
+
+  <div class="hero">
+    <h1>AI-Powered Crosslisting<br>for Canadian Resellers</h1>
+    <p>List faster. Sell smarter. Built for Canada’s online sellers.</p>
+    <a href="dashboard.html" class="cta-button">Get Started Free</a>
+  </div>
+
+  <div class="main-content">
+    <h2>Welcome to AutoList Canada</h2>
+    <p>AutoList Canada is the country’s first AI-powered crosslisting platform built exclusively for Canadian resellers. Whether you sell vintage, modern, handmade, or secondhand goods, our tools are secure, smart, and simple to use. <strong>AutoList Canada is Live!</strong> Please view our official soft launch test.</p>
+    <details><summary>What is AutoList Canada?</summary></details>
+    <details><summary>How does the sync feature work?</summary></details>
+    <details><summary>How can I edit a listing?</summary></details>
+    <details><summary>Can I schedule my listings?</summary></details>
+    <details><summary>Is AutoList Canada free to use?</summary></details>
+  </div>
+
+  <footer>
+    <div class="badges">
+      <img src="canadian-owned-badge.png" alt="Canadian Owned">
+      <img src="ai-powered-tools-badge.png" alt="AI Powered Tools">
+      <img src="privacy-first-badge.png" alt="Privacy First">
+    </div>
+    <div>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p style="font-size: 12px; margin-top: 10px;">&copy; 2025 AutoList Canada. All rights reserved.</p>
+  </footer>
+</body>
+</html>
