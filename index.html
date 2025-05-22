@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="AI-powered crosslisting for Canadian resellers. Secure, smart tools for vintage and secondhand sellers." />
   <title>AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
       background-color: #fff7eb;
       color: #2e2e2e;
+    }
+    h1, h2 {
+      font-family: 'DM Serif Display', serif;
     }
     a {
       text-decoration: none;
@@ -22,15 +25,14 @@
       top: 0;
       left: 0;
       height: 100vh;
-      width: 200px;
-      background: linear-gradient(to bottom right, #e05a13, #f4b242, #848f67);
+      width: 220px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 800"><path fill="%23e05a13" d="M0,0L200,0L200,800L0,800Z"/><path fill="%23f4b242" d="M0,200 C100,250 100,400 0,450 L0,0 Z"/><path fill="%23848f67" d="M0,600 C120,650 120,700 0,750 L0,800 Z"/></svg>') no-repeat;
+      background-size: cover;
       color: white;
-      display: flex;
-      flex-direction: column;
       padding: 30px 20px;
     }
     .sidebar h1 {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       margin-bottom: 40px;
     }
     .sidebar nav a {
@@ -40,23 +42,39 @@
       color: white;
     }
     .main {
-      margin-left: 200px;
-      padding: 20px;
+      margin-left: 220px;
+      padding: 30px;
+      box-sizing: border-box;
     }
     .hero {
       background: linear-gradient(to bottom right, #f4b242, #f5c88d);
       padding: 60px 30px;
-      border-radius: 8px;
+      width: 100%;
       position: relative;
       overflow: hidden;
     }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="%23ffffff22">🍁</text></svg>');
+      background-repeat: repeat;
+      opacity: 0.15;
+    }
     .hero h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin: 0 0 10px;
+      position: relative;
+      z-index: 1;
     }
     .hero p {
       font-size: 1.1rem;
       margin: 0 0 20px;
+      position: relative;
+      z-index: 1;
     }
     .hero button {
       background-color: #e05a13;
@@ -66,6 +84,8 @@
       font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
+      position: relative;
+      z-index: 1;
     }
     .welcome {
       margin-top: 40px;
