@@ -12,47 +12,50 @@
       background-color: #fdf1dd;
       color: #333;
       margin: 0;
-      padding: 0;
-    }
-    .topnav {
-      background-color: #e05a13;
-      padding: 12px 20px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
-    .topnav a {
+    .sidebar {
+      width: 240px;
+      background-color: #e05a13;
+      padding: 20px 0;
+      min-height: 100vh;
+      color: white;
+    }
+    .sidebar h1 {
+      font-size: 1.5em;
+      font-family: 'DM Serif Display', serif;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .sidebar a {
+      display: block;
       color: white;
       text-decoration: none;
-      margin: 0 10px;
+      padding: 12px 24px;
       font-weight: 600;
     }
-    .hero {
-      background-color: #fdf1dd;
-      text-align: center;
-      padding: 40px 20px 20px;
+    .sidebar a:hover {
+      background-color: #f4b242;
+      color: #333;
+    }
+    .main {
+      flex: 1;
+      padding: 40px;
     }
     .hero img {
       width: 100%;
       max-width: 800px;
       border-radius: 16px;
       display: block;
-      margin: auto;
-    }
-    .cta {
-      background-color: #fdf1dd;
-      text-align: center;
-      padding: 20px;
+      margin: 0 auto 40px;
     }
     .cta h1 {
       font-family: 'DM Serif Display', serif;
       font-size: 2em;
-      margin-bottom: 0.5em;
     }
     .cta p {
       font-size: 1em;
       max-width: 600px;
-      margin: auto;
     }
     .button {
       background-color: #e05a13;
@@ -68,17 +71,15 @@
       background-color: #fff3e0;
       padding: 30px;
       border-top: 2px solid #e05a13;
+      margin-top: 40px;
     }
     .faq-section h2 {
       font-family: 'DM Serif Display', serif;
-      text-align: center;
     }
     .faq-grid {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 12px;
       max-width: 600px;
-      margin: 20px auto;
     }
     .faq-grid a {
       display: block;
@@ -95,7 +96,7 @@
       color: white;
       text-align: center;
       padding: 15px;
-      margin-top: 40px;
+      margin-top: 60px;
     }
     footer a {
       color: #f5b748;
@@ -105,42 +106,39 @@
   </style>
 </head>
 <body>
-  <div class="topnav">
-    <div><strong>AutoList Canada</strong></div>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="ai-tools.html">AI Tools</a>
-      <a href="dashboard.html">Dashboard</a>
+  <div class="sidebar">
+    <h1>AutoList Canada</h1>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="listing.html">Listings</a>
+    <a href="import.html">Import</a>
+    <a href="sync.html">Sync</a>
+    <a href="settings.html">Settings</a>
+  </div>
+  <div class="main">
+    <div class="hero">
+      <img src="home-page.png" alt="Hero banner with abstract orange sun and green Canadian hills, showing AutoList Canada branding" loading="lazy">
     </div>
-  </div>
-
-  <div class="hero">
-    <img src="home-page.png" alt="Hero banner with abstract orange sun and green Canadian hills, showing AutoList Canada branding" loading="lazy" />
-  </div>
-
-  <div class="cta">
-    <h1>Welcome to AutoList Canada</h1>
-    <p>AutoList Canada is the country’s first AI-powered crosslisting platform built exclusively for Canadian resellers. Sell vintage, modern, handmade, or secondhand goods with tools designed to be secure, simple, and beautiful.</p>
-    <a class="button" href="dashboard.html">Get Started Free</a>
-  </div>
-
-  <section class="faq-section">
-    <h2>Frequently Asked</h2>
-    <div class="faq-grid">
-      <a href="about.html#what-is-autolist">What is AutoList Canada?</a>
-      <a href="about.html#sync">How does the sync feature work?</a>
-      <a href="about.html#edit">How can I edit a listing?</a>
-      <a href="about.html#schedule">Can I schedule my listings?</a>
-      <a href="about.html#free">Is AutoList Canada free to use?</a>
+    <div class="cta">
+      <h1>Welcome to AutoList Canada</h1>
+      <p>AutoList Canada is the country’s first AI-powered crosslisting platform built exclusively for Canadian resellers. Sell vintage, modern, handmade, or secondhand goods with tools designed to be secure, simple, and beautiful.</p>
+      <a class="button" href="dashboard.html">Get Started Free</a>
     </div>
-  </section>
-
-  <footer>
-    <a href="terms.html">Terms of Use</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="contact.html">Contact</a>
-  </footer>
+    <section class="faq-section">
+      <h2>Frequently Asked</h2>
+      <div class="faq-grid">
+        <a href="about.html#what-is-autolist">What is AutoList Canada?</a>
+        <a href="about.html#sync">How does the sync feature work?</a>
+        <a href="about.html#edit">How can I edit a listing?</a>
+        <a href="about.html#schedule">Can I schedule my listings?</a>
+        <a href="about.html#free">Is AutoList Canada free to use?</a>
+      </div>
+    </section>
+    <footer>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="contact.html">Contact</a>
+    </footer>
+  </div>
 </body>
 </html>
+
