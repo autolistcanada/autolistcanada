@@ -10,7 +10,7 @@
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background-color: #fff7eb;
+      background-color: #fff5e0;
       color: #2e2e2e;
     }
     h1, h2 {
@@ -26,91 +26,97 @@
       left: 0;
       height: 100vh;
       width: 220px;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 800"><path fill="%23e05a13" d="M0,0L200,0L200,800L0,800Z"/><path fill="%23f4b242" d="M0,200 C100,250 100,400 0,450 L0,0 Z"/><path fill="%23848f67" d="M0,600 C120,650 120,700 0,750 L0,800 Z"/></svg>') no-repeat;
-      background-size: cover;
+      background: linear-gradient(180deg, #e05a13 0%, #f4b242 50%, #848f67 100%);
       color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 30px 20px;
     }
-    .sidebar h1 {
-      font-size: 1.3rem;
+    .sidebar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
       margin-bottom: 40px;
     }
     .sidebar nav a {
-      margin-bottom: 20px;
-      display: block;
+      margin: 10px 0;
       font-weight: bold;
       color: white;
     }
     .main {
       margin-left: 220px;
       padding: 30px;
-      box-sizing: border-box;
     }
     .hero {
-      background: linear-gradient(to bottom right, #f4b242, #f5c88d);
-      padding: 60px 30px;
-      width: 100%;
       position: relative;
+      background: linear-gradient(to bottom, #396c3e 0%, #e77512 100%);
+      color: white;
+      padding: 60px 40px;
       overflow: hidden;
+      border-radius: 8px;
     }
     .hero::before {
       content: "";
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="14" fill="%23ffffff22">🍁</text></svg>');
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="%23ffffff22">🍁</text></svg>');
       background-repeat: repeat;
-      opacity: 0.15;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
     }
     .hero h2 {
-      font-size: 2.2rem;
-      margin: 0 0 10px;
-      position: relative;
-      z-index: 1;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
     .hero p {
-      font-size: 1.1rem;
-      margin: 0 0 20px;
-      position: relative;
-      z-index: 1;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
     }
     .hero button {
-      background-color: #e05a13;
+      background-color: #f5b748;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px 24px;
       font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
-      position: relative;
-      z-index: 1;
     }
     .welcome {
+      background: #fff4dc;
+      padding: 30px;
+      border-radius: 8px;
       margin-top: 40px;
     }
     .faq {
       margin-top: 30px;
     }
     .faq details {
-      background: #fff4da;
+      background: #fff0cc;
       border: 1px solid #f5c88d;
-      border-radius: 8px;
-      padding: 10px 15px;
+      border-radius: 10px;
+      padding: 15px 20px;
       margin-bottom: 10px;
+      font-size: 1rem;
     }
     .badges {
       display: flex;
       justify-content: center;
       gap: 20px;
-      margin: 40px 0;
+      margin: 50px 0 30px;
     }
     .badge {
-      background: #f4b242;
+      background: #e05a13;
       color: white;
-      padding: 6px 12px;
-      border-radius: 12px;
+      padding: 6px 14px;
+      border-radius: 14px;
       font-size: 0.85rem;
       font-weight: bold;
     }
@@ -129,7 +135,7 @@
 </head>
 <body>
   <div class="sidebar">
-    <h1>AutoList Canada</h1>
+    <div class="logo">AutoList Canada</div>
     <nav>
       <a href="dashboard.html">Dashboard</a>
       <a href="listings.html">Listings</a>
@@ -141,9 +147,11 @@
 
   <div class="main">
     <section class="hero">
-      <h2>AI-Powered Crosslisting for Canadian Resellers</h2>
-      <p>List faster. Sell smarter. Built for Canada’s online sellers.</p>
-      <button onclick="location.href='dashboard.html'">Get Started Free</button>
+      <div class="hero-content">
+        <h2>AI-Powered Crosslisting for Canadian Resellers</h2>
+        <p>List faster. Sell smarter. Built for Canada’s online sellers.</p>
+        <button onclick="location.href='dashboard.html'">Get Started Free</button>
+      </div>
     </section>
 
     <section class="welcome">
@@ -177,7 +185,7 @@
 
     <div class="badges">
       <div class="badge">🇨🇦 Canadian-Owned</div>
-      <div class="badge">✅ Trusted by Sellers</div>
+      <div class="badge">✅ Trusted by Resellers</div>
       <div class="badge">🤖 AI-Powered</div>
     </div>
 
