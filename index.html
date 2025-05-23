@@ -3,172 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <title>AutoList Canada | AI Crosslisting for Canadian Resellers</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600&display=swap">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
-      color: white;
-      background-color: #000;
+      color: #fff;
+      background-color: #1f1f1f;
     }
-    .section {
-      position: relative;
-      width: 100%;
-      background-size: cover;
-      background-position: center;
-      padding: 120px 20px;
-      text-align: center;
-    }
-    .overlay {
-      position: absolute;
+    .sidebar {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.3);
-      z-index: 1;
+      width: 200px;
+      height: 100vh;
+      background-image: url('sidebar-background.png');
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+    }
+    .sidebar img.logo {
+      width: 140px;
+      margin-bottom: 10px;
+    }
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .sidebar nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
     }
     .content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-      margin: 0 auto;
+      margin-left: 200px;
+      overflow-x: hidden;
     }
-    h1, h2 {
+    section {
+      padding: 80px 40px;
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+    }
+    h1, h2, h3 {
       font-family: 'DM Serif Display', serif;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 2.75rem;
-    }
-    h2 {
-      font-size: 2rem;
-    }
-    p, li {
-      font-size: 1.1rem;
-      line-height: 1.7;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    ul li::before {
-      content: '★';
-      margin-right: 8px;
-      color: #f5b748;
-    }
-    .section.hero {
-      background-image: url('hero-banner-background.png');
-    }
-    .section.why {
-      background-image: url('founders-story-background.png');
-    }
-    .section.difference {
-      background-image: url('why-different-background.png');
-    }
-    .section.how {
-      background-image: url('how-it-works-background.png');
-    }
-    .section.faq {
-      background-image: url('faq-background.png');
-    }
-    .button {
-      display: inline-block;
-      padding: 12px 24px;
-      margin-top: 24px;
-      background: #f5b748;
-      color: #000;
-      font-weight: bold;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .button:hover {
-      background: #eaa531;
-    }
-    .logo {
-      width: 100px;
       margin-bottom: 20px;
     }
-    .autolist-title {
-      width: 300px;
-      margin: 20px auto;
+    p, li {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #f0f0f0;
+    }
+    .hero {
+      background-image: url('hero-banner-background.png');
+    }
+    .section-why {
+      background-image: url('founders-story-background.png');
+    }
+    .section-different {
+      background-image: url('why-different-background.png');
+    }
+    .section-how {
+      background-image: url('how-it-works-background.png');
+    }
+    .section-faq {
+      background-image: url('faq-background-new.png');
+    }
+    .fade {
+      backdrop-filter: blur(2px);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .cta-button {
+      background-color: #f5b748;
+      color: #000;
+      padding: 12px 24px;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <div class="section hero">
-    <div class="overlay"></div>
-    <div class="content">
-      <img src="autolist-logo.png" alt="AutoList Canada logo" class="logo">
-      <img src="autolist-title.png" alt="AutoList Canada title" class="autolist-title">
-      <h1>AI-Powered Crosslisting for Canadian Resellers</h1>
-      <p>List smarter. Scale faster. Built by Canadians, for Canadians — this is not just software, it’s a seller’s revolution.</p>
-      <a href="#" class="button">Get Started Free</a>
-    </div>
+  <div class="sidebar">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="logo">
+    <img src="autolist-title.png" alt="AutoList Canada Title" class="logo">
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="listing.html">Listings</a>
+      <a href="import.html">Import</a>
+      <a href="sync.html">Sync</a>
+      <a href="ai-tools.html">AI Tools (Demo)</a>
+      <a href="ai-tools-live.html">AI Tools (Live)</a>
+    </nav>
   </div>
-
-  <div class="section why">
-    <div class="overlay"></div>
-    <div class="content">
-      <h2>Why AutoList Exists</h2>
-      <p>We were frustrated. As Canadian sellers, we couldn’t access the tools built for U.S. platforms. So we built our own — AutoList is made by sellers who wanted something better. No currency hacks. No region blocks. Just pure innovation.</p>
-    </div>
+  <div class="content">
+    <section class="hero">
+      <div class="fade">
+        <h1>AI-Powered Crosslisting for Canadian Resellers</h1>
+        <p>List smarter. Scale faster. Built by Canadians, for Canadians — this is not just software, it’s a seller’s revolution.</p>
+        <button class="cta-button">Get Started Free</button>
+      </div>
+    </section>
+    <section class="section-why">
+      <div class="fade">
+        <h2>Why AutoList Canada Exists</h2>
+        <p>We were frustrated. As Canadian sellers, we couldn’t access the tools built for U.S. platforms. So we built our own — AutoList Canada is made by sellers who wanted something better. No currency hacks. No region blocks. Just pure innovation.</p>
+      </div>
+    </section>
+    <section class="section-different">
+      <div class="fade">
+        <h2>What Makes AutoList Canada Different</h2>
+        <ul>
+          <li><strong>Fully Canadian</strong> — pricing, support, design, all made for Canada.</li>
+          <li><strong>AI-powered descriptions, tags, pricing</strong> — no more writer’s block.</li>
+          <li><strong>Made by resellers</strong>, not corporations.</li>
+        </ul>
+      </div>
+    </section>
+    <section class="section-how">
+      <div class="fade">
+        <h2>How AutoList Works (and Why It’s Revolutionary)</h2>
+        <ol>
+          <li>Connect your marketplaces. AutoList handles sync across them all.</li>
+          <li>AI writes powerful titles, tags, and product descriptions instantly.</li>
+          <li>Click once to crosslist. Track and delist automatically.</li>
+          <li>30-minute workflows now take 30 seconds.</li>
+          <li>Built for vintage. Tuned for speed. Powered by GPT-4.</li>
+        </ol>
+      </div>
+    </section>
+    <section class="section-faq">
+      <div class="fade">
+        <h2>FAQs</h2>
+        <p><strong>What is AutoList Canada?</strong> — The first AI-powered crosslisting platform made just for Canadian resellers.</p>
+        <p><strong>Is it free?</strong> — Yes! You can start with our free tier anytime.</p>
+        <p><strong>Can I customize what the AI writes?</strong> — Absolutely. You control tone and tags.</p>
+        <p><strong>Will it work with my shop?</strong> — If you sell in Canada, the answer is YES.</p>
+      </div>
+    </section>
+    <footer>
+      <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" height="20">
+      <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" height="20">
+      <img src="privacy-first-badge.png" alt="Privacy First Badge" height="20">
+      <br><br>
+      <a href="terms.html" style="color:#ccc; text-decoration: underline;">Terms of Use</a> |
+      <a href="privacy.html" style="color:#ccc; text-decoration: underline;">Privacy Policy</a>
+      <br>
+      <p>&copy; 2025 AutoList Canada. All rights reserved.</p>
+    </footer>
   </div>
-
-  <div class="section difference">
-    <div class="overlay"></div>
-    <div class="content">
-      <h2>What Makes AutoList Different</h2>
-      <ul>
-        <li><strong>🇨🇦 Fully Canadian</strong> — pricing, support, design, all made for Canada.</li>
-        <li><strong>✨ AI-powered descriptions, tags, pricing</strong> — no more writer’s block.</li>
-        <li><strong>🧠 Made by resellers</strong>, not corporations.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section how">
-    <div class="overlay"></div>
-    <div class="content">
-      <h2>How AutoList Works (and Why It’s Revolutionary)</h2>
-      <ul>
-        <li>Connect your marketplaces. AutoList handles sync across them all.</li>
-        <li>AI writes powerful titles, tags, and product descriptions instantly.</li>
-        <li>Click once to crosslist. Track and delist automatically.</li>
-        <li>30-minute workflows now take 30 seconds.</li>
-        <li>Built for vintage. Tuned for speed. Powered by GPT-4.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section faq">
-    <div class="overlay"></div>
-    <div class="content">
-      <h2>FAQs</h2>
-      <p><strong>What is AutoList?</strong> — The first AI-powered Canadian crosslisting tool.</p>
-      <p><strong>Is it free?</strong> — Yes! You can start with our free tier anytime.</p>
-      <p><strong>Can I customize what the AI writes?</strong> — Absolutely. You control tone and tags.</p>
-      <p><strong>Will it work with my shop?</strong> — If you sell in Canada, the answer is YES.</p>
-    </div>
-  </div>
-
-  <footer style="background: #f4f4f4; color: #222; text-align: center; padding: 20px; font-size: 0.9rem">
-    <div>
-      <img src="canadian-owned-badge.png" alt="Canadian Owned" width="120">
-      <img src="ai-powered-tools-badge.png" alt="AI Powered Tools" width="120">
-      <img src="privacy-first-badge.png" alt="Privacy First" width="120">
-    </div>
-    <p>
-      <a href="terms.html">Terms of Use</a> |
-      <a href="privacy.html">Privacy Policy</a>
-    </p>
-    <p>&copy; 2025 AutoList Canada. All rights reserved.</p>
-  </footer>
 </body>
 </html>
