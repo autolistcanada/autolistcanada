@@ -6,47 +6,46 @@
   <title>AutoList Canada</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="sidebar">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="logo" />
-    <img src="autolist-title.png" alt="AutoList Canada Title" class="title-img" />
-    <nav>
-      <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="listing.html">Listings</a></li>
-        <li><a href="import.html">Import</a></li>
-        <li><a href="sync.html">Sync</a></li>
-        <li><a href="ai-tools.html">AI Tools (Demo)</a></li>
-        <li><a href="ai-tools-live.html">AI Tools (Live)</a></li>
-      </ul>
-    </nav>
-  </div>
+<body style="margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #000; color: #fff;">
+  <div style="display: flex; min-height: 100vh;">
+    <!-- Sidebar -->
+    <aside style="width: 200px; background-image: url('sidebar-background.png'); background-size: cover; color: white; display: flex; flex-direction: column; align-items: center; padding: 1rem 0;">
+      <img src="autolist-logo.png" alt="AutoList Logo" style="width: 80px; margin-bottom: 0.5rem;" />
+      <img src="autolist-title.png" alt="AutoList Canada" style="width: 150px; margin-bottom: 2rem;" />
+      <nav style="display: flex; flex-direction: column; gap: 1rem; font-weight: bold;">
+        <a href="#" style="color: white; text-decoration: none;">Dashboard</a>
+        <a href="#" style="color: white; text-decoration: none;">Listings</a>
+        <a href="#" style="color: white; text-decoration: none;">Import</a>
+        <a href="#" style="color: white; text-decoration: none;">Sync</a>
+        <a href="#" style="color: white; text-decoration: none;">AI Tools (Demo)</a>
+        <a href="#" style="color: white; text-decoration: none;">AI Tools (Live)</a>
+      </nav>
+    </aside>
 
-  <main>
-    <section class="hero" style="background-image: url('hero-banner-background.png')">
-      <div class="overlay">
-        <h1>AI-Powered Crosslisting for Canadian Resellers</h1>
-        <p>List smarter. Scale faster. Built by Canadians, for Canadians — this isn’t just software, it’s a seller’s revolution.</p>
-        <a href="#" class="cta">Get Started Free</a>
-      </div>
-    </section>
+    <!-- Main Content -->
+    <main style="flex: 1; background-image: url('unified-background.png'); background-size: cover; background-repeat: no-repeat; background-position: center; padding: 2rem;">
 
-    <section class="section" style="background-image: url('unified-background.png')">
-      <div class="content">
+      <section style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2rem; color: white;">AI-Powered Crosslisting for Canadian Resellers</h1>
+        <p style="color: white;">List smarter. Scale faster. Built by Canadians, for Canadians — this isn’t just software, it’s a seller’s revolution.</p>
+        <a href="#" style="background-color: #f5b748; color: black; font-weight: bold; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 1rem;">Get Started Free</a>
+      </section>
+
+      <section>
         <h2>Why AutoList Canada Exists</h2>
         <p>We were frustrated. As Canadian sellers, we couldn’t access the tools built for U.S. platforms. So we built our own — AutoList Canada is made by sellers who wanted something better. No currency hacks. No region blocks. Just pure innovation.</p>
-      </div>
+      </section>
 
-      <div class="content">
+      <section>
         <h2>What Makes AutoList Canada Different</h2>
         <ul>
           <li><strong>Fully Canadian</strong> — pricing, support, design, all made for Canada.</li>
           <li><strong>AI-powered descriptions, tags, pricing</strong> — no more writer’s block.</li>
           <li><strong>Made by resellers</strong>, not corporations.</li>
         </ul>
-      </div>
+      </section>
 
-      <div class="content">
+      <section>
         <h2>How AutoList Works (and Why It’s Revolutionary)</h2>
         <ol>
           <li>Connect your marketplaces. AutoList handles sync across them all.</li>
@@ -55,29 +54,31 @@
           <li>30-minute workflows now take 30 seconds.</li>
           <li>Built for vintage. Tuned for speed. Powered by GPT-4.</li>
         </ol>
-      </div>
+      </section>
 
-      <div class="content faq">
+      <section>
         <h2>FAQs</h2>
-        <p><strong>What is AutoList Canada?</strong> — The first AI-powered crosslisting platform made just for Canadian resellers.</p>
-        <p><strong>Is it free?</strong> — Yes! You can start with our free tier anytime.</p>
-        <p><strong>Can I customize what the AI writes?</strong> — Absolutely. You control tone and tags.</p>
-        <p><strong>Will it work with my shop?</strong> — If you sell in Canada, the answer is YES.</p>
-      </div>
-    </section>
+        <ul>
+          <li><strong>What is AutoList Canada?</strong> — The first AI-powered crosslisting platform made just for Canadian resellers.</li>
+          <li><strong>Is it free?</strong> — Yes! You can start with our free tier anytime.</li>
+          <li><strong>Can I customize what the AI writes?</strong> — Absolutely. You control tone and tags.</li>
+          <li><strong>Will it work with my shop?</strong> — If you sell in Canada, the answer is YES.</li>
+        </ul>
+      </section>
 
-    <footer>
-      <div class="badges">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" />
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" />
-        <img src="privacy-first-badge.png" alt="Privacy First Badge" />
-      </div>
-      <p>
-        <a href="terms.html">Terms of Use</a> |
-        <a href="privacy.html">Privacy Policy</a>
-      </p>
-      <p>&copy; 2025 AutoList Canada. All rights reserved.</p>
-    </footer>
-  </main>
+      <footer style="margin-top: 4rem; text-align: center; font-size: 0.8rem; color: #ccc;">
+        <div style="margin-bottom: 1rem;">
+          <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" style="height: 24px; margin: 0 0.5rem;">
+          <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" style="height: 24px; margin: 0 0.5rem;">
+          <img src="privacy-first-badge.png" alt="Privacy First Badge" style="height: 24px; margin: 0 0.5rem;">
+        </div>
+        <p>
+          <a href="terms.html" style="color: #ccc;">Terms of Use</a> |
+          <a href="privacy.html" style="color: #ccc;">Privacy Policy</a>
+        </p>
+        <p>&copy; 2025 AutoList Canada. All rights reserved.</p>
+      </footer>
+    </main>
+  </div>
 </body>
 </html>
