@@ -1,99 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoList Canada</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      h1, h2, h3, h4 {
+        font-family: 'Playfair Display', serif;
+      }
+    </style>
+  </head>
+  <body class="bg-cover bg-no-repeat bg-center" style="background-image: url('unified-background.png');">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-gradient-to-b from-teal-900 to-orange-600 text-white p-6 fixed h-full">
+        <img src="d14047e0-7da1-4c13-818c-8e56021de780.png" alt="AutoList Logo" class="w-12 h-12 mb-4" />
+        <img src="76c1d2e5-eff9-4dc3-b864-5504f2ef3b7b.png" alt="AutoList Canada Title" class="w-48 mb-8" />
+        <nav class="space-y-4">
+          <a href="#" class="block hover:text-yellow-300">Home</a>
+          <a href="dashboard.html" class="block hover:text-yellow-300">Dashboard</a>
+          <a href="features.html" class="block hover:text-yellow-300">Features</a>
+          <a href="pricing.html" class="block hover:text-yellow-300">Pricing</a>
+          <a href="ai-tools.html" class="block hover:text-yellow-300">AI Tools (Live)</a>
+        </nav>
+      </aside>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    h1, h2, h3, h4 {
-      font-family: 'Playfair Display', serif;
-    }
-  </style>
-</head>
+      <!-- Main Content -->
+      <main class="ml-64 w-full space-y-24 px-8 py-12">
+        <!-- Hero Section -->
+        <section class="max-w-3xl mx-auto text-center">
+          <h1 class="text-4xl font-bold text-gray-900">The First AI Crosslisting System Made for Canada.</h1>
+          <p class="mt-4 text-gray-800">
+            AutoList Canada empowers Canadian resellers with automation, inventory sync, and intelligent AI tools — built just for your markets, platforms, and workflow.
+          </p>
+          <a href="features.html" class="mt-6 inline-block px-6 py-3 bg-orange-600 text-white font-semibold rounded shadow hover:bg-orange-700">
+            Explore AutoList Canada
+          </a>
+        </section>
 
-<body class="flex bg-cover bg-no-repeat bg-center" style="background-image: url('unified-background.png');">
-  <!-- Sidebar -->
-  <aside class="w-64 bg-gradient-to-b from-[#00695c] to-[#e65100] text-white min-h-screen fixed flex flex-col items-center py-6 space-y-6">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20" />
-    <h1 class="text-xl font-bold text-center px-4">AutoList Canada</h1>
-    <nav class="flex flex-col space-y-3 pt-4">
-      <a href="#" class="hover:underline">Home</a>
-      <a href="#" class="hover:underline">Dashboard</a>
-      <a href="#" class="hover:underline">Features</a>
-      <a href="#" class="hover:underline">Pricing</a>
-      <a href="#" class="hover:underline">AI Tools (Live)</a>
-    </nav>
-  </aside>
+        <!-- Why AutoList Canada Exists -->
+        <section class="bg-white/70 p-8 rounded-xl shadow max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Why AutoList Canada Exists</h2>
+          <p class="text-gray-800">
+            Until now, there’s never been a crosslisting system built specifically for Canadian resellers. AutoList Canada is the first to offer a fully integrated AI toolkit — including auto-titling, real-time tag generation, price intelligence, buyer psychology insights, market demand predictions, customizable delisting sync, and more — all connected to a browser extension designed for Canadian marketplaces.
+          </p>
+          <p class="mt-2 font-semibold">Built for Canada. Engineered from scratch.</p>
+        </section>
 
-  <!-- Main content -->
-  <main class="ml-64 w-full">
-    <!-- Hero Section -->
-    <section class="h-screen flex flex-col justify-center px-16 py-20 max-w-5xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-bold text-[#3e3e3e] mb-4">The First AI Crosslisting System Made for Canada.</h2>
-      <p class="text-lg mb-6 text-[#4a4a4a]">AutoList Canada empowers Canadian resellers with automation, inventory sync, and intelligent AI tools — built just for your markets, platforms, and workflow.</p>
-      <a href="#" class="bg-[#e65100] text-white px-6 py-3 rounded shadow hover:bg-orange-700 w-max">Explore AutoList Canada</a>
-    </section>
+        <!-- What Makes AutoList Canada Different -->
+        <section class="bg-white/60 p-8 rounded-xl shadow max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">What Makes AutoList Canada Different</h2>
+          <p class="text-gray-800">
+            Crosslisting tools existed. But none were designed for Canadians — or for the future.
+          </p>
+          <p class="mt-2 text-gray-800">
+            AutoList changes everything with real-time buyer insight tools, intelligent AI logic, and automation tailored to Canadian sellers. It’s not about doing more. It’s about doing it smarter.
+          </p>
+        </section>
 
-    <!-- Section Shape Divider -->
-    <svg class="w-full" viewBox="0 0 1440 100"><path fill-opacity=".05" d="M0,64L1440,0L1440,320L0,320Z"></path></svg>
+        <!-- How It Works -->
+        <section class="bg-white/50 p-8 rounded-xl shadow max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">How AutoList Works (and Why It’s Revolutionary)</h2>
+          <p class="text-gray-800 mb-4">This is the next generation of resale automation.</p>
+          <ul class="list-disc pl-6 space-y-2 text-gray-800">
+            <li><strong>One-Click Capture:</strong> Grab any listing from any marketplace via our extension.</li>
+            <li><strong>AI That Thinks Beyond Text:</strong> Predict buyer intent, suggest prices, rewrite listings.</li>
+            <li><strong>Crossposting + Delisting Sync:</strong> Post once — update everywhere.</li>
+            <li><strong>Behavior Tracking:</strong> Know what buyers click, scroll past, and read.</li>
+            <li><strong>Bulk Edits + Persona Logic:</strong> Adjust tone, pricing, and goals instantly.</li>
+          </ul>
+        </section>
 
-    <!-- Why AutoList Exists -->
-    <section class="bg-white bg-opacity-70 px-12 py-16 max-w-4xl mx-auto rounded-xl">
-      <h2 class="text-3xl font-bold mb-4">Why AutoList Canada Exists</h2>
-      <p class="text-md leading-relaxed text-[#333]">
-        Until now, there’s never been a crosslisting system built specifically for Canadian resellers. AutoList Canada is the first to offer a fully integrated AI toolkit — including auto-titling, real-time tag generation, price intelligence, buyer psychology insights, market demand predictions, customizable delisting sync, and more — all connected to a browser extension designed for Canadian marketplaces.
-      </p>
-      <p class="mt-4 font-semibold">Built for Canada. Engineered from scratch.</p>
-    </section>
+        <!-- FAQ -->
+        <section class="bg-white/40 p-8 rounded-xl shadow max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+          <ul class="space-y-3 text-gray-800">
+            <li><strong>Who is it for?</strong> — Canadian resellers who want to grow faster and work smarter.</li>
+            <li><strong>How does it work?</strong> — Use the browser extension to grab your listing, then let the AI generate optimized content.</li>
+            <li><strong>What’s special about the AI?</strong> — It thinks like a buyer — not just a keyword tool.</li>
+            <li><strong>Is this just another bulk uploader?</strong> — No. It’s a full system with real syncing, delisting logic, and custom AI workflows.</li>
+            <li><strong>What’s the catch?</strong> — No catch — just smart design by Canadian sellers.</li>
+          </ul>
+        </section>
 
-    <section class="bg-white bg-opacity-80 px-12 py-16 max-w-4xl mx-auto rounded-xl mt-12">
-      <h2 class="text-3xl font-bold mb-4">What Makes AutoList Canada Different</h2>
-      <p class="text-md leading-relaxed text-[#333]">Crosslisting tools existed. But none were designed for Canadians — or for the future.</p>
-      <p class="mt-4 text-[#333]">AutoList changes everything with real-time buyer insight tools, intelligent AI logic, and automation tailored to Canadian sellers. It’s not about doing more. It’s about doing it smarter.</p>
-    </section>
-
-    <section class="bg-white bg-opacity-90 px-12 py-16 max-w-4xl mx-auto rounded-xl mt-12">
-      <h2 class="text-3xl font-bold mb-4">How AutoList Works (and Why It’s Revolutionary)</h2>
-      <p class="mb-4 text-[#333]">This is the next generation of resale automation.</p>
-      <ul class="list-disc pl-6 space-y-2 text-[#333]">
-        <li><strong>One-Click Capture:</strong> Grab any listing from any marketplace via our extension.</li>
-        <li><strong>AI That Thinks Beyond Text:</strong> Predict buyer intent, suggest prices, rewrite listings.</li>
-        <li><strong>Crossposting + Delisting Sync:</strong> Post once — update everywhere.</li>
-        <li><strong>Behavior Tracking:</strong> Know what buyers click, scroll past, and read.</li>
-        <li><strong>Bulk Edits + Persona Logic:</strong> Adjust tone, pricing, and goals instantly.</li>
-      </ul>
-    </section>
-
-    <section class="bg-white bg-opacity-95 px-12 py-16 max-w-4xl mx-auto rounded-xl mt-12">
-      <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-      <div class="space-y-4 text-[#333]">
-        <p><strong>Who is it for?</strong> — Canadian resellers who want to grow faster and work smarter.</p>
-        <p><strong>How does it work?</strong> — Use the browser extension to grab your listing, then let the AI generate optimized content.</p>
-        <p><strong>What’s special about the AI?</strong> — It thinks like a buyer — not just a keyword tool.</p>
-        <p><strong>Is this just another bulk uploader?</strong> — No. It’s a full system with real syncing, delisting logic, and custom AI workflows.</p>
-        <p><strong>What’s the catch?</strong> — No catch — just smart design by Canadian sellers.</p>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="mt-12 py-6 text-center text-sm text-white bg-black bg-opacity-50">
-      <div class="flex justify-center space-x-6 mb-3">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" class="h-8" />
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" class="h-8" />
-        <img src="privacy-first-badge.png" alt="Privacy First Badge" class="h-8" />
-      </div>
-      <div class="text-[#f5c88d]">
-        <a href="#" class="hover:underline">Terms of Use</a> | <a href="#" class="hover:underline">Privacy Policy</a>
-      </div>
-      <p class="mt-1">© 2025 AutoList Canada. All rights reserved.</p>
-    </footer>
-  </main>
-</body>
+        <!-- Footer -->
+        <footer class="mt-12 text-center space-y-4">
+          <div class="flex justify-center gap-6">
+            <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" class="h-10" />
+            <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" class="h-10" />
+            <img src="privacy-first-badge.png" alt="Privacy First Badge" class="h-10" />
+          </div>
+          <p class="text-sm text-gray-700">
+            <a href="terms.html" class="hover:underline">Terms of Use</a> |
+            <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+          </p>
+          <p class="text-sm text-gray-500">© 2025 AutoList Canada. All rights reserved.</p>
+        </footer>
+      </main>
+    </div>
+  </body>
 </html>
-
