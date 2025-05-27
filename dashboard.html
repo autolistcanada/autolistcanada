@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoList Canada Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
@@ -12,245 +12,226 @@
       font-family: 'Inter', sans-serif;
       background: url('dashboard-background.png') no-repeat center center fixed;
       background-size: cover;
-      color: #222;
+      color: #333;
     }
     .container {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
     .sidebar {
-      width: 240px;
-      background: url('sidebar-background.png') no-repeat center;
+      width: 220px;
+      background: url('sidebar-background.png') no-repeat center center;
       background-size: cover;
-      padding: 30px 20px;
+      color: white;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      justify-content: space-between;
     }
     .sidebar img.logo {
       width: 50px;
-      margin-bottom: 10px;
+      margin: 0 auto 10px;
     }
     .sidebar img.title {
-      width: 130px;
-      margin-bottom: 20px;
+      width: 160px;
+      margin: 0 auto 30px;
     }
-    .nav a {
-      display: block;
+    .sidebar nav a {
       color: white;
       text-decoration: none;
+      margin-bottom: 12px;
+      display: block;
+      text-align: center;
       font-weight: 600;
-      margin: 10px 0;
-    }
-    .nav a:hover {
-      text-decoration: underline;
     }
     .main {
       flex: 1;
-      padding: 40px 60px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
       gap: 40px;
+      overflow-y: scroll;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-    .grid {
+    .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 30px;
     }
-    canvas {
-      width: 100% !important;
-      height: auto !important;
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(6px);
+      transition: transform 0.2s ease;
     }
-    footer {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .chart-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .footer {
       text-align: center;
-      font-size: 0.9rem;
+      margin-top: 40px;
+      font-size: 12px;
       color: #444;
     }
-    .badges {
-      margin: 10px 0;
+    .footer img {
+      height: 20px;
+      margin: 0 6px;
     }
-    .badges img {
-      height: 32px;
-      margin: 0 8px;
+    .footer a {
+      color: #444;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="sidebar">
-    <img src="autolist-logo.png" alt="Logo" class="logo" />
-    <img src="autolist-title.png" alt="Title" class="title" />
-    <div class="nav">
-      <a href="dashboard.html">Dashboard</a>
-      <a href="ai-tools-live.html">AI Tools (Live)</a>
-      <a href="ai-tools.html">AI Tools (Demo)</a>
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="index.html">Home</a>
-      <a href="settings.html">Settings</a>
-    </div>
-  </div>
+  <div class="container">
+    <aside class="sidebar">
+      <div>
+        <img src="autolist-logo.png" class="logo" alt="Logo" />
+        <img src="autolist-title.png" class="title" alt="AutoList Canada" />
+        <nav>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="ai-tools-live.html">AI Tools (Live)</a>
+          <a href="ai-tools.html">AI Tools (Demo)</a>
+          <a href="features.html">Features</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="index.html">Home</a>
+          <a href="settings.html">Settings</a>
+        </nav>
+      </div>
+    </aside>
 
-  <div class="main">
-    <div class="grid">
-      <div class="card">
-        <h3>Earnings Overview</h3>
-        <canvas id="earningsChart"></canvas>
-      </div>
-      <div class="card">
-        <h3>Crosslist Count</h3>
-        <canvas id="crosslistRing"></canvas>
-      </div>
-    </div>
+    <main class="main">
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="chart-title">Earnings Overview</div>
+          <canvas id="earningsChart"></canvas>
+        </div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>AI Health Score</h3>
-        <canvas id="aiHealthRing"></canvas>
-      </div>
-      <div class="card">
-        <h3>Emotional Forecast</h3>
-        <canvas id="emotionWave"></canvas>
-      </div>
-    </div>
+        <div class="card">
+          <div class="chart-title">Crosslist Count</div>
+          <canvas id="crosslistChart"></canvas>
+        </div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Tool Usage Breakdown</h3>
-        <canvas id="toolStacked"></canvas>
-      </div>
-      <div class="card">
-        <h3>Milestone Completion</h3>
-        <canvas id="milestoneTower"></canvas>
-      </div>
-    </div>
+        <div class="card">
+          <div class="chart-title">AI Health Score</div>
+          <canvas id="healthChart"></canvas>
+        </div>
 
-    <footer>
-      <div class="badges">
+        <div class="card">
+          <div class="chart-title">Emotional Forecast</div>
+          <canvas id="emotionChart"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="chart-title">Tool Usage Breakdown</div>
+          <canvas id="toolChart"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="chart-title">Milestone Completion</div>
+          <canvas id="milestoneChart"></canvas>
+        </div>
+      </div>
+
+      <div class="footer">
         <img src="canadian-owned-badge.png" alt="Canadian Owned" />
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Tools" />
+        <img src="ai-powered-tools-badge.png" alt="AI Powered" />
         <img src="privacy-first-badge.png" alt="Privacy First" />
+        <br /><br />
+        <a href="terms.html">Terms of Service</a> /
+        <a href="privacy.html">Privacy Policy</a>
+        <br />
+        &copy; 2025 AutoList Canada &mdash; All rights reserved.
       </div>
-      <a href="terms.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a>
-      <div>&copy; 2025 AutoList Canada — All rights reserved.</div>
-    </footer>
+    </main>
   </div>
-</div>
 
-<script>
-  // Earnings Chart
-  new Chart(document.getElementById('earningsChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-      datasets: [{
-        label: 'Earnings',
-        data: [420, 680, 1200, 1100, 1350],
-        backgroundColor: '#f5b748'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } }
-    }
-  });
+  <script>
+    new Chart(document.getElementById('earningsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+          label: 'Earnings',
+          data: [420, 680, 1200, 1100, 1350],
+          backgroundColor: '#f5b748'
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
 
-  // Crosslist Ring
-  new Chart(document.getElementById('crosslistRing'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Synced', 'Remaining'],
-      datasets: [{
-        data: [312, 88],
-        backgroundColor: ['#e77512', '#eee']
-      }]
-    },
-    options: { cutout: '70%' }
-  });
+    new Chart(document.getElementById('crosslistChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Synced', 'Remaining'],
+        datasets: [{
+          data: [78, 22],
+          backgroundColor: ['#e77512', '#eee']
+        }]
+      },
+      options: { cutout: '70%', plugins: { legend: { display: false } } }
+    });
 
-  // AI Health Score
-  new Chart(document.getElementById('aiHealthRing'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Healthy', 'Remaining'],
-      datasets: [{
-        data: [92, 8],
-        backgroundColor: ['#848f67', '#ddd']
-      }]
-    },
-    options: { cutout: '70%' }
-  });
+    new Chart(document.getElementById('healthChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Accurate', 'Outdated'],
+        datasets: [{
+          data: [92, 8],
+          backgroundColor: ['#848f67', '#eee']
+        }]
+      },
+      options: { cutout: '70%', plugins: { legend: { display: false } } }
+    });
 
-  // Emotion Forecast (wave line)
-  new Chart(document.getElementById('emotionWave'), {
-    type: 'line',
-    data: {
-      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-      datasets: [{
-        label: 'Emotion Score',
-        data: [60, 72, 68, 80, 85, 70, 65],
-        fill: true,
-        borderColor: '#e77512',
-        backgroundColor: 'rgba(244,178,66,0.2)',
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } }
-    }
-  });
+    new Chart(document.getElementById('emotionChart'), {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        datasets: [{
+          label: 'Emotional Flow',
+          data: [60, 82, 78, 90, 74],
+          borderColor: '#e05a13',
+          tension: 0.4,
+          fill: true,
+          backgroundColor: 'rgba(224, 90, 19, 0.1)'
+        }]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
 
-  // Tool Usage Breakdown
-  new Chart(document.getElementById('toolStacked'), {
-    type: 'bar',
-    data: {
-      labels: ['Title', 'Description', 'Tags', 'Price'],
-      datasets: [
-        {
-          label: 'Clarity', data: [80, 70, 50, 60], backgroundColor: '#f5c88d'
-        },
-        {
-          label: 'Trust', data: [70, 65, 40, 50], backgroundColor: '#e05a13'
-        },
-        {
-          label: 'Emotion', data: [90, 80, 60, 70], backgroundColor: '#f4b242'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'bottom' } },
-      scales: { x: { stacked: true }, y: { stacked: true } }
-    }
-  });
+    new Chart(document.getElementById('toolChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Title', 'Tags', 'Trust', 'Tone', 'Conversion'],
+        datasets: [
+          { label: 'Search', data: [20, 30, 15, 25, 10], backgroundColor: '#f5b748' },
+          { label: 'Emotional', data: [10, 15, 20, 20, 5], backgroundColor: '#e77512' },
+          { label: 'Trust', data: [5, 10, 25, 10, 15], backgroundColor: '#848f67' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
 
-  // Milestone Completion Tower
-  new Chart(document.getElementById('milestoneTower'), {
-    type: 'bar',
-    data: {
-      labels: ['Connect', 'Import', 'Generate Title', 'Generate Desc', 'Sync'],
-      datasets: [{
-        label: 'Completed',
-        data: [1, 1, 1, 1, 1],
-        backgroundColor: '#848f67'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      indexAxis: 'y'
-    }
-  });
-</script>
+    new Chart(document.getElementById('milestoneChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Platform', 'Listing', 'Title', 'Description', 'Crosslist'],
+        datasets: [{
+          label: 'Completed',
+          data: [1, 1, 1, 1, 1],
+          backgroundColor: '#f4b242'
+        }]
+      },
+      options: { indexAxis: 'y', plugins: { legend: { display: false } } }
+    });
+  </script>
 </body>
 </html>
