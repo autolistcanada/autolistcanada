@@ -1,121 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Tools Live – AutoList Canada</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tools - AutoList Canada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('unified-background.png') no-repeat center top;
+      font-family: 'Inter', sans-serif;
+      background: url('unified-background.png') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
     }
     .glass {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(14px);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
-    .tool-header {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 0.5rem;
-    }
-    .tool-desc {
-      color: #4b5563;
-      margin-bottom: 1rem;
-    }
-    textarea, input {
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      margin-top: 0.5rem;
-    }
-    button {
-      background-color: #e05a13;
-      color: white;
-      padding: 0.5rem 1rem;
-      margin-top: 1rem;
-      border-radius: 0.5rem;
-    }
-    .output {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: white;
-      border-radius: 0.5rem;
-      font-style: italic;
-      color: #1f2937;
+    .wave-divider {
+      margin-top: -3rem;
     }
   </style>
-  <script>
-    let usageCount = parseInt(localStorage.getItem("aiLiveUsage")) || 0;
-
-    function runLiveTool(id) {
-      if (usageCount >= 5) {
-        alert("Free demo complete! Head to pricing to unlock full tool access.");
-        window.location.href = "/pricing.html";
-        return;
-      }
-      const input = document.getElementById(id + "-input").value.trim();
-      const output = document.getElementById(id + "-output");
-      if (!input) {
-        output.innerText = "Please enter something first.";
-        return;
-      }
-      usageCount++;
-      localStorage.setItem("aiLiveUsage", usageCount);
-      output.innerText = "✅ Live Tool Result: " + input + " ➜ [Simulated GPT-4 Output]";
-    }
-  </script>
 </head>
-<body class="p-10">
-  <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">AutoList Canada – AI Tools (Live Demo)</h1>
-  <div class="max-w-5xl mx-auto">
+<body class="text-gray-800">
 
-    <script>
-      const liveTools = [
-        ["Title Generator", "Try generating titles in real time."],
-        ["Description Generator", "Preview smart AI descriptions instantly."],
-        ["Tags Generator", "Generate relevance-based search tags on demand."],
-        ["Price Suggestion", "Smart pricing based on your listing input."],
-        ["Buyer Psychology Panel", "Simulate behavior-driven listing insights."],
-        ["Crosslist + Sync Visualizer", "Get a real-time sync preview."],
-        ["Smart Defaults Engine", "Auto-apply optimized listing presets."],
-        ["Trust-First Description Composer", "Structure trust-worthy narratives."],
-        ["AI Tag Disqualifier", "Flag weak tags in seconds."],
-        ["Tone Training Tool", "Match your tone to the right audience."],
-        ["AI Pattern Predictor", "Reveal high-performance tone + tag combos."],
-        ["Launch Timing Optimizer", "Best time to list: revealed."],
-        ["Copy Consistency Scanner", "Keep your voice clean + consistent."],
-        ["Mood-Based Description Converter", "Emotionally reshape listings."],
-        ["Conversion Confidence Score", "Get a listing impact score instantly."],
-        ["Listing Logic Explainer", "Break down what works and what doesn't."],
-        ["Buyer Emotion Forecast Tool", "Predict reactions to your listing style."],
-        ["Sales Plateau Analyzer", "Uncover why sales slowed + fix it."],
-        ["Flow-Through Optimizer", "Make listings easier to read + trust."],
-        ["Listing Fusion Composer", "Merge notes into a final, sharp listing."]
-      ];
+  <!-- Sidebar -->
+  <aside class="fixed top-0 left-0 w-48 h-full bg-[#004F4F] text-white p-4 text-sm z-50">
+    <img src="autolist-logo.png" alt="AutoList Logo" class="w-20 mx-auto mb-2">
+    <img src="autolist-title.png" alt="AutoList Canada" class="w-28 mx-auto mb-6">
+    <nav class="space-y-3">
+      <a href="index.html" class="block hover:underline">Home</a>
+      <a href="dashboard.html" class="block hover:underline">Dashboard</a>
+      <a href="ai-tools.html" class="block hover:underline font-semibold">AI Tools</a>
+      <a href="how-it-works.html" class="block hover:underline">How It Works</a>
+      <a href="faq.html" class="block hover:underline">FAQ</a>
+      <a href="terms.html" class="block hover:underline">Terms of Service</a>
+      <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
+    </nav>
+  </aside>
 
-      liveTools.forEach((tool, index) => {
-        const id = `live${index + 1}`;
-        document.write(`
-          <div class="glass">
-            <div class="tool-header">${index + 1}. ${tool[0]}</div>
-            <div class="tool-desc">${tool[1]}</div>
-            <textarea id="${id}-input" rows="2" placeholder="Try your prompt here..."></textarea>
-            <button onclick="runLiveTool('${id}')">Try It</button>
-            <div class="output" id="${id}-output"></div>
-          </div>
-        `);
-      });
-    </script>
+  <!-- Main Content -->
+  <main class="ml-52 px-6 pt-10">
+    <h1 class="text-2xl font-bold text-center mb-6">AutoList Canada – AI Tools (Demo)</h1>
 
-  </div>
+    <!-- Tool Sections -->
+    <div class="space-y-10">
+      <!-- TOOL TEMPLATE -->
+      <!-- Repeat this for each of the 20 tools -->
+      <div class="glass">
+        <h2 class="text-lg font-semibold mb-2">1. Title Generator</h2>
+        <p class="text-sm mb-2">Create short, high-converting listing titles using tone + psychology science.</p>
+        <input type="text" placeholder="Paste your product info here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2">
+        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
+      </div>
+
+      <div class="glass">
+        <h2 class="text-lg font-semibold mb-2">2. Description Generator</h2>
+        <p class="text-sm mb-2">Structure your description with flow, pacing, and trust-building logic.</p>
+        <input type="text" placeholder="Paste your product info here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2">
+        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
+      </div>
+
+      <!-- Repeat for Tools 3 through 20 -->
+
+      <!-- EXAMPLE PLACEHOLDER FOR TOOL 20 -->
+      <div class="glass">
+        <h2 class="text-lg font-semibold mb-2">20. Listing Fusion Composer</h2>
+        <p class="text-sm mb-2">Merge multiple drafts into one strong, unified listing — powered by AI synthesis.</p>
+        <textarea placeholder="Paste drafts, title notes, or scraps here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2 h-28"></textarea>
+        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
+      </div>
+    </div>
+
+    <!-- Footer divider -->
+    <div class="mt-12 text-center text-sm text-gray-600">
+      © 2025 AutoList Canada — All rights reserved.
+    </div>
+  </main>
+
 </body>
 </html>
