@@ -25,9 +25,27 @@
       margin-top: -3rem;
     }
   </style>
+  <script>
+    let usageCount = parseInt(localStorage.getItem("aiToolUsage")) || 0;
+    function runTool(id) {
+      if (usageCount >= 5) {
+        alert("You've reached your free limit. Please upgrade for full access.");
+        window.location.href = "/pricing.html";
+        return;
+      }
+      const input = document.getElementById(`${id}-input`).value;
+      const output = document.getElementById(`${id}-output`);
+      if (!input) {
+        output.innerText = "Please enter some content first.";
+        return;
+      }
+      usageCount++;
+      localStorage.setItem("aiToolUsage", usageCount);
+      output.innerText = `✅ Generated Output for '${id}': ${input} ➜ [Simulated AI Response]`;
+    }
+  </script>
 </head>
 <body class="text-gray-800">
-
   <!-- Sidebar -->
   <aside class="fixed top-0 left-0 w-48 h-full bg-[#004F4F] text-white p-4 text-sm z-50">
     <img src="autolist-logo.png" alt="AutoList Logo" class="w-20 mx-auto mb-2">
@@ -36,7 +54,7 @@
       <a href="index.html" class="block hover:underline">Home</a>
       <a href="dashboard.html" class="block hover:underline">Dashboard</a>
       <a href="ai-tools.html" class="block hover:underline font-semibold">AI Tools</a>
-      <a href="how-it-works.html" class="block hover:underline">How It Works</a>
+      <a href="ai-tools-live.html" class="block hover:underline">AI Tools (Live)</a>
       <a href="faq.html" class="block hover:underline">FAQ</a>
       <a href="terms.html" class="block hover:underline">Terms of Service</a>
       <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
@@ -49,38 +67,45 @@
 
     <!-- Tool Sections -->
     <div class="space-y-10">
-      <!-- TOOL TEMPLATE -->
-      <!-- Repeat this for each of the 20 tools -->
-      <div class="glass">
-        <h2 class="text-lg font-semibold mb-2">1. Title Generator</h2>
-        <p class="text-sm mb-2">Create short, high-converting listing titles using tone + psychology science.</p>
-        <input type="text" placeholder="Paste your product info here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2">
-        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
-      </div>
-
-      <div class="glass">
-        <h2 class="text-lg font-semibold mb-2">2. Description Generator</h2>
-        <p class="text-sm mb-2">Structure your description with flow, pacing, and trust-building logic.</p>
-        <input type="text" placeholder="Paste your product info here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2">
-        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
-      </div>
-
-      <!-- Repeat for Tools 3 through 20 -->
-
-      <!-- EXAMPLE PLACEHOLDER FOR TOOL 20 -->
-      <div class="glass">
-        <h2 class="text-lg font-semibold mb-2">20. Listing Fusion Composer</h2>
-        <p class="text-sm mb-2">Merge multiple drafts into one strong, unified listing — powered by AI synthesis.</p>
-        <textarea placeholder="Paste drafts, title notes, or scraps here" class="w-full border border-gray-300 rounded px-3 py-2 mb-2 h-28"></textarea>
-        <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">Generate</button>
-      </div>
+      <!-- 20 Tools Generated Here -->
+      <script>
+        const tools = [
+          "Title Generator", "Description Generator", "Tags Generator", "Price Suggestion",
+          "Buyer Psychology Panel", "Crosslist + Sync Visualizer", "Smart Defaults Engine",
+          "Trust-First Description Composer", "AI Tag Disqualifier", "Tone Training Tool",
+          "AI Pattern Predictor", "Launch Timing Optimizer", "Copy Consistency Scanner",
+          "Mood-Based Description Converter", "Conversion Confidence Score", "Listing Logic Explainer",
+          "Buyer Emotion Forecast Tool", "Sales Plateau Analyzer", "Flow-Through Optimizer",
+          "Listing Fusion Composer"
+        ];
+        tools.forEach((tool, i) => {
+          const id = `tool${i + 1}`;
+          document.write(`
+            <div class='glass'>
+              <h2 class='text-lg font-semibold mb-2'>${i + 1}. ${tool}</h2>
+              <input type='text' id='${id}-input' placeholder='Paste your content here...' class='w-full border border-gray-300 rounded px-3 py-2 mb-2'>
+              <button onclick='runTool("${id}")' class='bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded'>Generate</button>
+              <div id='${id}-output' class='mt-2 text-sm italic text-gray-700'></div>
+            </div>
+            <svg class='wave-divider' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 150'><path fill='#f5b748' fill-opacity='1' d='M0,96L80,106.7C160,117,320,139,480,149.3C640,160,800,160,960,149.3C1120,139,1280,117,1360,106.7L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'></path></svg>
+          `);
+        });
+      </script>
     </div>
 
     <!-- Footer divider -->
-    <div class="mt-12 text-center text-sm text-gray-600">
-      © 2025 AutoList Canada — All rights reserved.
-    </div>
+    <footer class="text-center text-xs text-gray-600 mt-10 mb-6">
+      <div class="flex justify-center items-center gap-4 mb-2">
+        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" width="30">
+        <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" width="30">
+        <img src="privacy-first-badge.png" alt="Privacy First Badge" width="30">
+      </div>
+      <p>© 2025 AutoList Canada — All rights reserved.</p>
+      <div class="space-x-4 mt-1">
+        <a href="terms.html" class="hover:underline">Terms of Service</a>
+        <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+      </div>
+    </footer>
   </main>
-
 </body>
 </html>
