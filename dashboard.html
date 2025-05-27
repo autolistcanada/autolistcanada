@@ -1,101 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: url('dashboard-background.png') no-repeat center center fixed;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('dashboard-background.png');
       background-size: cover;
-      color: #222;
+      background-position: center;
+      color: #333;
     }
     .sidebar {
       position: fixed;
       top: 0;
       left: 0;
-      width: 180px;
       height: 100%;
-      background: url('sidebar-background.png') no-repeat center center;
+      width: 180px;
+      background-image: url('sidebar-background.png');
       background-size: cover;
-      padding-top: 40px;
+      padding: 20px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      color: white;
     }
-    .sidebar img.logo {
-      width: 60px;
+    .sidebar img {
+      max-width: 80%;
       margin-bottom: 10px;
     }
-    .sidebar img.title {
-      width: 120px;
-      margin-bottom: 20px;
+    .sidebar h2 {
+      font-size: 16px;
+      text-align: center;
     }
     .sidebar a {
-      font-size: 12px;
       color: white;
       text-decoration: none;
       margin: 8px 0;
-      display: block;
+      font-size: 13px;
     }
     .main {
       margin-left: 200px;
       padding: 20px;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.9);
+    .section {
+      background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
-    .card h3 {
-      margin-top: 0;
+    .chart-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 10px;
     }
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background: #eee;
-      border-radius: 6px;
-      overflow: hidden;
+    .chart-bar {
+      width: 20%;
+      height: 100px;
+      background: #f5b748;
+      border-radius: 4px;
+      transition: height 0.3s ease;
     }
-    .progress-fill {
-      height: 100%;
-      background: #e77512;
+    .tool-tile {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff5ec;
+      border-left: 5px solid #e77512;
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin: 10px 0;
     }
-    .footer {
+    .tool-tile:hover {
+      background: #fff1e2;
+    }
+    .tool-label {
+      font-weight: bold;
+    }
+    .milestone-list {
+      list-style: none;
+      padding: 0;
+    }
+    .milestone-list li::before {
+      content: '✔';
+      margin-right: 8px;
+      color: green;
+    }
+    footer {
       text-align: center;
       font-size: 11px;
-      padding: 20px;
-      color: #333;
+      margin-top: 40px;
+      padding: 10px;
+      color: #555;
     }
     .badges img {
-      height: 30px;
-      margin: 0 6px;
-    }
-    .tile {
-      padding: 12px;
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .tile h4 {
-      margin: 0 0 4px 0;
-      font-weight: 600;
-    }
-    .milestone {
-      font-size: 13px;
-      margin: 4px 0;
+      height: 24px;
+      margin: 0 5px;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <img src="autolist-logo.png" alt="Logo" class="logo">
-    <img src="autolist-title.png" alt="AutoList Canada" class="title">
+    <img src="autolist-logo.png" alt="AutoList Logo">
+    <img src="autolist-title.png" alt="AutoList Canada">
     <a href="#">Dashboard</a>
     <a href="#">Listings</a>
     <a href="#">Import</a>
@@ -104,93 +117,79 @@
     <a href="#">AI Tools (Demo)</a>
     <a href="#">Settings</a>
   </div>
+
   <div class="main">
-    <h2>Success Dashboard</h2>
-
-    <div class="card">
-      <h3>Earnings Overview</h3>
-      <canvas id="earningsChart" height="180"></canvas>
+    <div class="section">
+      <h2>Success Dashboard</h2>
+      <h4>Earnings Overview</h4>
+      <div class="chart-box">
+        <div class="chart-bar" style="height: 40px;"></div>
+        <div class="chart-bar" style="height: 60px;"></div>
+        <div class="chart-bar" style="height: 100px;"></div>
+        <div class="chart-bar" style="height: 90px;"></div>
+        <div class="chart-bar" style="height: 120px;"></div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Crosslist Count</h3>
-      <p>312 Listings Synced</p>
-      <div class="progress-bar"><div class="progress-fill" style="width: 78%"></div></div>
+    <div class="section">
+      <h4>Crosslist Count</h4>
+      <div style="width: 100%; background: #ddd; border-radius: 10px; overflow: hidden;">
+        <div style="width: 78%; background: #e77512; padding: 4px 0; text-align: center; color: white; font-size: 12px;">312 Listings Synced</div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>AI Health Score</h3>
-      <p>92% Accuracy</p>
-      <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
+    <div class="section">
+      <h4>AI Health Score</h4>
+      <div style="width: 100%; background: #ddd; border-radius: 10px; overflow: hidden;">
+        <div style="width: 92%; background: #848f67; padding: 4px 0; text-align: center; color: white; font-size: 12px;">92% Accuracy</div>
+      </div>
     </div>
 
-    <!-- AI Tool Tiles 1-20 -->
-    <div class="card">
-      <h3>AI Tools Status</h3>
-      <div class="tile"><h4>1. Title Generator</h4><p>Active – Tone AI</p></div>
-      <div class="tile"><h4>2. Description Generator</h4><p>Storytelling logic: ON</p></div>
-      <div class="tile"><h4>3. Tags Generator</h4><p>Search visibility scoring: Enabled</p></div>
-      <div class="tile"><h4>4. Price Suggestion</h4><p>Market-aware pricing: Enabled</p></div>
-      <div class="tile"><h4>5. Buyer Psychology Panel</h4><p>Peak interest: Tue 11AM</p></div>
-      <div class="tile"><h4>6. Crosslist + Sync Visualizer</h4><p>Sync status mapped</p></div>
-      <div class="tile"><h4>7. Smart Defaults Engine</h4><p>Tone + Image order preset</p></div>
-      <div class="tile"><h4>8. Trust-First Description Composer</h4><p>Trust anchors + pacing applied</p></div>
-      <div class="tile"><h4>9. AI Tag Disqualifier</h4><p>12 weak tags flagged</p></div>
-      <div class="tile"><h4>10. Tone Training Tool</h4><p>Current tone: Minimalist</p></div>
-      <div class="tile"><h4>11. AI Pattern Predictor</h4><p>Top tone: Cozy, Best day: Monday</p></div>
-      <div class="tile"><h4>12. Launch Timing Optimizer</h4><p>Optimal post: Thursday 7PM</p></div>
-      <div class="tile"><h4>13. Copy Consistency Scanner</h4><p>92% tone alignment</p></div>
-      <div class="tile"><h4>14. Mood-Based Description Converter</h4><p>Mode: Luxe</p></div>
-      <div class="tile"><h4>15. Conversion Confidence Score</h4><p>Score: 89/100</p></div>
-      <div class="tile"><h4>16. Listing Logic Explainer</h4><p>Passive openers, tag redundancy flagged</p></div>
-      <div class="tile"><h4>17. Buyer Emotion Forecast Tool</h4><p>Profile: Nostalgic impulse</p></div>
-      <div class="tile"><h4>18. Sales Plateau Analyzer</h4><p>Trend: Lower Sunday response</p></div>
-      <div class="tile"><h4>19. Flow-Through Optimizer</h4><p>Readability score: A–</p></div>
-      <div class="tile"><h4>20. Listing Fusion Composer</h4><p>Merged 3 drafts to final</p></div>
+    <div class="section">
+      <h4>AI Tools</h4>
+      <div class="tool-tile"><span class="tool-label">1. Title Generator</span> <span>Active – Tone AI</span></div>
+      <div class="tool-tile"><span class="tool-label">2. Description Generator</span> <span>Storytelling: ON</span></div>
+      <div class="tool-tile"><span class="tool-label">3. Tags Generator</span> <span>Search Scoring Enabled</span></div>
+      <div class="tool-tile"><span class="tool-label">4. Price Suggestion</span> <span>Market-aware</span></div>
+      <div class="tool-tile"><span class="tool-label">5. Buyer Psychology Panel</span> <span>Tue 11AM</span></div>
+      <div class="tool-tile"><span class="tool-label">6. Crosslist + Sync Visualizer</span> <span>Live</span></div>
+      <div class="tool-tile"><span class="tool-label">7. Smart Defaults Engine</span> <span>Auto Tone + Images</span></div>
+      <div class="tool-tile"><span class="tool-label">8. Trust-First Description</span> <span>Pacing Applied</span></div>
+      <div class="tool-tile"><span class="tool-label">9. AI Tag Disqualifier</span> <span>12 Weak Tags</span></div>
+      <div class="tool-tile"><span class="tool-label">10. Tone Training</span> <span>Minimalist</span></div>
+      <div class="tool-tile"><span class="tool-label">11. AI Pattern Predictor</span> <span>Cozy + Mon</span></div>
+      <div class="tool-tile"><span class="tool-label">12. Launch Optimizer</span> <span>Thursday 7PM</span></div>
+      <div class="tool-tile"><span class="tool-label">13. Copy Scanner</span> <span>92% Match</span></div>
+      <div class="tool-tile"><span class="tool-label">14. Mood Converter</span> <span>Luxe</span></div>
+      <div class="tool-tile"><span class="tool-label">15. Confidence Score</span> <span>89/100</span></div>
+      <div class="tool-tile"><span class="tool-label">16. Logic Explainer</span> <span>Redundancy: 68%</span></div>
+      <div class="tool-tile"><span class="tool-label">17. Emotion Forecast</span> <span>Impulse Buyer</span></div>
+      <div class="tool-tile"><span class="tool-label">18. Plateau Analyzer</span> <span>Sun Shift</span></div>
+      <div class="tool-tile"><span class="tool-label">19. Flow Optimizer</span> <span>A–</span></div>
+      <div class="tool-tile"><span class="tool-label">20. Fusion Composer</span> <span>3 Drafts Merged</span></div>
     </div>
 
-    <div class="card">
-      <h3>Onboarding Milestones</h3>
-      <p class="milestone">✅ Connect platforms</p>
-      <p class="milestone">✅ Import first listing</p>
-      <p class="milestone">✅ Use AI Title Generator</p>
-      <p class="milestone">✅ Generate Description</p>
-      <p class="milestone">✅ Crosslist at least once</p>
+    <div class="section">
+      <h4>Onboarding Milestones</h4>
+      <ul class="milestone-list">
+        <li>Connect platforms</li>
+        <li>Import first listing</li>
+        <li>Use AI Title Generator</li>
+        <li>Generate Description</li>
+        <li>Crosslist at least once</li>
+      </ul>
     </div>
 
-    <div class="footer">
+    <footer>
       <div class="badges">
         <img src="canadian-owned-badge.png" alt="Canadian Owned">
         <img src="ai-powered-tools-badge.png" alt="AI Powered">
         <img src="privacy-first-badge.png" alt="Privacy First">
       </div>
-      <p><a href="terms.html">Terms of Service</a> · <a href="privacy.html">Privacy Policy</a></p>
+      <p><a href="terms.html">Terms of Service</a> • <a href="privacy.html">Privacy Policy</a></p>
       <p>© 2025 AutoList Canada — All rights reserved.</p>
-    </div>
+    </footer>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    const ctx = document.getElementById('earningsChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        datasets: [{
-          label: 'Earnings',
-          data: [420, 710, 1200, 1080, 1340],
-          backgroundColor: '#f5b748'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  </script>
 </body>
 </html>
+
