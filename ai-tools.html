@@ -1,44 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Tools - AutoList Canada</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tools – AutoList Canada</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('unified-background.png') no-repeat center top;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(14px);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    .tool-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+    .tool-desc {
+      color: #4b5563;
+      margin-bottom: 1rem;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      margin-top: 0.5rem;
+    }
+    button {
+      background-color: #e05a13;
+      color: white;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+    }
+    .output {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 0.5rem;
+      font-style: italic;
+      color: #1f2937;
+    }
+  </style>
+  <script>
+    let usageCount = parseInt(localStorage.getItem("aiUsage")) || 0;
+
+    function useTool(id) {
+      if (usageCount >= 5) {
+        alert("You've reached your 5 free uses! Redirecting to pricing page...");
+        window.location.href = "/pricing.html";
+        return;
+      }
+      const input = document.getElementById(id + "-input").value.trim();
+      const output = document.getElementById(id + "-output");
+      if (!input) {
+        output.innerText = "Please enter something first.";
+        return;
+      }
+      usageCount++;
+      localStorage.setItem("aiUsage", usageCount);
+      output.innerText = "🧠 Generated Result: " + input + " [AI-enhanced output here]";
+    }
+  </script>
 </head>
-<body style="font-family: Arial, sans-serif; background: linear-gradient(to bottom right, #f5b748, #e05a13, #848f67, #e77512); padding: 40px; color: #333;">
+<body class="p-10">
+  <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">AutoList Canada – AI Tools (Demo)</h1>
+  <div class="max-w-5xl mx-auto">
 
-  <h1 style="text-align:center; color:white;">AutoList Canada - AI Listing Tools</h1>
-  <p style="text-align:center; color:white;">Use the tools below to generate AI-powered content for your listings.</p>
+    <!-- LOOP TO RENDER ALL 20 TOOLS -->
+    <!-- Format: Title, Description, Input, Button, Output -->
 
-  <!-- AI Interaction Elements Start -->
-  <div style="text-align:center; margin-top: 40px;">
-    <h2>AI Listing Assistant</h2>
+    <script>
+      const tools = [
+        ["Title Generator", "Create clear, high-converting titles using buyer psychology + tone logic."],
+        ["Description Generator", "Generate trust-first, story-based descriptions that resonate."],
+        ["Tags Generator", "Suggest relevance-based, platform-aware tags to boost searchability."],
+        ["Price Suggestion", "Smart pricing suggestions based on market tone + category logic."],
+        ["Buyer Psychology Panel", "See buyer tone sensitivity, engagement timing, and behavior patterns."],
+        ["Crosslist + Sync Visualizer", "Preview delisting, syncing, and platform fit before pushing listings live."],
+        ["Smart Defaults Engine", "Auto-applies tone, structure, and image order based on your behavior."],
+        ["Trust-First Description Composer", "Paces and formats descriptions to build instant buyer trust."],
+        ["AI Tag Disqualifier", "Flags vague, low-visibility tags and recommends smart replacements."],
+        ["Tone Training Tool", "Adapts listing voice based on target buyer persona: cozy, luxe, minimal, etc."],
+        ["AI Pattern Predictor", "Detect patterns in your top-performing listings and surface what to repeat."],
+        ["Launch Timing Optimizer", "Get the best day/time to list based on buyer rhythms + past engagement."],
+        ["Copy Consistency Scanner", "Detect mismatched tone, duplicate phrases, and weak sentence flow."],
+        ["Mood-Based Description Converter", "Convert your listing copy to feel nostalgic, cozy, luxe, etc."],
+        ["Conversion Confidence Score", "Scores your listing clarity, flow, trust signals, and emotional tone."],
+        ["Listing Logic Explainer", "Breaks down your listing line-by-line to show what’s working or hurting."],
+        ["Buyer Emotion Forecast Tool", "Predict buyer reactions and identify emotional resonance gaps."],
+        ["Sales Plateau Analyzer", "Analyze your listing habits to show why growth has slowed."],
+        ["Flow-Through Optimizer", "Checks pacing, structure, skimmability, and visual fatigue triggers."],
+        ["Listing Fusion Composer", "Combine drafts, notes, and titles into one sharp listing output."]
+      ];
 
-    <!-- AI Title Suggestion -->
-    <div style="margin-bottom: 20px;">
-      <button onclick="alert('AI generating title...')" style="background-color: #e05a13; color: white; padding: 8px 16px; border: none; border-radius: 6px;">Generate Title</button>
-      <input type="text" placeholder="Your AI-Generated Title Will Appear Here" style="width: 300px; margin-top: 10px;">
-    </div>
+      tools.forEach((tool, index) => {
+        const id = `tool${index + 1}`;
+        document.write(`
+          <div class="glass">
+            <div class="tool-header">${index + 1}. ${tool[0]}</div>
+            <div class="tool-desc">${tool[1]}</div>
+            <textarea id="${id}-input" rows="2" placeholder="Enter your content here..."></textarea>
+            <button onclick="useTool('${id}')">Generate</button>
+            <div class="output" id="${id}-output"></div>
+          </div>
+        `);
+      });
+    </script>
 
-    <!-- AI Description Generator -->
-    <div style="margin-bottom: 20px;">
-      <button onclick="alert('AI generating description...')" style="background-color: #e05a13; color: white; padding: 8px 16px; border: none; border-radius: 6px;">Generate Description</button>
-      <textarea placeholder="Your AI-Generated Description Will Appear Here" style="width: 300px; height: 80px; margin-top: 10px;"></textarea>
-    </div>
-
-    <!-- AI Tags Generator -->
-    <div style="margin-bottom: 20px;">
-      <button onclick="alert('AI suggesting tags...')" style="background-color: #e05a13; color: white; padding: 8px 16px; border: none; border-radius: 6px;">Suggest Tags</button>
-      <input type="text" placeholder="Suggested Tags Will Appear Here" style="width: 300px; margin-top: 10px;">
-    </div>
-
-    <!-- AI Pricing Suggestion -->
-    <div style="margin-bottom: 20px;">
-      <button onclick="alert('AI suggesting price...')" style="background-color: #e05a13; color: white; padding: 8px 16px; border: none; border-radius: 6px;">Suggest Price</button>
-      <input type="text" placeholder="Suggested Price Will Appear Here" style="width: 300px; margin-top: 10px;">
-    </div>
   </div>
-  <!-- AI Interaction Elements End -->
-
 </body>
 </html>
