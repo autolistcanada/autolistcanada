@@ -4,151 +4,191 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoList Canada Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
       font-family: 'Inter', sans-serif;
-      background: url('dashboard-background.png') no-repeat center center fixed;
+    }
+    body {
+      background-image: url('dashboard-background.png');
       background-size: cover;
-      color: #333;
-    }
-    .container {
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       display: flex;
-      height: 100vh;
-      overflow: hidden;
     }
-    .sidebar {
+    aside {
       width: 220px;
-      background: url('sidebar-background.png') no-repeat center center;
+      background-image: url('sidebar-background.png');
       background-size: cover;
+      padding: 30px 20px;
       color: white;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      height: 100vh;
+      position: fixed;
     }
-    .sidebar img.logo {
-      width: 50px;
-      margin: 0 auto 10px;
+    aside img.logo {
+      width: 100%;
+      margin-bottom: 20px;
     }
-    .sidebar img.title {
-      width: 160px;
-      margin: 0 auto 30px;
-    }
-    .sidebar nav a {
+    aside nav a {
+      display: block;
       color: white;
       text-decoration: none;
-      margin-bottom: 12px;
-      display: block;
-      text-align: center;
+      margin: 10px 0;
       font-weight: 600;
     }
     .main {
-      flex: 1;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      overflow-y: scroll;
+      margin-left: 220px;
+      padding: 30px;
+      width: calc(100% - 220px);
     }
-    .dashboard-grid {
+    .welcome-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .welcome-bar h1 {
+      font-size: 22px;
+      color: #333;
+    }
+    .search {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+    }
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
-    .tile {
-      background: rgba(255, 255, 255, 0.88);
-      border-radius: 18px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    .card {
+      background: rgba(255, 255, 255, 0.9);
       padding: 20px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .tile:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+    .glow-tile {
+      background: #fff6ea;
+      border-left: 8px solid #f5b748;
     }
-    .tile-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
+    .momentum {
+      background: #fef9f4;
+      border-left: 8px solid #e05a13;
     }
-    .tile-title {
-      font-weight: 600;
-      margin-bottom: 8px;
+    .layer-card {
+      background: #f0f9f4;
+      border-left: 8px solid #848f67;
     }
-    .tile-value {
-      font-size: 20px;
+    .tool-title {
       font-weight: 700;
-      color: #e77512;
+      margin-bottom: 6px;
     }
     .footer {
-      text-align: center;
-      font-size: 13px;
-      color: #444;
       margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #333;
     }
     .badges img {
-      height: 32px;
-      margin: 0 10px;
+      width: 28px;
+      margin: 0 5px;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div>
-        <img src="autolist-logo.png" class="logo" alt="Logo" />
-        <img src="autolist-title.png" class="title" alt="AutoList Canada" />
-        <nav>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="ai-tools-live.html">AI Tools (Live)</a>
-          <a href="ai-tools.html">AI Tools (Demo)</a>
-          <a href="features.html">Features</a>
-          <a href="pricing.html">Pricing</a>
-          <a href="index.html">Home</a>
-          <a href="settings.html">Settings</a>
-        </nav>
+  <aside>
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="logo">
+    <img src="autolist-title.png" alt="AutoList Canada" style="width:100%;margin-bottom:20px;">
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ai-tools-live.html">AI Tools (Live)</a>
+      <a href="ai-tools.html">AI Tools (Demo)</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="index.html">Home</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <div class="welcome-bar">
+      <h1>Welcome back, Seller ✨</h1>
+      <input type="text" class="search" placeholder="Search tools, listings...">
+    </div>
+
+    <div class="grid">
+      <!-- Glow Tiles -->
+      <div class="card glow-tile"><div class="tool-title">Title Generator</div>Tone: Clear</div>
+      <div class="card glow-tile"><div class="tool-title">Tag Assistant</div>5 new tags</div>
+      <div class="card glow-tile"><div class="tool-title">Description Builder</div>Trust: 92%</div>
+      <div class="card glow-tile"><div class="tool-title">Price Suggestion</div>$42.00 CAD</div>
+      <div class="card glow-tile"><div class="tool-title">Buyer Psychology</div>Peak: 8PM</div>
+
+      <!-- Momentum Trail -->
+      <div class="card momentum"><div class="tool-title">Smart Defaults</div>Tone: Luxe</div>
+      <div class="card momentum"><div class="tool-title">Trust Composer</div>+ Closer</div>
+      <div class="card momentum"><div class="tool-title">Tag Disqualifier</div>2 flagged</div>
+      <div class="card momentum"><div class="tool-title">Tone Trainer</div>Current: Minimalist</div>
+      <div class="card momentum"><div class="tool-title">Pattern Predictor</div>Best Day: Mon</div>
+
+      <!-- Layer Cards -->
+      <div class="card layer-card"><div class="tool-title">Timing Optimizer</div>Next: Thurs 7PM</div>
+      <div class="card layer-card"><div class="tool-title">Copy Scanner</div>92% match</div>
+      <div class="card layer-card"><div class="tool-title">Mood Converter</div>Current: Luxe</div>
+      <div class="card layer-card"><div class="tool-title">Confidence Score</div>89/100</div>
+      <div class="card layer-card"><div class="tool-title">Logic Explainer</div>Passive Openers</div>
+
+      <!-- Interactive Grid -->
+      <div class="card"><div class="tool-title">Emotion Forecast</div><canvas id="emotionChart"></canvas></div>
+      <div class="card"><div class="tool-title">Plateau Analyzer</div>Trend: Lower Sunday</div>
+      <div class="card"><div class="tool-title">Flow Optimizer</div>Score: A–</div>
+      <div class="card"><div class="tool-title">Fusion Composer</div>3 drafts merged</div>
+      <div class="card"><div class="tool-title">Crosslist Visualizer</div>4 platforms</div>
+    </div>
+
+    <div class="footer">
+      <div class="badges">
+        <img src="canadian-owned-badge.png" alt="Canadian Owned">
+        <img src="ai-powered-tools-badge.png" alt="AI Powered">
+        <img src="privacy-first-badge.png" alt="Privacy First">
       </div>
-    </aside>
-    <main class="main">
-      <div class="dashboard-grid">
-        <!-- 20 Tool Tiles -->
-        <div class="tile"><div class="tile-icon">📝</div><div class="tile-title">Title Generator</div><div class="tile-value">Tone: Clear</div></div>
-        <div class="tile"><div class="tile-icon">🏷️</div><div class="tile-title">Tag Assistant</div><div class="tile-value">5 new tags</div></div>
-        <div class="tile"><div class="tile-icon">📄</div><div class="tile-title">Description Builder</div><div class="tile-value">Trust: 92%</div></div>
-        <div class="tile"><div class="tile-icon">💵</div><div class="tile-title">Price Suggestion</div><div class="tile-value">$42.00 CAD</div></div>
-        <div class="tile"><div class="tile-icon">🧠</div><div class="tile-title">Buyer Psychology Panel</div><div class="tile-value">Peak: 8PM</div></div>
-        <div class="tile"><div class="tile-icon">🔗</div><div class="tile-title">Crosslist Visualizer</div><div class="tile-value">4 platforms</div></div>
-        <div class="tile"><div class="tile-icon">⚙️</div><div class="tile-title">Smart Defaults Engine</div><div class="tile-value">Tone: Luxe</div></div>
-        <div class="tile"><div class="tile-icon">🔒</div><div class="tile-title">Trust Composer</div><div class="tile-value">+ Closer</div></div>
-        <div class="tile"><div class="tile-icon">❌</div><div class="tile-title">Tag Disqualifier</div><div class="tile-value">2 flagged</div></div>
-        <div class="tile"><div class="tile-icon">🎨</div><div class="tile-title">Tone Trainer</div><div class="tile-value">Style: Cozy</div></div>
-        <div class="tile"><div class="tile-icon">📈</div><div class="tile-title">Pattern Predictor</div><div class="tile-value">Save rate: +14%</div></div>
-        <div class="tile"><div class="tile-icon">⏰</div><div class="tile-title">Timing Optimizer</div><div class="tile-value">List: Tue 9AM</div></div>
-        <div class="tile"><div class="tile-icon">🔍</div><div class="tile-title">Consistency Scanner</div><div class="tile-value">✓ Unified</div></div>
-        <div class="tile"><div class="tile-icon">💫</div><div class="tile-title">Mood Converter</div><div class="tile-value">Emo: Nostalgic</div></div>
-        <div class="tile"><div class="tile-icon">✅</div><div class="tile-title">Conversion Score</div><div class="tile-value">87%</div></div>
-        <div class="tile"><div class="tile-icon">📎</div><div class="tile-title">Listing Explainer</div><div class="tile-value">3 notes</div></div>
-        <div class="tile"><div class="tile-icon">❤️</div><div class="tile-title">Emotion Forecast</div><div class="tile-value">Calm → Trust</div></div>
-        <div class="tile"><div class="tile-icon">📉</div><div class="tile-title">Sales Analyzer</div><div class="tile-value">Plateau: tags</div></div>
-        <div class="tile"><div class="tile-icon">🌀</div><div class="tile-title">Flow Optimizer</div><div class="tile-value">Score: A</div></div>
-        <div class="tile"><div class="tile-icon">🔀</div><div class="tile-title">Fusion Composer</div><div class="tile-value">3 drafts → 1</div></div>
-      </div>
-      <div class="footer">
-        <div class="badges">
-          <img src="canadian-owned-badge.png" alt="Canadian Owned" />
-          <img src="ai-powered-tools-badge.png" alt="AI Powered" />
-          <img src="privacy-first-badge.png" alt="Privacy First" />
-        </div>
-        <br />
-        <a href="terms.html">Terms of Service</a> /
-        <a href="privacy.html">Privacy Policy</a>
-        <br />
+      <p>
+        <a href="terms.html">Terms of Service</a> / <a href="privacy.html">Privacy Policy</a><br>
         &copy; 2025 AutoList Canada — All rights reserved.
-      </div>
-    </main>
+      </p>
+    </div>
   </div>
+
+  <script>
+    const ctx = document.getElementById('emotionChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri'],
+        datasets: [{
+          label: 'Emotional Score',
+          data: [68, 72, 70, 77, 74],
+          fill: true,
+          backgroundColor: 'rgba(244, 178, 66, 0.2)',
+          borderColor: '#f4b242',
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false } }
+      }
+    });
+  </script>
 </body>
 </html>
