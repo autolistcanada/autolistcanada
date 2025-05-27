@@ -55,37 +55,43 @@
     }
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 16px;
+    .tile {
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      backdrop-filter: blur(6px);
-      transition: transform 0.2s ease;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .card:hover {
-      transform: scale(1.02);
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
     }
-    .chart-title {
-      font-weight: 600;
+    .tile-icon {
+      font-size: 28px;
       margin-bottom: 10px;
+    }
+    .tile-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .tile-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #e77512;
     }
     .footer {
       text-align: center;
+      font-size: 13px;
+      color: #444;
       margin-top: 40px;
-      font-size: 12px;
-      color: #444;
     }
-    .footer img {
-      height: 20px;
-      margin: 0 6px;
-    }
-    .footer a {
-      color: #444;
-      text-decoration: underline;
+    .badges img {
+      height: 32px;
+      margin: 0 10px;
     }
   </style>
 </head>
@@ -106,132 +112,43 @@
         </nav>
       </div>
     </aside>
-
     <main class="main">
       <div class="dashboard-grid">
-        <div class="card">
-          <div class="chart-title">Earnings Overview</div>
-          <canvas id="earningsChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="chart-title">Crosslist Count</div>
-          <canvas id="crosslistChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="chart-title">AI Health Score</div>
-          <canvas id="healthChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="chart-title">Emotional Forecast</div>
-          <canvas id="emotionChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="chart-title">Tool Usage Breakdown</div>
-          <canvas id="toolChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="chart-title">Milestone Completion</div>
-          <canvas id="milestoneChart"></canvas>
-        </div>
+        <!-- 20 Tool Tiles -->
+        <div class="tile"><div class="tile-icon">📝</div><div class="tile-title">Title Generator</div><div class="tile-value">Tone: Clear</div></div>
+        <div class="tile"><div class="tile-icon">🏷️</div><div class="tile-title">Tag Assistant</div><div class="tile-value">5 new tags</div></div>
+        <div class="tile"><div class="tile-icon">📄</div><div class="tile-title">Description Builder</div><div class="tile-value">Trust: 92%</div></div>
+        <div class="tile"><div class="tile-icon">💵</div><div class="tile-title">Price Suggestion</div><div class="tile-value">$42.00 CAD</div></div>
+        <div class="tile"><div class="tile-icon">🧠</div><div class="tile-title">Buyer Psychology Panel</div><div class="tile-value">Peak: 8PM</div></div>
+        <div class="tile"><div class="tile-icon">🔗</div><div class="tile-title">Crosslist Visualizer</div><div class="tile-value">4 platforms</div></div>
+        <div class="tile"><div class="tile-icon">⚙️</div><div class="tile-title">Smart Defaults Engine</div><div class="tile-value">Tone: Luxe</div></div>
+        <div class="tile"><div class="tile-icon">🔒</div><div class="tile-title">Trust Composer</div><div class="tile-value">+ Closer</div></div>
+        <div class="tile"><div class="tile-icon">❌</div><div class="tile-title">Tag Disqualifier</div><div class="tile-value">2 flagged</div></div>
+        <div class="tile"><div class="tile-icon">🎨</div><div class="tile-title">Tone Trainer</div><div class="tile-value">Style: Cozy</div></div>
+        <div class="tile"><div class="tile-icon">📈</div><div class="tile-title">Pattern Predictor</div><div class="tile-value">Save rate: +14%</div></div>
+        <div class="tile"><div class="tile-icon">⏰</div><div class="tile-title">Timing Optimizer</div><div class="tile-value">List: Tue 9AM</div></div>
+        <div class="tile"><div class="tile-icon">🔍</div><div class="tile-title">Consistency Scanner</div><div class="tile-value">✓ Unified</div></div>
+        <div class="tile"><div class="tile-icon">💫</div><div class="tile-title">Mood Converter</div><div class="tile-value">Emo: Nostalgic</div></div>
+        <div class="tile"><div class="tile-icon">✅</div><div class="tile-title">Conversion Score</div><div class="tile-value">87%</div></div>
+        <div class="tile"><div class="tile-icon">📎</div><div class="tile-title">Listing Explainer</div><div class="tile-value">3 notes</div></div>
+        <div class="tile"><div class="tile-icon">❤️</div><div class="tile-title">Emotion Forecast</div><div class="tile-value">Calm → Trust</div></div>
+        <div class="tile"><div class="tile-icon">📉</div><div class="tile-title">Sales Analyzer</div><div class="tile-value">Plateau: tags</div></div>
+        <div class="tile"><div class="tile-icon">🌀</div><div class="tile-title">Flow Optimizer</div><div class="tile-value">Score: A</div></div>
+        <div class="tile"><div class="tile-icon">🔀</div><div class="tile-title">Fusion Composer</div><div class="tile-value">3 drafts → 1</div></div>
       </div>
-
       <div class="footer">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned" />
-        <img src="ai-powered-tools-badge.png" alt="AI Powered" />
-        <img src="privacy-first-badge.png" alt="Privacy First" />
-        <br /><br />
+        <div class="badges">
+          <img src="canadian-owned-badge.png" alt="Canadian Owned" />
+          <img src="ai-powered-tools-badge.png" alt="AI Powered" />
+          <img src="privacy-first-badge.png" alt="Privacy First" />
+        </div>
+        <br />
         <a href="terms.html">Terms of Service</a> /
         <a href="privacy.html">Privacy Policy</a>
         <br />
-        &copy; 2025 AutoList Canada &mdash; All rights reserved.
+        &copy; 2025 AutoList Canada — All rights reserved.
       </div>
     </main>
   </div>
-
-  <script>
-    new Chart(document.getElementById('earningsChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        datasets: [{
-          label: 'Earnings',
-          data: [420, 680, 1200, 1100, 1350],
-          backgroundColor: '#f5b748'
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    });
-
-    new Chart(document.getElementById('crosslistChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Synced', 'Remaining'],
-        datasets: [{
-          data: [78, 22],
-          backgroundColor: ['#e77512', '#eee']
-        }]
-      },
-      options: { cutout: '70%', plugins: { legend: { display: false } } }
-    });
-
-    new Chart(document.getElementById('healthChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Accurate', 'Outdated'],
-        datasets: [{
-          data: [92, 8],
-          backgroundColor: ['#848f67', '#eee']
-        }]
-      },
-      options: { cutout: '70%', plugins: { legend: { display: false } } }
-    });
-
-    new Chart(document.getElementById('emotionChart'), {
-      type: 'line',
-      data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-        datasets: [{
-          label: 'Emotional Flow',
-          data: [60, 82, 78, 90, 74],
-          borderColor: '#e05a13',
-          tension: 0.4,
-          fill: true,
-          backgroundColor: 'rgba(224, 90, 19, 0.1)'
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    });
-
-    new Chart(document.getElementById('toolChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Title', 'Tags', 'Trust', 'Tone', 'Conversion'],
-        datasets: [
-          { label: 'Search', data: [20, 30, 15, 25, 10], backgroundColor: '#f5b748' },
-          { label: 'Emotional', data: [10, 15, 20, 20, 5], backgroundColor: '#e77512' },
-          { label: 'Trust', data: [5, 10, 25, 10, 15], backgroundColor: '#848f67' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    });
-
-    new Chart(document.getElementById('milestoneChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Platform', 'Listing', 'Title', 'Description', 'Crosslist'],
-        datasets: [{
-          label: 'Completed',
-          data: [1, 1, 1, 1, 1],
-          backgroundColor: '#f4b242'
-        }]
-      },
-      options: { indexAxis: 'y', plugins: { legend: { display: false } } }
-    });
-  </script>
 </body>
 </html>
