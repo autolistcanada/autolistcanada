@@ -1,177 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard | AutoList Canada</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background-image: url('dashboard-background.png');
-        background-size: cover;
-        background-position: center;
-        color: #333;
-        overflow-x: hidden;
-      }
-      aside {
-        width: 220px;
-        background-image: url('sidebar-background.png');
-        background-size: cover;
-        color: white;
-        position: fixed;
-        height: 100vh;
-        padding: 20px 15px;
-      }
-      aside img.logo {
-        width: 160px;
-        margin-bottom: 20px;
-      }
-      aside nav a {
-        display: block;
-        color: white;
-        text-decoration: none;
-        margin: 12px 0;
-        font-weight: 600;
-        font-size: 14px;
-      }
-      main {
-        margin-left: 240px;
-        padding: 30px;
-      }
-      .header-title {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 40px;
-      }
-      .header-title img {
-        height: 50px;
-      }
-      .tile-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 24px;
-        margin-bottom: 40px;
-      }
-      .tile {
-        flex: 1;
-        min-width: 280px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-      }
-      .tile h3 {
-        margin-top: 0;
-        font-size: 18px;
-        margin-bottom: 10px;
-      }
-      .progress-bar {
-        background: #eee;
-        border-radius: 8px;
-        overflow: hidden;
-        height: 16px;
-        margin-top: 8px;
-      }
-      .progress-fill {
-        height: 100%;
-        background: #e77512;
-        width: 0;
-      }
-      .footer {
-        text-align: center;
-        padding: 40px 20px 20px;
-        font-size: 13px;
-        color: #555;
-      }
-      .badges img {
-        height: 30px;
-        margin: 0 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <aside>
-      <img src="autolist-logo.png" alt="AutoList Logo" class="logo" />
-      <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="listings.html">Listings</a>
-        <a href="import.html">Import</a>
-        <a href="sync.html">Sync</a>
-        <a href="ai-tools-live.html">AI Tools (Live)</a>
-        <a href="ai-tools.html">AI Tools (Demo)</a>
-        <a href="settings.html">Settings</a>
-      </nav>
-    </aside>
-    <main>
-      <div class="header-title">
-        <img src="autolist-title.png" alt="AutoList Canada Title" />
-      </div>
 
-      <!-- Row 1: Key Performance -->
-      <div class="tile-row">
-        <div class="tile">
-          <h3>Earnings Overview</h3>
-          <p>$1,420 this month</p>
-          <div class="progress-bar"><div class="progress-fill" style="width: 70%"></div></div>
-        </div>
-        <div class="tile">
-          <h3>Crosslists This Month</h3>
-          <p>83 crosslists</p>
-          <div class="progress-bar"><div class="progress-fill" style="width: 83%"></div></div>
-        </div>
-        <div class="tile">
-          <h3>AI Health Score</h3>
-          <p>92% Precision</p>
-          <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-image: url('dashboard-background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: #222;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background-image: url('sidebar-background.png');
+      background-size: cover;
+      padding: 20px;
+      color: white;
+    }
+    .sidebar img {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 12px 0;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .main {
+      margin-left: 220px;
+      padding: 40px;
+    }
+    .tile {
+      background: rgba(255,255,255,0.85);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .progress-bar {
+      height: 12px;
+      background: #eee;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #e77512;
+    }
+    .badge-footer {
+      text-align: center;
+      font-size: 12px;
+      padding: 40px;
+      background: rgba(255,255,255,0.7);
+      margin-top: 60px;
+    }
+    .badge-footer img {
+      height: 30px;
+      margin: 0 10px;
+    }
+  </style>
+</head>
 
-      <!-- Row 2: Seller Success Lab -->
-      <div class="tile-row">
-        <div class="tile">
-          <h3>Buyer Psychology Panel</h3>
-          <p>Peak engagement: Tue 8PM | Tone: Calm + Warm</p>
-        </div>
-        <div class="tile">
-          <h3>Smart Defaults Engine</h3>
-          <p>Applied tone: Clean & confident | Image pattern: Flat lay</p>
-        </div>
-        <div class="tile">
-          <h3>Trust Anchors Active</h3>
-          <p>Present in 88% of listings</p>
-        </div>
-      </div>
+<body>
+  <aside class="sidebar">
+    <img src="autolist-logo.png" alt="AutoList Logo">
+    <img src="autolist-title.png" alt="AutoList Title">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="listings.html">Listings</a>
+    <a href="import.html">Import</a>
+    <a href="sync.html">Sync</a>
+    <a href="ai-tools-live.html">AI Tools (Live)</a>
+    <a href="ai-tools.html">AI Tools (Demo)</a>
+    <a href="settings.html">Settings</a>
+  </aside>
 
-      <!-- Row 3: Activity & Automation -->
-      <div class="tile-row">
-        <div class="tile">
-          <h3>Delist Sync Coverage</h3>
-          <p>92% active sync</p>
-          <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
-        </div>
-        <div class="tile">
-          <h3>Bulk Actions Used</h3>
-          <p>17 out of 50 this month</p>
-          <div class="progress-bar"><div class="progress-fill" style="width: 34%"></div></div>
-        </div>
-        <div class="tile">
-          <h3>AI Suggestions Used</h3>
-          <p>42 titles / 35 descriptions / 39 tags</p>
-        </div>
-      </div>
+  <main class="main">
+    <h1>Success Dashboard</h1>
 
-      <div class="footer">
-        <div class="badges">
-          <img src="canadian-owned-badge.png" alt="Canadian Owned" />
-          <img src="ai-powered-tools-badge.png" alt="AI Powered" />
-          <img src="privacy-first-badge.png" alt="Privacy First" />
-        </div>
-        <br />
-        <a href="terms.html">Terms of Service</a> | <a href="privacy.html">Privacy Policy</a><br />
-        &copy; 2025 AutoList Canada — All rights reserved.
-      </div>
-    </main>
-  </body>
+    <!-- Dashboard Metrics -->
+    <div class="tile">
+      <h2>Earnings Overview</h2>
+      <canvas id="earningsChart" height="100"></canvas>
+    </div>
+    <div class="tile">
+      <h2>Crosslist Count</h2>
+      <p>312 Listings Synced</p>
+      <div class="progress-bar"><div class="progress-fill" style="width: 82%"></div></div>
+    </div>
+    <div class="tile">
+      <h2>AI Health Score</h2>
+      <p>92% Accuracy</p>
+      <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
+    </div>
+
+    <!-- Full Feature Tools Integration -->
+    <div class="tile"><h2>1. Title Generator</h2><p>Active - Tone AI</p></div>
+    <div class="tile"><h2>2. Description Generator</h2><p>Storytelling Logic: ON</p></div>
+    <div class="tile"><h2>3. Tags Generator</h2><p>Search visibility scoring enabled</p></div>
+    <div class="tile"><h2>4. Price Suggestion</h2><p>Market-aware pricing: Enabled</p></div>
+    <div class="tile"><h2>5. Buyer Psychology Panel</h2><p>Buyer tone insights: Calm + Warm, Peak = Tue 11AM</p></div>
+    <div class="tile"><h2>6. Crosslist + Sync Visualizer</h2><p>Live sync status mapped</p></div>
+    <div class="tile"><h2>7. Smart Defaults Engine</h2><p>Auto-applied tone + image order presets</p></div>
+    <div class="tile"><h2>8. Trust-First Description Composer</h2><p>Trust anchors + pacing applied</p></div>
+    <div class="tile"><h2>9. AI Tag Disqualifier</h2><p>Flagged 12 weak tags</p></div>
+    <div class="tile"><h2>10. Tone Training Tool</h2><p>Active profile: Minimalist</p></div>
+    <div class="tile"><h2>11. AI Pattern Predictor</h2><p>Top-performing tone: Cozy, Best day: Mon</p></div>
+    <div class="tile"><h2>12. Launch Timing Optimizer</h2><p>Next optimal post: Thursday 7PM</p></div>
+    <div class="tile"><h2>13. Copy Consistency Scanner</h2><p>92% voice alignment</p></div>
+    <div class="tile"><h2>14. Mood-Based Description Converter</h2><p>Current mode: Luxe</p></div>
+    <div class="tile"><h2>15. Conversion Confidence Score</h2><p>Current listing score: 89/100</p></div>
+    <div class="tile"><h2>16. Listing Logic Explainer</h2><p>Issues flagged: Passive openers, tag redundancy</p></div>
+    <div class="tile"><h2>17. Buyer Emotion Forecast Tool</h2><p>Response profile: Nostalgic impulse</p></div>
+    <div class="tile"><h2>18. Sales Plateau Analyzer</h2><p>Trend shift: Lower Sunday response, tone split detected</p></div>
+    <div class="tile"><h2>19. Flow-Through Optimizer</h2><p>Readability score: A-, Pacing = 5.2 sec</p></div>
+    <div class="tile"><h2>20. Listing Fusion Composer</h2><p>Merged 3 drafts to final form</p></div>
+
+    <!-- Onboarding Checklist -->
+    <div class="tile">
+      <h2>Onboarding Milestones</h2>
+      <ul>
+        <li>✅ Connect platforms</li>
+        <li>✅ Import first listing</li>
+        <li>✅ Use AI Title Generator</li>
+        <li>✅ Generate Description</li>
+        <li>⏳ Crosslist at least once</li>
+      </ul>
+    </div>
+
+    <div class="badge-footer">
+      <img src="canadian-owned-badge.png" alt="Canadian Owned">
+      <img src="ai-powered-tools-badge.png" alt="AI Powered">
+      <img src="privacy-first-badge.png" alt="Privacy First">
+      <p><a href="terms.html">Terms of Service</a> • <a href="privacy.html">Privacy Policy</a></p>
+      <p>© 2025 AutoList Canada — All rights reserved.</p>
+    </div>
+  </main>
+
+  <script>
+    const ctx = document.getElementById('earningsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+          label: 'Earnings',
+          data: [500, 850, 1200, 1000, 1420],
+          backgroundColor: '#f4b242'
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
+</body>
+
 </html>
