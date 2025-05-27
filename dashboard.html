@@ -3,195 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada | Dashboard</title>
+  <title>AutoList Canada Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background: url('dashboard-background.png') no-repeat center center fixed;
       background-size: cover;
-      color: #222;
+      color: #333;
     }
     .sidebar {
       position: fixed;
+      top: 0;
+      left: 0;
       width: 220px;
       height: 100vh;
-      background: #004d43;
+      background: url('sidebar-background.png') no-repeat center center;
+      background-size: cover;
       color: white;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       align-items: center;
-      background-image: url('sidebar-background.png');
-      background-size: cover;
+      text-align: center;
     }
-    .sidebar img.logo {
-      width: 80px;
-      margin: 15px auto;
+    .sidebar img {
+      width: 60px;
+      margin-bottom: 10px;
     }
-    .sidebar img.title {
-      width: 160px;
-      margin-bottom: 20px;
-    }
-    .sidebar a {
+    .sidebar nav a {
       color: white;
       text-decoration: none;
-      margin: 10px 0;
+      margin: 8px 0;
       font-weight: 600;
-      font-size: 14px;
       display: block;
     }
-    main {
+    .main {
       margin-left: 240px;
       padding: 40px;
-    }
-    .tile {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .tile h2 {
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-    .row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      flex-direction: column;
+      gap: 30px;
     }
-    .block {
-      flex: 1;
-      min-width: 280px;
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    .card {
+      background: rgba(255,255,255,0.85);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
-    .progress-bar {
-      height: 8px;
-      background: #eee;
-      border-radius: 8px;
-      overflow: hidden;
+    .ring, .wave, .stacked, .spark, .heatmap {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    .progress-fill {
-      height: 100%;
-      background: #e05a13;
-      width: 92%;
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
-    .footer {
-      text-align: center;
-      margin-top: 60px;
-      padding: 30px 0;
-      font-size: 12px;
-      color: #666;
-    }
-    .footer img {
-      height: 28px;
-      margin: 0 10px;
+    canvas {
+      width: 100%!important;
+      height: auto!important;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <img class="logo" src="autolist-logo.png" alt="AutoList Logo" />
-    <img class="title" src="autolist-title.png" alt="AutoList Title" />
-    <a href="dashboard.html">Dashboard</a>
-    <a href="ai-tools-live.html">AI Tools (Live)</a>
-    <a href="ai-tools.html">AI Tools (Demo)</a>
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="index.html">Home</a>
-    <a href="settings.html">Settings</a>
+    <img src="autolist-logo.png" alt="AutoList Canada Logo">
+    <img src="autolist-title.png" alt="AutoList Canada Title" style="width: 100%;">
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ai-tools-live.html">AI Tools (Live)</a>
+      <a href="ai-tools.html">AI Tools (Demo)</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="index.html">Home</a>
+      <a href="settings.html">Settings</a>
+    </nav>
   </div>
-
-  <main>
-    <div class="tile">
-      <h2>Earnings Overview</h2>
+  <div class="main">
+    <div class="card">
+      <div class="section-title">Earnings Overview</div>
       <canvas id="earningsChart"></canvas>
     </div>
-
-    <div class="row">
-      <div class="block">
-        <h2>Crosslist Count</h2>
-        <p>312 Listings Synced</p>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
-      </div>
-      <div class="block">
-        <h2>AI Health Score</h2>
-        <p>92% Accuracy</p>
-        <div class="progress-bar"><div class="progress-fill" style="background:#6a994e;width:92%"></div></div>
-      </div>
+    <div class="card">
+      <div class="section-title">Crosslist Count</div>
+      <canvas id="crosslistRing"></canvas>
     </div>
-
-    <div class="tile">
-      <h2>AI Tools Overview</h2>
-      <div class="row">
-        <div class="block">1. Title Generator<br><small>Status: Active – Tone AI</small></div>
-        <div class="block">2. Description Generator<br><small>Storytelling: ON</small></div>
-        <div class="block">3. Tags Generator<br><small>Search Scoring Enabled</small></div>
-        <div class="block">4. Price Suggestion<br><small>Market-aware</small></div>
-        <div class="block">5. Buyer Psychology<br><small>Tue @ 11AM</small></div>
-        <div class="block">6. Sync Visualizer<br><small>Status: Live</small></div>
-        <div class="block">7. Smart Defaults<br><small>Auto Tone + Image</small></div>
-        <div class="block">8. Trust Description<br><small>Pacing Applied</small></div>
-        <div class="block">9. Tag Disqualifier<br><small>12 Weak Tags</small></div>
-        <div class="block">10. Tone Training<br><small>Minimalist</small></div>
-        <div class="block">11. Pattern Predictor<br><small>Cozy – Monday</small></div>
-        <div class="block">12. Launch Optimizer<br><small>Thursday 7PM</small></div>
-        <div class="block">13. Copy Scanner<br><small>92% Match</small></div>
-        <div class="block">14. Mood Converter<br><small>Luxe</small></div>
-        <div class="block">15. Confidence Score<br><small>89/100</small></div>
-        <div class="block">16. Logic Explainer<br><small>68% Redundancy</small></div>
-        <div class="block">17. Emotion Forecast<br><small>Impulse Buyer</small></div>
-        <div class="block">18. Plateau Analyzer<br><small>Sunday Dip</small></div>
-        <div class="block">19. Flow Optimizer<br><small>Score: A–</small></div>
-        <div class="block">20. Fusion Composer<br><small>3 Drafts Merged</small></div>
-      </div>
+    <div class="card">
+      <div class="section-title">AI Health Score</div>
+      <canvas id="aiHealthRing"></canvas>
     </div>
-
-    <div class="tile">
-      <h2>Onboarding Milestones</h2>
-      <ul>
-        <li>✅ Connect platforms</li>
-        <li>✅ Import first listing</li>
-        <li>✅ Use AI Title Generator</li>
-        <li>✅ Generate Description</li>
-        <li>✅ Crosslist at least once</li>
-      </ul>
+    <div class="card">
+      <div class="section-title">Emotional Forecast</div>
+      <canvas id="moodWave"></canvas>
     </div>
-
-    <div class="footer">
-      <img src="canadian-owned-badge.png" alt="Canadian Owned">
-      <img src="ai-powered-tools-badge.png" alt="AI Tools">
-      <img src="privacy-first-badge.png" alt="Privacy First">
-      <p><a href="terms.html">Terms of Service</a> • <a href="privacy.html">Privacy Policy</a><br>&copy; 2025 AutoList Canada — All rights reserved.</p>
+    <div class="card">
+      <div class="section-title">Tool Usage Breakdown</div>
+      <canvas id="toolStacked"></canvas>
     </div>
-  </main>
-
+    <div class="card">
+      <div class="section-title">Milestone Completion</div>
+      <canvas id="milestoneTower"></canvas>
+    </div>
+  </div>
   <script>
-    const ctx = document.getElementById('earningsChart').getContext('2d');
-    new Chart(ctx, {
+    const earningsChart = new Chart(document.getElementById('earningsChart'), {
       type: 'bar',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
         datasets: [{
           label: 'Earnings',
-          data: [430, 670, 1200, 1090, 1340],
-          backgroundColor: '#f5b748'
+          data: [420, 670, 1200, 1100, 1350],
+          backgroundColor: '#f4b242',
+          borderRadius: 10,
         }]
       },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
+      options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
     });
+
+    const createRingChart = (id, label, value, color) => {
+      new Chart(document.getElementById(id), {
+        type: 'doughnut',
+        data: {
+          labels: [label, 'Remaining'],
+          datasets: [{
+            data: [value, 100 - value],
+            backgroundColor: [color, '#e0e0e0'],
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false },
+          }
+        }
+      });
+    }
+    createRingChart('crosslistRing', 'Synced', 78, '#e77512');
+    createRingChart('aiHealthRing', 'Accuracy', 92, '#848f67');
   </script>
 </body>
 </html>
