@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Tools – AutoList Canada</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools Live – AutoList Canada</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
     body {
@@ -54,11 +54,11 @@
     }
   </style>
   <script>
-    let usageCount = parseInt(localStorage.getItem("aiUsage")) || 0;
+    let usageCount = parseInt(localStorage.getItem("aiLiveUsage")) || 0;
 
-    function useTool(id) {
+    function runLiveTool(id) {
       if (usageCount >= 5) {
-        alert("You've reached your 5 free uses! Redirecting to pricing page...");
+        alert("Free demo complete! Head to pricing to unlock full tool access.");
         window.location.href = "/pricing.html";
         return;
       }
@@ -69,50 +69,47 @@
         return;
       }
       usageCount++;
-      localStorage.setItem("aiUsage", usageCount);
-      output.innerText = "🧠 Generated Result: " + input + " [AI-enhanced output here]";
+      localStorage.setItem("aiLiveUsage", usageCount);
+      output.innerText = "✅ Live Tool Result: " + input + " ➜ [Simulated GPT-4 Output]";
     }
   </script>
 </head>
 <body class="p-10">
-  <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">AutoList Canada – AI Tools (Demo)</h1>
+  <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">AutoList Canada – AI Tools (Live Demo)</h1>
   <div class="max-w-5xl mx-auto">
 
-    <!-- LOOP TO RENDER ALL 20 TOOLS -->
-    <!-- Format: Title, Description, Input, Button, Output -->
-
     <script>
-      const tools = [
-        ["Title Generator", "Create clear, high-converting titles using buyer psychology + tone logic."],
-        ["Description Generator", "Generate trust-first, story-based descriptions that resonate."],
-        ["Tags Generator", "Suggest relevance-based, platform-aware tags to boost searchability."],
-        ["Price Suggestion", "Smart pricing suggestions based on market tone + category logic."],
-        ["Buyer Psychology Panel", "See buyer tone sensitivity, engagement timing, and behavior patterns."],
-        ["Crosslist + Sync Visualizer", "Preview delisting, syncing, and platform fit before pushing listings live."],
-        ["Smart Defaults Engine", "Auto-applies tone, structure, and image order based on your behavior."],
-        ["Trust-First Description Composer", "Paces and formats descriptions to build instant buyer trust."],
-        ["AI Tag Disqualifier", "Flags vague, low-visibility tags and recommends smart replacements."],
-        ["Tone Training Tool", "Adapts listing voice based on target buyer persona: cozy, luxe, minimal, etc."],
-        ["AI Pattern Predictor", "Detect patterns in your top-performing listings and surface what to repeat."],
-        ["Launch Timing Optimizer", "Get the best day/time to list based on buyer rhythms + past engagement."],
-        ["Copy Consistency Scanner", "Detect mismatched tone, duplicate phrases, and weak sentence flow."],
-        ["Mood-Based Description Converter", "Convert your listing copy to feel nostalgic, cozy, luxe, etc."],
-        ["Conversion Confidence Score", "Scores your listing clarity, flow, trust signals, and emotional tone."],
-        ["Listing Logic Explainer", "Breaks down your listing line-by-line to show what’s working or hurting."],
-        ["Buyer Emotion Forecast Tool", "Predict buyer reactions and identify emotional resonance gaps."],
-        ["Sales Plateau Analyzer", "Analyze your listing habits to show why growth has slowed."],
-        ["Flow-Through Optimizer", "Checks pacing, structure, skimmability, and visual fatigue triggers."],
-        ["Listing Fusion Composer", "Combine drafts, notes, and titles into one sharp listing output."]
+      const liveTools = [
+        ["Title Generator", "Try generating titles in real time."],
+        ["Description Generator", "Preview smart AI descriptions instantly."],
+        ["Tags Generator", "Generate relevance-based search tags on demand."],
+        ["Price Suggestion", "Smart pricing based on your listing input."],
+        ["Buyer Psychology Panel", "Simulate behavior-driven listing insights."],
+        ["Crosslist + Sync Visualizer", "Get a real-time sync preview."],
+        ["Smart Defaults Engine", "Auto-apply optimized listing presets."],
+        ["Trust-First Description Composer", "Structure trust-worthy narratives."],
+        ["AI Tag Disqualifier", "Flag weak tags in seconds."],
+        ["Tone Training Tool", "Match your tone to the right audience."],
+        ["AI Pattern Predictor", "Reveal high-performance tone + tag combos."],
+        ["Launch Timing Optimizer", "Best time to list: revealed."],
+        ["Copy Consistency Scanner", "Keep your voice clean + consistent."],
+        ["Mood-Based Description Converter", "Emotionally reshape listings."],
+        ["Conversion Confidence Score", "Get a listing impact score instantly."],
+        ["Listing Logic Explainer", "Break down what works and what doesn't."],
+        ["Buyer Emotion Forecast Tool", "Predict reactions to your listing style."],
+        ["Sales Plateau Analyzer", "Uncover why sales slowed + fix it."],
+        ["Flow-Through Optimizer", "Make listings easier to read + trust."],
+        ["Listing Fusion Composer", "Merge notes into a final, sharp listing."]
       ];
 
-      tools.forEach((tool, index) => {
-        const id = `tool${index + 1}`;
+      liveTools.forEach((tool, index) => {
+        const id = `live${index + 1}`;
         document.write(`
           <div class="glass">
             <div class="tool-header">${index + 1}. ${tool[0]}</div>
             <div class="tool-desc">${tool[1]}</div>
-            <textarea id="${id}-input" rows="2" placeholder="Enter your content here..."></textarea>
-            <button onclick="useTool('${id}')">Generate</button>
+            <textarea id="${id}-input" rows="2" placeholder="Try your prompt here..."></textarea>
+            <button onclick="runLiveTool('${id}')">Try It</button>
             <div class="output" id="${id}-output"></div>
           </div>
         `);
