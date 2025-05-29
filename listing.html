@@ -3,81 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Listing - AutoList Canada</title>
+  <title>AutoList Canada – Listings</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="font-family: Arial, sans-serif; background: linear-gradient(to bottom right, #f5b748, #e05a13, #848f67, #e77512); padding: 40px;">
+<body class="flex text-white">
+  <!-- Sidebar -->
+  <aside class="w-1/5 min-h-screen p-6 flex flex-col items-start justify-start bg-cover" style="background-image: url('sidebar-background.png');">
+    <img src="autolist-logo.png" alt="AutoList Logo" class="w-12 mb-3">
+    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-44 mb-6">
+    <nav class="flex flex-col gap-3 w-full">
+      <a href="index.html" class="hover:text-yellow-100">Home</a>
+      <a href="dashboard.html" class="hover:text-yellow-100">Dashboard</a>
+      <a href="ai-tools.html" class="hover:text-yellow-100">AI Tools</a>
+      <a href="listings.html" class="text-yellow-100 font-semibold">Listings</a>
+      <a href="features.html" class="hover:text-yellow-100">Features</a>
+      <a href="pricing.html" class="hover:text-yellow-100">Pricing</a>
+      <a href="terms.html" class="text-xs mt-4 hover:underline">Terms</a>
+      <a href="privacy.html" class="text-xs hover:underline">Privacy</a>
+    </nav>
+  </aside>
 
-  <h1 style="text-align:center;">Create a New Listing</h1>
+  <!-- Main Content -->
+  <main class="flex-1 bg-gradient-to-br from-[#f5b748] via-[#e05a13] to-[#e77512] min-h-screen p-10 overflow-x-auto">
+    <h1 class="text-3xl font-bold mb-6">📦 My Listings</h1>
 
-  <div style="display:flex; flex-wrap:wrap; gap: 20px; justify-content:center;">
-
-    <!-- Product Images Upload -->
-    <div style="background:white; border-radius: 12px; padding: 20px; width: 300px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-      <h2>Upload Product Images</h2>
-      <input type="file" multiple>
+    <!-- Search and Filters -->
+    <div class="flex flex-wrap items-center justify-between mb-6">
+      <input type="text" placeholder="Search listings..." class="p-2 rounded-lg bg-white text-black w-1/2 max-w-md shadow">
+      <div class="flex items-center gap-4 text-sm">
+        <label><input type="checkbox" class="mr-1"> Hide Draft</label>
+        <label><input type="checkbox" class="mr-1"> Hide Sold</label>
+        <select class="p-2 rounded bg-white text-black shadow">
+          <option>Sort by: Newest</option>
+          <option>Price High → Low</option>
+          <option>Price Low → High</option>
+        </select>
+      </div>
     </div>
 
-    <!-- AI-Powered Title & Description -->
-    <div style="background:white; border-radius: 12px; padding: 20px; width: 300px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-      <h2>AI Title Suggestion</h2>
-      <input type="text" placeholder="Generated Title Here"><br><br>
-      <h2>AI Description</h2>
-      <textarea placeholder="Generated Description Here"></textarea>
+    <!-- Table Headers -->
+    <div class="grid grid-cols-7 gap-4 font-semibold text-white text-sm bg-[#e05a13]/90 p-3 rounded-t-lg">
+      <div>Image</div>
+      <div>Title</div>
+      <div>Price</div>
+      <div>Platforms</div>
+      <div>Status</div>
+      <div>SKU</div>
+      <div>Actions</div>
     </div>
 
-    <!-- Tags, Pricing, Category -->
-    <div style="background:white; border-radius: 12px; padding: 20px; width: 300px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-      <h2>Tags & Keywords</h2>
-      <input type="text" placeholder="Suggested Tags"><br><br>
-      <h2>Pricing</h2>
-      <input type="text" placeholder="Suggested Price"><br><br>
-      <h2>Condition & Quantity</h2>
-      <input type="text" placeholder="Condition"><br><br>
-      <input type="number" placeholder="Quantity">
-    </div>
+    <!-- Listing Container -->
+    <div id="listingTable" class="grid grid-cols-7 gap-4 text-black text-sm bg-white/80 p-3 rounded-b-lg"></div>
+  </main>
 
-  </div>
-
-  <!-- Crosslist Button -->
-  <div style="text-align:center; margin-top: 30px;">
-    <button style="background-color: #e05a13; color: white; padding: 10px 20px; border: none; border-radius: 8px;">Crosslist to Platforms</button>
-  </div>
-<div id="listings" style="margin-top: 40px;"></div>
-  <div style="text-align:center; margin-top: 30px;">
-    <button style="background-color: #e05a13; color: white; padding: 10px 20px; border: none; border-radius: 8px;">Crosslist to Platforms</button>
-  </div>
-
-  <!-- Listings Output -->
-  <div id="listings" style="margin-top: 40px;"></div>
-
-  <!-- Listings Output -->
-<div id="listings" style="margin-top: 40px;"></div>
-
-<script>
-  fetch('https://autolistcanada.github.io/data.json')
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('listings');
-      data.forEach(item => {
-        const card = document.createElement('div');
-        card.innerHTML = `
-          <h2>${item.title}</h2>
-          <img src="${item.image}" alt="${item.title}" style="width:200px;">
-          <p><strong>Price:</strong> ${item.price}</p>
-          <p><strong>Platform:</strong> ${item.platform}</p>
-          <p><strong>Description:</strong> ${item.description}</p>
-          <p><strong>AI Tags:</strong> ${item.ai_tags.join(', ')}</p>
-          <hr>
-        `;
-        container.appendChild(card);
+  <script>
+    fetch('https://autolistcanada.github.io/data.json')
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById('listingTable');
+        data.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'contents';
+          row.innerHTML = `
+            <div><img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded shadow"></div>
+            <div class="font-medium text-gray-900">${item.title}</div>
+            <div class="text-green-600 font-bold">$${item.price}</div>
+            <div class="text-sm text-gray-800">${item.platform}</div>
+            <div class="text-xs ${item.status === 'SOLD' ? 'text-red-600 font-semibold' : 'text-green-700'}">${item.status}</div>
+            <div class="text-gray-700">${item.sku}</div>
+            <div class="flex gap-2">
+              <button class="bg-green-500 text-white px-2 py-1 rounded">✏️</button>
+              <button class="bg-blue-500 text-white px-2 py-1 rounded">🔗</button>
+              <button class="bg-red-500 text-white px-2 py-1 rounded">🗑️</button>
+            </div>
+          `;
+          table.appendChild(row);
+        });
       });
-    })
-    .catch(error => console.error('Error loading data:', error));
-</script>
-
-</body>
-</html>
-
+  </script>
 </body>
 </html>
