@@ -5,144 +5,153 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoList Canada Dashboard</title>
-  <script defer src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script defer>
-    document.addEventListener("DOMContentLoaded", () => {
-      const userData = {
-        name: "Top Tool Seller",
-        listingsSynced: 127,
-        aiCredits: 41,
-        confidenceScore: 87,
-        role: "Power Lister"
-      };
-
-      // Inject Stats
-      document.getElementById("listings-synced").textContent = userData.listingsSynced;
-      document.getElementById("ai-credits").textContent = userData.aiCredits;
-      document.getElementById("confidence-score").textContent = `${userData.confidenceScore}%`;
-      document.getElementById("user-role").textContent = userData.role;
-
-      // Modal Logic
-      document.querySelectorAll(".open-modal").forEach(button => {
-        button.addEventListener("click", () => {
-          const modalId = button.dataset.modal;
-          document.getElementById(modalId).classList.remove("hidden");
-        });
-      });
-      document.querySelectorAll(".close-modal").forEach(button => {
-        button.addEventListener("click", () => {
-          button.closest(".modal").classList.add("hidden");
-        });
-      });
-
-      // Typing Simulation
-      document.querySelectorAll(".simulate-response").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const output = btn.closest(".modal").querySelector(".output");
-          output.textContent = "Thinking...";
-          setTimeout(() => {
-            output.textContent = "Here’s your personalized AI insight! ✨";
-          }, 1500);
-        });
-      });
-
-      // Sidebar Active Logic
-      document.querySelectorAll(".sidebar-link").forEach(link => {
-        link.addEventListener("click", () => {
-          document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("text-orange-500"));
-          link.classList.add("text-orange-500");
-        });
-      });
-    });
-  </script>
-  <script defer>
-    // Placeholder for Graphs/Analytics Logic
-    document.addEventListener("DOMContentLoaded", () => {
-      const bars = document.querySelectorAll(".bar");
-      bars.forEach((bar, i) => {
-        bar.style.height = `${Math.random() * 100}%`;
-      });
-    });
-  </script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px #f5b74844; }
+      50% { box-shadow: 0 0 20px #f5b748aa; }
+    }
+  </style>
 </head>
 
 <body class="bg-white text-gray-800">
   <!-- SIDEBAR -->
-  <aside class="fixed top-0 left-0 h-full w-56 bg-[#f4b242] shadow-xl p-4 flex flex-col gap-4 z-50">
-    <img src="sidebar-logo.png" alt="AutoList Canada Logo" class="w-36 mx-auto mb-2">
-    <nav class="flex flex-col gap-2">
-      <a href="dashboard.html" class="sidebar-link font-semibold hover:text-orange-600">Dashboard</a>
-      <a href="ai-tools.html" class="sidebar-link font-semibold hover:text-orange-600">AI Tools</a>
-      <a href="features.html" class="sidebar-link font-semibold hover:text-orange-600">Features</a>
-      <a href="pricing.html" class="sidebar-link font-semibold hover:text-orange-600">Pricing</a>
-    </nav>
-    <div class="mt-auto text-xs text-center">
-      <p class="text-white">© AutoList Canada</p>
-      <a href="terms.html" class="underline text-white">Terms</a> • <a href="privacy.html" class="underline text-white">Privacy</a>
+  <aside class="fixed top-0 left-0 h-full w-60 bg-[#f4b242] shadow-xl p-6 flex flex-col justify-between z-50">
+    <div>
+      <img src="sidebar-logo.png" alt="AutoList Canada Logo" class="w-40 mb-6 mx-auto">
+      <nav class="space-y-3">
+        <a href="dashboard.html" class="sidebar-link block font-semibold text-white hover:text-orange-200">Dashboard</a>
+        <a href="ai-tools.html" class="sidebar-link block font-semibold text-white hover:text-orange-200">AI Tools</a>
+        <a href="features.html" class="sidebar-link block font-semibold text-white hover:text-orange-200">Features</a>
+        <a href="pricing.html" class="sidebar-link block font-semibold text-white hover:text-orange-200">Pricing</a>
+      </nav>
+    </div>
+    <div class="text-xs text-center text-white">
+      <p>© AutoList Canada</p>
+      <a href="terms.html" class="underline">Terms</a> • <a href="privacy.html" class="underline">Privacy</a>
     </div>
   </aside>
 
   <!-- MAIN -->
-  <main class="ml-60 p-8">
+  <main class="ml-64 px-8 py-10 bg-[url('dashboard-background.png')] bg-cover bg-no-repeat min-h-screen">
     <!-- TOP SECTION -->
-    <section class="flex justify-between items-center mb-8">
-      <div>
-        <h1 class="text-3xl font-bold">Welcome back, Seller 🌿</h1>
-        <div class="flex gap-6 mt-2">
-          <div>🔁 Listings Synced: <span id="listings-synced">...</span></div>
-          <div>💡 AI Credits: <span id="ai-credits">...</span></div>
-          <div>🎯 Confidence Score: <span id="confidence-score">...</span></div>
+    <section class="mb-12">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-4xl font-bold">Welcome back, Seller 🌿</h1>
+          <div class="mt-2 text-lg flex gap-6">
+            <div>🔁 Listings Synced: <span id="listings-synced">...</span></div>
+            <div>💡 AI Credits: <span id="ai-credits">...</span></div>
+            <div>🎯 Confidence Score: <span id="confidence-score">...</span></div>
+          </div>
         </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <select id="user-role" class="bg-white border rounded px-2 py-1 shadow">
-          <option>Power Lister</option>
-          <option>Top Tool</option>
-          <option>Sync Time</option>
-        </select>
-        <input type="text" placeholder="Search..." class="bg-white/50 backdrop-blur-md px-4 py-2 rounded-full shadow border" />
+        <div class="flex gap-4 items-center">
+          <select id="user-role" class="bg-white/60 backdrop-blur-sm border rounded px-3 py-2 shadow">
+            <option>Power Lister</option>
+            <option>Top Tool</option>
+            <option>Sync Time</option>
+          </select>
+          <input type="text" placeholder="Search..." class="bg-white/50 backdrop-blur-lg px-4 py-2 rounded-full border shadow" />
+        </div>
       </div>
     </section>
 
-    <!-- AI TOOLS -->
-    <section class="mb-16">
-      <h2 class="text-2xl font-semibold mb-4">Your Smart AI Tools</h2>
-      <!-- Tool Formats (Interactive Grid, Momentum Trail, etc.) would go here -->
-      <!-- For brevity, use separate includes or continuation -->
+    <!-- AI TOOL ZONES (Placeholder zones: will be expanded modularly in sections) -->
+    <section class="mb-20">
+      <h2 class="text-2xl font-semibold mb-4">Smart Listing AI Tools</h2>
+      <div class="grid grid-cols-2 gap-6">
+        <div class="bg-white/70 p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer open-modal" data-modal="modal-1">
+          <h3 class="text-xl font-semibold">🧠 Title Generator</h3>
+          <p class="text-sm mt-2">Psychology-based headline generator for listings</p>
+        </div>
+        <!-- Repeat for 4 more Grid Cards -->
+      </div>
     </section>
 
     <!-- ANALYTICS ZONE -->
     <section>
-      <h2 class="text-xl font-semibold mb-4">Analytics</h2>
+      <h2 class="text-xl font-semibold mb-4">Your Analytics</h2>
       <div class="grid grid-cols-2 gap-6">
-        <div class="bg-[#f5c88d] p-6 rounded-xl shadow">
-          <h3 class="font-bold mb-2">Tool Usage</h3>
-          <div class="flex gap-2 items-end h-32">
-            <div class="w-4 bg-[#e05a13] bar rounded"></div>
-            <div class="w-4 bg-[#e05a13] bar rounded"></div>
-            <div class="w-4 bg-[#e05a13] bar rounded"></div>
-            <div class="w-4 bg-[#e05a13] bar rounded"></div>
-            <div class="w-4 bg-[#e05a13] bar rounded"></div>
+        <div class="bg-[#f5c88d]/80 p-6 rounded-xl shadow-md">
+          <h3 class="font-bold mb-2">Tool Usage Graph</h3>
+          <div class="flex gap-3 h-32 items-end">
+            <div class="bar bg-[#e05a13] w-4 rounded"></div>
+            <div class="bar bg-[#e05a13] w-4 rounded"></div>
+            <div class="bar bg-[#e05a13] w-4 rounded"></div>
+            <div class="bar bg-[#e05a13] w-4 rounded"></div>
+            <div class="bar bg-[#e05a13] w-4 rounded"></div>
           </div>
         </div>
-        <!-- Add Confidence Ring, Mood Wave, Radial Map, etc. -->
+        <div class="bg-white/80 p-6 rounded-xl shadow-md">
+          <h3 class="font-bold mb-2">Milestone Tracker</h3>
+          <ul class="space-y-2">
+            <li><input type="checkbox" checked class="mr-2"> Connected 3 Platforms</li>
+            <li><input type="checkbox" checked class="mr-2"> Generated 10 AI Descriptions</li>
+            <li><input type="checkbox" checked class="mr-2"> Synced Listings</li>
+            <li><input type="checkbox" class="mr-2"> Activated Psychology Panel</li>
+            <li><input type="checkbox" class="mr-2"> Reached Confidence 90%</li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- MODALS (Placeholder sample for one tool) -->
-  <div id="modal-title-generator" class="modal hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl w-96">
-      <h2 class="text-xl font-semibold mb-2">🧠 Title Generator</h2>
-      <p class="text-sm mb-3">Creating titles that convert using buyer psychology</p>
-      <div class="output bg-gray-100 p-3 rounded mb-3">Thinking...</div>
-      <div class="flex justify-between">
+  <!-- MODAL SAMPLE -->
+  <div id="modal-1" class="modal hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-xl w-96 shadow-xl">
+      <h2 class="text-xl font-bold mb-2">🧠 Title Generator</h2>
+      <p class="text-sm mb-3">Generating high-converting titles...</p>
+      <div class="output bg-gray-100 p-4 rounded text-sm mb-3">Thinking...</div>
+      <div class="flex justify-between text-sm">
         <button class="simulate-response text-green-600 font-bold">Regenerate</button>
-        <button class="close-modal text-red-500 font-semibold">Close</button>
+        <button class="close-modal text-red-500 font-bold">Close</button>
       </div>
     </div>
   </div>
+
+  <!-- SCRIPTING -->
+  <script>
+    const userData = {
+      listingsSynced: 127,
+      aiCredits: 43,
+      confidenceScore: 91,
+      role: "Power Lister"
+    };
+
+    document.getElementById("listings-synced").textContent = userData.listingsSynced;
+    document.getElementById("ai-credits").textContent = userData.aiCredits;
+    document.getElementById("confidence-score").textContent = `${userData.confidenceScore}%`;
+
+    // Modal logic
+    document.querySelectorAll(".open-modal").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.modal;
+        document.getElementById(id).classList.remove("hidden");
+      });
+    });
+    document.querySelectorAll(".close-modal").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.closest(".modal").classList.add("hidden");
+      });
+    });
+
+    // Typing logic simulation
+    document.querySelectorAll(".simulate-response").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const output = btn.closest(".modal").querySelector(".output");
+        output.textContent = "Thinking...";
+        setTimeout(() => {
+          output.textContent = "Your optimized listing title: 'Cozy Vintage Knit – Soft & Timeless 🧶'";
+        }, 1400);
+      });
+    });
+
+    // Graph animation
+    document.querySelectorAll(".bar").forEach(bar => {
+      bar.style.height = `${Math.random() * 80 + 20}%`;
+    });
+  </script>
 </body>
 
 </html>
