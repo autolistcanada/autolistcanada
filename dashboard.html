@@ -29,6 +29,14 @@
       0% { height: 20%; }
       100% { height: 100%; }
     }
+    .tool-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+    .tool-desc {
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+    }
   </style>
 </head>
 <body class="text-gray-800">
@@ -73,18 +81,11 @@
       </div>
     </section>
 
-    <!-- ALL 20 TOOLS -->
+    <!-- TOOLS -->
     <section class="mb-20">
       <h2 class="text-2xl font-bold text-white mb-6">Smart Listing AI Tools</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-        <!-- 5 Glow Tiles -->
-        <template id="tile-template">
-          <div class="glass-tile p-5 rounded-xl cursor-pointer open-modal" data-modal="modal-template">
-            <h3 class="font-bold text-white">🔧 Tool Name</h3>
-            <p class="text-sm text-white/90">Brief description</p>
-          </div>
-        </template>
-        <!-- Repeat using JS below -->
+        <!-- Injected via JavaScript -->
       </div>
     </section>
 
@@ -113,80 +114,69 @@
     </section>
   </main>
 
-  <!-- MODAL TEMPLATE -->
-  <div id="modal-template" class="modal hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl w-96">
-      <h2 class="text-xl font-bold mb-2">🧠 Tool Name</h2>
-      <div class="output bg-gray-100 p-3 rounded mb-3">Thinking...</div>
-      <div class="flex justify-between">
-        <button class="simulate-response text-green-600 font-bold">Regenerate</button>
-        <button class="close-modal text-red-500 font-semibold">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JS -->
+  <!-- TOOL & MODAL SCRIPT -->
   <script>
     const tools = [
-      { icon: "🧠", name: "Title Generator", desc: "Clear, catchy title builder" },
-      { icon: "📄", name: "Description Builder", desc: "Trust-first copy logic" },
-      { icon: "🏷️", name: "Tag Assistant", desc: "Optimized tag logic" },
-      { icon: "💰", name: "Price Suggestion", desc: "Market & tone matched" },
-      { icon: "🧠", name: "Buyer Psychology", desc: "Timing + tone analytics" },
-      { icon: "✨", name: "Tone Trainer", desc: "Audience tone presets" },
-      { icon: "🚀", name: "Launch Optimizer", desc: "Best time to list" },
-      { icon: "🧾", name: "Trust Composer", desc: "Trust-first listing logic" },
-      { icon: "⛔", name: "Tag Disqualifier", desc: "Flags weak tags" },
-      { icon: "🧠", name: "Copy Consistency", desc: "Tone & phrase audit" },
-      { icon: "🔍", name: "Listing Explainer", desc: "Why your listing works" },
-      { icon: "💖", name: "Emotion Forecast", desc: "Buyer emotion prediction" },
-      { icon: "📉", name: "Sales Plateau Fixer", desc: "Diagnose flat listings" },
-      { icon: "📊", name: "Flow Optimizer", desc: "Pacing & skimmability" },
-      { icon: "🧬", name: "Pattern Predictor", desc: "What’s worked before" },
-      { icon: "🔄", name: "Crosslist Visualizer", desc: "Where your item fits" },
-      { icon: "⚙️", name: "Defaults Engine", desc: "Auto pattern filler" },
-      { icon: "🎯", name: "Conversion Score", desc: "Psych-based rating" },
-      { icon: "🧵", name: "Listing Fusion", desc: "Merge listing drafts" },
-      { icon: "💬", name: "Mood Converter", desc: "Nostalgic/luxe/cozy" }
+      "Title Generator|Clear, catchy title builder",
+      "Description Builder|Trust-first copy logic",
+      "Tag Assistant|Optimized tag logic",
+      "Price Suggestion|Market & tone matched",
+      "Buyer Psychology|Timing + tone analytics",
+      "Tone Trainer|Audience tone presets",
+      "Launch Optimizer|Best time to list",
+      "Trust Composer|Trust-first listing logic",
+      "Tag Disqualifier|Flags weak tags",
+      "Copy Consistency|Tone & phrase audit",
+      "Listing Explainer|Why your listing works",
+      "Emotion Forecast|Buyer emotion prediction",
+      "Sales Plateau Fixer|Diagnose flat listings",
+      "Flow Optimizer|Pacing & skimmability",
+      "Pattern Predictor|What’s worked before",
+      "Crosslist Visualizer|Where your item fits",
+      "Defaults Engine|Auto pattern filler",
+      "Conversion Score|Psych-based rating",
+      "Listing Fusion|Merge listing drafts",
+      "Mood Converter|Nostalgic/luxe/cozy"
     ];
 
     const container = document.querySelector(".grid");
-    const template = document.getElementById("tile-template");
 
-    tools.forEach(tool => {
-      const clone = template.content.cloneNode(true);
-      const tile = clone.querySelector(".glass-tile");
-      const modalId = `modal-${tool.name.toLowerCase().replace(/\s+/g, '-')}`;
+    tools.forEach((tool, i) => {
+      const [title, desc] = tool.split('|');
+      const modalId = `modal-${i}`;
+      const tile = document.createElement("div");
+      tile.className = "glass-tile p-5 rounded-xl cursor-pointer";
       tile.dataset.modal = modalId;
-      tile.innerHTML = `<h3 class='font-bold text-white'>${tool.icon} ${tool.name}</h3><p class='text-sm text-white/90'>${tool.desc}</p>`;
+      tile.innerHTML = `<h3 class='tool-title text-white'>${title}</h3><p class='tool-desc text-white/90'>${desc}</p>`;
+      tile.onclick = () => document.getElementById(modalId).classList.remove("hidden");
 
-      const modal = document.getElementById("modal-template").cloneNode(true);
+      const modal = document.createElement("div");
       modal.id = modalId;
-      modal.querySelector("h2").innerText = `${tool.icon} ${tool.name}`;
+      modal.className = "modal hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50";
+      modal.innerHTML = `
+        <div class="bg-white p-6 rounded-xl w-96">
+          <h2 class="text-xl font-bold mb-2">${title}</h2>
+          <div class="output bg-gray-100 p-3 rounded mb-3">Thinking...</div>
+          <div class="flex justify-between">
+            <button class="simulate-response text-green-600 font-bold">Regenerate</button>
+            <button class="close-modal text-red-500 font-semibold">Close</button>
+          </div>
+        </div>
+      `;
+
       document.body.appendChild(modal);
-
-      container.appendChild(clone);
+      container.appendChild(tile);
     });
 
-    document.querySelectorAll(".open-modal").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.modal;
-        document.getElementById(id).classList.remove("hidden");
-      });
-    });
-    document.querySelectorAll(".close-modal").forEach(btn => {
-      btn.addEventListener("click", () => {
-        btn.closest(".modal").classList.add("hidden");
-      });
-    });
-    document.querySelectorAll(".simulate-response").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const output = btn.closest(".modal").querySelector(".output");
-        output.textContent = "Thinking...";
-        setTimeout(() => {
-          output.textContent = "This is your optimized result 🌿";
-        }, 1400);
-      });
+    document.body.addEventListener("click", e => {
+      if (e.target.matches(".close-modal")) {
+        e.target.closest(".modal").classList.add("hidden");
+      }
+      if (e.target.matches(".simulate-response")) {
+        const out = e.target.closest(".modal").querySelector(".output");
+        out.textContent = "Thinking...";
+        setTimeout(() => out.textContent = "This is your optimized result 🌿", 1400);
+      }
     });
   </script>
 </body>
