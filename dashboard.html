@@ -40,60 +40,76 @@
     .sidebar a:hover {
       color: #f5b748;
     }
+    .map-pulse {
+      background: radial-gradient(circle, rgba(244,178,66,0.5) 0%, rgba(255,255,255,0) 70%);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
   </style>
 </head>
 <body class="text-gray-800">
   <!-- SIDEBAR -->
   <aside class="sidebar fixed top-0 left-0 h-full w-60 p-6 flex flex-col justify-between z-50">
     <div>
-      <img src="autolist-title.png" alt="AutoList Canada" class="w-44 mb-6">
+      <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-12 mb-3">
+      <img src="autolist-title.png" alt="AutoList Canada Title" class="w-44 mb-6">
       <nav class="space-y-4 text-lg">
-        <a href="#" class="block">Dashboard</a>
-        <a href="#" class="block">AI Tools</a>
-        <a href="#" class="block">Features</a>
-        <a href="#" class="block">Pricing</a>
+        <a href="dashboard.html" class="block">Dashboard</a>
+        <a href="ai-tools.html" class="block">AI Tools</a>
+        <a href="features.html" class="block">Features</a>
+        <a href="pricing.html" class="block">Pricing</a>
       </nav>
     </div>
     <div class="text-xs text-center">
       <p>© AutoList Canada</p>
-      <a href="#" class="underline">Terms</a> • <a href="#" class="underline">Privacy</a>
+      <a href="terms.html" class="underline">Terms</a> • <a href="privacy.html" class="underline">Privacy</a>
     </div>
   </aside>
 
   <!-- MAIN -->
   <main class="ml-64 p-6 sm:p-4">
-    <h1 class="text-white text-3xl font-bold mb-6">AutoList Canada Final Dashboard 🌿</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-      <div class="glass-tile p-5 rounded-xl">
-        <h3 class="text-white font-bold">🧠 Title Generator</h3>
-        <p class="text-white/90 text-sm">Clear, catchy title builder</p>
+    <!-- SELLER INFO + SEARCH -->
+    <section class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-white">Welcome back, Seller 🌿</h1>
+        <div class="mt-2 text-base sm:text-lg text-white space-x-4 sm:space-x-8">
+          <span>🔁 Listings Synced: <strong>127</strong></span>
+          <span>💡 AI Credits: <strong>43</strong></span>
+          <span>🎯 Confidence Score: <strong>91%</strong></span>
+        </div>
       </div>
-      <div class="glass-tile p-5 rounded-xl">
-        <h3 class="text-white font-bold">📄 Description Builder</h3>
-        <p class="text-white/90 text-sm">Trust-first copy logic</p>
+      <div class="flex gap-3 mt-4 sm:mt-0">
+        <select class="bg-white/40 backdrop-blur px-4 py-2 rounded shadow text-sm border border-white/30">
+          <option>Power Lister</option>
+          <option>Top Tool</option>
+          <option>Sync Time</option>
+        </select>
+        <input type="text" placeholder="Search listings, tools..." class="bg-white/30 text-white placeholder-white backdrop-blur px-4 py-2 rounded-full w-48 sm:w-64 text-sm border border-white/30">
       </div>
-      <div class="glass-tile p-5 rounded-xl">
-        <h3 class="text-white font-bold">🏷️ Tag Assistant</h3>
-        <p class="text-white/90 text-sm">Optimized tag logic</p>
+    </section>
+
+    <!-- TOOL GRID -->
+    <section>
+      <h2 class="text-2xl font-bold text-white mb-6">Smart Listing AI Tools</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <!-- 20 glow tiles will be generated via JavaScript to keep HTML clean -->
+        <div class="glass-tile p-5 rounded-xl text-white text-center">...Tools Loading...</div>
       </div>
-      <div class="glass-tile p-5 rounded-xl">
-        <h3 class="text-white font-bold">💰 Price Suggestion</h3>
-        <p class="text-white/90 text-sm">Market & tone matched</p>
-      </div>
-      <div class="glass-tile p-5 rounded-xl">
-        <h3 class="text-white font-bold">🧠 Buyer Psychology</h3>
-        <p class="text-white/90 text-sm">Timing + tone analytics</p>
-      </div>
-    </div>
-    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+    </section>
+
+    <!-- ANALYTICS ZONE -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-12">
       <div class="glass-tile p-6 rounded-xl">
         <h3 class="text-xl font-bold text-white mb-4">Tool Usage Graph</h3>
-        <div class="flex items-end gap-3 h-32">
-          <div class="w-5 bg-[#f5b748] rounded pulse-bar"></div>
-          <div class="w-5 bg-[#f4b242] rounded pulse-bar"></div>
-          <div class="w-5 bg-[#e77512] rounded pulse-bar"></div>
-          <div class="w-5 bg-[#e05a13] rounded pulse-bar"></div>
-          <div class="w-5 bg-[#848f67] rounded pulse-bar"></div>
+        <div class="flex gap-2 items-end h-32">
+          <div class="w-4 rounded bg-[#f5b748] pulse-bar"></div>
+          <div class="w-4 rounded bg-[#f4b242] pulse-bar"></div>
+          <div class="w-4 rounded bg-[#e77512] pulse-bar"></div>
+          <div class="w-4 rounded bg-[#e05a13] pulse-bar"></div>
+          <div class="w-4 rounded bg-[#848f67] pulse-bar"></div>
         </div>
       </div>
       <div class="glass-tile p-6 rounded-xl">
@@ -106,7 +122,17 @@
           <li><input type="checkbox" class="mr-2">Reached Confidence 90%</li>
         </ul>
       </div>
-    </div>
+      <div class="glass-tile p-6 rounded-xl col-span-1 sm:col-span-2">
+        <h3 class="text-xl font-bold text-white mb-4">Buyer Psychology Map</h3>
+        <div class="relative w-full h-40 bg-[#f5c88d]/50 rounded-lg overflow-hidden">
+          <div class="absolute top-1/2 left-1/4 w-10 h-10 rounded-full map-pulse"></div>
+          <div class="absolute top-1/3 right-1/4 w-10 h-10 rounded-full map-pulse"></div>
+          <div class="absolute bottom-1/4 left-1/2 w-10 h-10 rounded-full map-pulse"></div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- DYNAMIC TOOL GENERATION + MODALS + SCRIPTS... (next step) -->
 </body>
 </html>
