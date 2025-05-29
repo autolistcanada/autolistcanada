@@ -1,85 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoList Canada – Listings</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listings - AutoList Canada</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="scripts.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: url('dashboard-background.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+    }
+    aside {
+      width: 250px;
+      background-image: url('sidebar-background.png');
+      background-size: cover;
+      min-height: 100vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    aside img {
+      max-width: 80%;
+      margin-bottom: 1rem;
+    }
+    nav a {
+      color: #f5c88d;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      font-weight: bold;
+      display: block;
+    }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+      color: #fff;
+    }
+    .listing-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .listing-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      backdrop-filter: blur(8px);
+      color: #fff;
+    }
+    .listing-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .listing-meta {
+      margin-top: 0.5rem;
+    }
+    .platform-badges span {
+      background-color: #e05a13;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-right: 5px;
+      font-size: 0.75rem;
+    }
+  </style>
 </head>
-<body class="flex text-white">
-  <!-- Sidebar -->
-  <aside class="w-1/5 min-h-screen p-6 flex flex-col items-start justify-start bg-cover" style="background-image: url('sidebar-background.png');">
-    <img src="autolist-logo.png" alt="AutoList Logo" class="w-12 mb-3">
-    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-44 mb-6">
-    <nav class="flex flex-col gap-3 w-full">
-      <a href="index.html" class="hover:text-yellow-100">Home</a>
-      <a href="dashboard.html" class="hover:text-yellow-100">Dashboard</a>
-      <a href="ai-tools.html" class="hover:text-yellow-100">AI Tools</a>
-      <a href="listings.html" class="text-yellow-100 font-semibold">Listings</a>
-      <a href="features.html" class="hover:text-yellow-100">Features</a>
-      <a href="pricing.html" class="hover:text-yellow-100">Pricing</a>
-      <a href="terms.html" class="text-xs mt-4 hover:underline">Terms</a>
-      <a href="privacy.html" class="text-xs hover:underline">Privacy</a>
+<body>
+  <aside>
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" />
+    <img src="autolist-title.png" alt="AutoList Canada Title" />
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ai-tools.html">AI Tools</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="listings.html">Listings</a>
     </nav>
   </aside>
-
-  <!-- Main Content -->
-  <main class="flex-1 bg-gradient-to-br from-[#f5b748] via-[#e05a13] to-[#e77512] min-h-screen p-10 overflow-x-auto">
-    <h1 class="text-3xl font-bold mb-6">📦 My Listings</h1>
-
-    <!-- Search and Filters -->
-    <div class="flex flex-wrap items-center justify-between mb-6">
-      <input type="text" placeholder="Search listings..." class="p-2 rounded-lg bg-white text-black w-1/2 max-w-md shadow">
-      <div class="flex items-center gap-4 text-sm">
-        <label><input type="checkbox" class="mr-1"> Hide Draft</label>
-        <label><input type="checkbox" class="mr-1"> Hide Sold</label>
-        <select class="p-2 rounded bg-white text-black shadow">
-          <option>Sort by: Newest</option>
-          <option>Price High → Low</option>
-          <option>Price Low → High</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Table Headers -->
-    <div class="grid grid-cols-7 gap-4 font-semibold text-white text-sm bg-[#e05a13]/90 p-3 rounded-t-lg">
-      <div>Image</div>
-      <div>Title</div>
-      <div>Price</div>
-      <div>Platforms</div>
-      <div>Status</div>
-      <div>SKU</div>
-      <div>Actions</div>
-    </div>
-
-    <!-- Listing Container -->
-    <div id="listingTable" class="grid grid-cols-7 gap-4 text-black text-sm bg-white/80 p-3 rounded-b-lg"></div>
+  <main>
+    <h1>Your Inventory</h1>
+    <div class="listing-container" id="listings"></div>
   </main>
 
   <script>
     fetch('https://autolistcanada.github.io/data.json')
       .then(res => res.json())
       .then(data => {
-        const table = document.getElementById('listingTable');
+        const listings = document.getElementById('listings');
+        listings.innerHTML = '';
+
         data.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'contents';
-          row.innerHTML = `
-            <div><img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded shadow"></div>
-            <div class="font-medium text-gray-900">${item.title}</div>
-            <div class="text-green-600 font-bold">$${item.price}</div>
-            <div class="text-sm text-gray-800">${item.platform}</div>
-            <div class="text-xs ${item.status === 'SOLD' ? 'text-red-600 font-semibold' : 'text-green-700'}">${item.status}</div>
-            <div class="text-gray-700">${item.sku}</div>
-            <div class="flex gap-2">
-              <button class="bg-green-500 text-white px-2 py-1 rounded">✏️</button>
-              <button class="bg-blue-500 text-white px-2 py-1 rounded">🔗</button>
-              <button class="bg-red-500 text-white px-2 py-1 rounded">🗑️</button>
+          const card = document.createElement('div');
+          card.className = 'listing-card';
+
+          card.innerHTML = `
+            <img src="${item.image}" alt="${item.title}" />
+            <div class="listing-meta">
+              <h2>${item.title}</h2>
+              <p><strong>Price:</strong> ${item.price}</p>
+              <p><strong>Condition:</strong> ${item.condition}</p>
+              <p><strong>Status:</strong> ${item.status}</p>
+              <div class="platform-badges">
+                ${item.platforms.map(p => `<span>${p}</span>`).join('')}
+              </div>
             </div>
           `;
-          table.appendChild(row);
+
+          listings.appendChild(card);
         });
+      })
+      .catch(err => {
+        document.getElementById('listings').innerHTML = '<p>Failed to load listings.</p>';
+        console.error(err);
       });
   </script>
 </body>
