@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada - Listings</title>
+  <title>AutoList Canada – Listings</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-image: url('https://autolistcanada.github.io/listings-background.png');
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/listings-background.png') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      color: #333;
+    }
+    .container {
+      margin-left: 220px;
+      padding: 20px;
     }
     .sidebar {
+      width: 220px;
+      height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
-      width: 200px;
-      height: 100vh;
-      background-image: url('https://autolistcanada.github.io/sidebar-background.png');
+      background: url('https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/sidebar-background.png') no-repeat center center;
       background-size: cover;
-      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -29,100 +31,100 @@
     }
     .sidebar img.logo {
       width: 60px;
-      height: 60px;
     }
     .sidebar img.title {
       width: 140px;
       margin: 10px 0;
     }
     .sidebar nav a {
-      color: white;
+      color: #fff;
       text-decoration: none;
-      padding: 8px 0;
+      margin: 10px 0;
       font-weight: bold;
       display: block;
-      width: 100%;
-      text-align: center;
     }
-    .content {
-      margin-left: 220px;
-      padding: 30px;
-    }
-    .filters {
+    .toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
     }
-    .filters input,
-    .filters select {
+    .filters input, .filters select {
       padding: 6px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+      margin-right: 10px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background-color: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      overflow: hidden;
     }
     th, td {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
+      padding: 12px 10px;
       text-align: left;
+      border-bottom: 1px solid #ddd;
     }
     th {
       background-color: #e77512;
       color: white;
     }
-    .actions img, .platforms img {
-      width: 20px;
+    .sold {
+      color: gray;
+      text-decoration: line-through;
+    }
+    .confidence {
+      background: #f4b242;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 0.8em;
+    }
+    .platform-icons img {
+      height: 24px;
+      margin-right: 5px;
+    }
+    .actions img {
       height: 20px;
       margin-right: 6px;
-      vertical-align: middle;
-    }
-    .sold {
-      text-decoration: line-through;
-      color: #999;
+      cursor: pointer;
     }
     .pagination {
+      text-align: center;
       margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
     }
     .pagination button {
+      padding: 6px 12px;
+      margin: 0 4px;
       background-color: #e77512;
       color: white;
       border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <img src="https://autolistcanada.github.io/logo.png" alt="Logo" class="logo" />
-    <img src="https://autolistcanada.github.io/title.png" alt="AutoList Canada" class="title" />
+    <img class="logo" src="https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/logo.png" alt="Logo" />
+    <img class="title" src="https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/title.png" alt="AutoList Canada" />
     <nav>
       <a href="index.html">Home</a>
       <a href="dashboard.html">Dashboard</a>
-      <a href="listings.html">Listings</a>
+      <a href="listings.html" style="text-decoration: underline;">Listings</a>
       <a href="ai-tools.html">AI Tools</a>
-      <a href="#">How It Works</a>
-      <a href="#">FAQ</a>
-      <a href="#">Listings Import</a>
-      <a href="#">Terms</a>
+      <a href="#">Features</a>
+      <a href="#">Pricing</a>
     </nav>
   </div>
-  <div class="content">
-    <div class="filters">
-      <input type="text" placeholder="Search Listings..." />
-      <div>
-        <label>Status: </label>
+  <div class="container">
+    <div class="toolbar">
+      <div class="filters">
+        <input type="text" placeholder="Search listings..." />
         <select>
-          <option>All</option>
+          <option>Status: All</option>
           <option>Active</option>
+          <option>Draft</option>
           <option>Sold</option>
         </select>
         <label><input type="checkbox" /> Hide Draft</label>
@@ -132,7 +134,7 @@
     <table>
       <thead>
         <tr>
-          <th><input type="checkbox" /></th>
+          <th>✔</th>
           <th>Image</th>
           <th>Title</th>
           <th>Actions</th>
@@ -144,42 +146,43 @@
       <tbody>
         <tr>
           <td><input type="checkbox" /></td>
-          <td><img src="https://autolistcanada.github.io/listing1.png" alt="Listing Image" width="50" /></td>
-          <td>Vintage Crayola Crayons</td>
+          <td><img src="https://via.placeholder.com/60" alt="Listing Image" /></td>
+          <td>Vintage Crayola Jacket</td>
           <td class="actions">
-            <img src="https://autolistcanada.github.io/icons/crosslist.png" alt="Crosslist" />
-            <img src="https://autolistcanada.github.io/icons/edit.png" alt="Edit" />
-            <img src="https://autolistcanada.github.io/icons/copy.png" alt="Copy" />
-            <img src="https://autolistcanada.github.io/icons/delete.png" alt="Delete" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" title="Crosslist" />
+            <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" title="Edit" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" title="Copy" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" title="Delete" />
           </td>
-          <td>0039</td>
-          <td>$175.00</td>
-          <td class="platforms">
-            <img src="https://autolistcanada.github.io/icons/ebay.png" alt="eBay" /> eBay
-            <img src="https://autolistcanada.github.io/icons/poshmark.png" alt="Poshmark" /> Poshmark
+          <td>#938474</td>
+          <td>$42.00 <span class="confidence">92%</span></td>
+          <td class="platform-icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" title="eBay" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Poshmark_logo.png" title="Poshmark" />
           </td>
         </tr>
-        <tr>
+        <tr class="sold">
           <td><input type="checkbox" /></td>
-          <td><img src="https://autolistcanada.github.io/listing2.png" alt="Listing Image" width="50" /></td>
-          <td class="sold">Poppin' Fresh Piggy Bank</td>
+          <td><img src="https://via.placeholder.com/60" alt="Listing Image" /></td>
+          <td>Wool Peacoat - SOLD</td>
           <td class="actions">
-            <img src="https://autolistcanada.github.io/icons/crosslist.png" alt="Crosslist" />
-            <img src="https://autolistcanada.github.io/icons/edit.png" alt="Edit" />
-            <img src="https://autolistcanada.github.io/icons/copy.png" alt="Copy" />
-            <img src="https://autolistcanada.github.io/icons/delete.png" alt="Delete" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" title="Crosslist" />
+            <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" title="Edit" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" title="Copy" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" title="Delete" />
           </td>
-          <td class="sold">0047</td>
-          <td class="sold">$35.00</td>
-          <td class="platforms">
-            <img src="https://autolistcanada.github.io/icons/ebay.png" alt="eBay" /> eBay
-            <img src="https://autolistcanada.github.io/icons/poshmark.png" alt="Poshmark" /> Poshmark
+          <td>#292174</td>
+          <td>$68.00 <span class="confidence">76%</span></td>
+          <td class="platform-icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" title="eBay" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Poshmark_logo.png" title="Poshmark" />
           </td>
         </tr>
       </tbody>
     </table>
     <div class="pagination">
       <button>&laquo; Prev</button>
+      Page 1 of 3
       <button>Next &raquo;</button>
     </div>
   </div>
