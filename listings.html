@@ -1,72 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoList Canada Listings</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listings | AutoList Canada</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      display: flex;
       background-image: url('listings-background.png');
       background-size: cover;
-      background-position: center;
-      color: #222;
+      background-repeat: no-repeat;
     }
-    .flex { display: flex; }
-    .sidebar {
-      width: 220px;
-      background-color: #004f4f;
+    aside {
+      width: 240px;
+      background: #074d4a;
       color: white;
-      height: 100vh;
-      flex-shrink: 0;
       padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       background-image: url('sidebar-background.png');
       background-size: cover;
-      background-position: center;
     }
-    .sidebar img {
-      width: 160px;
-      margin: 0 auto 30px;
+    aside img {
+      width: 120px;
+      margin-bottom: 10px;
+    }
+    aside h1 {
+      font-size: 1.8em;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    aside nav a {
       display: block;
-    }
-    .sidebar a {
       color: white;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 16px;
+      margin: 10px 0;
       font-weight: bold;
+      text-decoration: none;
     }
-    .main {
-      flex-grow: 1;
-      padding: 30px;
-      background: transparent;
-    }
-    .top-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .search-bar {
+    main {
       flex: 1;
-      margin-right: 10px;
+      padding: 40px;
+      color: #333;
+      background-color: rgba(255, 255, 255, 0.05);
     }
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .filters {
+    .controls {
       display: flex;
       align-items: center;
-      gap: 15px;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-    .filters select, .filters label {
-      font-size: 14px;
+    .controls input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      border-radius: 5px;
+      border: none;
+    }
+    .controls select, .controls label {
+      margin-left: 20px;
     }
     table {
       width: 100%;
@@ -75,60 +69,79 @@
       border-radius: 8px;
       overflow: hidden;
     }
-    th, td {
-      text-align: left;
-      padding: 12px 16px;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
+    thead th {
       background-color: #f4b242;
-      color: #222;
+      padding: 12px;
+      text-align: left;
+    }
+    tbody td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
     }
     .actions i {
       margin-right: 10px;
       cursor: pointer;
     }
-    .platforms img {
-      height: 20px;
-      margin-right: 5px;
-    }
     .sold {
       color: gray;
       text-decoration: line-through;
-      background-color: rgba(200, 200, 200, 0.3);
+    }
+    .platform-icon {
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .pagination {
+      margin-top: 20px;
+      text-align: right;
+    }
+    .pagination button {
+      margin-left: 5px;
+      padding: 6px 10px;
+    }
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead { display: none; }
+      tbody td {
+        padding: 10px;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
 <body>
-<div class="flex">
-  <aside class="sidebar">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo">
-    <img src="autolist-title.png" alt="AutoList Canada Title">
-    <a href="index.html">Home</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="ai-tools.html">AI Tools</a>
-    <a href="features.html">Features</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="listings.html" style="text-decoration: underline;">Listings</a>
+  <aside>
+    <img src="autolist-logo.png" alt="Logo" />
+    <img src="autolist-title.png" alt="AutoList Canada" style="width:160px; margin-bottom:20px;" />
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ai-tools.html">AI Tools</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="listings.html"><strong>Listings</strong></a>
+    </nav>
   </aside>
-
-  <main class="main">
-    <h1>Your Inventory</h1>
-    <div class="top-controls">
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search Listings...">
-      </div>
-      <div class="filters">
-        <select id="statusFilter">
-          <option value="all">Status: All</option>
-          <option value="active">Active</option>
-          <option value="sold">Sold</option>
-        </select>
+  <main>
+    <h2>Your Inventory</h2>
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search Listings...">
+      <div>
+        <label>Status:
+          <select id="status">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="sold">Sold</option>
+          </select>
+        </label>
         <label><input type="checkbox" id="hideDraft"> Hide Draft</label>
         <label><input type="checkbox" id="hideSold"> Hide Sold</label>
       </div>
     </div>
-
     <table>
       <thead>
         <tr>
@@ -141,39 +154,78 @@
           <th>Platforms</th>
         </tr>
       </thead>
-      <tbody id="listingTable"></tbody>
+      <tbody id="listingBody"></tbody>
     </table>
+    <div class="pagination">
+      <button onclick="prevPage()">&laquo; Prev</button>
+      <span id="pageInfo">Page 1</span>
+      <button onclick="nextPage()">Next &raquo;</button>
+    </div>
   </main>
-</div>
+  <script>
+    let listings = [];
+    let currentPage = 1;
+    const perPage = 5;
 
-<script>
-fetch('https://autolistcanada.github.io/data.json')
-  .then(res => res.json())
-  .then(data => {
-    const table = document.getElementById('listingTable');
-    data.forEach(item => {
-      const row = document.createElement('tr');
-      if (item.status === 'sold') row.classList.add('sold');
-      row.innerHTML = `
-        <td><input type="checkbox"></td>
-        <td><img src="${item.image}" alt="${item.title}" style="height: 60px;"></td>
-        <td>${item.title}</td>
-        <td class="actions">
-          <i class="fas fa-share-nodes" title="Crosslist"></i>
-          <i class="fas fa-pen" title="Edit"></i>
-          <i class="fas fa-copy" title="Duplicate"></i>
-          <i class="fas fa-trash" title="Delete"></i>
-        </td>
-        <td>${item.sku || '---'}</td>
-        <td>$${item.price}</td>
-        <td class="platforms">
-          ${item.platforms.includes('ebay') ? '<img src="ebay.png" alt="eBay">' : ''}
-          ${item.platforms.includes('poshmark') ? '<img src="poshmark.png" alt="Poshmark">' : ''}
-        </td>
-      `;
-      table.appendChild(row);
+    fetch('https://autolistcanada.github.io/data.json')
+      .then(res => res.json())
+      .then(data => {
+        listings = data;
+        renderTable();
+      });
+
+    function renderTable() {
+      const start = (currentPage - 1) * perPage;
+      const paginated = listings.slice(start, start + perPage);
+      const tbody = document.getElementById('listingBody');
+      tbody.innerHTML = '';
+
+      paginated.forEach(item => {
+        const row = document.createElement('tr');
+        row.className = item.status === 'sold' ? 'sold' : '';
+        row.innerHTML = `
+          <td><input type="checkbox"></td>
+          <td><img src="${item.image}" alt="${item.title}" style="width:60px"></td>
+          <td contenteditable="true">${item.title}</td>
+          <td class="actions">
+            <i class="fas fa-share-nodes" title="Crosslist"></i>
+            <i class="fas fa-edit" title="Edit"></i>
+            <i class="fas fa-copy" title="Copy"></i>
+            <i class="fas fa-trash" title="Delete"></i>
+          </td>
+          <td>${item.sku}</td>
+          <td>$${item.price}</td>
+          <td>
+            ${item.platforms.includes('ebay') ? '<img src="ebay.png" class="platform-icon" width="20">' : ''}
+            ${item.platforms.includes('poshmark') ? '<img src="poshmark.png" class="platform-icon" width="20">' : ''}
+            ${item.status === 'sold' ? '<span class="sold">SOLD</span>' : ''}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById('pageInfo').innerText = `Page ${currentPage}`;
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderTable();
+      }
+    }
+    function nextPage() {
+      if ((currentPage * perPage) < listings.length) {
+        currentPage++;
+        renderTable();
+      }
+    }
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      const val = e.target.value.toLowerCase();
+      listings = listings.filter(item => item.title.toLowerCase().includes(val));
+      currentPage = 1;
+      renderTable();
     });
-  });
-</script>
+  </script>
 </body>
 </html>
