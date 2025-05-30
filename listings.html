@@ -1,231 +1,118 @@
+<!-- Begin Listings Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Listings | AutoList Canada</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listings - AutoList Canada</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body {
-      margin: 0;
+      background-image: url('https://autolistcanada.github.io/listings-background.png');
+      background-size: cover;
+      background-position: center;
       font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      background-image: url('listings-background.png');
+    }
+    .sidebar {
+      background-image: url('https://autolistcanada.github.io/sidebar-background.png');
       background-size: cover;
-      background-repeat: no-repeat;
+      background-position: center;
     }
-    aside {
-      width: 240px;
-      background: #074d4a;
-      color: white;
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-image: url('sidebar-background.png');
-      background-size: cover;
-    }
-    aside img {
-      width: 120px;
-      margin-bottom: 10px;
-    }
-    aside h1 {
-      font-size: 1.8em;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    aside nav a {
-      display: block;
-      color: white;
-      margin: 10px 0;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    main {
-      flex: 1;
-      padding: 40px;
-      color: #333;
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-    .controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .controls input[type="text"] {
-      padding: 10px;
-      width: 300px;
-      border-radius: 5px;
-      border: none;
-    }
-    .controls select, .controls label {
-      margin-left: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    thead th {
-      background-color: #f4b242;
-      padding: 12px;
-      text-align: left;
-    }
-    tbody td {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
-      vertical-align: middle;
-    }
-    .actions i {
-      margin-right: 10px;
-      cursor: pointer;
-    }
-    .sold {
-      color: gray;
-      text-decoration: line-through;
-    }
-    .platform-icon {
-      margin-right: 10px;
-      vertical-align: middle;
-    }
-    .pagination {
-      margin-top: 20px;
-      text-align: right;
-    }
-    .pagination button {
-      margin-left: 5px;
-      padding: 6px 10px;
-    }
-    @media (max-width: 768px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      thead { display: none; }
-      tbody td {
-        padding: 10px;
-        border: none;
-        display: flex;
-        justify-content: space-between;
-      }
-    }
+    .strikethrough { text-decoration: line-through; opacity: 0.6; }
   </style>
 </head>
-<body>
-  <aside>
-    <img src="autolist-logo.png" alt="Logo" />
-    <img src="autolist-title.png" alt="AutoList Canada" style="width:160px; margin-bottom:20px;" />
-    <nav>
+<body class="flex text-white">
+
+  <!-- Sidebar -->
+  <aside class="sidebar w-64 min-h-screen p-6 flex flex-col items-start space-y-4 text-white">
+    <img src="https://autolistcanada.github.io/logo.png" alt="Logo" class="w-14 h-14"/>
+    <img src="https://autolistcanada.github.io/title.png" alt="Title" class="w-36"/>
+    <nav class="mt-8 flex flex-col space-y-2 text-lg">
       <a href="index.html">Home</a>
       <a href="dashboard.html">Dashboard</a>
+      <a href="listings.html" class="underline font-bold">Listings</a>
       <a href="ai-tools.html">AI Tools</a>
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="listings.html"><strong>Listings</strong></a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#import">Listings Import</a>
+      <a href="#tos">Terms of Service</a>
     </nav>
   </aside>
-  <main>
-    <h2>Your Inventory</h2>
-    <div class="controls">
-      <input type="text" id="search" placeholder="Search Listings...">
-      <div>
-        <label>Status:
-          <select id="status">
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="sold">Sold</option>
-          </select>
-        </label>
-        <label><input type="checkbox" id="hideDraft"> Hide Draft</label>
-        <label><input type="checkbox" id="hideSold"> Hide Sold</label>
+
+  <!-- Listings Area -->
+  <main class="flex-1 p-6 overflow-x-auto bg-white bg-opacity-10">
+    <h1 class="text-3xl font-bold mb-4">Your Inventory</h1>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-4 items-center">
+      <input type="text" placeholder="Search Listings..." class="px-4 py-2 rounded text-black" />
+      <select class="px-4 py-2 rounded text-black">
+        <option>Status: All</option>
+        <option>Active</option>
+        <option>Sold</option>
+      </select>
+      <label><input type="checkbox" /> Hide Draft</label>
+      <label><input type="checkbox" /> Hide Sold</label>
+    </div>
+
+    <!-- Table Headers -->
+    <div class="grid grid-cols-7 font-semibold text-left bg-yellow-600 text-white px-4 py-2 rounded">
+      <span><input type="checkbox"/></span>
+      <span>Image</span>
+      <span>Title</span>
+      <span>Actions</span>
+      <span>SKU</span>
+      <span>Price</span>
+      <span>Platforms</span>
+    </div>
+
+    <!-- Sample Row (Active) -->
+    <div class="grid grid-cols-7 items-center bg-white text-black px-4 py-2 mt-2 rounded">
+      <input type="checkbox"/>
+      <img src="https://via.placeholder.com/60" alt="Image" class="rounded"/>
+      <span>Vintage Crayola Crayons</span>
+      <div class="flex space-x-2">
+        <button title="Crosslist">🔁</button>
+        <button title="Edit">✏️</button>
+        <button title="Copy">📄</button>
+        <button title="Delete">🗑️</button>
+      </div>
+      <span>0039</span>
+      <span>$175.00</span>
+      <div class="flex space-x-2">
+        <img src="https://autolistcanada.github.io/ebay-icon.png" class="w-5" alt="eBay"/>
+        <img src="https://autolistcanada.github.io/poshmark-icon.png" class="w-5" alt="Poshmark"/>
       </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox"></th>
-          <th>Image</th>
-          <th>Title</th>
-          <th>Actions</th>
-          <th>SKU</th>
-          <th>Price</th>
-          <th>Platforms</th>
-        </tr>
-      </thead>
-      <tbody id="listingBody"></tbody>
-    </table>
-    <div class="pagination">
-      <button onclick="prevPage()">&laquo; Prev</button>
-      <span id="pageInfo">Page 1</span>
-      <button onclick="nextPage()">Next &raquo;</button>
+
+    <!-- Sample Row (Sold) -->
+    <div class="grid grid-cols-7 items-center bg-white text-black px-4 py-2 mt-2 rounded strikethrough">
+      <input type="checkbox"/>
+      <img src="https://via.placeholder.com/60" alt="Image" class="rounded"/>
+      <span>Poppin’ Fresh Piggy Bank</span>
+      <div class="flex space-x-2">
+        <button title="Crosslist">🔁</button>
+        <button title="Edit">✏️</button>
+        <button title="Copy">📄</button>
+        <button title="Delete">🗑️</button>
+      </div>
+      <span>0047</span>
+      <span>$35.00</span>
+      <div class="flex space-x-2">
+        <img src="https://autolistcanada.github.io/ebay-icon.png" class="w-5" alt="eBay"/>
+        <img src="https://autolistcanada.github.io/poshmark-icon.png" class="w-5" alt="Poshmark"/>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex justify-center items-center space-x-4 text-white">
+      <button class="bg-yellow-500 text-black px-4 py-2 rounded">« Prev</button>
+      <span>Page 1</span>
+      <button class="bg-yellow-500 text-black px-4 py-2 rounded">Next »</button>
     </div>
   </main>
-  <script>
-    let listings = [];
-    let currentPage = 1;
-    const perPage = 5;
 
-    fetch('https://autolistcanada.github.io/data.json')
-      .then(res => res.json())
-      .then(data => {
-        listings = data;
-        renderTable();
-      });
-
-    function renderTable() {
-      const start = (currentPage - 1) * perPage;
-      const paginated = listings.slice(start, start + perPage);
-      const tbody = document.getElementById('listingBody');
-      tbody.innerHTML = '';
-
-      paginated.forEach(item => {
-        const row = document.createElement('tr');
-        row.className = item.status === 'sold' ? 'sold' : '';
-        row.innerHTML = `
-          <td><input type="checkbox"></td>
-          <td><img src="${item.image}" alt="${item.title}" style="width:60px"></td>
-          <td contenteditable="true">${item.title}</td>
-          <td class="actions">
-            <i class="fas fa-share-nodes" title="Crosslist"></i>
-            <i class="fas fa-edit" title="Edit"></i>
-            <i class="fas fa-copy" title="Copy"></i>
-            <i class="fas fa-trash" title="Delete"></i>
-          </td>
-          <td>${item.sku}</td>
-          <td>$${item.price}</td>
-          <td>
-            ${item.platforms.includes('ebay') ? '<img src="ebay.png" class="platform-icon" width="20">' : ''}
-            ${item.platforms.includes('poshmark') ? '<img src="poshmark.png" class="platform-icon" width="20">' : ''}
-            ${item.status === 'sold' ? '<span class="sold">SOLD</span>' : ''}
-          </td>
-        `;
-        tbody.appendChild(row);
-      });
-
-      document.getElementById('pageInfo').innerText = `Page ${currentPage}`;
-    }
-
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderTable();
-      }
-    }
-    function nextPage() {
-      if ((currentPage * perPage) < listings.length) {
-        currentPage++;
-        renderTable();
-      }
-    }
-
-    document.getElementById('search').addEventListener('input', (e) => {
-      const val = e.target.value.toLowerCase();
-      listings = listings.filter(item => item.title.toLowerCase().includes(val));
-      currentPage = 1;
-      renderTable();
-    });
-  </script>
 </body>
 </html>
+<!-- End Listings Page -->
+
