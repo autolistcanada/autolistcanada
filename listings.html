@@ -2,139 +2,183 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada – Listings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listings – AutoList Canada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/listings-background.png') no-repeat center center fixed;
+      font-family: 'Inter', 'Open Sans', sans-serif;
+      background: url('https://raw.githubusercontent.com/autolistcanada/assets/main/listings-background.png') no-repeat center center fixed;
       background-size: cover;
       color: #333;
     }
-    .container {
-      margin-left: 220px;
-      padding: 20px;
-    }
+
     .sidebar {
-      width: 220px;
-      height: 100vh;
+      width: 240px;
       position: fixed;
       top: 0;
       left: 0;
-      background: url('https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/sidebar-background.png') no-repeat center center;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
+      height: 100vh;
+      background: #0a4f4f;
+      padding: 20px;
+      box-sizing: border-box;
     }
+
     .sidebar img.logo {
-      width: 60px;
+      width: 50px;
+      display: block;
+      margin-bottom: 10px;
     }
+
     .sidebar img.title {
-      width: 140px;
-      margin: 10px 0;
+      width: 160px;
+      margin-bottom: 30px;
     }
+
     .sidebar nav a {
-      color: #fff;
+      display: block;
+      color: white;
+      font-weight: bold;
       text-decoration: none;
       margin: 10px 0;
-      font-weight: bold;
-      display: block;
     }
-    .toolbar {
+
+    .sidebar nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      margin-left: 260px;
+      padding: 30px;
+    }
+
+    .filters {
       display: flex;
-      justify-content: space-between;
+      gap: 15px;
       align-items: center;
       margin-bottom: 20px;
     }
-    .filters input, .filters select {
-      padding: 6px;
-      margin-right: 10px;
+
+    .filters input[type="text"], .filters select {
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      background: #fff5e5;
+      box-shadow: 0 0 3px rgba(0,0,0,0.1);
     }
+
+    .filters label {
+      font-weight: 500;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 8px;
+      background-color: rgba(255,255,255,0.92);
+      border-radius: 10px;
       overflow: hidden;
     }
-    th, td {
-      padding: 12px 10px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
+
     th {
       background-color: #e77512;
       color: white;
+      padding: 12px;
+      text-align: left;
     }
-    .sold {
-      color: gray;
+
+    td {
+      padding: 12px;
+      vertical-align: middle;
+    }
+
+    td img {
+      height: 30px;
+      vertical-align: middle;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fffaf2;
+    }
+
+    tr.sold {
+      opacity: 0.6;
       text-decoration: line-through;
     }
-    .confidence {
-      background: #f4b242;
-      color: #fff;
-      padding: 3px 8px;
-      border-radius: 10px;
-      font-size: 0.8em;
-    }
-    .platform-icons img {
-      height: 24px;
-      margin-right: 5px;
-    }
+
     .actions img {
       height: 20px;
-      margin-right: 6px;
+      margin-right: 10px;
       cursor: pointer;
+      transition: transform 0.2s;
     }
-    .pagination {
-      text-align: center;
-      margin-top: 20px;
+
+    .actions img:hover {
+      transform: scale(1.2);
     }
-    .pagination button {
-      padding: 6px 12px;
-      margin: 0 4px;
-      background-color: #e77512;
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background-color: #f4b242;
+      border-radius: 10px;
+      font-weight: bold;
       color: white;
+      font-size: 12px;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination button {
+      background-color: #e77512;
       border: none;
-      border-radius: 4px;
+      color: white;
+      padding: 10px 16px;
+      margin: 0 5px;
+      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
+    }
+
+    .pagination button:hover {
+      background-color: #d05f00;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <img class="logo" src="https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/logo.png" alt="Logo" />
-    <img class="title" src="https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/title.png" alt="AutoList Canada" />
+    <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/logo.png" alt="Logo" class="logo" />
+    <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/autolist-title.png" alt="AutoList Canada" class="title" />
     <nav>
       <a href="index.html">Home</a>
       <a href="dashboard.html">Dashboard</a>
-      <a href="listings.html" style="text-decoration: underline;">Listings</a>
+      <a href="listings.html">Listings</a>
       <a href="ai-tools.html">AI Tools</a>
-      <a href="#">Features</a>
-      <a href="#">Pricing</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
     </nav>
   </div>
-  <div class="container">
-    <div class="toolbar">
-      <div class="filters">
-        <input type="text" placeholder="Search listings..." />
-        <select>
-          <option>Status: All</option>
-          <option>Active</option>
-          <option>Draft</option>
-          <option>Sold</option>
-        </select>
-        <label><input type="checkbox" /> Hide Draft</label>
-        <label><input type="checkbox" /> Hide Sold</label>
-      </div>
+
+  <div class="content">
+    <div class="filters">
+      <input type="text" placeholder="Search listings..." />
+      <select>
+        <option>Status: All</option>
+        <option>Active</option>
+        <option>Draft</option>
+        <option>Sold</option>
+      </select>
+      <label><input type="checkbox" /> Hide Draft</label>
+      <label><input type="checkbox" /> Hide Sold</label>
     </div>
+
     <table>
       <thead>
         <tr>
-          <th>✔</th>
+          <th>✓</th>
           <th>Image</th>
           <th>Title</th>
           <th>Actions</th>
@@ -146,40 +190,41 @@
       <tbody>
         <tr>
           <td><input type="checkbox" /></td>
-          <td><img src="https://via.placeholder.com/60" alt="Listing Image" /></td>
+          <td><img src="https://raw.githubusercontent.com/autolistcanada/assets/main/sample1.jpg" alt="Listing Image" /></td>
           <td>Vintage Crayola Jacket</td>
           <td class="actions">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" title="Crosslist" />
-            <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" title="Edit" />
-            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" title="Copy" />
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" title="Delete" />
+            <img src="https://img.icons8.com/material-outlined/24/edit--v1.png" alt="Edit" title="Edit Listing" />
+            <img src="https://img.icons8.com/material-outlined/24/share.png" alt="Crosslist" title="Crosslist" />
+            <img src="https://img.icons8.com/material-outlined/24/copy.png" alt="Copy" title="Copy" />
+            <img src="https://img.icons8.com/material-outlined/24/delete-sign.png" alt="Delete" title="Delete" />
           </td>
           <td>#938474</td>
-          <td>$42.00 <span class="confidence">92%</span></td>
-          <td class="platform-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" title="eBay" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Poshmark_logo.png" title="Poshmark" />
+          <td>$42.00 <span class="badge">92%</span></td>
+          <td>
+            <img src="https://img.icons8.com/color/48/ebay.png" alt="eBay" />
+            <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/poshmark-icon.png" alt="Poshmark" />
           </td>
         </tr>
         <tr class="sold">
           <td><input type="checkbox" /></td>
-          <td><img src="https://via.placeholder.com/60" alt="Listing Image" /></td>
+          <td><img src="https://raw.githubusercontent.com/autolistcanada/assets/main/sample2.jpg" alt="Listing Image" /></td>
           <td>Wool Peacoat - SOLD</td>
           <td class="actions">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" title="Crosslist" />
-            <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" title="Edit" />
-            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" title="Copy" />
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" title="Delete" />
+            <img src="https://img.icons8.com/material-outlined/24/edit--v1.png" alt="Edit" title="Edit Listing" />
+            <img src="https://img.icons8.com/material-outlined/24/share.png" alt="Crosslist" title="Crosslist" />
+            <img src="https://img.icons8.com/material-outlined/24/copy.png" alt="Copy" title="Copy" />
+            <img src="https://img.icons8.com/material-outlined/24/delete-sign.png" alt="Delete" title="Delete" />
           </td>
           <td>#292174</td>
-          <td>$68.00 <span class="confidence">76%</span></td>
-          <td class="platform-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" title="eBay" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Poshmark_logo.png" title="Poshmark" />
+          <td>$68.00 <span class="badge">76%</span></td>
+          <td>
+            <img src="https://img.icons8.com/color/48/ebay.png" alt="eBay" />
+            <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/poshmark-icon.png" alt="Poshmark" />
           </td>
         </tr>
       </tbody>
     </table>
+
     <div class="pagination">
       <button>&laquo; Prev</button>
       Page 1 of 3
