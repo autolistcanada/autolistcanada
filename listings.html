@@ -1,235 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Listings – AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', 'Open Sans', sans-serif;
-      background: url('https://raw.githubusercontent.com/autolistcanada/assets/main/listings-background.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-    }
-
-    .sidebar {
-      width: 240px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      background: #0a4f4f;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .sidebar img.logo {
-      width: 50px;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .sidebar img.title {
-      width: 160px;
-      margin-bottom: 30px;
-    }
-
-    .sidebar nav a {
-      display: block;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      margin: 10px 0;
-    }
-
-    .sidebar nav a:hover {
-      text-decoration: underline;
-    }
-
-    .content {
-      margin-left: 260px;
-      padding: 30px;
-    }
-
-    .filters {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .filters input[type="text"], .filters select {
-      padding: 8px;
-      border: none;
-      border-radius: 8px;
-      background: #fff5e5;
-      box-shadow: 0 0 3px rgba(0,0,0,0.1);
-    }
-
-    .filters label {
-      font-weight: 500;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: rgba(255,255,255,0.92);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    th {
-      background-color: #e77512;
-      color: white;
-      padding: 12px;
-      text-align: left;
-    }
-
-    td {
-      padding: 12px;
-      vertical-align: middle;
-    }
-
-    td img {
-      height: 30px;
-      vertical-align: middle;
-    }
-
-    tr:nth-child(even) {
-      background-color: #fffaf2;
-    }
-
-    tr.sold {
-      opacity: 0.6;
-      text-decoration: line-through;
-    }
-
-    .actions img {
-      height: 20px;
-      margin-right: 10px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .actions img:hover {
-      transform: scale(1.2);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 3px 8px;
-      background-color: #f4b242;
-      border-radius: 10px;
-      font-weight: bold;
-      color: white;
-      font-size: 12px;
-    }
-
-    .pagination {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .pagination button {
-      background-color: #e77512;
-      border: none;
-      color: white;
-      padding: 10px 16px;
-      margin: 0 5px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .pagination button:hover {
-      background-color: #d05f00;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    .platform-icon { width: 24px; height: 24px; margin-right: 6px; }
   </style>
 </head>
-<body>
-  <div class="sidebar">
-    <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/logo.png" alt="Logo" class="logo" />
-    <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/autolist-title.png" alt="AutoList Canada" class="title" />
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="listings.html">Listings</a>
-      <a href="ai-tools.html">AI Tools</a>
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-  </div>
+<body class="bg-[#fff9f4] flex">
 
-  <div class="content">
-    <div class="filters">
-      <input type="text" placeholder="Search listings..." />
-      <select>
-        <option>Status: All</option>
-        <option>Active</option>
-        <option>Draft</option>
-        <option>Sold</option>
+  <!-- Sidebar -->
+  <aside class="w-64 min-h-screen bg-[#f5c88d] text-white p-6 flex flex-col justify-between">
+    <div>
+      <img src="images/autolist-logo.png" alt="AutoList Canada Logo" class="mb-4 w-32">
+      <nav class="space-y-4 text-black font-semibold">
+        <a href="dashboard.html" class="block hover:text-orange-600">Dashboard</a>
+        <a href="listings.html" class="block text-orange-700">Listings</a>
+        <a href="ai-tools.html" class="block hover:text-orange-600">AI Tools</a>
+        <a href="ai-tools-live.html" class="block hover:text-orange-600">Live Tools</a>
+      </nav>
+    </div>
+    <div class="text-sm text-black">
+      <p>&copy; 2025 AutoList Canada</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-bold text-orange-700 mb-4">Your Listings</h1>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-6 items-center">
+      <input type="text" id="searchInput" placeholder="Search listings..." class="px-4 py-2 rounded-md border w-64">
+      <select id="platformFilter" class="px-3 py-2 border rounded-md">
+        <option value="">All Platforms</option>
+        <option value="eBay">eBay</option>
+        <option value="Poshmark">Poshmark</option>
+        <option value="Depop">Depop</option>
+        <option value="Etsy">Etsy</option>
       </select>
-      <label><input type="checkbox" /> Hide Draft</label>
-      <label><input type="checkbox" /> Hide Sold</label>
+      <select id="statusFilter" class="px-3 py-2 border rounded-md">
+        <option value="">All Statuses</option>
+        <option value="synced">Synced</option>
+        <option value="unsynced">Unsynced</option>
+      </select>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>✓</th>
-          <th>Image</th>
-          <th>Title</th>
-          <th>Actions</th>
-          <th>SKU</th>
-          <th>Price</th>
-          <th>Platforms</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input type="checkbox" /></td>
-          <td><img src="https://raw.githubusercontent.com/autolistcanada/assets/main/sample1.jpg" alt="Listing Image" /></td>
-          <td>Vintage Crayola Jacket</td>
-          <td class="actions">
-            <img src="https://img.icons8.com/material-outlined/24/edit--v1.png" alt="Edit" title="Edit Listing" />
-            <img src="https://img.icons8.com/material-outlined/24/share.png" alt="Crosslist" title="Crosslist" />
-            <img src="https://img.icons8.com/material-outlined/24/copy.png" alt="Copy" title="Copy" />
-            <img src="https://img.icons8.com/material-outlined/24/delete-sign.png" alt="Delete" title="Delete" />
-          </td>
-          <td>#938474</td>
-          <td>$42.00 <span class="badge">92%</span></td>
-          <td>
-            <img src="https://img.icons8.com/color/48/ebay.png" alt="eBay" />
-            <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/poshmark-icon.png" alt="Poshmark" />
-          </td>
-        </tr>
-        <tr class="sold">
-          <td><input type="checkbox" /></td>
-          <td><img src="https://raw.githubusercontent.com/autolistcanada/assets/main/sample2.jpg" alt="Listing Image" /></td>
-          <td>Wool Peacoat - SOLD</td>
-          <td class="actions">
-            <img src="https://img.icons8.com/material-outlined/24/edit--v1.png" alt="Edit" title="Edit Listing" />
-            <img src="https://img.icons8.com/material-outlined/24/share.png" alt="Crosslist" title="Crosslist" />
-            <img src="https://img.icons8.com/material-outlined/24/copy.png" alt="Copy" title="Copy" />
-            <img src="https://img.icons8.com/material-outlined/24/delete-sign.png" alt="Delete" title="Delete" />
-          </td>
-          <td>#292174</td>
-          <td>$68.00 <span class="badge">76%</span></td>
-          <td>
-            <img src="https://img.icons8.com/color/48/ebay.png" alt="eBay" />
-            <img src="https://raw.githubusercontent.com/autolistcanada/assets/main/poshmark-icon.png" alt="Poshmark" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="pagination">
-      <button>&laquo; Prev</button>
-      Page 1 of 3
-      <button>Next &raquo;</button>
+    <!-- Listings Container -->
+    <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <!-- Listings will be injected here -->
     </div>
-  </div>
+  </main>
+
+  <!-- Embedded JSON Data -->
+  <script id="listingsData" type="application/json">
+    [
+      { "title": "Vintage Levi’s Denim Jacket", "price": "$78", "platforms": ["eBay", "Depop"], "image": "images/listing1.jpg", "synced": true },
+      { "title": "90s Band Tee – Nirvana", "price": "$42", "platforms": ["Poshmark", "eBay"], "image": "images/listing2.jpg", "synced": false },
+      { "title": "Retro Floral Blouse", "price": "$35", "platforms": ["Etsy"], "image": "images/listing3.jpg", "synced": true },
+      { "title": "Y2K Mini Shoulder Bag", "price": "$50", "platforms": ["Depop", "eBay"], "image": "images/listing4.jpg", "synced": true },
+      { "title": "80s Leather Bomber Jacket", "price": "$120", "platforms": ["eBay"], "image": "images/listing5.jpg", "synced": false },
+      { "title": "Plaid Grunge Skirt", "price": "$30", "platforms": ["Poshmark", "Depop"], "image": "images/listing6.jpg", "synced": true },
+      { "title": "Boho Maxi Dress – Cream", "price": "$60", "platforms": ["Etsy", "Depop"], "image": "images/listing7.jpg", "synced": false },
+      { "title": "Oversized Graphic Hoodie", "price": "$48", "platforms": ["Poshmark"], "image": "images/listing8.jpg", "synced": true },
+      { "title": "Vintage Wrangler Jeans", "price": "$55", "platforms": ["eBay", "Etsy"], "image": "images/listing9.jpg", "synced": true },
+      { "title": "Faux Fur Coat – 70s Style", "price": "$85", "platforms": ["Depop"], "image": "images/listing10.jpg", "synced": false }
+    ]
+  </script>
+
+  <!-- JS Logic -->
+  <script>
+    const platformIcons = {
+      "eBay": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAd0lEQVRIS+2UQQrAIAhEH/f/N6xhRrQ0R7gKnTImAW0fGGIEVX9Ej0hdSBLHt3HJd1CeUOkqO9TxmZCqIUdP0iAdKNhf0yqDkkyRszSYBp4oEChppItlKhf1EqWXcK5yXz77hi9LNCXbVKnfbwDyU3q2AJPRsEAAAAASUVORK5CYII=",
+      "Depop": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAkElEQVRIS+2UQQrAIAxE/f+Lbc0hFGu7ip6Q6NvREuCUe8SQ2wqNPFgXcB6ADmffOg9sYAkogE3YVG4oL7v6AIw1JoLmk7UJcb3E2QH9ngAElsmhPCD3WT2hEuI4BR7k3yJMP0UFAGewLCZa94vPe8DxHuhYIpcuL/fOb+Te27S/URKkxGEk3Q5D7sM4aFIAAAAAElFTkSuQmCC",
+      "Poshmark": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAh0lEQVRIS+2UQQrAIAhE/f+Lbc0hFJvdmj6Q5NtEImFd6mAiZgUCzvx+gm8AxqDX77d8IGikDJwS7g0V+GlObAwmiDQWy6piIOAX6FwAxibCsSB5MKcTR7VAFFXBa6hXSwNGgeEvPfqzoZqJ+qDkkUsQ/dnDbb0+gLVjT6rwRkiDX7PwAAAABJRU5ErkJggg==",
+      "Etsy": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAjUlEQVRIS+2UsQkAIAxE/f+L7eE4Twzixmbwoyz1IaMk0nE+LuEi0s4GvwCKJDZazA0nF6FBz5uoJdBc0HgoJxnAB4D7MyJnhvIjFZi5UrHpjwHcOa4eX5AUpr+pYk4CUw5Dki3SRtzp8Db4zgyflvpm1Uz2mdboP5cgL2CtVh0TZTMSfB6ZvwD9ScgQBRBaKIAAAAAElFTkSuQmCC"
+    };
+
+    const listingsContainer = document.getElementById("listingsContainer");
+    const platformFilter = document.getElementById("platformFilter");
+    const statusFilter = document.getElementById("statusFilter");
+    const searchInput = document.getElementById("searchInput");
+
+    function getListings() {
+      const data = document.getElementById("listingsData").textContent;
+      return JSON.parse(data);
+    }
+
+    function renderListings(listings) {
+      listingsContainer.innerHTML = "";
+
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedPlatform = platformFilter.value;
+      const selectedStatus = statusFilter.value;
+
+      listings.filter(listing => {
+        const matchesSearch = listing.title.toLowerCase().includes(searchTerm);
+        const matchesPlatform = selectedPlatform ? listing.platforms.includes(selectedPlatform) : true;
+        const matchesStatus = selectedStatus
+          ? (selectedStatus === "synced" ? listing.synced : !listing.synced)
+          : true;
+        return matchesSearch && matchesPlatform && matchesStatus;
+      }).forEach(listing => {
+        const div = document.createElement("div");
+        div.className = "bg-white rounded-xl shadow-md p-4 flex flex-col";
+
+        const platformImgs = listing.platforms.map(p => {
+          const src = platformIcons[p] || "";
+          return `<img src="${src}" class="platform-icon" title="${p}">`;
+        }).join("");
+
+        div.innerHTML = `
+          <img src="${listing.image}" alt="${listing.title}" class="h-48 object-cover rounded-lg mb-3">
+          <h2 class="text-lg font-semibold">${listing.title}</h2>
+          <p class="text-sm text-gray-600">${listing.price}</p>
+          <div class="flex items-center mt-2">${platformImgs}</div>
+          <div class="flex justify-between items-center mt-4">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="checkbox" ${listing.synced ? "checked" : ""} class="form-checkbox">
+              Synced
+            </label>
+            <button class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm hover:bg-orange-600">
+              AI Suggest
+            </button>
+          </div>
+        `;
+        listingsContainer.appendChild(div);
+      });
+    }
+
+    const updateUI = () => renderListings(getListings());
+    [platformFilter, statusFilter, searchInput].forEach(el => {
+      el.addEventListener("input", updateUI);
+    });
+
+    updateUI();
+  </script>
+
 </body>
 </html>
