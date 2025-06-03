@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Listings | AutoList Canada</title>
-  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="/assets/favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -24,9 +24,22 @@
     }
   </script>
   <style>
+    body {
+      background-color: #fefaf5;
+    }
     main {
-      background: url('listing-background.png') no-repeat center center fixed;
+      background: url("/assets/listing-background.png") no-repeat center center;
       background-size: cover;
+    }
+    .fallback-img {
+      background-color: #eee;
+      width: 100%;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
@@ -35,9 +48,9 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-autolistOrange text-white flex flex-col justify-between px-6 py-8 sticky top-0">
     <div>
-      <img src="autolist-logo.png" alt="Logo" class="w-20 h-20 mb-4 rounded-full shadow bg-white p-1">
-      <img src="autolist-title.png" alt="Title" class="w-36 mb-8">
-      <nav class="space-y-4 text-sm">
+      <img src="/assets/autolist-logo.png" alt="AutoList Canada Logo" class="w-16 h-16 mx-auto mb-4 bg-white p-1 rounded-full">
+      <img src="/assets/autolist-title.png" alt="AutoList Canada Title" class="w-40 mx-auto mb-6">
+      <nav class="text-sm space-y-3">
         <a href="index.html" class="block hover:underline">🏠 Homepage</a>
         <a href="dashboard.html" class="block hover:underline">📊 Dashboard</a>
         <a href="listings.html" class="block font-bold underline">📦 Listings</a>
@@ -45,122 +58,104 @@
         <a href="ai-tools-live.html" class="block hover:underline">⚡ Live Tools</a>
       </nav>
     </div>
-    <div class="text-xs mt-8 opacity-70">
-      <a href="terms.html" class="block hover:underline">Terms of Use</a>
-      <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
+    <footer class="text-xs opacity-70 mt-6">
+      <a href="terms.html" class="block">Terms of Use</a>
+      <a href="privacy.html" class="block">Privacy Policy</a>
       <p class="mt-4">© 2025 AutoList Canada</p>
-    </div>
+    </footer>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 px-6 py-10">
-    <h1 class="text-4xl font-bold text-autolistOrange mb-2">Your Listings</h1>
-    <p class="text-sm text-autolistMoss mb-6">Welcome back, Coltin 🌿 | 6 Active Listings | 2 Sold</p>
+  <main class="flex-1 px-8 py-10">
+    <h1 class="text-4xl font-bold text-autolistOrange mb-1">Your Listings</h1>
+    <p class="text-sm text-autolistMoss mb-8">Welcome back, Coltin 🌿 | 6 Active Listings | 2 Sold</p>
 
-    <!-- Filter/Search -->
+    <!-- Filters -->
     <div class="flex flex-wrap gap-4 mb-10">
-      <input type="text" placeholder="Search..." class="p-2 border rounded shadow-sm w-48">
-      <select class="p-2 border rounded">
-        <option>All Platforms</option><option>eBay</option><option>Poshmark</option><option>Depop</option>
+      <input type="text" placeholder="Search..." class="p-2 border border-gray-300 rounded shadow-sm w-60">
+      <select class="p-2 border border-gray-300 rounded">
+        <option>All Platforms</option>
+        <option>eBay</option>
+        <option>Poshmark</option>
+        <option>Depop</option>
       </select>
-      <select class="p-2 border rounded">
-        <option>Status</option><option>Synced</option><option>Unsynced</option>
+      <select class="p-2 border border-gray-300 rounded">
+        <option>Status</option>
+        <option>Synced</option>
+        <option>Unsynced</option>
       </select>
     </div>
 
-    <!-- Listings Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-      <!-- Card 1 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="levi-jacket.png" alt="Vintage Levi’s Jacket" class="rounded mb-3">
-        <div class="text-sm font-semibold">Vintage Levi’s Jacket</div>
-        <p class="text-gray-600 text-sm">$65</p>
-        <div class="text-lg">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Vintage Levi’s Jacket')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+    <!-- Listings -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Listing Cards -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/levi-jacket.png" alt="Vintage Levi’s Jacket" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Vintage Levi’s Jacket</h2>
+        <p class="text-sm text-gray-700">$65</p>
+        <div class="text-lg mt-1">🧥 🛒</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="sneakers.png" alt="Retro Adidas Sneakers" class="rounded mb-3">
-        <div class="text-sm font-semibold">Retro Adidas Sneakers</div>
-        <p class="text-gray-600 text-sm">$45</p>
-        <div class="text-lg">👟 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Retro Adidas Sneakers')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/sneakers.png" alt="Retro Adidas Sneakers" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Retro Adidas Sneakers</h2>
+        <p class="text-sm text-gray-700">$45</p>
+        <div class="text-lg mt-1">👟 🛒</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
 
-      <!-- Card 3 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="trench-coat.png" alt="Burberry Trench Coat" class="rounded mb-3">
-        <div class="text-sm font-semibold">Burberry Trench Coat</div>
-        <p class="text-gray-600 text-sm">$210</p>
-        <div class="text-lg">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Burberry Trench Coat')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/trench-coat.png" alt="Burberry Trench Coat" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Burberry Trench Coat</h2>
+        <p class="text-sm text-gray-700">$210</p>
+        <div class="text-lg mt-1">🧥 🛒</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
 
-      <!-- Card 4 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="boho-dress.png" alt="Boho Maxi Dress" class="rounded mb-3">
-        <div class="text-sm font-semibold">Boho Maxi Dress</div>
-        <p class="text-gray-600 text-sm">$70</p>
-        <div class="text-lg">👗 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Boho Maxi Dress')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/boho-dress.png" alt="Boho Maxi Dress" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Boho Maxi Dress</h2>
+        <p class="text-sm text-gray-700">$70</p>
+        <div class="text-lg mt-1">👗 🛒</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
 
-      <!-- Card 5 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="denim-overalls.png" alt="Vintage Denim Overalls" class="rounded mb-3">
-        <div class="text-sm font-semibold">Vintage Denim Overalls</div>
-        <p class="text-gray-600 text-sm">$74</p>
-        <div class="text-lg">🧥 👟</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Vintage Denim Overalls')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/denim-overalls.png" alt="Vintage Denim Overalls" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Vintage Denim Overalls</h2>
+        <p class="text-sm text-gray-700">$74</p>
+        <div class="text-lg mt-1">🧥 👟</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
 
-      <!-- Card 6 -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4">
-        <img src="fringe-boots.png" alt="Western Fringe Boots" class="rounded mb-3">
-        <div class="text-sm font-semibold">Western Fringe Boots</div>
-        <p class="text-gray-600 text-sm">$105</p>
-        <div class="text-lg">👢 🧥</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Western Fringe Boots')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
+        <img src="/assets/fringe-boots.png" alt="Western Fringe Boots" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
+        <h2 class="font-bold text-sm">Western Fringe Boots</h2>
+        <p class="text-sm text-gray-700">$105</p>
+        <div class="text-lg mt-1">👢 🧥</div>
+        <div class="flex justify-between items-center mt-2">
+          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
+          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="aiModal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 max-w-lg">
-        <h2 id="modalTitle" class="text-xl font-bold text-autolistOrange mb-2">AI Suggest</h2>
-        <p class="text-sm text-gray-600 mb-4">AutoList AI is analyzing for optimal tone, trust, and price psychology...</p>
-        <button onclick="closeModal()" class="px-4 py-2 bg-autolistOrange text-white rounded hover:bg-orange-600">Close</button>
       </div>
     </div>
   </main>
 </div>
-<script>
-  function openModal(title) {
-    document.getElementById('modalTitle').textContent = `AI Suggest: ${title}`;
-    document.getElementById('aiModal').classList.remove('hidden');
-  }
-  function closeModal() {
-    document.getElementById('aiModal').classList.add('hidden');
-  }
-</script>
 </body>
 </html>
