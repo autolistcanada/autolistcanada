@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Listings | AutoList Canada</title>
-  <link rel="icon" href="favicon.ico" />
+  <link rel="icon" href="favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -70,41 +70,21 @@
 
     <!-- Listings Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-      <!-- Listing Card Example -->
+      <!-- Listing Cards -->
+      ${["levi-jacket", "sneakers", "trench-coat", "boho-dress", "denim-overalls", "fringe-boots"].map((img, i) => `
       <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
-        <img src="levi-jacket.png" alt="Vintage Levi’s Jacket" class="rounded mb-3">
-        <div class="text-sm font-semibold">Vintage Levi’s Jacket</div>
-        <p class="text-gray-600 text-sm">$65</p>
-        <div class="text-lg">🧥 🛒</div>
+        <img src="${img}.png" alt="Listing ${i+1}" class="rounded mb-3">
+        <div class="text-sm font-semibold">${img.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+        <p class="text-gray-600 text-sm">$${60 + i*10}</p>
+        <div class="text-lg">🧥 👟 🛒</div>
         <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Vintage Levi’s Jacket')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
+          <label class="text-sm flex gap-1 items-center"><input type="checkbox" ${i % 2 === 0 ? 'checked' : ''} class="accent-autolistOrange"> Synced</label>
+          <button onclick="openModal('${img}')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
-      </div>
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
-        <img src="sneakers.png" alt="Retro Adidas Sneakers" class="rounded mb-3">
-        <div class="text-sm font-semibold">Retro Adidas Sneakers</div>
-        <p class="text-gray-600 text-sm">$45</p>
-        <div class="text-lg">👟 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Retro Adidas Sneakers')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
-        <img src="trench-coat.png" alt="Burberry Trench Coat" class="rounded mb-3">
-        <div class="text-sm font-semibold">Burberry Trench Coat</div>
-        <p class="text-gray-600 text-sm">$210</p>
-        <div class="text-lg">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-3">
-          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Burberry Trench Coat')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-      <!-- Add 3 more with unique images/text if needed -->
+      </div>`).join('')}
     </div>
 
-    <!-- Listing Intelligence Panels -->
+    <!-- Listing Intelligence -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
       <div class="bg-white rounded-xl p-6 shadow">
         <h2 class="text-autolistOrange font-semibold text-lg mb-2">AI Assistant</h2>
