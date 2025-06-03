@@ -2,142 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Listings – AutoList Canada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada - Listings</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .platform-icon { width: 24px; height: 24px; margin-right: 6px; }
-  </style>
 </head>
-<body class="bg-[#fff9f4] flex">
+<body class="flex bg-[#fdf3e7] text-gray-800 font-sans">
 
   <!-- Sidebar -->
-  <aside class="w-64 min-h-screen bg-[#f5c88d] text-white p-6 flex flex-col justify-between">
+  <aside class="w-64 bg-[#f4b242] p-6 flex flex-col justify-between min-h-screen sticky top-0">
     <div>
-      <img src="images/autolist-logo.png" alt="AutoList Canada Logo" class="mb-4 w-32">
-      <nav class="space-y-4 text-black font-semibold">
-        <a href="dashboard.html" class="block hover:text-orange-600">Dashboard</a>
-        <a href="listings.html" class="block text-orange-700">Listings</a>
-        <a href="ai-tools.html" class="block hover:text-orange-600">AI Tools</a>
-        <a href="ai-tools-live.html" class="block hover:text-orange-600">Live Tools</a>
+      <img src="autolist-logo.png" alt="AutoList Canada Logo" class="mb-6 w-32">
+      <nav class="space-y-4 font-medium text-white">
+        <a href="dashboard.html" class="block hover:text-black">Dashboard</a>
+        <a href="listings.html" class="block text-black font-bold">Listings</a>
+        <a href="ai-tools.html" class="block hover:text-black">AI Tools</a>
+        <a href="ai-tools-live.html" class="block hover:text-black">Live Tools</a>
       </nav>
     </div>
-    <div class="text-sm text-black">
-      <p>&copy; 2025 AutoList Canada</p>
-    </div>
+    <footer class="text-xs text-white opacity-70">© 2025 AutoList Canada</footer>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6">
-    <h1 class="text-2xl font-bold text-orange-700 mb-4">Your Listings</h1>
+  <main class="flex-1 p-8">
+    <h1 class="text-3xl font-bold text-[#e77512] mb-6">Your Listings</h1>
 
-    <!-- Filters -->
-    <div class="flex flex-wrap gap-4 mb-6 items-center">
-      <input type="text" id="searchInput" placeholder="Search listings..." class="px-4 py-2 rounded-md border w-64">
-      <select id="platformFilter" class="px-3 py-2 border rounded-md">
-        <option value="">All Platforms</option>
-        <option value="eBay">eBay</option>
-        <option value="Poshmark">Poshmark</option>
-        <option value="Depop">Depop</option>
-        <option value="Etsy">Etsy</option>
+    <!-- Filter Bar -->
+    <div class="flex flex-wrap items-center gap-4 mb-6">
+      <input type="text" placeholder="Search listings..." class="flex-1 p-2 border border-gray-300 rounded" />
+      <select class="p-2 border border-gray-300 rounded">
+        <option>All Platforms</option>
+        <option>eBay</option>
+        <option>Poshmark</option>
+        <option>Depop</option>
+        <option>Facebook</option>
       </select>
-      <select id="statusFilter" class="px-3 py-2 border rounded-md">
-        <option value="">All Statuses</option>
-        <option value="synced">Synced</option>
-        <option value="unsynced">Unsynced</option>
+      <select class="p-2 border border-gray-300 rounded">
+        <option>All Statuses</option>
+        <option>Synced</option>
+        <option>Unsynced</option>
+        <option>Draft</option>
       </select>
     </div>
 
-    <!-- Listings Container -->
-    <div id="listingsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      <!-- Listings will be injected here -->
+    <!-- View Mode Toggle -->
+    <div class="flex justify-end mb-4">
+      <button class="px-3 py-1 text-sm border border-gray-300 rounded-l bg-white">Grid</button>
+      <button class="px-3 py-1 text-sm border border-gray-300 rounded-r bg-gray-100">Table</button>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Repeat this block for each listing -->
+      <div class="bg-white rounded-lg shadow-md p-4 flex flex-col justify-between hover:shadow-lg transition">
+        <img src="https://via.placeholder.com/300x200?text=Vintage+Levi's+Denim+Jacket" class="w-full h-40 object-cover rounded mb-3" />
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold mb-1">Vintage Levi’s Denim Jacket</h3>
+          <p class="text-sm text-gray-700 mb-2">$78</p>
+          <div class="flex items-center space-x-2 text-sm mb-2">
+            <span title="eBay">🛒</span><span title="Poshmark">🧥</span><span title="Depop">👟</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-2">
+          <label class="text-sm flex items-center gap-1">
+            <input type="checkbox" checked class="accent-[#e77512]">
+            Synced
+          </label>
+          <button class="px-3 py-1 bg-[#e77512] text-white text-xs rounded hover:bg-orange-600">AI Suggest</button>
+        </div>
+      </div>
+
+      <!-- Add more listing cards below following the same structure -->
+
     </div>
   </main>
-
-  <!-- Embedded JSON Data -->
-  <script id="listingsData" type="application/json">
-    [
-      { "title": "Vintage Levi’s Denim Jacket", "price": "$78", "platforms": ["eBay", "Depop"], "image": "images/listing1.jpg", "synced": true },
-      { "title": "90s Band Tee – Nirvana", "price": "$42", "platforms": ["Poshmark", "eBay"], "image": "images/listing2.jpg", "synced": false },
-      { "title": "Retro Floral Blouse", "price": "$35", "platforms": ["Etsy"], "image": "images/listing3.jpg", "synced": true },
-      { "title": "Y2K Mini Shoulder Bag", "price": "$50", "platforms": ["Depop", "eBay"], "image": "images/listing4.jpg", "synced": true },
-      { "title": "80s Leather Bomber Jacket", "price": "$120", "platforms": ["eBay"], "image": "images/listing5.jpg", "synced": false },
-      { "title": "Plaid Grunge Skirt", "price": "$30", "platforms": ["Poshmark", "Depop"], "image": "images/listing6.jpg", "synced": true },
-      { "title": "Boho Maxi Dress – Cream", "price": "$60", "platforms": ["Etsy", "Depop"], "image": "images/listing7.jpg", "synced": false },
-      { "title": "Oversized Graphic Hoodie", "price": "$48", "platforms": ["Poshmark"], "image": "images/listing8.jpg", "synced": true },
-      { "title": "Vintage Wrangler Jeans", "price": "$55", "platforms": ["eBay", "Etsy"], "image": "images/listing9.jpg", "synced": true },
-      { "title": "Faux Fur Coat – 70s Style", "price": "$85", "platforms": ["Depop"], "image": "images/listing10.jpg", "synced": false }
-    ]
-  </script>
-
-  <!-- JS Logic -->
-  <script>
-    const platformIcons = {
-      "eBay": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAd0lEQVRIS+2UQQrAIAhEH/f/N6xhRrQ0R7gKnTImAW0fGGIEVX9Ej0hdSBLHt3HJd1CeUOkqO9TxmZCqIUdP0iAdKNhf0yqDkkyRszSYBp4oEChppItlKhf1EqWXcK5yXz77hi9LNCXbVKnfbwDyU3q2AJPRsEAAAAASUVORK5CYII=",
-      "Depop": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAkElEQVRIS+2UQQrAIAxE/f+Lbc0hFGu7ip6Q6NvREuCUe8SQ2wqNPFgXcB6ADmffOg9sYAkogE3YVG4oL7v6AIw1JoLmk7UJcb3E2QH9ngAElsmhPCD3WT2hEuI4BR7k3yJMP0UFAGewLCZa94vPe8DxHuhYIpcuL/fOb+Te27S/URKkxGEk3Q5D7sM4aFIAAAAAElFTkSuQmCC",
-      "Poshmark": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAh0lEQVRIS+2UQQrAIAhE/f+Lbc0hFJvdmj6Q5NtEImFd6mAiZgUCzvx+gm8AxqDX77d8IGikDJwS7g0V+GlObAwmiDQWy6piIOAX6FwAxibCsSB5MKcTR7VAFFXBa6hXSwNGgeEvPfqzoZqJ+qDkkUsQ/dnDbb0+gLVjT6rwRkiDX7PwAAAABJRU5ErkJggg==",
-      "Etsy": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAjUlEQVRIS+2UsQkAIAxE/f+L7eE4Twzixmbwoyz1IaMk0nE+LuEi0s4GvwCKJDZazA0nF6FBz5uoJdBc0HgoJxnAB4D7MyJnhvIjFZi5UrHpjwHcOa4eX5AUpr+pYk4CUw5Dki3SRtzp8Db4zgyflvpm1Uz2mdboP5cgL2CtVh0TZTMSfB6ZvwD9ScgQBRBaKIAAAAAElFTkSuQmCC"
-    };
-
-    const listingsContainer = document.getElementById("listingsContainer");
-    const platformFilter = document.getElementById("platformFilter");
-    const statusFilter = document.getElementById("statusFilter");
-    const searchInput = document.getElementById("searchInput");
-
-    function getListings() {
-      const data = document.getElementById("listingsData").textContent;
-      return JSON.parse(data);
-    }
-
-    function renderListings(listings) {
-      listingsContainer.innerHTML = "";
-
-      const searchTerm = searchInput.value.toLowerCase();
-      const selectedPlatform = platformFilter.value;
-      const selectedStatus = statusFilter.value;
-
-      listings.filter(listing => {
-        const matchesSearch = listing.title.toLowerCase().includes(searchTerm);
-        const matchesPlatform = selectedPlatform ? listing.platforms.includes(selectedPlatform) : true;
-        const matchesStatus = selectedStatus
-          ? (selectedStatus === "synced" ? listing.synced : !listing.synced)
-          : true;
-        return matchesSearch && matchesPlatform && matchesStatus;
-      }).forEach(listing => {
-        const div = document.createElement("div");
-        div.className = "bg-white rounded-xl shadow-md p-4 flex flex-col";
-
-        const platformImgs = listing.platforms.map(p => {
-          const src = platformIcons[p] || "";
-          return `<img src="${src}" class="platform-icon" title="${p}">`;
-        }).join("");
-
-        div.innerHTML = `
-          <img src="${listing.image}" alt="${listing.title}" class="h-48 object-cover rounded-lg mb-3">
-          <h2 class="text-lg font-semibold">${listing.title}</h2>
-          <p class="text-sm text-gray-600">${listing.price}</p>
-          <div class="flex items-center mt-2">${platformImgs}</div>
-          <div class="flex justify-between items-center mt-4">
-            <label class="flex items-center gap-2 text-sm">
-              <input type="checkbox" ${listing.synced ? "checked" : ""} class="form-checkbox">
-              Synced
-            </label>
-            <button class="bg-orange-500 text-white px-3 py-1 rounded-md text-sm hover:bg-orange-600">
-              AI Suggest
-            </button>
-          </div>
-        `;
-        listingsContainer.appendChild(div);
-      });
-    }
-
-    const updateUI = () => renderListings(getListings());
-    [platformFilter, statusFilter, searchInput].forEach(el => {
-      el.addEventListener("input", updateUI);
-    });
-
-    updateUI();
-  </script>
-
 </body>
 </html>
