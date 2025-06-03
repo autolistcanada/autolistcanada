@@ -13,171 +13,99 @@
           colors: {
             autolistYellow: '#f4b242',
             autolistOrange: '#e77512',
-            autolistMoss: '#848f67'
+            autolistMoss: '#848f67',
+            autolistPeach: '#f5c88d',
+            autolistDeepOrange: '#e05a13'
+          },
+          fontFamily: {
+            sans: ['Segoe UI', 'Roboto', 'sans-serif']
           }
         }
       }
     }
   </script>
+  <style>
+    body {
+      background: url('listings-background.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
 </head>
-<body class="font-sans bg-[#fdf3e7] text-gray-800">
+<body class="font-sans text-gray-900">
 
-<!-- Wrapper -->
 <div class="flex min-h-screen">
-
   <!-- Sidebar -->
-  <aside class="w-64 bg-autolistYellow text-white flex flex-col justify-between px-6 py-8 sticky top-0">
+  <aside class="w-64 bg-autolistOrange text-white flex flex-col justify-between px-6 py-8 sticky top-0">
     <div>
-      <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-28 mx-auto mb-8">
-      <nav class="space-y-4 font-medium">
-        <a href="dashboard.html" class="block hover:text-black">Dashboard</a>
-        <a href="listings.html" class="block text-black font-bold">Listings</a>
-        <a href="ai-tools.html" class="block hover:text-black">AI Tools</a>
-        <a href="ai-tools-live.html" class="block hover:text-black">Live Tools</a>
+      <img src="autolist-title.png" alt="AutoList Canada Title" class="w-36 mb-8">
+      <nav class="space-y-4 text-sm">
+        <a href="index.html" class="block hover:underline">🏠 Homepage</a>
+        <a href="dashboard.html" class="block hover:underline">📊 Dashboard</a>
+        <a href="listings.html" class="block font-bold underline">📦 Listings</a>
+        <a href="ai-tools.html" class="block hover:underline">🧠 AI Tools</a>
+        <a href="ai-tools-live.html" class="block hover:underline">⚡ Live Tools</a>
       </nav>
     </div>
-    <footer class="text-xs text-white opacity-70 mt-12">© 2025 AutoList Canada</footer>
+    <div class="text-xs mt-8 opacity-70">
+      <a href="terms.html" class="block hover:underline">Terms of Use</a>
+      <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
+      <p class="mt-4">© 2025 AutoList Canada</p>
+    </div>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-8">
-    <h1 class="text-3xl font-bold text-autolistOrange mb-6">Your Listings</h1>
-
-    <!-- Filter Bar -->
-    <div class="flex flex-wrap gap-4 mb-6">
-      <input type="text" placeholder="Search listings..." class="flex-1 p-2 border border-gray-300 rounded shadow-sm" />
-      <select class="p-2 border border-gray-300 rounded">
-        <option>All Platforms</option>
-        <option>eBay</option>
-        <option>Poshmark</option>
-        <option>Depop</option>
-        <option>Facebook</option>
-      </select>
-      <select class="p-2 border border-gray-300 rounded">
-        <option>All Statuses</option>
-        <option>Synced</option>
-        <option>Unsynced</option>
-      </select>
+  <main class="flex-1 p-6 sm:p-10 backdrop-blur bg-white/80 rounded-l-xl">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-autolistOrange">Your Listings</h1>
+      <div class="flex gap-2">
+        <input type="text" placeholder="Search listings..." class="p-2 border border-gray-300 rounded shadow-sm w-48" />
+        <select class="p-2 border border-gray-300 rounded">
+          <option>All Platforms</option>
+          <option>eBay</option>
+          <option>Poshmark</option>
+          <option>Depop</option>
+        </select>
+        <select class="p-2 border border-gray-300 rounded">
+          <option>Status</option>
+          <option>Synced</option>
+          <option>Unsynced</option>
+        </select>
+      </div>
     </div>
 
     <!-- Listings Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Listing Card 1 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Levi's+Denim" alt="Vintage Levi’s Denim Jacket" class="w-full h-40 object-cover rounded mb-3" />
+      <!-- Card Template -->
+      <div class="bg-white rounded-xl shadow-lg p-4 relative">
+        <img src="https://via.placeholder.com/300x200?text=Denim+Jacket" alt="Denim Jacket" class="w-full h-40 object-cover rounded mb-3">
+        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
         <h3 class="text-lg font-semibold mb-1">Vintage Levi’s Denim Jacket</h3>
         <p class="text-sm text-gray-700 mb-2">$78</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 2 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Y2K+Bag" alt="Y2K Mini Shoulder Bag" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Y2K Mini Shoulder Bag</h3>
-        <p class="text-sm text-gray-700 mb-2">$50</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 3 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Boho+Maxi+Dress" alt="Boho Maxi Dress – Cream" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Boho Maxi Dress – Cream</h3>
-        <p class="text-sm text-gray-700 mb-2">$60</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 4 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Faux+Fur+Coat" alt="Faux Fur Coat – 70s Style" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Faux Fur Coat – 70s Style</h3>
-        <p class="text-sm text-gray-700 mb-2">$85</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 5 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Wrangler+Jeans" alt="Vintage Wrangler Jeans" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Vintage Wrangler Jeans</h3>
-        <p class="text-sm text-gray-700 mb-2">$55</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-      <!-- Listing Card 6 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Grunge+Skirt" alt="Plaid Grunge Skirt" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Plaid Grunge Skirt</h3>
-        <p class="text-sm text-gray-700 mb-2">$30</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 7 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Retro+Sneakers" alt="Retro Platform Sneakers" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Retro Platform Sneakers</h3>
-        <p class="text-sm text-gray-700 mb-2">$68</p>
-        <div class="flex items-center gap-2 text-xl mb-2">👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 8 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Nirvana+Tee" alt="90s Nirvana Band Tee" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">90s Nirvana Band Tee</h3>
-        <p class="text-sm text-gray-700 mb-2">$42</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 🧥</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 9 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Graphic+Hoodie" alt="Oversized Graphic Hoodie" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Oversized Graphic Hoodie</h3>
-        <p class="text-sm text-gray-700 mb-2">$48</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 10 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-        <img src="https://via.placeholder.com/300x200?text=Leather+Bomber" alt="80s Leather Bomber Jacket" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">80s Leather Bomber Jacket</h3>
-        <p class="text-sm text-gray-700 mb-2">$120</p>
         <div class="flex items-center gap-2 text-xl mb-2">🧥 🛒</div>
         <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
+          <label class="text-sm flex items-center gap-1">
+            <input type="checkbox" checked class="accent-autolistOrange"> Synced
+          </label>
+          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">
+            AI Suggest
+          </button>
+        </div>
+      </div>
+      <!-- Repeat above card for more items -->
+
+      <!-- Additional sample -->
+      <div class="bg-white rounded-xl shadow-lg p-4">
+        <img src="https://via.placeholder.com/300x200?text=Boho+Kimono" alt="Boho Kimono" class="w-full h-40 object-cover rounded mb-3">
+        <h3 class="text-lg font-semibold mb-1">Festival Boho Kimono</h3>
+        <p class="text-sm text-gray-700 mb-2">$39</p>
+        <div class="flex items-center gap-2 text-xl mb-2">🧥</div>
+        <div class="flex justify-between items-center">
+          <label class="text-sm flex items-center gap-1">
+            <input type="checkbox" class="accent-autolistOrange"> Synced
+          </label>
+          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">
+            AI Suggest
+          </button>
         </div>
       </div>
 
@@ -187,7 +115,7 @@
     <div id="aiModal" class="fixed inset-0 hidden bg-black bg-opacity-40 z-50 flex items-center justify-center">
       <div class="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
         <h2 class="text-xl font-bold text-autolistOrange mb-2">AI Suggest</h2>
-        <p class="text-sm text-gray-600">This tool will soon show AI-generated title, tags, and price suggestions based on buyer psychology.</p>
+        <p class="text-sm text-gray-600">This AutoList-exclusive tool uses buyer psychology + tone matching to help you craft listings that convert. Soon you'll see smart title, tag, and price edits right here.</p>
         <button onclick="document.getElementById('aiModal').classList.add('hidden')" class="mt-4 px-4 py-2 bg-autolistOrange text-white rounded hover:bg-orange-600">
           Close
         </button>
@@ -195,130 +123,12 @@
     </div>
 
   </main>
-</div> <!-- End Wrapper -->
-      <!-- Listing Card 11 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Shearling+Jacket" alt="Shearling Aviator Jacket" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Shearling Aviator Jacket</h3>
-        <p class="text-sm text-gray-700 mb-2">$130</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
+</div>
 
-      <!-- Listing Card 12 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Denim+Overalls" alt="Vintage Denim Overalls" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Vintage Denim Overalls</h3>
-        <p class="text-sm text-gray-700 mb-2">$74</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 13 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Sold+Boots" alt="Distressed Leather Boots" class="w-full h-40 object-cover rounded mb-3" />
-        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
-        <h3 class="text-lg font-semibold mb-1">Distressed Leather Boots</h3>
-        <p class="text-sm text-gray-700 mb-2">$95</p>
-        <div class="flex items-center gap-2 text-xl mb-2">👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 14 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Flare+Jeans" alt="70s Flare Jeans" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">70s Flare Jeans</h3>
-        <p class="text-sm text-gray-700 mb-2">$66</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 15 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Festival+Kimono" alt="Festival Boho Kimono" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Festival Boho Kimono</h3>
-        <p class="text-sm text-gray-700 mb-2">$39</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒 🧥</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-      <!-- Listing Card 16 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Cozy+Cardigan" alt="Cozy Knit Cardigan" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Cozy Knit Cardigan</h3>
-        <p class="text-sm text-gray-700 mb-2">$58</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 17 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Silk+Scarf" alt="Vintage Silk Scarf" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Vintage Silk Scarf</h3>
-        <p class="text-sm text-gray-700 mb-2">$28</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🛒</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 18 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Trench+Coat" alt="Camel Trench Coat" class="w-full h-40 object-cover rounded mb-3" />
-        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
-        <h3 class="text-lg font-semibold mb-1">Camel Trench Coat</h3>
-        <p class="text-sm text-gray-700 mb-2">$98</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 🛒</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 19 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Velvet+Dress" alt="Emerald Velvet Dress" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Emerald Velvet Dress</h3>
-        <p class="text-sm text-gray-700 mb-2">$72</p>
-        <div class="flex items-center gap-2 text-xl mb-2">👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-
-      <!-- Listing Card 20 -->
-      <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition relative">
-        <img src="https://via.placeholder.com/300x200?text=Western+Boots" alt="Western Fringe Boots" class="w-full h-40 object-cover rounded mb-3" />
-        <h3 class="text-lg font-semibold mb-1">Western Fringe Boots</h3>
-        <p class="text-sm text-gray-700 mb-2">$105</p>
-        <div class="flex items-center gap-2 text-xl mb-2">🧥 👟</div>
-        <div class="flex justify-between items-center">
-          <label class="text-sm flex items-center gap-1"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-        </div>
-      </div>
-    </div> <!-- End Listings Grid -->
-  </main>
-</div> <!-- End Wrapper -->
-
+<script>
+  function openModal() {
+    document.getElementById('aiModal').classList.remove('hidden');
+  }
+</script>
 </body>
 </html>
