@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Listings | AutoList Canada</title>
-  <link rel="icon" href="/assets/favicon.ico">
+  <title>Listings | AutoList Canada</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,149 +12,109 @@
           colors: {
             autolistYellow: '#f4b242',
             autolistOrange: '#e77512',
-            autolistMoss: '#848f67',
-            autolistPeach: '#f5c88d'
+            autolistMoss: '#848f67'
           },
-          fontFamily: {
-            sans: ['Segoe UI', 'Roboto', 'sans-serif']
+          backgroundImage: {
+            'listing-bg': "url('/mnt/data/listings-background.png')",
+            'sidebar-bg': "url('/mnt/data/sidebar-background.png')"
           }
         }
       }
     }
   </script>
-  <style>
-    body {
-      background-color: #fefaf5;
-    }
-    main {
-      background: url("/assets/listing-background.png") no-repeat center center;
-      background-size: cover;
-    }
-    .fallback-img {
-      background-color: #eee;
-      width: 100%;
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
 </head>
-<body class="font-sans text-gray-900">
-<div class="flex min-h-screen">
-  <!-- Sidebar -->
-  <aside class="w-64 bg-autolistOrange text-white flex flex-col justify-between px-6 py-8 sticky top-0">
-    <div>
-      <img src="/assets/autolist-logo.png" alt="AutoList Canada Logo" class="w-16 h-16 mx-auto mb-4 bg-white p-1 rounded-full">
-      <img src="/assets/autolist-title.png" alt="AutoList Canada Title" class="w-40 mx-auto mb-6">
-      <nav class="text-sm space-y-3">
-        <a href="index.html" class="block hover:underline">🏠 Homepage</a>
-        <a href="dashboard.html" class="block hover:underline">📊 Dashboard</a>
-        <a href="listings.html" class="block font-bold underline">📦 Listings</a>
-        <a href="ai-tools.html" class="block hover:underline">🧠 AI Tools</a>
-        <a href="ai-tools-live.html" class="block hover:underline">⚡ Live Tools</a>
-      </nav>
-    </div>
-    <footer class="text-xs opacity-70 mt-6">
-      <a href="terms.html" class="block">Terms of Use</a>
-      <a href="privacy.html" class="block">Privacy Policy</a>
-      <p class="mt-4">© 2025 AutoList Canada</p>
-    </footer>
-  </aside>
+<body class="bg-listing-bg font-sans text-gray-800">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-sidebar-bg bg-cover text-white p-6 flex flex-col justify-between">
+      <div>
+        <img src="/mnt/data/autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20 mx-auto mb-4">
+        <img src="/mnt/data/autolist-title.png" alt="AutoList Canada Title" class="w-full mx-auto mb-8">
+        <nav class="space-y-3 text-sm">
+          <a href="index.html" class="flex items-center gap-2"><span>🏠</span> Homepage</a>
+          <a href="dashboard.html" class="flex items-center gap-2"><span>🌐</span> Dashboard</a>
+          <a href="listings.html" class="font-bold underline flex items-center gap-2"><span>🔍</span> Listings</a>
+          <a href="ai-tools.html" class="flex items-center gap-2"><span>🔮</span> AI Tools</a>
+          <a href="ai-tools-live.html" class="flex items-center gap-2"><span>⚡</span> Live Tools</a>
+        </nav>
+      </div>
+      <footer class="text-xs mt-10 text-white/70">
+        <p><a href="terms.html">Terms of Use</a></p>
+        <p><a href="privacy.html">Privacy Policy</a></p>
+        <p class="mt-2">&copy; 2025 AutoList Canada</p>
+      </footer>
+    </aside>
 
-  <!-- Main Content -->
-  <main class="flex-1 px-8 py-10">
-    <h1 class="text-4xl font-bold text-autolistOrange mb-1">Your Listings</h1>
-    <p class="text-sm text-autolistMoss mb-8">Welcome back, Coltin 🌿 | 6 Active Listings | 2 Sold</p>
+    <!-- Main Content -->
+    <main class="flex-1 p-10">
+      <h1 class="text-3xl font-bold text-autolistOrange mb-2">Your Listings</h1>
+      <p class="text-sm text-autolistMoss mb-6">Welcome back, Coltin 🌱 | 6 Active Listings | 2 Sold</p>
 
-    <!-- Filters -->
-    <div class="flex flex-wrap gap-4 mb-10">
-      <input type="text" placeholder="Search..." class="p-2 border border-gray-300 rounded shadow-sm w-60">
-      <select class="p-2 border border-gray-300 rounded">
-        <option>All Platforms</option>
-        <option>eBay</option>
-        <option>Poshmark</option>
-        <option>Depop</option>
-      </select>
-      <select class="p-2 border border-gray-300 rounded">
-        <option>Status</option>
-        <option>Synced</option>
-        <option>Unsynced</option>
-      </select>
-    </div>
-
-    <!-- Listings -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Listing Cards -->
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/levi-jacket.png" alt="Vintage Levi’s Jacket" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Vintage Levi’s Jacket</h2>
-        <p class="text-sm text-gray-700">$65</p>
-        <div class="text-lg mt-1">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mb-8">
+        <input type="text" placeholder="Search..." class="flex-1 p-2 rounded border shadow-sm" />
+        <select class="p-2 border rounded">
+          <option>All Platforms</option>
+        </select>
+        <select class="p-2 border rounded">
+          <option>Status</option>
+        </select>
       </div>
 
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/sneakers.png" alt="Retro Adidas Sneakers" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Retro Adidas Sneakers</h2>
-        <p class="text-sm text-gray-700">$45</p>
-        <div class="text-lg mt-1">👟 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
+      <!-- Listing Table Layout -->
+      <div class="overflow-x-auto rounded shadow">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-orange-100 text-orange-900">
+            <tr>
+              <th class="p-3">Image</th>
+              <th class="p-3">Title</th>
+              <th class="p-3">Price</th>
+              <th class="p-3">Platforms</th>
+              <th class="p-3">Sync</th>
+              <th class="p-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white/80">
+            <tr class="border-t">
+              <td class="p-3">
+                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
+              </td>
+              <td class="p-3 font-semibold">Vintage Levi’s Jacket</td>
+              <td class="p-3">$65</td>
+              <td class="p-3">eBay, Poshmark</td>
+              <td class="p-3"><input type="checkbox" checked></td>
+              <td class="p-3">
+                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
+              </td>
+            </tr>
+            <tr class="border-t">
+              <td class="p-3">
+                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
+              </td>
+              <td class="p-3 font-semibold">Retro Adidas Sneakers</td>
+              <td class="p-3">$45</td>
+              <td class="p-3">eBay, Poshmark</td>
+              <td class="p-3"><input type="checkbox"></td>
+              <td class="p-3">
+                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
+              </td>
+            </tr>
+            <tr class="border-t">
+              <td class="p-3">
+                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
+              </td>
+              <td class="p-3 font-semibold">Burberry Trench Coat</td>
+              <td class="p-3">$210</td>
+              <td class="p-3">eBay</td>
+              <td class="p-3"><input type="checkbox" checked></td>
+              <td class="p-3">
+                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/trench-coat.png" alt="Burberry Trench Coat" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Burberry Trench Coat</h2>
-        <p class="text-sm text-gray-700">$210</p>
-        <div class="text-lg mt-1">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/boho-dress.png" alt="Boho Maxi Dress" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Boho Maxi Dress</h2>
-        <p class="text-sm text-gray-700">$70</p>
-        <div class="text-lg mt-1">👗 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/denim-overalls.png" alt="Vintage Denim Overalls" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Vintage Denim Overalls</h2>
-        <p class="text-sm text-gray-700">$74</p>
-        <div class="text-lg mt-1">🧥 👟</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-lg shadow hover:shadow-lg transition p-4">
-        <img src="/assets/fringe-boots.png" alt="Western Fringe Boots" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\'fallback-img\'>Image not found</div>')" class="mb-2 rounded">
-        <h2 class="font-bold text-sm">Western Fringe Boots</h2>
-        <p class="text-sm text-gray-700">$105</p>
-        <div class="text-lg mt-1">👢 🧥</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+    </main>
+  </div>
 </body>
 </html>
