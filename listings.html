@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Listings | AutoList Canada</title>
   <link rel="icon" href="favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -56,47 +56,54 @@
 
   <!-- Main Content -->
   <main class="flex-1 px-8 py-10">
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4">
-      <h1 class="text-4xl font-bold text-autolistOrange">Your Listings</h1>
-      <div class="flex flex-wrap items-center gap-2">
-        <input type="text" placeholder="Search listings..." class="p-2 border border-gray-300 rounded shadow-sm w-48" />
-        <select class="p-2 border border-gray-300 rounded">
-          <option>All Platforms</option>
-          <option>eBay</option>
-          <option>Poshmark</option>
-          <option>Depop</option>
-        </select>
-        <select class="p-2 border border-gray-300 rounded">
-          <option>Status</option>
-          <option>Synced</option>
-          <option>Unsynced</option>
-        </select>
+    <div class="flex flex-col gap-4 mb-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <h1 class="text-4xl font-bold text-autolistOrange">Your Listings</h1>
+        <div class="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
+          <input type="text" placeholder="Search listings..." class="p-2 border border-gray-300 rounded shadow-sm w-48" />
+          <select class="p-2 border border-gray-300 rounded">
+            <option>All Platforms</option>
+            <option>eBay</option>
+            <option>Poshmark</option>
+            <option>Depop</option>
+          </select>
+          <select class="p-2 border border-gray-300 rounded">
+            <option>Status</option>
+            <option>Synced</option>
+            <option>Unsynced</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-4 text-sm text-gray-700">
+        <p class="text-lg font-semibold text-autolistMoss">Welcome back, Coltin 🌿</p>
+        <p class="mt-1">You've listed <strong>17 items</strong> this week — 4 marked as <strong>SOLD</strong>. Keep up the great work!</p>
       </div>
     </div>
 
-    <!-- Listings + Panels -->
-    <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
-      <!-- Listings Column -->
-      <div class="xl:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Card Example -->
-        <div class="bg-white rounded-xl shadow-lg p-4 relative">
-          <img src="https://via.placeholder.com/300x200?text=Denim+Jacket" class="w-full h-40 object-cover rounded mb-3">
-          <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
-          <h3 class="text-lg font-semibold mb-1">Vintage Levi’s Denim Jacket</h3>
-          <p class="text-sm text-gray-700 mb-2">$78</p>
-          <div class="flex items-center gap-2 text-xl mb-2">🧥 🛒</div>
-          <div class="flex justify-between items-center">
-            <label class="text-sm flex items-center gap-1">
-              <input type="checkbox" checked class="accent-autolistOrange"> Synced
-            </label>
-            <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
-          </div>
+    <!-- Listings Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card 1 Example -->
+      <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition-all relative">
+        <img src="https://via.placeholder.com/300x200?text=Denim+Jacket" alt="Denim Jacket" class="w-full h-40 object-cover rounded mb-3">
+        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
+        <h3 class="text-lg font-semibold mb-1">Vintage Levi’s Denim Jacket</h3>
+        <p class="text-sm text-gray-700 mb-2">$78</p>
+        <div class="flex items-center gap-2 text-xl mb-2">🧥 🛒</div>
+        <div class="flex justify-between items-center">
+          <label class="text-sm flex items-center gap-1">
+            <input type="checkbox" checked class="accent-autolistOrange"> Synced
+          </label>
+          <button onclick="openModal()" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded hover:bg-orange-600">AI Suggest</button>
         </div>
-        <!-- Add more cards... -->
       </div>
+      <!-- Add more cards as needed -->
+    </div>
 
-      <!-- AI Assistant Panel -->
-      <div class="bg-white rounded-xl shadow-md p-4">
+    <!-- Smart Panels -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-10">
+      <!-- AI Assistant -->
+      <div class="bg-white rounded-xl shadow-md p-6">
         <h2 class="text-lg font-bold text-autolistOrange mb-2">Listing AI Assistant</h2>
         <p class="text-sm text-gray-600 mb-2">Tone match. Price logic. Trust boost.</p>
         <ul class="text-sm list-disc list-inside text-gray-700">
@@ -105,20 +112,17 @@
           <li>Flag low-trust phrasing</li>
         </ul>
       </div>
-
-      <!-- Listing Stats Graph Placeholder -->
-      <div class="bg-white rounded-xl shadow-md p-4">
+      <!-- Stats Graph -->
+      <div class="bg-white rounded-xl shadow-md p-6">
         <h2 class="text-lg font-bold text-autolistOrange mb-2">Listing Stats</h2>
-        <div class="text-center text-sm text-gray-600 italic">Sales & Sync Graph Coming Soon</div>
-        <div class="h-32 mt-2 bg-gradient-to-br from-autolistPeach to-autolistYellow rounded"></div>
+        <div class="h-32 bg-gradient-to-r from-autolistPeach to-autolistYellow rounded flex items-center justify-center text-sm italic text-gray-600">Sales & Sync Graph Coming Soon</div>
       </div>
-
-      <!-- Calendar Placeholder -->
-      <div class="bg-white rounded-xl shadow-md p-4">
+      <!-- Calendar -->
+      <div class="bg-white rounded-xl shadow-md p-6">
         <h2 class="text-lg font-bold text-autolistOrange mb-2">Listing Calendar</h2>
-        <div class="grid grid-cols-7 gap-1 text-center text-xs">
+        <div class="grid grid-cols-7 text-center text-xs gap-1">
           <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-          <div class="col-span-7 bg-gray-100 h-24 mt-1 rounded">📅 Launch sync preview</div>
+          <div class="col-span-7 text-center bg-gray-100 p-4 mt-1 rounded">📅 Wednesday: Launch Sync Preview</div>
         </div>
       </div>
     </div>
@@ -127,7 +131,7 @@
     <div id="aiModal" class="fixed inset-0 hidden bg-black bg-opacity-40 z-50 flex items-center justify-center">
       <div class="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
         <h2 class="text-xl font-bold text-autolistOrange mb-2">AI Suggest</h2>
-        <p class="text-sm text-gray-600">This tool analyzes tone, clarity, and emotional trust logic to optimize your listing for buyer psychology.</p>
+        <p class="text-sm text-gray-600">AutoList’s psychology AI is analyzing this listing for clarity, emotional resonance, and price trust logic...</p>
         <button onclick="document.getElementById('aiModal').classList.add('hidden')" class="mt-4 px-4 py-2 bg-autolistOrange text-white rounded hover:bg-orange-600">Close</button>
       </div>
     </div>
@@ -141,3 +145,4 @@
 </script>
 </body>
 </html>
+
