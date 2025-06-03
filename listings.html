@@ -14,8 +14,7 @@
             autolistYellow: '#f4b242',
             autolistOrange: '#e77512',
             autolistMoss: '#848f67',
-            autolistPeach: '#f5c88d',
-            autolistDeepOrange: '#e05a13'
+            autolistPeach: '#f5c88d'
           },
           fontFamily: {
             sans: ['Segoe UI', 'Roboto', 'sans-serif']
@@ -25,7 +24,7 @@
     }
   </script>
   <style>
-    body {
+    main {
       background: url('listing-background.png') no-repeat center center fixed;
       background-size: cover;
     }
@@ -54,14 +53,12 @@
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 px-6 py-8">
-    <div class="mb-6">
-      <h1 class="text-4xl font-bold text-autolistOrange mb-2">Your Listings</h1>
-      <p class="text-sm text-autolistMoss">Welcome back, Coltin 🌿 | 6 Active Listings | 2 Sold</p>
-    </div>
+  <main class="flex-1 px-6 py-10">
+    <h1 class="text-4xl font-bold text-autolistOrange mb-2">Your Listings</h1>
+    <p class="text-sm text-autolistMoss mb-6">Welcome back, Coltin 🌿 | 6 Active Listings | 2 Sold</p>
 
     <!-- Filter/Search -->
-    <div class="flex flex-wrap gap-4 mb-6">
+    <div class="flex flex-wrap gap-4 mb-10">
       <input type="text" placeholder="Search..." class="p-2 border rounded shadow-sm w-48">
       <select class="p-2 border rounded">
         <option>All Platforms</option><option>eBay</option><option>Poshmark</option><option>Depop</option>
@@ -72,76 +69,55 @@
     </div>
 
     <!-- Listings Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Repeatable Card Format -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4 relative">
-        <img src="https://via.placeholder.com/300x200?text=Vintage+Jacket" class="rounded mb-3">
-        <div class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded">SOLD</div>
-        <h3 class="font-semibold">Vintage Levi’s Jacket</h3>
-        <p class="text-sm text-gray-600">$65</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+      <!-- Listing Card Example -->
+      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
+        <img src="levi-jacket.png" alt="Vintage Levi’s Jacket" class="rounded mb-3">
+        <div class="text-sm font-semibold">Vintage Levi’s Jacket</div>
+        <p class="text-gray-600 text-sm">$65</p>
         <div class="text-lg">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
+        <div class="flex justify-between items-center mt-3">
+          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
           <button onclick="openModal('Vintage Levi’s Jacket')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
-      <!-- Duplicate above card 5 more times with different image/text -->
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4">
-        <img src="https://via.placeholder.com/300x200?text=Sneakers" class="rounded mb-3">
-        <h3 class="font-semibold">Retro Adidas Sneakers</h3>
-        <p class="text-sm text-gray-600">$45</p>
+      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
+        <img src="sneakers.png" alt="Retro Adidas Sneakers" class="rounded mb-3">
+        <div class="text-sm font-semibold">Retro Adidas Sneakers</div>
+        <p class="text-gray-600 text-sm">$45</p>
         <div class="text-lg">👟 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
+        <div class="flex justify-between items-center mt-3">
+          <label class="text-sm flex gap-1 items-center"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
           <button onclick="openModal('Retro Adidas Sneakers')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4">
-        <img src="https://via.placeholder.com/300x200?text=Trench+Coat" class="rounded mb-3">
-        <h3 class="font-semibold">Burberry Trench Coat</h3>
-        <p class="text-sm text-gray-600">$210</p>
+      <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all transform hover:-translate-y-1 p-4 min-h-[280px]">
+        <img src="trench-coat.png" alt="Burberry Trench Coat" class="rounded mb-3">
+        <div class="text-sm font-semibold">Burberry Trench Coat</div>
+        <p class="text-gray-600 text-sm">$210</p>
         <div class="text-lg">🧥 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
+        <div class="flex justify-between items-center mt-3">
+          <label class="text-sm flex gap-1 items-center"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
           <button onclick="openModal('Burberry Trench Coat')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
         </div>
       </div>
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4">
-        <img src="https://via.placeholder.com/300x200?text=Fleece" class="rounded mb-3">
-        <h3 class="font-semibold">Cozy Fleece Pullover</h3>
-        <p class="text-sm text-gray-600">$38</p>
-        <div class="text-lg">🧵 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Cozy Fleece Pullover')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4">
-        <img src="https://via.placeholder.com/300x200?text=Vintage+Sweater" class="rounded mb-3">
-        <h3 class="font-semibold">Handmade Wool Sweater</h3>
-        <p class="text-sm text-gray-600">$52</p>
-        <div class="text-lg">🧶 🛒</div>
-        <div class="flex justify-between items-center mt-2">
-          <label class="text-sm"><input type="checkbox" checked class="accent-autolistOrange"> Synced</label>
-          <button onclick="openModal('Handmade Wool Sweater')" class="bg-autolistOrange text-white px-3 py-1 text-xs rounded">AI Suggest</button>
-        </div>
-      </div>
+      <!-- Add 3 more with unique images/text if needed -->
     </div>
 
-    <!-- Panels -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-10">
+    <!-- Listing Intelligence Panels -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
       <div class="bg-white rounded-xl p-6 shadow">
         <h2 class="text-autolistOrange font-semibold text-lg mb-2">AI Assistant</h2>
-        <p class="text-sm text-gray-600 mb-2">Run advanced clarity, tone, and trust analysis.</p>
-        <button onclick="openModal('AI Assistant Preview')" class="bg-autolistOrange text-white px-4 py-2 rounded hover:bg-orange-600">Try Suggestion</button>
+        <p class="text-sm text-gray-600 mb-2">Run clarity, tone, and trust analysis.</p>
+        <button onclick="openModal('AI Assistant Tool')" class="bg-autolistOrange text-white px-4 py-2 rounded hover:bg-orange-600">Try Suggestion</button>
       </div>
       <div class="bg-gradient-to-r from-autolistPeach to-autolistYellow p-6 rounded-xl shadow text-white text-center">
         <h2 class="text-lg font-semibold mb-2">Listing Stats</h2>
         <p class="text-sm">This week: 178 Views • 12 Sales</p>
       </div>
-      <div class="bg-white p-6 rounded-xl shadow">
+      <div class="bg-white p-6 rounded-xl shadow md:col-span-2">
         <h2 class="text-autolistOrange font-semibold text-lg mb-2">Calendar Sync</h2>
-        <p class="text-sm text-gray-600">Friday: Schedule 8 items to crosslist.</p>
+        <p class="text-sm text-gray-600">📅 Friday: Schedule 8 items to crosslist.</p>
       </div>
     </div>
 
@@ -149,7 +125,7 @@
     <div id="aiModal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 max-w-lg">
         <h2 id="modalTitle" class="text-xl font-bold text-autolistOrange mb-2">AI Suggest</h2>
-        <p class="text-sm text-gray-600 mb-4">Running analysis for improved engagement, tone match, and conversion confidence...</p>
+        <p class="text-sm text-gray-600 mb-4">AutoList AI is analyzing for optimal tone, trust, and price psychology...</p>
         <button onclick="closeModal()" class="px-4 py-2 bg-autolistOrange text-white rounded hover:bg-orange-600">Close</button>
       </div>
     </div>
