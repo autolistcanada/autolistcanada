@@ -1,140 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoList Canada – Listings</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       background-image: url('/assets/listings-background.png');
       background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-    .sidebar {
+    aside {
       background-image: url('/assets/sidebar-background.png');
       background-size: cover;
     }
-    .ai-glow:hover {
-      box-shadow: 0 0 10px #f4b242;
-    }
   </style>
 </head>
-<body class="flex text-sm font-sans text-gray-800">
-  <!-- Sidebar -->
-  <aside class="sidebar w-64 min-h-screen p-4 text-white">
-    <img src="/assets/autolist-logo.png" alt="AutoList Logo" class="w-16 mx-auto mb-2 rounded-full">
-    <img src="/assets/autolist-title.png" alt="AutoList Canada" class="w-full mb-4">
+<body class="flex min-h-screen text-[#333]">
 
-    <nav class="space-y-3">
-      <a href="index.html" class="block hover:underline">🏡 Home</a>
-      <a href="dashboard.html" class="block hover:underline">📊 Dashboard</a>
-      <a href="listings.html" class="block font-bold underline">📋 Listings</a>
-      <a href="ai-tools.html" class="block hover:underline">🧠 AI Tools</a>
-      <a href="#" class="block hover:underline">⚡ Live Tools</a>
-      <a href="#" class="block mt-4">How it works</a>
-      <a href="#" class="block">FAQ</a>
-      <a href="#" class="block">Listing Tips</a>
-      <a href="terms.html" class="block">Terms + Service</a>
-      <a href="privacy.html" class="block">Privacy / Legal</a>
+  <!-- Sidebar -->
+  <aside class="w-64 p-4 text-white flex flex-col items-center">
+    <img src="/assets/autolist-logo.png" alt="AutoList Logo" class="w-20 mb-2">
+    <img src="/assets/autolist-title.png" alt="AutoList Title" class="w-32 mb-6">
+    <nav class="flex flex-col gap-6 text-lg">
+      <a href="#" class="hover:text-[#f4b242]">🏠 Home</a>
+      <a href="#" class="hover:text-[#f4b242]">📊 Dashboard</a>
+      <a href="#" class="text-[#f4b242] font-bold">📋 Listings</a>
+      <a href="#" class="hover:text-[#f4b242]">🛠 Tools</a>
+      <a href="#" class="hover:text-[#f4b242]">⚡️ Boost</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-1 p-6 space-y-6">
-    <header>
-      <h1 class="text-2xl font-bold text-orange-600">Your Listings</h1>
-      <p class="text-sm text-green-700">Welcome back, 🌿 | 6 Active | 2 Sold</p>
-
-      <!-- Top UI: Icons, Filters -->
-      <div class="mt-4 flex flex-wrap items-center gap-4">
-        <!-- Search -->
-        <input type="text" placeholder="Search..." class="p-2 border rounded w-64">
-        <!-- Filters -->
-        <select class="p-2 border rounded">
-          <option>All Platforms</option>
-          <option>eBay</option>
-          <option>Poshmark</option>
-        </select>
-        <select class="p-2 border rounded">
-          <option>Status</option>
-          <option>Synced</option>
-          <option>Unsynced</option>
-        </select>
-
-        <!-- Icons -->
-        <div class="ml-auto flex gap-2">
-          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">🎛 Customize</button>
-          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">📦 Bulk Edit</button>
-          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">🧰 Filters</button>
-        </div>
+  <main class="flex-1 p-8 space-y-8">
+    <!-- Title Section -->
+    <header class="flex flex-col md:flex-row justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-[#e77512]">Your Listings</h1>
+        <p class="text-sm text-[#848f67]">Welcome back! 🌿 | 6 Active | 2 Sold</p>
       </div>
-
-      <!-- Graph + Map -->
-      <div class="flex mt-4 gap-4">
-        <div class="bg-white p-4 rounded shadow w-1/2">
-          <h2 class="font-semibold text-red-500">Sales & Psychology Analytics</h2>
-          <div class="mt-2 h-20 bg-gray-100 rounded">[Insert Chart]</div>
-        </div>
-        <div class="bg-white p-4 rounded shadow w-1/2">
-          <h2 class="font-semibold text-purple-700">🌍 World Mapping Analysis</h2>
-        </div>
+      <div class="flex gap-2 mt-4 md:mt-0">
+        <button class="bg-white shadow px-3 py-1 rounded hover:bg-[#f5c88d]">Customize</button>
+        <button class="bg-white shadow px-3 py-1 rounded hover:bg-[#f5c88d]">Bulk Edit</button>
+        <button class="bg-white shadow px-3 py-1 rounded hover:bg-[#f5c88d]">Filters</button>
       </div>
     </header>
 
+    <!-- Search and Filters -->
+    <section class="flex flex-wrap gap-4">
+      <input type="text" placeholder="Search listings..." class="flex-1 p-2 border rounded">
+      <select class="p-2 border rounded">
+        <option>All Platforms</option>
+        <option>eBay</option>
+        <option>Poshmark</option>
+      </select>
+      <select class="p-2 border rounded">
+        <option>Status</option>
+        <option>Active</option>
+        <option>Sold</option>
+      </select>
+    </section>
+
+    <!-- Analytics Boxes -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded shadow">📈 Sales & Psychology Analytics (placeholder chart)</div>
+      <div class="bg-white p-4 rounded shadow">🌎 World Mapping Analysis</div>
+    </section>
+
     <!-- Listings Table -->
-    <section class="bg-white shadow rounded p-4">
-      <table class="w-full text-left border-separate border-spacing-y-2">
-        <thead class="bg-[#f4b242] text-white rounded">
+    <section class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-[#f5c88d] text-left text-sm font-semibold">
           <tr>
-            <th></th>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Platforms</th>
-            <th>Synced</th>
-            <th>Action</th>
+            <th class="px-4 py-2">✓</th>
+            <th class="px-4 py-2">Thumbnail</th>
+            <th class="px-4 py-2">Title</th>
+            <th class="px-4 py-2">Price</th>
+            <th class="px-4 py-2">Platform</th>
+            <th class="px-4 py-2">Synced</th>
+            <th class="px-4 py-2">AI Suggest</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Repeat Row Template -->
-          <tr class="bg-white hover:bg-orange-50 rounded shadow">
-            <td><input type="checkbox" /></td>
-            <td><img src="/assets/thumb1.png" alt="item" class="w-12 h-12 rounded"></td>
-            <td class="font-semibold">Vintage Levi's Jacket</td>
-            <td>$65</td>
-            <td>📦 eBay, 🛍️ Poshmark</td>
-            <td><input type="checkbox" checked /></td>
-            <td><button class="px-3 py-1 bg-orange-500 text-white rounded ai-glow">AI Suggest</button></td>
+        <tbody class="divide-y divide-gray-100">
+          <!-- Repeat this <tr> block for 10 listings -->
+          <tr class="hover:bg-[#fff9f0]">
+            <td class="px-4 py-2"><input type="checkbox"></td>
+            <td class="px-4 py-2"><img src="/assets/thumbnail.png" alt="Item" class="w-12 h-12 rounded"></td>
+            <td class="px-4 py-2 font-bold">Vintage Denim Jacket</td>
+            <td class="px-4 py-2">$65</td>
+            <td class="px-4 py-2">🛍️ Poshmark</td>
+            <td class="px-4 py-2"><input type="checkbox"></td>
+            <td class="px-4 py-2"><button class="bg-[#f4b242] text-white px-2 py-1 rounded hover:bg-[#e77512]">AI Suggest</button></td>
           </tr>
-          <!-- Copy 9 more like above -->
+          <!-- ...more listings... -->
         </tbody>
       </table>
     </section>
 
-    <!-- Pagination + View -->
-    <div class="flex items-center justify-between text-sm text-gray-600">
-      <div>📅 Preview • Week View</div>
-      <div>📖 Page 1 of 16</div>
-      <div>🔲 View: List | 🟨 Grid</div>
-    </div>
-
-    <!-- Footer Tools -->
-    <footer class="flex justify-between mt-8 text-xs text-[#848f67]">
-      <div>
-        <button class="p-2 bg-green-100 rounded hover:bg-green-200">🧩 Misc. Assistant AI</button>
-      </div>
-      <div class="text-center text-blue-600">All Rights Reserved</div>
-      <div class="text-right">
-        <button class="p-2 bg-yellow-200 rounded hover:bg-yellow-300">🛠️ Our Tools for Listings Dashboard</button>
-        <span class="ml-2 text-[#e77512]">🧠 AI-Ready</span>
+    <!-- Footer Tools & Legal -->
+    <footer class="mt-8 space-y-4">
+      <div class="flex justify-between items-center">
+        <div class="bg-white p-2 rounded-full shadow">🧩 Misc. Assistant AI</div>
+        <div class="bg-white p-2 rounded shadow">🛠️ Our Tools for Listings</div>
+        <div class="text-xs text-[#848f67]">📜 All Rights Reserved · AutoList Canada</div>
+        <div class="text-sm">🧠 AI Ready</div>
       </div>
     </footer>
   </main>
 
-  <script>
-    document.querySelectorAll('.ai-glow').forEach(btn => {
-      btn.addEventListener('click', () => alert('AI Suggestion logic goes here.'));
-    });
-  </script>
 </body>
 </html>
