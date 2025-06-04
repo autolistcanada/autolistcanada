@@ -1,120 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listings | AutoList Canada</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada – Listings</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            autolistYellow: '#f4b242',
-            autolistOrange: '#e77512',
-            autolistMoss: '#848f67'
-          },
-          backgroundImage: {
-            'listing-bg': "url('/mnt/data/listings-background.png')",
-            'sidebar-bg': "url('/mnt/data/sidebar-background.png')"
-          }
-        }
-      }
+  <style>
+    body {
+      background-image: url('/assets/listings-background.png');
+      background-size: cover;
     }
-  </script>
+    .sidebar {
+      background-image: url('/assets/sidebar-background.png');
+      background-size: cover;
+    }
+    .ai-glow:hover {
+      box-shadow: 0 0 10px #f4b242;
+    }
+  </style>
 </head>
-<body class="bg-listing-bg font-sans text-gray-800">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-sidebar-bg bg-cover text-white p-6 flex flex-col justify-between">
-      <div>
-        <img src="/mnt/data/autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20 mx-auto mb-4">
-        <img src="/mnt/data/autolist-title.png" alt="AutoList Canada Title" class="w-full mx-auto mb-8">
-        <nav class="space-y-3 text-sm">
-          <a href="index.html" class="flex items-center gap-2"><span>🏠</span> Homepage</a>
-          <a href="dashboard.html" class="flex items-center gap-2"><span>🌐</span> Dashboard</a>
-          <a href="listings.html" class="font-bold underline flex items-center gap-2"><span>🔍</span> Listings</a>
-          <a href="ai-tools.html" class="flex items-center gap-2"><span>🔮</span> AI Tools</a>
-          <a href="ai-tools-live.html" class="flex items-center gap-2"><span>⚡</span> Live Tools</a>
-        </nav>
-      </div>
-      <footer class="text-xs mt-10 text-white/70">
-        <p><a href="terms.html">Terms of Use</a></p>
-        <p><a href="privacy.html">Privacy Policy</a></p>
-        <p class="mt-2">&copy; 2025 AutoList Canada</p>
-      </footer>
-    </aside>
+<body class="flex text-sm font-sans text-gray-800">
+  <!-- Sidebar -->
+  <aside class="sidebar w-64 min-h-screen p-4 text-white">
+    <img src="/assets/autolist-logo.png" alt="AutoList Logo" class="w-16 mx-auto mb-2 rounded-full">
+    <img src="/assets/autolist-title.png" alt="AutoList Canada" class="w-full mb-4">
 
-    <!-- Main Content -->
-    <main class="flex-1 p-10">
-      <h1 class="text-3xl font-bold text-autolistOrange mb-2">Your Listings</h1>
-      <p class="text-sm text-autolistMoss mb-6">Welcome back, Coltin 🌱 | 6 Active Listings | 2 Sold</p>
+    <nav class="space-y-3">
+      <a href="index.html" class="block hover:underline">🏡 Home</a>
+      <a href="dashboard.html" class="block hover:underline">📊 Dashboard</a>
+      <a href="listings.html" class="block font-bold underline">📋 Listings</a>
+      <a href="ai-tools.html" class="block hover:underline">🧠 AI Tools</a>
+      <a href="#" class="block hover:underline">⚡ Live Tools</a>
+      <a href="#" class="block mt-4">How it works</a>
+      <a href="#" class="block">FAQ</a>
+      <a href="#" class="block">Listing Tips</a>
+      <a href="terms.html" class="block">Terms + Service</a>
+      <a href="privacy.html" class="block">Privacy / Legal</a>
+    </nav>
+  </aside>
 
-      <!-- Filters -->
-      <div class="flex flex-wrap gap-4 mb-8">
-        <input type="text" placeholder="Search..." class="flex-1 p-2 rounded border shadow-sm" />
+  <!-- Main Content -->
+  <main class="flex-1 p-6 space-y-6">
+    <header>
+      <h1 class="text-2xl font-bold text-orange-600">Your Listings</h1>
+      <p class="text-sm text-green-700">Welcome back, 🌿 | 6 Active | 2 Sold</p>
+
+      <!-- Top UI: Icons, Filters -->
+      <div class="mt-4 flex flex-wrap items-center gap-4">
+        <!-- Search -->
+        <input type="text" placeholder="Search..." class="p-2 border rounded w-64">
+        <!-- Filters -->
         <select class="p-2 border rounded">
           <option>All Platforms</option>
+          <option>eBay</option>
+          <option>Poshmark</option>
         </select>
         <select class="p-2 border rounded">
           <option>Status</option>
+          <option>Synced</option>
+          <option>Unsynced</option>
         </select>
+
+        <!-- Icons -->
+        <div class="ml-auto flex gap-2">
+          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">🎛 Customize</button>
+          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">📦 Bulk Edit</button>
+          <button class="p-2 bg-orange-200 rounded hover:bg-orange-300">🧰 Filters</button>
+        </div>
       </div>
 
-      <!-- Listing Table Layout -->
-      <div class="overflow-x-auto rounded shadow">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-orange-100 text-orange-900">
-            <tr>
-              <th class="p-3">Image</th>
-              <th class="p-3">Title</th>
-              <th class="p-3">Price</th>
-              <th class="p-3">Platforms</th>
-              <th class="p-3">Sync</th>
-              <th class="p-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white/80">
-            <tr class="border-t">
-              <td class="p-3">
-                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
-              </td>
-              <td class="p-3 font-semibold">Vintage Levi’s Jacket</td>
-              <td class="p-3">$65</td>
-              <td class="p-3">eBay, Poshmark</td>
-              <td class="p-3"><input type="checkbox" checked></td>
-              <td class="p-3">
-                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="p-3">
-                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
-              </td>
-              <td class="p-3 font-semibold">Retro Adidas Sneakers</td>
-              <td class="p-3">$45</td>
-              <td class="p-3">eBay, Poshmark</td>
-              <td class="p-3"><input type="checkbox"></td>
-              <td class="p-3">
-                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="p-3">
-                <img src="https://via.placeholder.com/80" class="w-20 h-20 object-cover rounded">
-              </td>
-              <td class="p-3 font-semibold">Burberry Trench Coat</td>
-              <td class="p-3">$210</td>
-              <td class="p-3">eBay</td>
-              <td class="p-3"><input type="checkbox" checked></td>
-              <td class="p-3">
-                <button class="text-xs bg-autolistOrange hover:bg-orange-600 text-white px-3 py-1 rounded">AI Suggest</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Graph + Map -->
+      <div class="flex mt-4 gap-4">
+        <div class="bg-white p-4 rounded shadow w-1/2">
+          <h2 class="font-semibold text-red-500">Sales & Psychology Analytics</h2>
+          <div class="mt-2 h-20 bg-gray-100 rounded">[Insert Chart]</div>
+        </div>
+        <div class="bg-white p-4 rounded shadow w-1/2">
+          <h2 class="font-semibold text-purple-700">🌍 World Mapping Analysis</h2>
+        </div>
       </div>
-    </main>
-  </div>
+    </header>
+
+    <!-- Listings Table -->
+    <section class="bg-white shadow rounded p-4">
+      <table class="w-full text-left border-separate border-spacing-y-2">
+        <thead class="bg-[#f4b242] text-white rounded">
+          <tr>
+            <th></th>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Platforms</th>
+            <th>Synced</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Repeat Row Template -->
+          <tr class="bg-white hover:bg-orange-50 rounded shadow">
+            <td><input type="checkbox" /></td>
+            <td><img src="/assets/thumb1.png" alt="item" class="w-12 h-12 rounded"></td>
+            <td class="font-semibold">Vintage Levi's Jacket</td>
+            <td>$65</td>
+            <td>📦 eBay, 🛍️ Poshmark</td>
+            <td><input type="checkbox" checked /></td>
+            <td><button class="px-3 py-1 bg-orange-500 text-white rounded ai-glow">AI Suggest</button></td>
+          </tr>
+          <!-- Copy 9 more like above -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Pagination + View -->
+    <div class="flex items-center justify-between text-sm text-gray-600">
+      <div>📅 Preview • Week View</div>
+      <div>📖 Page 1 of 16</div>
+      <div>🔲 View: List | 🟨 Grid</div>
+    </div>
+
+    <!-- Footer Tools -->
+    <footer class="flex justify-between mt-8 text-xs text-[#848f67]">
+      <div>
+        <button class="p-2 bg-green-100 rounded hover:bg-green-200">🧩 Misc. Assistant AI</button>
+      </div>
+      <div class="text-center text-blue-600">All Rights Reserved</div>
+      <div class="text-right">
+        <button class="p-2 bg-yellow-200 rounded hover:bg-yellow-300">🛠️ Our Tools for Listings Dashboard</button>
+        <span class="ml-2 text-[#e77512]">🧠 AI-Ready</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('.ai-glow').forEach(btn => {
+      btn.addEventListener('click', () => alert('AI Suggestion logic goes here.'));
+    });
+  </script>
 </body>
 </html>
