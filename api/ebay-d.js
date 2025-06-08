@@ -8,18 +8,18 @@ export default async function handler(req, res) {
   }
 
   const { challengeCode, verificationToken, endpoint } = req.body;
-  const expectedToken = "AutoListCanadaSecureWebhookToken2025_launch";
 
+  const expectedToken = "AutoListCanadaSecureWebhookToken2025_launch";
   if (verificationToken !== expectedToken) {
     return res.status(400).json({ error: 'Invalid token' });
   }
 
-  const crypto = await import('crypto');
-  const hash = crypto.createHash('sha256');
-  hash.update(challengeCode);
-  hash.update(verificationToken);
-  hash.update(endpoint);
-  const challengeResponse = hash.digest('hex');
+  // Forward to your live Webhook.site inbox
+  const response = await fetch("https://webhook.site/dc1cbf55-8797-4657-a8ce-fcfe84c80e66", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ challengeCode, verificationToken, endpoint })
+  });
 
-  return res.status(200).json({ challengeResponse });
+  return res.status(200).json({ message: 'Forwarded to webhook.site successfully' });
 }
