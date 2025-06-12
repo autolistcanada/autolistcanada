@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   ).toString('base64');
 
   try {
-    const response = await fetch('https://api.sandbox.ebay.com/identity/v1/oauth2/token', {
+    const response = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
