@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const clientId = process.env.EBAY_CLIENT_ID;
   const clientSecret = process.env.EBAY_CLIENT_SECRET;
-  const redirectUri = "https://autolistcanada.ca/api/ebay-auth-callback"; // must match eBay app settings
+  const redirectUri = "https://autoslistcanada.ca/api/ebay-auth-callback";
 
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
