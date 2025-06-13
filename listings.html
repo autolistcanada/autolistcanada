@@ -12,7 +12,7 @@
       background-repeat: no-repeat;
     }
     .sidebar {
-      background-image: url('sidebar-background.png');
+      background-image: url('/sidebar-background.png');
       background-size: cover;
     }
     .hover-glow:hover {
@@ -22,37 +22,34 @@
 </head>
 <body class="min-h-screen flex text-gray-900">
   <!-- Sidebar -->
-  <aside class="sidebar w-20 md:w-60 flex flex-col items-center pt-4 pb-8 shadow-xl">
+  <aside class="sidebar w-20 md:w-60 flex flex-col items-center pt-4 pb-8 shadow-xl text-white">
     <img src="/assets/autolist-logo.png" alt="AutoList Logo" class="w-12 h-12 md:w-16 md:h-16 mb-4">
     <img src="/assets/autolist-title.png" alt="AutoList Title" class="w-24 md:w-40 mb-8">
-    <nav class="flex flex-col gap-6 mt-4 text-xl text-white">
-      <a href="#" class="hover-glow">🏠</a>
-      <a href="#" class="hover-glow">📊</a>
-      <a href="#" class="hover-glow">📋</a>
-      <a href="#" class="hover-glow">🛠️</a>
-      <a href="#" class="hover-glow">⚡</a>
+    <nav class="flex flex-col gap-6 mt-4 text-xl">
+      <a href="/dashboard.html" class="hover-glow">🏠</a>
+      <a href="/listings.html" class="hover-glow font-bold">📋</a>
+      <a href="/ai-tools.html" class="hover-glow">🛠️</a>
+      <a href="/features.html" class="hover-glow">⚙️</a>
+      <a href="/pricing.html" class="hover-glow">💰</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
   <main class="flex-1 p-4 md:p-8 overflow-x-hidden">
-    <!-- Top Title + Welcome -->
     <div class="mb-4">
       <h1 class="text-3xl font-bold text-[#e77512]">Your Listings</h1>
-      <p class="text-sm text-[#848f67]">Welcome back! 🌿 | 6 Active | 2 Sold</p>
+      <p class="text-sm text-[#848f67]">Welcome back! 🌿 | <span id="activeCount">0 Active</span> | <span id="soldCount">0 Sold</span></p>
     </div>
 
     <!-- Search and Filters Row -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-      <input type="text" placeholder="Search listings..." class="flex-1 p-2 border border-gray-300 rounded-lg">
-
+      <input id="searchInput" type="text" placeholder="Search listings..." class="flex-1 p-2 border border-gray-300 rounded-lg">
       <select class="p-2 border border-gray-300 rounded-lg">
         <option>All Platforms</option>
         <option>eBay</option>
         <option>Poshmark</option>
         <option>Depop</option>
       </select>
-
       <select class="p-2 border border-gray-300 rounded-lg">
         <option>Status</option>
         <option>Synced</option>
@@ -61,354 +58,79 @@
       </select>
     </div>
 
-    <!-- Top Right Icons Row -->
+    <!-- Button Row -->
     <div class="flex justify-end gap-4 mb-6">
       <button class="bg-[#f4b242] px-3 py-1 rounded-md text-white shadow hover:bg-[#e77512] transition">Customize</button>
       <button class="bg-[#f4b242] px-3 py-1 rounded-md text-white shadow hover:bg-[#e77512] transition">Bulk Edit</button>
       <button class="bg-[#f4b242] px-3 py-1 rounded-md text-white shadow hover:bg-[#e77512] transition">Filters</button>
     </div>
 
-    <!-- Mini Graph + World Map + Calendar + Pagination -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-      <div class="bg-white shadow rounded-lg p-4">📈 <strong>Sales & Psychology Analytics</strong></div>
-      <div class="bg-white shadow rounded-lg p-4">🌎 <strong>World Mapping Analysis</strong></div>
-      <div class="bg-white shadow rounded-lg p-4">📆 <strong>Calendar Preview</strong><br><span class="text-sm text-gray-500">Week 23 Active</span></div>
-      <div class="bg-white shadow rounded-lg p-4 text-center">
-        <p><strong>1 of 16</strong></p>
-        <div class="flex justify-center gap-2 mt-2">
-          <button class="text-sm text-[#848f67]">◀</button>
-          <button class="text-sm text-[#848f67]">▶</button>
-        </div>
+    <!-- Listings Table -->
+    <div id="listingContainer" class="grid gap-4">
+      <!-- Dynamically injected listings will appear here -->
+    </div>
+
+    <!-- Footer Tool Row -->
+    <div class="mt-8 mb-4 px-4 flex justify-between items-center">
+      <div class="flex space-x-4">
+        <button onclick="openAssistant()" class="bg-[#f4b242] hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow">🧩 Misc. Assistant AI</button>
+        <button onclick="openTools()" class="bg-[#848f67] hover:bg-green-700 text-white px-4 py-2 rounded shadow">🛠️ Our Tools for Listings</button>
       </div>
+      <div class="text-xs text-[#848f67]">© AutoList Canada – All Rights Reserved</div>
+      <div class="text-sm">🧠 <span class="text-blue-500 font-semibold">AI-Ready</span></div>
     </div>
+  </main>
 
-    <!-- Listing View Toggle -->
-    <div class="flex justify-end gap-2 mb-4">
-      <button class="text-xl hover:text-[#e77512]">🔳</button>
-      <button class="text-xl hover:text-[#e77512]">📄</button>
-    </div>
+  <script>
+    const sampleListings = [
+      {
+        title: "Vintage Levi's Denim Jacket",
+        price: "$75",
+        platforms: ["eBay", "Poshmark"],
+        image: "/assets/listing-1.png"
+      },
+      {
+        title: "Boho Macramé Wall Hanging",
+        price: "$38",
+        platforms: ["Etsy"],
+        image: "/assets/listing-2.png"
+      },
+      {
+        title: "Midcentury Floor Lamp",
+        price: "$185",
+        platforms: ["eBay"],
+        image: "/assets/listing-4.png"
+      }
+    ];
 
-    <!-- Listing Rows Begin Here -->
-...
-        <!-- Example Row Format -->
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm">
+    function renderListings() {
+      const container = document.getElementById('listingContainer');
+      container.innerHTML = '';
+      sampleListings.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = "grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm";
+        card.innerHTML = `
           <input type="checkbox">
-          <img src="/assets/listing-1.png" alt="Listing 1" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Vintage Levi’s Denim Jacket</div>
-          <div>$75</div>
-          <div>🛍️ Poshmark</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-orange-50 rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-2.png" alt="Listing 2" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Boho Macramé Wall Hanging</div>
-          <div>$38</div>
-          <div>📦 Etsy</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-3.png" alt="Listing 3" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Retro Adidas Track Jacket</div>
-          <div>$59</div>
-          <div>🛍️ Poshmark</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-orange-50 rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-4.png" alt="Listing 4" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Minimalist Pottery Set</div>
-          <div>$80</div>
-          <div>📦 Etsy</div>
+          <img src="${item.image}" alt="Listing ${index+1}" class="h-12 w-12 object-cover rounded">
+          <div class="col-span-2 font-semibold">${item.title}</div>
+          <div>${item.price}</div>
+          <div>${item.platforms.join(', ')}</div>
           <input type="checkbox">
           <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-5.png" alt="Listing 5" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Mid-Century Chair</div>
-          <div>$145</div>
-          <div>📦 eBay</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-orange-50 rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-6.png" alt="Listing 6" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Antique Brass Candle Holders</div>
-          <div>$42</div>
-          <div>🛍️ Poshmark</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-7.png" alt="Listing 7" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Chunky Knit Throw Blanket</div>
-          <div>$65</div>
-          <div>📦 Etsy</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-orange-50 rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-8.png" alt="Listing 8" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Vintage Glass Pitcher</div>
-          <div>$30</div>
-          <div>📦 eBay</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-white rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-9.png" alt="Listing 9" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Wool Peacoat with Brass Buttons</div>
-          <div>$120</div>
-          <div>🛍️ Poshmark</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-        <div class="grid grid-cols-8 items-center gap-2 px-4 py-2 bg-orange-50 rounded shadow-sm">
-          <input type="checkbox">
-          <img src="/assets/listing-10.png" alt="Listing 10" class="h-12 w-12 object-cover rounded">
-          <div class="col-span-2 font-semibold">Artisan Ceramic Coffee Mug</div>
-          <div>$24</div>
-          <div>📦 Etsy</div>
-          <input type="checkbox">
-          <button class="bg-[#f4b242] text-white px-3 py-1 rounded hover:bg-[#e77512]">AI Suggest</button>
-        </div>
-      </div>
-<!-- Part 3 of 5: Listing Rows + Sync Toggles + AI Suggest Buttons -->
+        `;
+        container.appendChild(card);
+      });
+    }
 
-<!-- Listing Row 1 -->
-<div class="flex items-center bg-white rounded-xl shadow-md p-4 mb-4">
-  <input type="checkbox" class="mr-4">
-  <img src="/assets/listing1-thumb.png" alt="Listing 1" class="w-16 h-16 rounded object-cover mr-4">
-  <div class="flex-1">
-    <div class="font-bold text-lg">Vintage Denim Jacket</div>
-    <div class="text-sm text-gray-600">$65 CAD</div>
-  </div>
-  <div class="flex items-center space-x-2">
-    <span class="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">📦 eBay</span>
-    <span class="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">🛍️ Poshmark</span>
-  </div>
-  <input type="checkbox" class="ml-4 toggle-checkbox">
-  <button class="ml-4 bg-[#f4b242] hover:bg-[#e77512] text-white font-semibold py-1 px-4 rounded shadow transition">AI Suggest</button>
-</div>
+    function openAssistant() {
+      alert("Misc. AI Assistant Opened");
+    }
 
-<!-- Listing Row 2 -->
-<div class="flex items-center bg-white rounded-xl shadow-md p-4 mb-4">
-  <input type="checkbox" class="mr-4">
-  <img src="/assets/listing2-thumb.png" alt="Listing 2" class="w-16 h-16 rounded object-cover mr-4">
-  <div class="flex-1">
-    <div class="font-bold text-lg">Boho Rattan Chair</div>
-    <div class="text-sm text-gray-600">$120 CAD</div>
-  </div>
-  <div class="flex items-center space-x-2">
-    <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">🛒 Facebook</span>
-    <span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">📱 Depop</span>
-  </div>
-  <input type="checkbox" class="ml-4 toggle-checkbox">
-  <button class="ml-4 bg-[#f4b242] hover:bg-[#e77512] text-white font-semibold py-1 px-4 rounded shadow transition">AI Suggest</button>
-</div>
+    function openTools() {
+      alert("Toolbox opened");
+    }
 
-<!-- Listing Row 3 -->
-<div class="flex items-center bg-white rounded-xl shadow-md p-4 mb-4">
-  <input type="checkbox" class="mr-4">
-  <img src="/assets/listing3-thumb.png" alt="Listing 3" class="w-16 h-16 rounded object-cover mr-4">
-  <div class="flex-1">
-    <div class="font-bold text-lg">Leather Messenger Bag</div>
-    <div class="text-sm text-gray-600">$90 CAD</div>
-  </div>
-  <div class="flex items-center space-x-2">
-    <span class="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">👜 Etsy</span>
-  </div>
-  <input type="checkbox" class="ml-4 toggle-checkbox">
-  <button class="ml-4 bg-[#f4b242] hover:bg-[#e77512] text-white font-semibold py-1 px-4 rounded shadow transition">AI Suggest</button>
-</div>
-
-<!-- Listing Row 4 -->
-<div class="flex items-center bg-white rounded-xl shadow-md p-4 mb-4">
-  <input type="checkbox" class="mr-4">
-  <img src="/assets/listing4-thumb.png" alt="Listing 4" class="w-16 h-16 rounded object-cover mr-4">
-  <div class="flex-1">
-    <div class="font-bold text-lg">Midcentury Floor Lamp</div>
-    <div class="text-sm text-gray-600">$185 CAD</div>
-  </div>
-  <div class="flex items-center space-x-2">
-    <span class="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">📦 eBay</span>
-  </div>
-  <input type="checkbox" class="ml-4 toggle-checkbox">
-  <button class="ml-4 bg-[#f4b242] hover:bg-[#e77512] text-white font-semibold py-1 px-4 rounded shadow transition">AI Suggest</button>
-</div>
-<!-- Part 4 of 5: Listing Rows 5–10 -->
-
-<!-- Listing Row 5 -->
-<tr class="bg-white border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample5.png" alt="Listing 5" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Rare Vintage Plaid Blazer</td>
-  <td class="p-4">$52.00</td>
-  <td class="p-4">📦 eBay</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(5)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-<!-- Listing Row 6 -->
-<tr class="bg-gray-50 border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample6.png" alt="Listing 6" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Handwoven Linen Throw</td>
-  <td class="p-4">$30.00</td>
-  <td class="p-4">🛍️ Poshmark</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(6)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-<!-- Listing Row 7 -->
-<tr class="bg-white border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample7.png" alt="Listing 7" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Ceramic Floral Teacup Set</td>
-  <td class="p-4">$42.00</td>
-  <td class="p-4">📦 eBay</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(7)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-<!-- Listing Row 8 -->
-<tr class="bg-gray-50 border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample8.png" alt="Listing 8" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Embroidered Denim Skirt</td>
-  <td class="p-4">$36.00</td>
-  <td class="p-4">🛍️ Poshmark</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(8)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-<!-- Listing Row 9 -->
-<tr class="bg-white border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample9.png" alt="Listing 9" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Vintage Pyrex Mixing Bowls</td>
-  <td class="p-4">$58.00</td>
-  <td class="p-4">📦 eBay</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(9)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-<!-- Listing Row 10 -->
-<tr class="bg-gray-50 border-b hover:bg-yellow-50">
-  <td class="p-4"><input type="checkbox"></td>
-  <td class="p-4"><img src="/assets/sample10.png" alt="Listing 10" class="h-12 rounded"></td>
-  <td class="p-4 font-semibold">Minimalist Art Print</td>
-  <td class="p-4">$22.00</td>
-  <td class="p-4">🛍️ Poshmark</td>
-  <td class="p-4"><input type="checkbox" class="form-checkbox text-orange-500"></td>
-  <td class="p-4">
-    <button onclick="suggestAI(10)" class="bg-[#e77512] hover:bg-orange-600 text-white px-3 py-1 rounded shadow">AI Suggest</button>
-  </td>
-</tr>
-
-</tbody>
-</table>
-</div>
-<!-- End of listings table -->
-<!-- Part 5 of 5: Top Nav Icons, Footer Tools, Scripts, Closing Tags -->
-
-<!-- Top-Right Panel Elements -->
-<div class="flex justify-between items-center mt-6 px-4">
-  <div class="flex items-center space-x-2">
-    <input type="text" placeholder="Search listings..." class="px-3 py-2 border rounded w-full md:w-96 shadow-sm">
-    <select class="border rounded px-2 py-1 text-sm text-gray-700">
-      <option>All Platforms</option>
-      <option>eBay</option>
-      <option>Poshmark</option>
-    </select>
-    <select class="border rounded px-2 py-1 text-sm text-gray-700">
-      <option>Status</option>
-      <option>Active</option>
-      <option>Sold</option>
-    </select>
-  </div>
-
-  <div class="flex space-x-3">
-    <button class="bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded shadow">Customize</button>
-    <button class="bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded shadow">Bulk Edit</button>
-    <button class="bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded shadow">Filters</button>
-    <div class="flex items-center space-x-1">
-      <span class="text-sm">📆 Preview</span>
-      <span class="text-xs text-gray-500">Today</span>
-    </div>
-    <div class="flex items-center space-x-2">
-      <button onclick="prevPage()" class="text-sm px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded">‹</button>
-      <span class="text-sm">1 of 16</span>
-      <button onclick="nextPage()" class="text-sm px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded">›</button>
-    </div>
-    <div class="flex items-center space-x-1">
-      <button onclick="toggleView('list')" class="text-xl hover:text-orange-500">📋</button>
-      <button onclick="toggleView('grid')" class="text-xl hover:text-orange-500">🔳</button>
-    </div>
-  </div>
-</div>
-
-<!-- Footer Tool Row -->
-<div class="mt-8 mb-4 px-4 flex justify-between items-center">
-  <div class="flex space-x-4">
-    <button onclick="openAssistant()" class="bg-[#f4b242] hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow">🧩 Misc. Assistant AI</button>
-    <button onclick="openTools()" class="bg-[#848f67] hover:bg-green-700 text-white px-4 py-2 rounded shadow">🛠️ Our Tools for Listings</button>
-  </div>
-  <div class="text-xs text-[#848f67]">© AutoList Canada – All Rights Reserved</div>
-  <div class="text-sm">🧠 <span class="text-blue-500 font-semibold">AI-Ready</span></div>
-</div>
-
-<!-- Floating Modal Scripts -->
-<script>
-  function suggestAI(id) {
-    alert("AI Suggest activated for Listing #" + id);
-    // In full build: this would call OpenAI or backend with listing data
-  }
-
-  function toggleView(view) {
-    alert("Switched to " + view + " view");
-    // In full build: this would toggle class states for display format
-  }
-
-  function openAssistant() {
-    alert("Misc. AI Assistant Opened");
-    // In full build: this could open a floating modal or side panel
-  }
-
-  function openTools() {
-    alert("Toolbox opened");
-    // In full build: this opens listing-specific AI tool options
-  }
-
-  function prevPage() {
-    alert("Previous page");
-  }
-
-  function nextPage() {
-    alert("Next page");
-  }
-</script>
-
-</main>
-</div>
+    renderListings();
+  </script>
 </body>
 </html>
