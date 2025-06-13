@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const clientId = process.env.EBAY_CLIENT_ID;
   const clientSecret = process.env.EBAY_CLIENT_SECRET;
-  const redirectUri = "https://autoslistcanada.ca/api/ebay-auth-callback";
+  const redirectUri = "https://autoslistcanada.ca/api/ebay-auth-callback"; // ✅ FIXED
 
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
@@ -34,10 +34,10 @@ export default async function handler(req, res) {
 
     console.log("✅ Access Token:", data.access_token);
 
-    // TODO: Save token to Airtable, DB, or session
-    return res.redirect("/dashboard.html"); // success redirect (you can change this)
+    // Future: Save to Airtable, DB, or session
+    return res.redirect("/dashboard.html"); // 🎯 Success redirect
   } catch (err) {
     console.error("OAuth Callback Error:", err);
-    res.status(500).json({ error: "Internal Server Error", message: err.message });
+    return res.status(500).json({ error: "Internal Server Error", message: err.message });
   }
 }
