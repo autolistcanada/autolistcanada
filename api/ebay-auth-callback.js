@@ -2,36 +2,42 @@ export default async function handler(req, res) {
   const { code } = req.query;
 
   if (!code) {
-    return res.status(400).json({ error: 'Missing code from eBay OAuth' });
+    return res.status(400).send("Missing authorization code");
   }
 
-  const credentials = Buffer.from(
-    `${process.env.EBAY_CLIENT_ID}:${process.env.EBAY_CLIENT_SECRET}`
-  ).toString('base64');
+  const clientId = process.env.EBAY_CLIENT_ID;
+  const clientSecret = process.env.EBAY_CLIENT_SECRET;
+  const redirectUri = "https://autolistcanada.ca/api/ebay-auth-callback"; // must match eBay app settings
+
+  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
   try {
-    const response = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
-      method: 'POST',
+    const tokenResponse = await fetch("https://api.ebay.com/identity/v1/oauth2/token", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${credentials}`
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Basic ${credentials}`,
       },
       body: new URLSearchParams({
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         code,
-redirect_uri: 'https://autoslistcanada.ca/api/ebay-auth-callback'
-      })
+        redirect_uri: redirectUri,
+      }),
     });
 
-    const data = await response.json();
+    const data = await tokenResponse.json();
 
-    if (response.ok) {
-      console.log('✅ eBay Access Token:', data.access_token);
-      return res.status(200).json({ success: true, token: data.access_token });
-    } else {
-      return res.status(500).json({ error: data });
+    if (!tokenResponse.ok) {
+      console.error("Token exchange error:", data);
+      return res.status(500).json({ error: "Failed to get access token", details: data });
     }
+
+    console.log("✅ Access Token:", data.access_token);
+
+    // TODO: Save token to Airtable, DB, or session
+    return res.redirect("/dashboard.html"); // success redirect (you can change this)
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error("OAuth Callback Error:", err);
+    res.status(500).json({ error: "Internal Server Error", message: err.message });
   }
 }
