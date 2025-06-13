@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code,
-        redirect_uri: 'https://autolistcanada.vercel.app/api/ebay-auth-callback'
+redirect_uri: 'https://autoslistcanada.ca/api/ebay-auth-callback'
       })
     });
 
