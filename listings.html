@@ -2,87 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada – Your Listings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Listings | AutoList Canada</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('listings-background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: sans-serif;
+    }
+    .sidebar {
+      background-image: url('sidebar-background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .hover-tooltip:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #000;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      z-index: 10;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-yellow-100 to-orange-200 text-gray-800 font-sans">
+<body class="flex min-h-screen text-gray-900">
   <!-- Sidebar -->
-  <div class="fixed top-0 left-0 h-full w-56 bg-gradient-to-b from-green-800 to-yellow-500 p-4 text-white z-40">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 mx-auto mb-6" />
-    <nav class="flex flex-col space-y-4 text-lg">
-      <a href="index.html" class="hover:underline">Home</a>
-      <a href="dashboard.html" class="hover:underline">Dashboard</a>
-      <a href="listings.html" class="font-bold underline">Listings</a>
-      <a href="ai-tools.html" class="hover:underline">AI Tools</a>
-      <a href="#" class="hover:underline">How It Works</a>
-      <a href="#" class="hover:underline">FAQ</a>
-      <a href="#" class="hover:underline">Listing Import</a>
-      <a href="#" class="hover:underline">Terms & Service</a>
-      <a href="#" class="hover:underline">Pricing/Legal</a>
+  <aside class="sidebar w-60 p-4 flex flex-col text-white">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-20 mb-4 mx-auto"/>
+    <nav class="space-y-3">
+      <a href="index.html" class="block font-bold">Home</a>
+      <a href="dashboard.html" class="block">Dashboard</a>
+      <a href="listings.html" class="block font-bold underline">Listings</a>
+      <a href="ai-tools.html" class="block">AI Tools</a>
+      <a href="how-it-works.html" class="block">How It Works</a>
+      <a href="faq.html" class="block">FAQ</a>
+      <a href="import.html" class="block">Listing Import</a>
+      <a href="terms.html" class="block">Terms & Service</a>
+      <a href="pricing.html" class="block">Pricing/Legal</a>
     </nav>
-    <div class="mt-12 text-xs text-white/70">© AutoList Canada</div>
-  </div>
+  </aside>
 
-  <!-- Main content wrapper -->
-  <div class="ml-56 px-6 pt-6">
-    <header class="flex justify-between items-center mb-4">
-      <div>
-        <h1 class="text-3xl font-bold">Your Listings</h1>
-        <p class="text-sm text-gray-600">Welcome back, syncing to access magic.</p>
-      </div>
-      <div class="flex items-center gap-4">
-        <input type="text" placeholder="Search..." class="rounded-full px-4 py-1 border border-gray-400" />
-        <button class="bg-yellow-600 text-white px-3 py-1 rounded-md">Customize</button>
-        <button class="bg-yellow-600 text-white px-3 py-1 rounded-md">Bulk</button>
-      </div>
-    </header>
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <div class="text-3xl font-bold mb-1">Your Listings</div>
+    <div class="text-sm mb-6">Welcome back, syncing to access magic.</div>
 
-    <!-- Toolbar Filters -->
-    <div class="flex justify-end items-center gap-4 text-sm mb-4">
-      <span>1 of 16</span>
-      <button class="hover:underline">List View</button>
-      <button class="hover:underline">Wide View</button>
-    </div>
-
-    <!-- Table Header -->
-    <div class="grid grid-cols-8 text-left font-semibold text-sm bg-orange-300 rounded-t-md py-2 px-2">
-      <div><input type="checkbox" /></div>
-      <div>Image</div>
-      <div>Title</div>
-      <div>Action</div>
-      <div>SKU</div>
-      <div>Price</div>
-      <div>Platforms</div>
-      <div>Status</div>
-    </div>
-
-    <!-- Listing Row -->
-    <div class="grid grid-cols-8 items-center text-sm bg-white/80 border-b border-orange-200 py-2 px-2">
-      <div><input type="checkbox" /></div>
-      <div><img src="placeholder.jpg" class="w-12 h-12 object-cover rounded" alt="item image" /></div>
-      <div>610 Troll</div>
-      <div class="flex space-x-2">
-        <button title="Edit"><img src="icon-edit.png" class="w-5" /></button>
-        <button title="Duplicate"><img src="icon-copy.png" class="w-5" /></button>
-        <button title="Delete"><img src="icon-delete.png" class="w-5" /></button>
-      </div>
-      <div>00174</div>
-      <div>$34.99</div>
-      <div class="flex gap-1">
-        <img src="icon-ebay.png" class="w-5" title="eBay" />
-        <img src="icon-etsy.png" class="w-5" title="Etsy" />
-        <img src="icon-shopify.png" class="w-5" title="Shopify" />
-        <img src="icon-poshmark.png" class="w-5" title="Poshmark" />
-      </div>
-      <div class="text-green-600 font-bold">✅ Synced</div>
+    <div class="overflow-x-auto bg-white bg-opacity-90 shadow rounded-lg">
+      <table class="min-w-full text-sm table-auto border-collapse">
+        <thead class="bg-orange-200 text-gray-700">
+          <tr>
+            <th class="p-3"><input type="checkbox"/></th>
+            <th class="p-3">Image</th>
+            <th class="p-3">Title</th>
+            <th class="p-3">Action</th>
+            <th class="p-3">SKU</th>
+            <th class="p-3">Price</th>
+            <th class="p-3">Platforms</th>
+            <th class="p-3">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Row Template -->
+          <tr class="border-t border-gray-300 hover:bg-orange-50">
+            <td class="p-2 text-center"><input type="checkbox" /></td>
+            <td class="p-2 text-center"><img src="item1.jpg" alt="item" class="w-12 h-12 object-cover mx-auto"/></td>
+            <td class="p-2">610 Troll</td>
+            <td class="p-2 flex justify-center gap-2 relative">
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Edit">✏️</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Duplicate">📄</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Delete">🗑️</span>
+            </td>
+            <td class="p-2">00174</td>
+            <td class="p-2">$34.99</td>
+            <td class="p-2 flex gap-2">
+              <img src="ebay-icon.png" class="w-6 h-6" alt="eBay"/>
+              <img src="etsy-icon.png" class="w-6 h-6" alt="Etsy"/>
+              <img src="shopify-icon.png" class="w-6 h-6" alt="Shopify"/>
+            </td>
+            <td class="p-2 text-green-600 font-bold">✅ Synced</td>
+          </tr>
+          <!-- Duplicate 3 more rows -->
+          <tr class="border-t border-gray-300 hover:bg-orange-50">
+            <td class="p-2 text-center"><input type="checkbox" /></td>
+            <td class="p-2 text-center"><img src="item2.jpg" alt="item" class="w-12 h-12 object-cover mx-auto"/></td>
+            <td class="p-2">Vintage Mug</td>
+            <td class="p-2 flex justify-center gap-2 relative">
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Edit">✏️</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Duplicate">📄</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Delete">🗑️</span>
+            </td>
+            <td class="p-2">00293</td>
+            <td class="p-2">$22.00</td>
+            <td class="p-2 flex gap-2">
+              <img src="poshmark-icon.png" class="w-6 h-6" alt="Poshmark"/>
+              <img src="depop-icon.png" class="w-6 h-6" alt="Depop"/>
+            </td>
+            <td class="p-2 text-yellow-600 font-bold">⏳ Pending</td>
+          </tr>
+          <tr class="border-t border-gray-300 hover:bg-orange-50">
+            <td class="p-2 text-center"><input type="checkbox" /></td>
+            <td class="p-2 text-center"><img src="item3.jpg" alt="item" class="w-12 h-12 object-cover mx-auto"/></td>
+            <td class="p-2">Boho Lamp</td>
+            <td class="p-2 flex justify-center gap-2 relative">
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Edit">✏️</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Duplicate">📄</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Delete">🗑️</span>
+            </td>
+            <td class="p-2">00591</td>
+            <td class="p-2">$59.00</td>
+            <td class="p-2 flex gap-2">
+              <img src="etsy-icon.png" class="w-6 h-6" alt="Etsy"/>
+            </td>
+            <td class="p-2 text-green-600 font-bold">✅ Synced</td>
+          </tr>
+          <tr class="border-t border-gray-300 hover:bg-orange-50">
+            <td class="p-2 text-center"><input type="checkbox" /></td>
+            <td class="p-2 text-center"><img src="item4.jpg" alt="item" class="w-12 h-12 object-cover mx-auto"/></td>
+            <td class="p-2">Denim Jacket</td>
+            <td class="p-2 flex justify-center gap-2 relative">
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Edit">✏️</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Duplicate">📄</span>
+              <span class="hover-tooltip cursor-pointer" data-tooltip="Delete">🗑️</span>
+            </td>
+            <td class="p-2">00844</td>
+            <td class="p-2">$42.50</td>
+            <td class="p-2 flex gap-2">
+              <img src="ebay-icon.png" class="w-6 h-6" alt="eBay"/>
+            </td>
+            <td class="p-2 text-red-600 font-bold">❌ Error</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Footer -->
-    <footer class="mt-10 text-xs text-gray-700 flex justify-between border-t pt-4">
-      <div class="italic">All Rights Reserved</div>
-      <div class="text-sm font-semibold">Our Tools for Listing Dashboard — AI 🔮</div>
+    <footer class="mt-6 text-xs text-gray-700 flex justify-between items-center">
+      <span>All Rights Reserved</span>
+      <div class="text-right space-y-1">
+        <div>Our Tools for Listing Dashboard — <span class="font-bold">AI 🧠</span></div>
+        <div>Misc Adjust AI</div>
+      </div>
     </footer>
-  </div>
+  </main>
 </body>
 </html>
