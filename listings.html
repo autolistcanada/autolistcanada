@@ -2,106 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Listings | AutoList Canada</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-image: url('images/listings-background.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-    }
-    .sidebar-bg {
-      background-image: url('images/sidebar-background.png');
-      background-size: cover;
-    }
-    .platform-icon {
-      width: 24px;
-      height: 24px;
-    }
-    .language-toggle:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada – Your Listings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="text-gray-900 font-sans">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-60 sidebar-bg text-white flex flex-col items-center py-6 space-y-6">
-      <img src="images/autolist-logo.png" alt="AutoList Canada Logo" class="w-16 h-16"/>
-      <img src="images/autolist-title.png" alt="AutoList Canada" class="w-32"/>
-      <nav class="mt-10 space-y-3 text-sm">
-        <a href="index.html" class="block hover:underline">Home</a>
-        <a href="dashboard.html" class="block hover:underline">Dashboard</a>
-        <a href="listings.html" class="block font-bold underline">Listings</a>
-        <a href="ai-tools.html" class="block hover:underline">AI Tools (Demo)</a>
-        <a href="ai-tools-live.html" class="block hover:underline">AI Tools (Live)</a>
-      </nav>
-      <div class="mt-auto">
-        <button onclick="toggleLanguage()" class="language-toggle text-xs mt-4">🇨🇦 Français / English</button>
-      </div>
-    </aside>
-
-    <!-- Main content -->
-    <main class="flex-1 px-6 py-8">
-      <h1 class="text-2xl font-bold mb-4">Your Listings</h1>
-
-      <!-- Filters -->
-      <div class="flex flex-wrap gap-4 mb-6">
-        <input type="text" placeholder="Search title..." class="px-4 py-2 border rounded w-64"/>
-        <select class="px-4 py-2 border rounded">
-          <option>All Platforms</option>
-          <option>eBay</option>
-          <option>Poshmark</option>
-          <option>Facebook Marketplace</option>
-        </select>
-        <select class="px-4 py-2 border rounded">
-          <option>Status: All</option>
-          <option>Active</option>
-          <option>Sold</option>
-        </select>
-        <button class="px-4 py-2 bg-yellow-500 text-white rounded">Filter</button>
-      </div>
-
-      <!-- Listings Table -->
-      <div class="space-y-4">
-        <!-- Listing Row Template (repeated 10 times) -->
-        <div class="bg-white bg-opacity-80 rounded-lg shadow p-4 flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <img src="https://i.ebayimg.com/images/g/abc123.jpg" alt="Listing Image" class="w-20 h-20 object-cover rounded"/>
-            <div>
-              <a href="https://www.ebay.ca/itm/1234567890" target="_blank" class="text-lg font-semibold hover:underline">Vintage Nike Crewneck Grey XL</a>
-              <div class="text-sm text-gray-600 mt-1">Listed on: <strong>eBay</strong></div>
-              <div class="flex items-center mt-1 gap-2">
-                <img src="images/ebay-icon.png" alt="eBay" class="platform-icon"/>
-                <img src="images/poshmark-icon.png" alt="Poshmark" class="platform-icon opacity-30"/>
-                <img src="images/fbmarket-icon.png" alt="Facebook Marketplace" class="platform-icon opacity-30"/>
-              </div>
-            </div>
-          </div>
-          <div class="text-right space-y-2">
-            <div class="text-xl font-bold">$64.99</div>
-            <div class="flex gap-2">
-              <button class="px-3 py-1 text-sm bg-orange-500 text-white rounded hover:bg-orange-600">AI Suggest</button>
-              <label class="flex items-center space-x-2 text-sm">
-                <input type="checkbox" checked class="form-checkbox text-green-500"/>
-                <span>Sync</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Repeat 9 more listings below (identical format with updated titles, images, links) -->
-        <!-- ... You can replace with real content in future updates ... -->
-      </div>
-    </main>
+<body class="bg-gradient-to-br from-yellow-100 to-orange-200 text-gray-800 font-sans">
+  <!-- Sidebar -->
+  <div class="fixed top-0 left-0 h-full w-56 bg-gradient-to-b from-green-800 to-yellow-500 p-4 text-white z-40">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 mx-auto mb-6" />
+    <nav class="flex flex-col space-y-4 text-lg">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="dashboard.html" class="hover:underline">Dashboard</a>
+      <a href="listings.html" class="font-bold underline">Listings</a>
+      <a href="ai-tools.html" class="hover:underline">AI Tools</a>
+      <a href="#" class="hover:underline">How It Works</a>
+      <a href="#" class="hover:underline">FAQ</a>
+      <a href="#" class="hover:underline">Listing Import</a>
+      <a href="#" class="hover:underline">Terms & Service</a>
+      <a href="#" class="hover:underline">Pricing/Legal</a>
+    </nav>
+    <div class="mt-12 text-xs text-white/70">© AutoList Canada</div>
   </div>
 
-  <script>
-    function toggleLanguage() {
-      alert("French/English toggle coming soon!");
-    }
-  </script>
+  <!-- Main content wrapper -->
+  <div class="ml-56 px-6 pt-6">
+    <header class="flex justify-between items-center mb-4">
+      <div>
+        <h1 class="text-3xl font-bold">Your Listings</h1>
+        <p class="text-sm text-gray-600">Welcome back, syncing to access magic.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <input type="text" placeholder="Search..." class="rounded-full px-4 py-1 border border-gray-400" />
+        <button class="bg-yellow-600 text-white px-3 py-1 rounded-md">Customize</button>
+        <button class="bg-yellow-600 text-white px-3 py-1 rounded-md">Bulk</button>
+      </div>
+    </header>
+
+    <!-- Toolbar Filters -->
+    <div class="flex justify-end items-center gap-4 text-sm mb-4">
+      <span>1 of 16</span>
+      <button class="hover:underline">List View</button>
+      <button class="hover:underline">Wide View</button>
+    </div>
+
+    <!-- Table Header -->
+    <div class="grid grid-cols-8 text-left font-semibold text-sm bg-orange-300 rounded-t-md py-2 px-2">
+      <div><input type="checkbox" /></div>
+      <div>Image</div>
+      <div>Title</div>
+      <div>Action</div>
+      <div>SKU</div>
+      <div>Price</div>
+      <div>Platforms</div>
+      <div>Status</div>
+    </div>
+
+    <!-- Listing Row -->
+    <div class="grid grid-cols-8 items-center text-sm bg-white/80 border-b border-orange-200 py-2 px-2">
+      <div><input type="checkbox" /></div>
+      <div><img src="placeholder.jpg" class="w-12 h-12 object-cover rounded" alt="item image" /></div>
+      <div>610 Troll</div>
+      <div class="flex space-x-2">
+        <button title="Edit"><img src="icon-edit.png" class="w-5" /></button>
+        <button title="Duplicate"><img src="icon-copy.png" class="w-5" /></button>
+        <button title="Delete"><img src="icon-delete.png" class="w-5" /></button>
+      </div>
+      <div>00174</div>
+      <div>$34.99</div>
+      <div class="flex gap-1">
+        <img src="icon-ebay.png" class="w-5" title="eBay" />
+        <img src="icon-etsy.png" class="w-5" title="Etsy" />
+        <img src="icon-shopify.png" class="w-5" title="Shopify" />
+        <img src="icon-poshmark.png" class="w-5" title="Poshmark" />
+      </div>
+      <div class="text-green-600 font-bold">✅ Synced</div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-xs text-gray-700 flex justify-between border-t pt-4">
+      <div class="italic">All Rights Reserved</div>
+      <div class="text-sm font-semibold">Our Tools for Listing Dashboard — AI 🔮</div>
+    </footer>
+  </div>
 </body>
 </html>
