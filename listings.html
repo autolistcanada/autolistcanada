@@ -3,162 +3,128 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Listings</title>
+    <title>Your Listings | AutoList Canada</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        background-image: url('listings-background.png');
+        background: url('/images/listings-background.png') no-repeat center center fixed;
         background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
         font-family: 'Inter', sans-serif;
-      }
-      .sidebar {
-        background-image: url('sidebar-background.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-      .tooltip {
-        position: absolute;
-        background: #333;
-        color: #fff;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        display: none;
-        z-index: 9999;
       }
     </style>
   </head>
   <body class="flex min-h-screen">
     <!-- Sidebar -->
-    <div class="sidebar w-64 p-6 text-white flex flex-col justify-between">
-      <div>
-        <img src="logo.png" alt="Logo" class="w-20 h-20 mb-6" />
-        <nav class="flex flex-col gap-4 text-lg font-semibold">
-          <a href="index.html">Home</a>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="listings.html" class="underline">Listings</a>
-          <a href="ai-tools.html">AI Tools</a>
-          <a href="#">How It Works</a>
-          <a href="#">FAQ</a>
-          <a href="#">Listing Import</a>
-          <a href="#">Terms & Service</a>
-          <a href="#">Pricing/Legal</a>
-        </nav>
+    <aside class="w-60 flex-shrink-0 text-white" style="background: url('/images/sidebar-background.png') no-repeat center center / cover">
+      <div class="p-4">
+        <img src="/images/autolist-logo.png" alt="Logo" class="w-10 mb-2" />
+        <img src="/images/autolist-title.png" alt="AutoList Canada" class="w-36" />
       </div>
-    </div>
+      <nav class="pl-4 space-y-4 text-sm mt-6">
+        <a href="index.html" class="block hover:underline">Home</a>
+        <a href="dashboard.html" class="block hover:underline">Dashboard</a>
+        <a href="listings.html" class="block font-bold underline">Listings</a>
+        <a href="ai-tools.html" class="block hover:underline">AI Tools</a>
+        <a href="how-it-works.html" class="block hover:underline">How It Works</a>
+        <a href="faq.html" class="block hover:underline">FAQ</a>
+        <a href="import.html" class="block hover:underline">Listing Import</a>
+        <a href="terms.html" class="block hover:underline">Terms & Service</a>
+        <a href="pricing.html" class="block hover:underline">Pricing/Legal</a>
+      </nav>
+    </aside>
 
-    <!-- Main Listings Area -->
-    <div class="flex-1 p-10 text-gray-900">
+    <!-- Main Content -->
+    <main class="flex-1 p-6 max-w-[1000px] mx-auto text-gray-900">
       <h1 class="text-3xl font-bold mb-1">Your Listings</h1>
-      <p class="mb-6 text-sm">Welcome back, syncing to access magic.</p>
+      <p class="mb-6 text-sm text-gray-600">Welcome back, syncing to <span class="text-orange-600 font-medium">access magic</span>.</p>
 
-      <div class="overflow-auto bg-white/80 backdrop-blur rounded-xl">
-        <table class="table-auto w-full text-left">
-          <thead class="bg-orange-200 text-gray-800">
+      <div class="bg-white bg-opacity-90 rounded-lg shadow overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-orange-100 text-left">
             <tr>
-              <th class="px-4 py-2"><input type="checkbox" /></th>
-              <th class="px-4 py-2">Image</th>
-              <th class="px-4 py-2">Title</th>
-              <th class="px-4 py-2">Action</th>
-              <th class="px-4 py-2">SKU</th>
-              <th class="px-4 py-2">Price</th>
-              <th class="px-4 py-2">Platforms</th>
-              <th class="px-4 py-2">Status</th>
+              <th class="p-3">Image</th>
+              <th class="p-3">Title</th>
+              <th class="p-3">Action</th>
+              <th class="p-3">SKU</th>
+              <th class="p-3">Price</th>
+              <th class="p-3">Platforms</th>
+              <th class="p-3">Status</th>
             </tr>
           </thead>
-          <tbody class="text-sm">
-            <!-- Sample Rows -->
-            <tr class="border-t bg-white hover:bg-orange-50">
-              <td class="px-4 py-2"><input type="checkbox" /></td>
-              <td class="px-4 py-2"><img src="item.png" alt="item" class="w-12" /></td>
-              <td class="px-4 py-2">610 Troll</td>
-              <td class="px-4 py-2 flex gap-3">
-                <button onclick="showModal('edit')" title="Edit">✏️</button>
-                <button onclick="showModal('ai')" title="AI Suggest">📄</button>
-                <button title="Delete">🗑️</button>
+          <tbody class="divide-y divide-orange-200">
+            <!-- Listing Row -->
+            <tr>
+              <td class="p-3"><img src="https://placehold.co/60x60" alt="610 Troll" class="rounded" /></td>
+              <td class="p-3 font-medium">610 Troll</td>
+              <td class="p-3 space-x-2">
+                <button class="group relative">
+                  <span class="text-orange-600 hover:text-orange-800">✏️</span>
+                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span>
+                </button>
+                <button class="group relative">
+                  <span class="text-gray-700 hover:text-black">📄</span>
+                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span>
+                </button>
+                <button class="group relative">
+                  <span class="text-red-600 hover:text-red-800">🗑️</span>
+                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span>
+                </button>
               </td>
-              <td class="px-4 py-2">00174</td>
-              <td class="px-4 py-2">$34.99</td>
-              <td class="px-4 py-2">🛒 eBay, Etsy</td>
-              <td class="px-4 py-2 text-green-600 font-semibold">✅ Synced</td>
+              <td class="p-3">00174</td>
+              <td class="p-3">$34.99</td>
+              <td class="p-3 flex items-center gap-2">
+                <span>🛒</span> eBay, Etsy
+              </td>
+              <td class="p-3 text-green-600 font-semibold">✅ Synced</td>
             </tr>
-            <tr class="border-t bg-white hover:bg-orange-50">
-              <td class="px-4 py-2"><input type="checkbox" /></td>
-              <td class="px-4 py-2"><img src="item.png" alt="item" class="w-12" /></td>
-              <td class="px-4 py-2">Vintage Mug</td>
-              <td class="px-4 py-2 flex gap-3">
-                <button onclick="showModal('edit')" title="Edit">✏️</button>
-                <button onclick="showModal('ai')" title="AI Suggest">📄</button>
-                <button title="Delete">🗑️</button>
+            <tr>
+              <td class="p-3"><img src="https://placehold.co/60x60" alt="Vintage Mug" class="rounded" /></td>
+              <td class="p-3 font-medium">Vintage Mug</td>
+              <td class="p-3 space-x-2">
+                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
+                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
+                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
               </td>
-              <td class="px-4 py-2">00293</td>
-              <td class="px-4 py-2">$22.00</td>
-              <td class="px-4 py-2">🛒 eBay</td>
-              <td class="px-4 py-2 text-yellow-500 font-semibold">⏳ Pending</td>
+              <td class="p-3">00293</td>
+              <td class="p-3">$22.00</td>
+              <td class="p-3">🛒 eBay</td>
+              <td class="p-3 text-yellow-600 font-semibold">⏳ Pending</td>
             </tr>
-            <tr class="border-t bg-white hover:bg-orange-50">
-              <td class="px-4 py-2"><input type="checkbox" /></td>
-              <td class="px-4 py-2"><img src="item.png" alt="item" class="w-12" /></td>
-              <td class="px-4 py-2">Boho Lamp</td>
-              <td class="px-4 py-2 flex gap-3">
-                <button onclick="showModal('edit')" title="Edit">✏️</button>
-                <button onclick="showModal('ai')" title="AI Suggest">📄</button>
-                <button title="Delete">🗑️</button>
+            <tr>
+              <td class="p-3"><img src="https://placehold.co/60x60" alt="Boho Lamp" class="rounded" /></td>
+              <td class="p-3 font-medium">Boho Lamp</td>
+              <td class="p-3 space-x-2">
+                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
+                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
+                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
               </td>
-              <td class="px-4 py-2">00591</td>
-              <td class="px-4 py-2">$59.00</td>
-              <td class="px-4 py-2">🛒 Etsy</td>
-              <td class="px-4 py-2 text-green-600 font-semibold">✅ Synced</td>
+              <td class="p-3">00591</td>
+              <td class="p-3">$59.00</td>
+              <td class="p-3">🛒 Etsy</td>
+              <td class="p-3 text-green-600 font-semibold">✅ Synced</td>
             </tr>
-            <tr class="border-t bg-white hover:bg-orange-50">
-              <td class="px-4 py-2"><input type="checkbox" /></td>
-              <td class="px-4 py-2"><img src="item.png" alt="item" class="w-12" /></td>
-              <td class="px-4 py-2">Denim Jacket</td>
-              <td class="px-4 py-2 flex gap-3">
-                <button onclick="showModal('edit')" title="Edit">✏️</button>
-                <button onclick="showModal('ai')" title="AI Suggest">📄</button>
-                <button title="Delete">🗑️</button>
+            <tr>
+              <td class="p-3"><img src="https://placehold.co/60x60" alt="Denim Jacket" class="rounded" /></td>
+              <td class="p-3 font-medium">Denim Jacket</td>
+              <td class="p-3 space-x-2">
+                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
+                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
+                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
               </td>
-              <td class="px-4 py-2">00844</td>
-              <td class="px-4 py-2">$42.50</td>
-              <td class="px-4 py-2">🛒 Poshmark</td>
-              <td class="px-4 py-2 text-red-500 font-semibold">❌ Error</td>
+              <td class="p-3">00844</td>
+              <td class="p-3">$42.50</td>
+              <td class="p-3">🛒 Poshmark</td>
+              <td class="p-3 text-red-600 font-semibold">❌ Error</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="mt-10 text-right text-sm text-gray-800">
-        <p><strong>Our Tools for Listing Dashboard — AI 🧠</strong></p>
-        <p>Misc Adjust AI</p>
-      </div>
-    </div>
-
-    <!-- Dummy Modals -->
-    <div id="modal-edit" class="fixed hidden inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div class="bg-white p-6 rounded-xl shadow-xl w-96">
-        <h2 class="text-xl font-bold mb-4">Edit Listing</h2>
-        <p class="text-sm text-gray-600">[Dummy modal content]</p>
-        <button onclick="closeModal('edit')" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Close</button>
-      </div>
-    </div>
-    <div id="modal-ai" class="fixed hidden inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div class="bg-white p-6 rounded-xl shadow-xl w-96">
-        <h2 class="text-xl font-bold mb-4">AI Suggestions</h2>
-        <p class="text-sm text-gray-600">[Sample AI suggestion here]</p>
-        <button onclick="closeModal('ai')" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Close</button>
-      </div>
-    </div>
-
-    <script>
-      function showModal(type) {
-        document.getElementById(`modal-${type}`).classList.remove('hidden');
-      }
-      function closeModal(type) {
-        document.getElementById(`modal-${type}`).classList.add('hidden');
-      }
-    </script>
+      <!-- Footer -->
+      <footer class="text-right text-sm mt-10 pt-5 pb-5">
+        <p><strong>Our Tools for Listing Dashboard — AI</strong> 🧠</p>
+        <p class="text-gray-700">Misc Adjust AI</p>
+      </footer>
+    </main>
   </body>
 </html>
