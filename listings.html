@@ -1,130 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Listings | AutoList Canada</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        background: url('/images/listings-background.png') no-repeat center center fixed;
-        background-size: cover;
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-  </head>
-  <body class="flex min-h-screen">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada - Listings</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('/images/listings-background.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Inter', sans-serif;
+    }
+    .sidebar {
+      background: url('/images/sidebar-background.png') no-repeat center center;
+      background-size: cover;
+    }
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+</head>
+<body class="text-white">
+
+  <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <aside class="w-60 flex-shrink-0 text-white" style="background: url('/images/sidebar-background.png') no-repeat center center / cover">
-      <div class="p-4">
-        <img src="/images/autolist-logo.png" alt="Logo" class="w-10 mb-2" />
-        <img src="/images/autolist-title.png" alt="AutoList Canada" class="w-36" />
+    <div class="sidebar w-64 p-4 flex flex-col justify-between">
+      <div>
+        <img src="/images/autolist-logo.png" alt="AutoList Logo" class="w-10 mx-auto mb-4">
+        <img src="/images/autolist-title.png" alt="AutoList Title" class="w-40 mx-auto mb-10">
+        <nav class="space-y-4">
+          <a href="index.html" class="block text-sm hover:underline">🏠 Home</a>
+          <a href="dashboard.html" class="block text-sm hover:underline">📊 Dashboard</a>
+          <a href="listings.html" class="block text-sm font-bold underline">📦 Listings</a>
+          <a href="ai-tools.html" class="block text-sm hover:underline">🧠 AI Tools</a>
+        </nav>
       </div>
-      <nav class="pl-4 space-y-4 text-sm mt-6">
-        <a href="index.html" class="block hover:underline">Home</a>
-        <a href="dashboard.html" class="block hover:underline">Dashboard</a>
-        <a href="listings.html" class="block font-bold underline">Listings</a>
-        <a href="ai-tools.html" class="block hover:underline">AI Tools</a>
-        <a href="how-it-works.html" class="block hover:underline">How It Works</a>
-        <a href="faq.html" class="block hover:underline">FAQ</a>
-        <a href="import.html" class="block hover:underline">Listing Import</a>
-        <a href="terms.html" class="block hover:underline">Terms & Service</a>
-        <a href="pricing.html" class="block hover:underline">Pricing/Legal</a>
-      </nav>
-    </aside>
+      <footer class="text-xs text-center pt-4 mt-auto">
+        <p class="mb-1">Our Tools For Listing Dashboard — AI</p>
+        <p class="mb-1">Misc Adjust AI</p>
+        <p class="text-gray-300">© 2025 AutoList Canada</p>
+      </footer>
+    </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 max-w-[1000px] mx-auto text-gray-900">
-      <h1 class="text-3xl font-bold mb-1">Your Listings</h1>
-      <p class="mb-6 text-sm text-gray-600">Welcome back, syncing to <span class="text-orange-600 font-medium">access magic</span>.</p>
+    <div class="flex-1 p-6 overflow-auto max-w-[1000px] mx-auto">
+      <h1 class="text-3xl font-bold mb-6">Your Listings (VintageCollect-5)</h1>
+      <div class="grid grid-cols-1 gap-4">
 
-      <div class="bg-white bg-opacity-90 rounded-lg shadow overflow-x-auto">
-        <table class="min-w-full text-sm">
-          <thead class="bg-orange-100 text-left">
-            <tr>
-              <th class="p-3">Image</th>
-              <th class="p-3">Title</th>
-              <th class="p-3">Action</th>
-              <th class="p-3">SKU</th>
-              <th class="p-3">Price</th>
-              <th class="p-3">Platforms</th>
-              <th class="p-3">Status</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-orange-200">
-            <!-- Listing Row -->
-            <tr>
-              <td class="p-3"><img src="https://placehold.co/60x60" alt="610 Troll" class="rounded" /></td>
-              <td class="p-3 font-medium">610 Troll</td>
-              <td class="p-3 space-x-2">
-                <button class="group relative">
-                  <span class="text-orange-600 hover:text-orange-800">✏️</span>
-                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span>
-                </button>
-                <button class="group relative">
-                  <span class="text-gray-700 hover:text-black">📄</span>
-                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span>
-                </button>
-                <button class="group relative">
-                  <span class="text-red-600 hover:text-red-800">🗑️</span>
-                  <span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span>
-                </button>
-              </td>
-              <td class="p-3">00174</td>
-              <td class="p-3">$34.99</td>
-              <td class="p-3 flex items-center gap-2">
-                <span>🛒</span> eBay, Etsy
-              </td>
-              <td class="p-3 text-green-600 font-semibold">✅ Synced</td>
-            </tr>
-            <tr>
-              <td class="p-3"><img src="https://placehold.co/60x60" alt="Vintage Mug" class="rounded" /></td>
-              <td class="p-3 font-medium">Vintage Mug</td>
-              <td class="p-3 space-x-2">
-                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
-                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
-                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
-              </td>
-              <td class="p-3">00293</td>
-              <td class="p-3">$22.00</td>
-              <td class="p-3">🛒 eBay</td>
-              <td class="p-3 text-yellow-600 font-semibold">⏳ Pending</td>
-            </tr>
-            <tr>
-              <td class="p-3"><img src="https://placehold.co/60x60" alt="Boho Lamp" class="rounded" /></td>
-              <td class="p-3 font-medium">Boho Lamp</td>
-              <td class="p-3 space-x-2">
-                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
-                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
-                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
-              </td>
-              <td class="p-3">00591</td>
-              <td class="p-3">$59.00</td>
-              <td class="p-3">🛒 Etsy</td>
-              <td class="p-3 text-green-600 font-semibold">✅ Synced</td>
-            </tr>
-            <tr>
-              <td class="p-3"><img src="https://placehold.co/60x60" alt="Denim Jacket" class="rounded" /></td>
-              <td class="p-3 font-medium">Denim Jacket</td>
-              <td class="p-3 space-x-2">
-                <button class="group relative"><span class="text-orange-600">✏️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Edit</span></button>
-                <button class="group relative"><span class="text-gray-700">📄</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Duplicate</span></button>
-                <button class="group relative"><span class="text-red-600">🗑️</span><span class="absolute hidden group-hover:block text-xs bg-gray-800 text-white px-2 py-1 rounded -top-8 left-1/2 -translate-x-1/2">Delete</span></button>
-              </td>
-              <td class="p-3">00844</td>
-              <td class="p-3">$42.50</td>
-              <td class="p-3">🛒 Poshmark</td>
-              <td class="p-3 text-red-600 font-semibold">❌ Error</td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Listing Row Template -->
+        <!-- Repeat this block for each listing -->
+        ${[...Array(10)].map((_, i) => `
+        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex flex-col md:flex-row md:items-center gap-4 border border-white/20">
+          <img src="https://placehold.co/80x80" alt="Listing ${i+1}" class="rounded w-20 h-20 object-cover" />
+          <div class="flex-1">
+            <h2 class="text-lg font-semibold">610 Troll Figurine ${i+1}</h2>
+            <p class="text-sm text-gray-300">SKU: VINTAGE-${1000 + i}</p>
+            <p class="text-sm text-green-400 mt-1">Status: ✅ Synced</p>
+            <a href="https://www.ebay.ca/str/vintagecollect5" target="_blank" class="text-blue-300 underline text-sm">View on eBay</a>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="showTooltip(event, 'Edit Listing')" class="hover:text-yellow-300" title="Edit">✏️</button>
+            <button onclick="showTooltip(event, 'Duplicate Listing')" class="hover:text-blue-300" title="Duplicate">📄</button>
+            <button onclick="showTooltip(event, 'Delete Listing')" class="hover:text-red-400" title="Delete">🗑️</button>
+          </div>
+        </div>
+        `).join('')}
+
+      </div>
+
+      <!-- Future Browser Extension Slot -->
+      <div class="mt-10 text-center text-sm text-gray-300 italic">
+        Browser Extension Sync Slots: Reserved — Extension Module Pending Activation
       </div>
 
       <!-- Footer -->
-      <footer class="text-right text-sm mt-10 pt-5 pb-5">
-        <p><strong>Our Tools for Listing Dashboard — AI</strong> 🧠</p>
-        <p class="text-gray-700">Misc Adjust AI</p>
+      <footer class="mt-10 pt-6 border-t border-white/20 text-xs text-center text-gray-400">
+        <p class="mb-1">Our Tools For Listing Dashboard — AI</p>
+        <p class="mb-1">Misc Adjust AI</p>
+        <p>All rights reserved. AutoList Canada 2025</p>
       </footer>
-    </main>
-  </body>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="tooltip" class="tooltip"></div>
+
+  <script>
+    function showTooltip(e, text) {
+      const tooltip = document.getElementById("tooltip");
+      tooltip.textContent = text;
+      tooltip.style.display = 'block';
+      tooltip.style.left = e.clientX + 10 + 'px';
+      tooltip.style.top = e.clientY + 10 + 'px';
+      setTimeout(() => {
+        tooltip.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+
+</body>
 </html>
