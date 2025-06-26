@@ -1,135 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>How It Works – AutoList Canada</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
-      .fade-in.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    </style>
-  </head>
-  <body class="flex text-gray-900 font-sans" style="background-image: url('how-it-works-background.png'); background-size: cover; background-position: center;">
-    
-    <!-- Sidebar -->
-    <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
-      <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
-      <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
-      <nav class="flex flex-col gap-5 text-sm mt-6">
-        <a href="index.html" class="btn-link">Home</a>
-        <a href="dashboard.html" class="btn-link">Dashboard</a>
-        <a href="listings.html" class="btn-link">Listings</a>
-        <a href="ai-tools.html" class="btn-link">AI Tools</a>
-        <a href="how-it-works.html" class="btn-link text-yellow-300 font-semibold">How It Works</a>
-        <a href="faq.html" class="btn-link">FAQ</a>
-        <a href="listing-import.html" class="btn-link">Listings Import</a>
-        <a href="terms.html" class="btn-link text-xs text-gray-600">Terms of Service</a>
-        <a href="privacy.html" class="btn-link text-xs text-gray-600">Privacy Policy</a>
-      </nav>
-    </aside>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works – AutoList Canada</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observers = document.querySelectorAll(".fade-in");
+      const onScroll = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.1 });
 
-    <!-- Main -->
-    <main class="w-4/5 px-10 py-16 space-y-32 overflow-x-hidden">
+      observers.forEach(el => onScroll.observe(el));
+    });
+  </script>
+</head>
+<body class="flex font-sans text-gray-900">
+  <!-- Sidebar -->
+  <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
+    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
+    <nav class="flex flex-col gap-5 text-sm mt-6 text-left">
+      <a href="index.html" class="btn-link text-orange-200">Home</a>
+      <a href="dashboard.html" class="btn-link text-orange-200">Dashboard</a>
+      <a href="listings.html" class="btn-link text-orange-200">Listings</a>
+      <a href="ai-tools.html" class="btn-link text-orange-200">AI Tools</a>
+      <a href="how-it-works.html" class="btn-link font-bold text-yellow-400">How It Works</a>
+      <a href="#faq" class="btn-link text-orange-200">FAQ</a>
+      <a href="#" class="btn-link text-orange-200">Listings Import</a>
+      <a href="terms.html" class="btn-link text-xs text-orange-100">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-orange-100">Privacy Policy</a>
+    </nav>
+  </aside>
 
-      <!-- HERO -->
-      <section class="text-center fade-in">
-        <h1 class="text-5xl font-extrabold mb-4">Selling Smarter Starts Here.</h1>
-        <p class="text-lg max-w-xl mx-auto mb-6">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
-        <a href="#flow" class="bg-orange-600 text-white px-6 py-3 rounded-full hover:bg-orange-700 transition-all">See What Makes Us Different</a>
-      </section>
+  <!-- Main Content -->
+  <main class="w-4/5 bg-no-repeat bg-cover bg-center" style="background-image: url('how-it-works-background.png');">
+    <section class="py-20 px-10 fade-in">
+      <h1 class="text-4xl font-bold text-center mb-4">Selling Smarter Starts Here.</h1>
+      <p class="text-center max-w-xl mx-auto text-lg">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
+    </section>
 
-      <!-- WHAT IT FIXES -->
-      <section class="bg-white bg-opacity-80 rounded-2xl p-10 shadow-xl fade-in max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold mb-6 text-center">What AutoList Fixes</h2>
-        <ul class="space-y-4 text-lg">
-          <li><strong>Copy-paste burnout →</strong> AI-assisted batch edits</li>
-          <li><strong>Guesswork in titles →</strong> Clarity-backed compression</li>
-          <li><strong>Manual delisting →</strong> Real-time sync tracking</li>
-          <li><strong>Tag stuffing →</strong> Relevance + intent-based scoring</li>
-        </ul>
-        <p class="italic text-center mt-6">“This isn’t just automation. It’s design thinking applied to selling.”</p>
-      </section>
-
-      <!-- FLOW SECTION -->
-      <section id="flow" class="fade-in max-w-5xl mx-auto text-center space-y-12">
-        <h2 class="text-4xl font-bold">The AutoList Flow</h2>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div class="flex flex-col items-center">
-            <img src="flow-import.png" class="h-16 mb-2" alt="Import">
-            <p class="font-semibold">Import</p>
-          </div>
-          <div class="flex flex-col items-center">
-            <img src="flow-ai.png" class="h-16 mb-2" alt="AI Tools">
-            <p class="font-semibold">AI Tools</p>
-          </div>
-          <div class="flex flex-col items-center">
-            <img src="flow-sync.png" class="h-16 mb-2" alt="Sync">
-            <p class="font-semibold">Sync</p>
-          </div>
-          <div class="flex flex-col items-center">
-            <img src="flow-analytics.png" class="h-16 mb-2" alt="Analytics">
-            <p class="font-semibold">Analytics</p>
-          </div>
-          <div class="flex flex-col items-center">
-            <img src="flow-grow.png" class="h-16 mb-2" alt="Grow">
-            <p class="font-semibold">Grow</p>
-          </div>
+    <section class="py-16 fade-in">
+      <h2 class="text-2xl font-semibold text-center mb-6">The AutoList Flow</h2>
+      <div class="flex justify-center gap-8">
+        <div class="flex flex-col items-center">
+          <img src="flow-import.png" class="w-16 h-16" alt="Import">
+          <span class="mt-2 text-sm">Import</span>
         </div>
-      </section>
-
-      <!-- INTELLIGENCE -->
-      <section class="fade-in max-w-4xl mx-auto bg-white bg-opacity-80 rounded-2xl p-10 shadow-xl">
-        <h2 class="text-3xl font-bold mb-6 text-center">AI Listing Intelligence</h2>
-        <ul class="text-left space-y-4">
-          <li><strong>Title Generator:</strong> Clean, compressed, clarity-first titles</li>
-          <li><strong>Tag Assistant:</strong> Filters vague tags and suggests Canadian-relevant keywords</li>
-          <li><strong>Description Composer:</strong> Builds trust, pacing, and buyer engagement</li>
-        </ul>
-        <div class="mt-6 bg-yellow-100 p-4 rounded text-sm">
-          <p><strong>Preview:</strong> <br> <em>“Handcrafted Ceramic Mug” →</em> <span class="text-green-700">“Rustic Ceramic Mug – Cozy, Handmade Feel – Canada Pottery”</span></p>
+        <div class="flex flex-col items-center">
+          <img src="flow-ai.png" class="w-16 h-16" alt="AI Tools">
+          <span class="mt-2 text-sm">AI Tools</span>
         </div>
-      </section>
+        <div class="flex flex-col items-center">
+          <img src="flow-sync.png" class="w-16 h-16" alt="Sync">
+          <span class="mt-2 text-sm">Sync</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="flow-analytics.png" class="w-16 h-16" alt="Analytics">
+          <span class="mt-2 text-sm">Analytics</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="flow-grow.png" class="w-16 h-16" alt="Grow">
+          <span class="mt-2 text-sm">Grow</span>
+        </div>
+      </div>
+    </section>
 
-      <!-- BADGES -->
-      <section class="fade-in flex justify-center gap-8 mt-12">
-        <img src="canadian-owned-badge.png" class="h-14" alt="Canadian Owned" />
-        <img src="ai-powered-tools-badge.png" class="h-14" alt="AI Powered" />
-        <img src="privacy-first-badge.png" class="h-14" alt="Privacy First" />
-      </section>
+    <section class="py-20 px-10 fade-in bg-white bg-opacity-70 rounded-lg mx-12 mt-10 shadow-xl">
+      <h2 class="text-2xl font-semibold mb-4 text-center">AI Listing Intelligence</h2>
+      <ul class="list-disc list-inside space-y-2 text-gray-800">
+        <li><strong>Title Generator:</strong> Creates clarity-first, compressed, buyer-ready titles.</li>
+        <li><strong>Tag Assistant:</strong> Filters vague tags and adds Canadian relevance.</li>
+        <li><strong>Description Composer:</strong> Writes with trust, pacing, and buyer psychology.</li>
+      </ul>
+    </section>
 
-      <!-- CTA -->
-      <section class="text-center fade-in pt-20">
-        <h2 class="text-3xl font-bold mb-4">Try It Free – See How It Works for Your Shop</h2>
-        <a href="dashboard.html" class="bg-orange-700 text-white px-8 py-4 rounded-full text-lg hover:bg-orange-800 transition-all">
-          Get Started Now
-        </a>
-      </section>
+    <section class="py-16 px-10 fade-in">
+      <h2 class="text-2xl font-semibold text-center mb-4">Why This Works</h2>
+      <p class="text-center text-lg italic mb-6">“Decision fatigue kills creativity. You sell more when you feel in control.”</p>
+      <div class="flex justify-center gap-8">
+        <img src="canadian-owned-badge.png" alt="Canadian Owned" class="w-16 h-16">
+        <img src="ai-powered-tools-badge.png" alt="AI Powered Tools" class="w-16 h-16">
+        <img src="privacy-first-badge.png" alt="Privacy First" class="w-16 h-16">
+      </div>
+    </section>
 
-    </main>
-
-    <script>
-      const fadeEls = document.querySelectorAll('.fade-in');
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) entry.target.classList.add('show');
-          });
-        },
-        { threshold: 0.1 }
-      );
-      fadeEls.forEach((el) => observer.observe(el));
-    </script>
-
-  </body>
+    <section class="py-20 px-10 text-center fade-in">
+      <h2 class="text-xl font-bold mb-4">Try It Free — See How It Works for Your Shop</h2>
+      <a href="dashboard.html" class="inline-block bg-orange-600 text-white px-6 py-3 rounded-full text-lg hover:bg-orange-700">Get Started Now</a>
+    </section>
+  </main>
+</body>
 </html>
