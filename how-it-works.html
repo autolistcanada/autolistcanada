@@ -21,7 +21,7 @@
     </style>
   </head>
 
-  <body class="flex bg-orange-50 font-sans text-gray-900 overflow-x-hidden">
+  <body class="flex bg-[url('how-it-works-background.png')] bg-cover bg-center font-sans text-gray-900 overflow-x-hidden">
     <!-- Sidebar -->
     <aside class="w-64 min-h-screen bg-[url('sidebar-background.png')] bg-cover bg-center text-white p-6 flex flex-col">
       <img src="autolist-logo.png" alt="AutoList Logo" class="w-12 h-12 mb-4" />
@@ -31,7 +31,7 @@
         <a href="dashboard.html" class="hover:text-yellow-300">📊 Dashboard</a>
         <a href="listings.html" class="hover:text-yellow-300">📋 Listings</a>
         <a href="ai-tools.html" class="hover:text-yellow-300">🧠 AI Tools</a>
-        <a href="how-it-works.html" class="text-yellow-300 font-semibold">✨ How it Works</a>
+        <a href="./how-it-works.html" class="text-yellow-300 font-semibold">✨ How it Works</a>
         <a href="faq.html" class="hover:text-yellow-300">❓ FAQ</a>
         <a href="listing-import.html" class="hover:text-yellow-300">⬇️ Listing Import</a>
         <a href="terms.html" class="hover:text-yellow-300">📜 Terms & Service</a>
@@ -157,8 +157,8 @@
       </section>
     </main>
 
+    <!-- JS: Scroll Animation -->
     <script>
-      // Scroll animation logic
       const fadeEls = document.querySelectorAll('.fade-in');
       const observer = new IntersectionObserver(
         (entries) => {
