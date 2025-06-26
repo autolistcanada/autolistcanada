@@ -2,150 +2,171 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>How It Works – AutoList Canada</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works - AutoList Canada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      background-image: url('assets/how-it-works-background.png');
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      font-family: 'Inter', sans-serif;
+    .glass {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
-<body class="text-white">
+<body class="bg-cover bg-no-repeat text-gray-900" style="background-image: url('how-it-works-background.png');">
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-64 min-h-screen bg-sidebar-background bg-cover text-white py-10 px-6">
+      <img src="logo.png" alt="AutoList Canada Logo" class="mb-6 w-32" />
+      <nav class="space-y-4">
+        <a href="index.html" class="block hover:underline">Home</a>
+        <a href="dashboard.html" class="block hover:underline">Dashboard</a>
+        <a href="listings.html" class="block hover:underline">Listings</a>
+        <a href="ai-tools.html" class="block hover:underline">AI Tools</a>
+        <a href="how-it-works.html" class="block text-orange-300 font-bold">How It Works</a>
+        <a href="faq.html" class="block hover:underline">FAQ</a>
+        <a href="import.html" class="block hover:underline">Listings Import</a>
+        <a href="terms.html" class="block hover:underline text-sm">Terms of Service</a>
+        <a href="privacy.html" class="block hover:underline text-sm">Privacy Policy</a>
+      </nav>
+    </aside>
 
-  <!-- Sidebar -->
-  <div class="fixed top-0 left-0 h-full w-64 bg-[#005F5F] px-6 py-10 z-50 text-white">
-    <img src="assets/sidebar-logo.png" alt="AutoList Logo" class="mb-6 w-32">
-    <h2 class="text-2xl font-bold text-white mb-10">AutoList Canada</h2>
-    <nav class="space-y-4 font-medium">
-      <a href="index.html" class="block hover:text-orange-400">Home</a>
-      <a href="dashboard.html" class="block hover:text-orange-400">Dashboard</a>
-      <a href="listings.html" class="block hover:text-orange-400">Listings</a>
-      <a href="ai-tools.html" class="block hover:text-orange-400">AI Tools</a>
-      <a href="how-it-works.html" class="block text-orange-300 font-bold">How It Works</a>
-      <a href="faq.html" class="block hover:text-orange-400">FAQ</a>
-      <a href="import.html" class="block hover:text-orange-400">Listings Import</a>
-      <a href="terms.html" class="block text-xs mt-8 hover:text-orange-400">Terms of Service</a>
-      <a href="privacy.html" class="block text-xs hover:text-orange-400">Privacy Policy</a>
-    </nav>
+    <!-- Content -->
+    <main class="flex-1 py-12 px-8 space-y-16">
+      <!-- Hero -->
+      <section class="text-center fade-in">
+        <h1 class="text-4xl font-bold mb-2">Selling Smarter Starts Here.</h1>
+        <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
+      </section>
+
+      <!-- The AutoList Flow Icons -->
+      <section class="flex justify-center items-center gap-6 fade-in">
+        <div class="text-center">
+          <img src="flow-import.png" class="w-10 mx-auto mb-1" alt="Import Icon">
+          <p class="text-sm">Import</p>
+        </div>
+        <div class="text-center">
+          <img src="flow-ai.png" class="w-10 mx-auto mb-1" alt="AI Tools Icon">
+          <p class="text-sm">AI Tools</p>
+        </div>
+        <div class="text-center">
+          <img src="flow-sync.png" class="w-10 mx-auto mb-1" alt="Sync Icon">
+          <p class="text-sm">Sync</p>
+        </div>
+        <div class="text-center">
+          <img src="flow-analytics.png" class="w-10 mx-auto mb-1" alt="Analytics Icon">
+          <p class="text-sm">Analytics</p>
+        </div>
+        <div class="text-center">
+          <img src="flow-grow.png" class="w-10 mx-auto mb-1" alt="Grow Icon">
+          <p class="text-sm">Grow</p>
+        </div>
+      </section>
+
+      <!-- Step-by-Step Listing Flow -->
+      <section class="glass p-8 max-w-4xl mx-auto fade-in">
+        <h2 class="text-xl font-semibold mb-4">Step-by-Step: From Photo to Profit</h2>
+        <ol class="list-decimal ml-6 space-y-2 text-sm">
+          <li><strong>Upload:</strong> Add your item photos</li>
+          <li><strong>AI Enhances:</strong> AutoList generates titles, tags, descriptions, and price</li>
+          <li><strong>Platform Sync:</strong> Select platforms and sync with one click</li>
+          <li><strong>Live Tracking:</strong> See buyer interest, heatmaps (coming soon)</li>
+          <li><strong>Delist Smart:</strong> Auto-removes listings once sold</li>
+        </ol>
+      </section>
+
+      <!-- AI Tools in Action -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto fade-in">
+        <div class="glass p-4 text-sm">
+          <h3 class="font-semibold text-pink-600">Title Generator</h3>
+          <p>Optimizes clarity-first titles to improve click-throughs using decision science.</p>
+        </div>
+        <div class="glass p-4 text-sm">
+          <h3 class="font-semibold text-yellow-600">Tag Assistant</h3>
+          <p>Removes irrelevant tags and adds high-performance Canadian search terms.</p>
+        </div>
+        <div class="glass p-4 text-sm">
+          <h3 class="font-semibold text-green-700">Description Composer</h3>
+          <p>Crafts persuasive copy using trust anchors, pacing psychology, and brand tone.</p>
+        </div>
+      </section>
+
+      <!-- Why AutoList is Different -->
+      <section class="glass p-8 max-w-4xl mx-auto fade-in">
+        <h2 class="text-xl font-semibold mb-4">Why AutoList is Different</h2>
+        <ul class="list-disc ml-6 text-sm space-y-2">
+          <li>Canada’s only psychology-powered crosslisting engine</li>
+          <li>Smart Defaults Engine adapts to your shop’s tone (luxury, cozy, minimalist, etc.)</li>
+          <li>Built-in Tone Trainer ensures consistency across listings</li>
+          <li>Zero hidden tracking or data resale — privacy-first always</li>
+          <li>Rooted in neuroscience: clarity, buyer trust, cognitive ease</li>
+        </ul>
+      </section>
+
+      <!-- You Do vs AutoList Does -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto fade-in">
+        <div class="glass p-4">
+          <h3 class="font-semibold mb-2">You Do</h3>
+          <ul class="list-disc ml-6 text-sm">
+            <li>Upload photos</li>
+            <li>Select platforms</li>
+            <li>Choose tone style</li>
+          </ul>
+        </div>
+        <div class="glass p-4">
+          <h3 class="font-semibold mb-2">AutoList Does</h3>
+          <ul class="list-disc ml-6 text-sm">
+            <li>Generates title, tags, descriptions</li>
+            <li>Pushes listings and auto-delists sold</li>
+            <li>Applies psychology-based templates</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Science Behind the System -->
+      <section class="glass p-8 max-w-4xl mx-auto fade-in">
+        <h2 class="text-xl font-semibold mb-4">The Science Behind the System</h2>
+        <ul class="list-disc ml-6 text-sm space-y-2">
+          <li>40% clarity gain with compressed titles (reduced cognitive load)</li>
+          <li>2x buyer trust with trust language + intent pacing</li>
+          <li>Sellers using AutoList tools list 3x faster</li>
+          <li>Built on behavioral science, attention theory, and tone psychology</li>
+        </ul>
+      </section>
+
+      <!-- CTA -->
+      <section class="text-center fade-in">
+        <p class="italic text-sm mb-2">"Decision fatigue kills creativity. You sell more when you feel in control."</p>
+        <div class="flex justify-center gap-4 mb-4">
+          <img src="canadian-owned-badge.png" class="h-6" alt="Canadian Owned">
+          <img src="ai-powered-tools-badge.png" class="h-6" alt="AI Powered">
+          <img src="privacy-first-badge.png" class="h-6" alt="Privacy First">
+        </div>
+        <a href="import.html" class="inline-block px-6 py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition">Get Started Now</a>
+      </section>
+    </main>
   </div>
 
-  <!-- Main Content -->
-  <div class="ml-64 px-8 py-12 space-y-16">
-
-    <!-- Hero -->
-    <section>
-      <h1 class="text-4xl font-extrabold text-black mb-2">Selling Smarter Starts Here.</h1>
-      <p class="text-lg text-black">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
-    </section>
-
-    <!-- AutoList Flow Icons -->
-    <section class="flex space-x-8 mt-8">
-      <div class="text-center">
-        <img src="assets/flow-import.png" class="mx-auto w-10 h-10" />
-        <p class="mt-2 text-black font-semibold">Import</p>
-      </div>
-      <div class="text-center">
-        <img src="assets/flow-tools.png" class="mx-auto w-10 h-10" />
-        <p class="mt-2 text-black font-semibold">AI Tools</p>
-      </div>
-      <div class="text-center">
-        <img src="assets/flow-sync.png" class="mx-auto w-10 h-10" />
-        <p class="mt-2 text-black font-semibold">Sync</p>
-      </div>
-      <div class="text-center">
-        <img src="assets/flow-analytics.png" class="mx-auto w-10 h-10" />
-        <p class="mt-2 text-black font-semibold">Analytics</p>
-      </div>
-      <div class="text-center">
-        <img src="assets/flow-grow.png" class="mx-auto w-10 h-10" />
-        <p class="mt-2 text-black font-semibold">Grow</p>
-      </div>
-    </section>
-
-    <!-- Step-by-Step -->
-    <section class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 text-black max-w-3xl">
-      <h2 class="text-2xl font-bold mb-4">Step-by-Step: From Photo to Profit</h2>
-      <ol class="list-decimal ml-6 space-y-2">
-        <li><strong>Upload:</strong> Add your item photos</li>
-        <li><strong>AI Enhances:</strong> AutoList generates titles, tags, descriptions, and price</li>
-        <li><strong>Platform Sync:</strong> Select platforms and sync with one click</li>
-        <li><strong>Live Tracking:</strong> See buyer interest, heatmaps (coming soon)</li>
-        <li><strong>Delist Smart:</strong> Auto-removes listings once sold</li>
-      </ol>
-    </section>
-
-    <!-- AI Tools -->
-    <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-black">
-      <div class="bg-white bg-opacity-90 p-4 rounded-lg shadow-md">
-        <h3 class="font-bold">Title Generator</h3>
-        <p class="text-sm">Optimizes clarity-first titles using decision science to improve click-throughs.</p>
-      </div>
-      <div class="bg-white bg-opacity-90 p-4 rounded-lg shadow-md">
-        <h3 class="font-bold">Tag Assistant</h3>
-        <p class="text-sm">Filters irrelevant tags, boosts Canadian SEO terms.</p>
-      </div>
-      <div class="bg-white bg-opacity-90 p-4 rounded-lg shadow-md">
-        <h3 class="font-bold">Description Composer</h3>
-        <p class="text-sm">Uses trust anchors + buyer psychology to improve conversions.</p>
-      </div>
-    </section>
-
-    <!-- Why AutoList Is Different -->
-    <section class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 text-black max-w-4xl">
-      <h2 class="text-2xl font-bold mb-4">Why AutoList is Different</h2>
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Canada’s only psychology-powered crosslisting engine</li>
-        <li>Smart Defaults Engine adapts to tone (cozy, luxury, minimalist)</li>
-        <li>Built-in Tone Trainer ensures brand voice consistency</li>
-        <li>No tracking, resale, or hidden ads — privacy-first always</li>
-        <li>Based in neuroscience: clarity, buyer trust, pacing psychology</li>
-      </ul>
-    </section>
-
-    <!-- You Do vs AutoList Does -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-black">
-      <div class="bg-white bg-opacity-90 p-4 rounded-lg shadow-md">
-        <h3 class="font-bold mb-2">You Do</h3>
-        <ul class="list-disc ml-6 text-sm space-y-1">
-          <li>Upload photos</li>
-          <li>Select platforms</li>
-          <li>Choose tone style</li>
-        </ul>
-      </div>
-      <div class="bg-white bg-opacity-90 p-4 rounded-lg shadow-md">
-        <h3 class="font-bold mb-2">AutoList Does</h3>
-        <ul class="list-disc ml-6 text-sm space-y-1">
-          <li>Generates titles, tags, descriptions</li>
-          <li>Pushes listings + delists sold</li>
-          <li>Applies psychology-based templates</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Science Behind the System -->
-    <section class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 text-black max-w-3xl">
-      <h2 class="text-2xl font-bold mb-4">The Science Behind the System</h2>
-      <ul class="list-disc ml-6 space-y-2">
-        <li>40% clarity gain with compressed titles (reduced cognitive load)</li>
-        <li>2x trust boost when using trust anchors + pacing</li>
-        <li>Sellers using AutoList list 3x faster</li>
-        <li>Built on behavioral science, tone psychology, and decision theory</li>
-      </ul>
-    </section>
-
-    <!-- CTA -->
-    <div class="text-center mt-12">
-      <p class="italic text-black mb-4">"Decision fatigue kills creativity. You sell more when you feel in control."</p>
-      <a href="ai-tools.html" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg">
-        Get Started Now
-      </a>
-    </div>
-
-  </div>
+  <script>
+    // Animate fade-in sections on scroll
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
