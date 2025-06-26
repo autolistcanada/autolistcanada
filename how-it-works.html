@@ -4,25 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works – AutoList Canada</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html {
       scroll-behavior: smooth;
     }
     .fade-in {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
     .fade-in.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const observers = document.querySelectorAll(".fade-in");
-      const onScroll = new IntersectionObserver((entries) => {
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
@@ -30,84 +29,124 @@
         });
       }, { threshold: 0.1 });
 
-      observers.forEach(el => onScroll.observe(el));
+      document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
     });
   </script>
 </head>
-<body class="flex font-sans text-gray-900">
+<body class="flex bg-cover bg-center text-gray-900" style="background-image: url('how-it-works-background.png');">
+
   <!-- Sidebar -->
   <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
     <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
     <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
-    <nav class="flex flex-col gap-5 text-sm mt-6 text-left">
-      <a href="index.html" class="btn-link text-orange-200">Home</a>
-      <a href="dashboard.html" class="btn-link text-orange-200">Dashboard</a>
-      <a href="listings.html" class="btn-link text-orange-200">Listings</a>
-      <a href="ai-tools.html" class="btn-link text-orange-200">AI Tools</a>
-      <a href="how-it-works.html" class="btn-link font-bold text-yellow-400">How It Works</a>
-      <a href="#faq" class="btn-link text-orange-200">FAQ</a>
-      <a href="#" class="btn-link text-orange-200">Listings Import</a>
-      <a href="terms.html" class="btn-link text-xs text-orange-100">Terms of Service</a>
-      <a href="privacy.html" class="btn-link text-xs text-orange-100">Privacy Policy</a>
+    <nav class="flex flex-col gap-5 text-sm mt-6">
+      <a href="index.html" class="btn-link">Home</a>
+      <a href="dashboard.html" class="btn-link">Dashboard</a>
+      <a href="listings.html" class="btn-link">Listings</a>
+      <a href="ai-tools.html" class="btn-link">AI Tools</a>
+      <a href="how-it-works.html" class="btn-link">How It Works</a>
+      <a href="#faq" class="btn-link">FAQ</a>
+      <a href="#" class="btn-link">Listings Import</a>
+      <a href="terms.html" class="btn-link text-xs text-gray-600">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-gray-600">Privacy Policy</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="w-4/5 bg-no-repeat bg-cover bg-center" style="background-image: url('how-it-works-background.png');">
-    <section class="py-20 px-10 fade-in">
-      <h1 class="text-4xl font-bold text-center mb-4">Selling Smarter Starts Here.</h1>
-      <p class="text-center max-w-xl mx-auto text-lg">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
+  <main class="w-4/5 py-16 px-10 space-y-20">
+
+    <!-- Hero -->
+    <section class="fade-in text-center">
+      <h1 class="text-4xl font-bold mb-2">Selling Smarter Starts Here.</h1>
+      <p class="text-lg text-gray-700 max-w-xl mx-auto">AutoList Canada replaces decision fatigue with clarity, flow, and control.</p>
     </section>
 
-    <section class="py-16 fade-in">
-      <h2 class="text-2xl font-semibold text-center mb-6">The AutoList Flow</h2>
-      <div class="flex justify-center gap-8">
-        <div class="flex flex-col items-center">
-          <img src="flow-import.png" class="w-16 h-16" alt="Import">
-          <span class="mt-2 text-sm">Import</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src="flow-ai.png" class="w-16 h-16" alt="AI Tools">
-          <span class="mt-2 text-sm">AI Tools</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src="flow-sync.png" class="w-16 h-16" alt="Sync">
-          <span class="mt-2 text-sm">Sync</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src="flow-analytics.png" class="w-16 h-16" alt="Analytics">
-          <span class="mt-2 text-sm">Analytics</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src="flow-grow.png" class="w-16 h-16" alt="Grow">
-          <span class="mt-2 text-sm">Grow</span>
-        </div>
+    <!-- Visual Flow Section -->
+    <section class="fade-in text-center">
+      <h2 class="text-2xl font-semibold mb-6">The AutoList Flow</h2>
+      <div class="flex justify-center gap-10">
+        <div><img src="flow-import.png" class="h-14 mx-auto mb-1"><p>Import</p></div>
+        <div><img src="flow-ai.png" class="h-14 mx-auto mb-1"><p>AI Tools</p></div>
+        <div><img src="flow-sync.png" class="h-14 mx-auto mb-1"><p>Sync</p></div>
+        <div><img src="flow-analytics.png" class="h-14 mx-auto mb-1"><p>Analytics</p></div>
+        <div><img src="flow-grow.png" class="h-14 mx-auto mb-1"><p>Grow</p></div>
       </div>
     </section>
 
-    <section class="py-20 px-10 fade-in bg-white bg-opacity-70 rounded-lg mx-12 mt-10 shadow-xl">
-      <h2 class="text-2xl font-semibold mb-4 text-center">AI Listing Intelligence</h2>
-      <ul class="list-disc list-inside space-y-2 text-gray-800">
+    <!-- Step-by-Step Journey -->
+    <section class="fade-in bg-white bg-opacity-80 p-8 rounded-xl shadow-xl max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-4">Step-by-Step: From Photo to Profit</h2>
+      <ul class="space-y-4 text-left">
+        <li><strong>1. Upload:</strong> Add your item with photo(s)</li>
+        <li><strong>2. AI Enhances:</strong> Auto-generates title, tags, description, and price</li>
+        <li><strong>3. Platform Sync:</strong> Choose where to list – AutoList syncs in one click</li>
+        <li><strong>4. Live Tracking:</strong> Analytics show interest and buyer activity</li>
+        <li><strong>5. Delist Smart:</strong> Once sold, AutoList removes it from other platforms</li>
+      </ul>
+    </section>
+
+    <!-- AI Tools Section -->
+    <section class="fade-in bg-white bg-opacity-80 p-8 rounded-xl shadow-xl max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-4">AI Listing Intelligence</h2>
+      <ul class="space-y-2">
         <li><strong>Title Generator:</strong> Creates clarity-first, compressed, buyer-ready titles.</li>
         <li><strong>Tag Assistant:</strong> Filters vague tags and adds Canadian relevance.</li>
         <li><strong>Description Composer:</strong> Writes with trust, pacing, and buyer psychology.</li>
       </ul>
     </section>
 
-    <section class="py-16 px-10 fade-in">
-      <h2 class="text-2xl font-semibold text-center mb-4">Why This Works</h2>
-      <p class="text-center text-lg italic mb-6">“Decision fatigue kills creativity. You sell more when you feel in control.”</p>
-      <div class="flex justify-center gap-8">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned" class="w-16 h-16">
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Tools" class="w-16 h-16">
-        <img src="privacy-first-badge.png" alt="Privacy First" class="w-16 h-16">
+    <!-- Why We're Different -->
+    <section class="fade-in bg-white bg-opacity-80 p-8 rounded-xl shadow-xl max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-4">Why AutoList is Different</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Only Canadian-built crosslisting engine</li>
+        <li>Rooted in cognitive and clarity science</li>
+        <li>Smart Defaults Engine that adapts to your store’s style</li>
+        <li>Privacy-first: We never resell or misuse your data</li>
+        <li>Tone Trainer for consistent brand voice</li>
+      </ul>
+    </section>
+
+    <!-- Manual vs Auto Table -->
+    <section class="fade-in text-center">
+      <h2 class="text-2xl font-semibold mb-4">What You Do vs What AutoList Does</h2>
+      <div class="grid grid-cols-2 gap-4 max-w-4xl mx-auto text-left">
+        <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow">
+          <h3 class="font-bold text-lg mb-2">You Do</h3>
+          <ul class="list-disc list-inside">
+            <li>Upload items</li>
+            <li>Choose platforms</li>
+            <li>Select tone preferences</li>
+          </ul>
+        </div>
+        <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow">
+          <h3 class="font-bold text-lg mb-2">AutoList Does</h3>
+          <ul class="list-disc list-inside">
+            <li>Generates full listing details</li>
+            <li>Syncs across marketplaces</li>
+            <li>Tracks and delists automatically</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="py-20 px-10 text-center fade-in">
-      <h2 class="text-xl font-bold mb-4">Try It Free — See How It Works for Your Shop</h2>
-      <a href="dashboard.html" class="inline-block bg-orange-600 text-white px-6 py-3 rounded-full text-lg hover:bg-orange-700">Get Started Now</a>
+    <!-- Trust & Science Section -->
+    <section class="fade-in text-center">
+      <h2 class="text-2xl font-semibold mb-4">Why This Works</h2>
+      <p class="italic text-lg mb-6">"Decision fatigue kills creativity. You sell more when you feel in control."</p>
+      <div class="flex justify-center gap-8">
+        <img src="canadian-owned-badge.png" class="h-12" alt="Canadian Owned">
+        <img src="ai-powered-tools-badge.png" class="h-12" alt="AI Powered Tools">
+        <img src="privacy-first-badge.png" class="h-12" alt="Privacy First">
+      </div>
     </section>
+
+    <!-- Final CTA -->
+    <section class="fade-in text-center pt-10">
+      <h3 class="text-lg font-semibold">Try It Free — See How It Works for Your Shop</h3>
+      <a href="signup.html" class="mt-4 inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-full">Get Started Now</a>
+    </section>
+
   </main>
 </body>
 </html>
