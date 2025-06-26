@@ -2,111 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FAQ – AutoList Canada</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoList Canada</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
-      background-image: url('faq-background.png');
+      font-family: 'Segoe UI', sans-serif;
+      background: url('unified-background.png') no-repeat center top;
       background-size: cover;
-      background-repeat: no-repeat;
       background-attachment: fixed;
-      font-family: 'Inter', sans-serif;
+      color: #1f2937;
     }
-    summary::-webkit-details-marker {
-      display: none;
+    .btn-link {
+      color: #e05a13;
+      font-weight: 600;
+      transition: all 0.2s;
+      padding: 0.5rem;
     }
-    .faq-box {
-      @apply bg-white/10 backdrop-blur-lg rounded-xl p-4 mb-4 shadow-md transition-all duration-300 text-white;
+    .btn-link:hover {
+      text-decoration: underline;
+      transform: scale(1.05);
     }
-    .faq-box[open] {
-      @apply bg-white/20;
+    .cta-button {
+      background-color: #e05a13;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.3s;
+    }
+    .cta-button:hover {
+      background-color: #cf4e0e;
+      transform: translateY(-2px);
+    }
+    .glass-section {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin-top: -4rem;
     }
   </style>
 </head>
 <body class="flex">
-
   <!-- Sidebar -->
   <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
     <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
     <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
-    <nav class="flex flex-col gap-5 text-sm mt-6 text-white">
+    <nav class="flex flex-col gap-5 text-sm mt-6">
       <a href="index.html" class="btn-link">Home</a>
       <a href="dashboard.html" class="btn-link">Dashboard</a>
       <a href="listings.html" class="btn-link">Listings</a>
       <a href="ai-tools.html" class="btn-link">AI Tools</a>
       <a href="how-it-works.html" class="btn-link">How It Works</a>
-      <a href="faq.html" class="btn-link text-orange-300 font-bold">FAQ</a>
-      <a href="import.html" class="btn-link">Listings Import</a>
-      <a href="terms.html" class="btn-link text-xs text-gray-300">Terms of Service</a>
-      <a href="privacy.html" class="btn-link text-xs text-gray-300">Privacy Policy</a>
+      <a href="#faq" class="btn-link">FAQ</a>
+      <a href="#" class="btn-link">Listings Import</a>
+      <a href="terms.html" class="btn-link text-xs text-gray-600">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-gray-600">Privacy Policy</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="w-4/5 p-10 text-white">
-    <h1 class="text-4xl font-bold mb-2">Frequently Asked Questions</h1>
-    <p class="text-lg mb-10">All the clarity, science, and trust-building answers you need — so you can list smarter with confidence.</p>
+  <main class="flex-1 px-12 pt-16 space-y-40">
+    <!-- Hero Section -->
+    <section class="text-center space-y-6 pt-20">
+      <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
+<p class="text-lg text-gray-700 max-w-2xl mx-auto">
+  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
+</p>
+    
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
+      <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
+    </section>
 
-    <!-- FAQ Sections -->
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Psychology & AI</summary>
-      <p class="mt-2">Our AI is designed using cognitive science, tone psychology, and clarity compression — helping your listings resonate faster with the right buyer. Unlike black-box AI, we disclose exactly how each tool works and optimize for Canadian markets.</p>
-    </details>
+    <!-- How It Works -->
+    <section id="how-it-works">
+      <div class="glass-section">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">How It Works</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">AutoList Canada was designed to reduce decision fatigue, not just listing time.</p>
+        <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg text-left max-w-3xl mx-auto">
+          <li>Shift tone or voice based on audience psychology</li>
+          <li>Auto-tag using relevance scoring, not just popularity</li>
+          <li>Refine titles with AI language compression to improve clarity and match search patterns</li>
+          <li>Generate descriptions optimized for readability, trust, and resonance</li>
+        </ul>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">When you're ready, crosslist and sync your products to supported platforms — no copy-paste, no burnout. All your edits, delists, and updates stay in sync — whether you’re selling one item or 500.</p>
+      </div>
+    </section>
 
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Privacy & Data</summary>
-      <p class="mt-2">We do not sell, rent, or scrape your data — ever. Listings are yours alone. AutoList is built with privacy-first architecture and zero ad tracking.</p>
-    </details>
+    <!-- Why AutoList Canada Exists -->
+    <section>
+      <div class="glass-section">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Why AutoList Canada Exists</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">AutoList Canada was created to bring clarity back to the selling process.</p>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Too many tools are built for speed, scale, or surface-level convenience — but not for the people doing the work. We believe sellers deserve more than automation. They deserve alignment.</p>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">That’s why we built a system that supports cognitive flow, creative momentum, and intentional growth — not just output.</p>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Our foundation is neuroscience, our structure is strategy, and our purpose is to help you build a business that’s sustainable, thoughtful, and truly aligned with your values.</p>
+      </div>
+    </section>
 
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Pricing & Plans</summary>
-      <p class="mt-2">Plans start at $0 for casual sellers, with Pro and Agency tiers offering full automation, analytics, and listing syncing. See our pricing page for full details.</p>
-    </details>
+    <!-- Explore AI Tools -->
+    <section id="ai-tools">
+      <div class="glass-section">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Explore AI Tools</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">These aren’t just writing tools — they’re business intelligence systems for sellers who want to grow with precision.</p>
+        <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg max-w-3xl mx-auto">
+          <li><strong>Cognitive Title Optimizer</strong> – structures titles to boost clarity, buyer focus, and intent-matching — no filler, no fluff</li>
+          <li><strong>Strategic Tag Builder</strong> – suggests tags based on relevance, uniqueness, and Canadian search flow</li>
+          <li><strong>Trust-First Description Composer</strong> – creates pacing and structure that support buyer trust and reading flow</li>
+          <li><strong>Buyer Psychology Panel</strong> – shows you what’s performing, when buyer interest peaks, and how to optimize timing and phrasing</li>
+          <li><strong>Crosslist + Sync Control</strong> – manage multiple platforms in one view — including smart delisting, update tracking, and inventory sync</li>
+          <li><strong>Smart Defaults Engine</strong> – saves time by applying your patterns automatically — no need to redo what already works</li>
+        </ul>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">These tools weren’t built to replace you — they were built to think with you.</p>
+      </div>
+    </section>
 
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Crosslisting Logic</summary>
-      <p class="mt-2">Listings are pushed across platforms via API or Chrome extension (depending on your plan). We support eBay, Poshmark, Etsy, Facebook Marketplace (manual), and more coming soon.</p>
-    </details>
-
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Support & Features</summary>
-      <p class="mt-2">You can access support via the Contact Support button below. Feature suggestions are welcome and regularly reviewed for roadmap inclusion.</p>
-    </details>
-
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">AI Credit System</summary>
-      <p class="mt-2">Each subscription includes monthly AI credits (e.g., 50 for Starter, 200 for Pro). These are used when generating titles, descriptions, tags, and other AI-enhanced fields. You’ll always see your balance on the dashboard.</p>
-    </details>
-
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Security & Trust Protections</summary>
-      <p class="mt-2">We implement SSL encryption, form validation, and database protection. Listings cannot be accessed by third parties. Trust scoring models are based on psychological safety, not manipulation.</p>
-    </details>
-
-    <details class="faq-box">
-      <summary class="cursor-pointer text-xl font-semibold">Account & Billing</summary>
-      <p class="mt-2">You can upgrade, downgrade, or cancel your plan at any time. We use Gumroad and LemonSqueezy for secure payment processing. Invoices and billing settings can be managed through your account dashboard.</p>
-    </details>
+    <!-- FAQ Section -->
+    <section id="faq">
+      <div class="glass-section">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Frequently Asked Questions</h2>
+        <div class="mt-4 space-y-6 text-lg">
+          <div>
+            <h3 class="font-semibold">Do I need to connect marketplace accounts to use AutoList Canada?</h3>
+            <p class="text-gray-600">No. All tools are available without connecting your platforms. AutoList Canada is designed to respect your workflow and data privacy — no integrations required unless you choose them.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold">Is this only for large shops or full-time sellers?</h3>
+            <p class="text-gray-600">Not at all. AutoList Canada supports solo resellers, part-time sellers, and multi-channel teams. Whether you’re scaling or just getting started, the tools adapt to your needs.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold">How is AutoList Canada different from other crosslisting software?</h3>
+            <p class="text-gray-600">We combine behavioral science, market-specific logic, and clarity-first design to support intentional growth. This isn’t just about crossposting — it’s about building smarter workflows and sustainable momentum.</p>
+          </div>
+          <div>
+            <h3 class="font-semibold">Will AutoList Canada change or post my listings automatically?</h3>
+            <p class="text-gray-600">Never without permission. You’re in full control of when, how, and where your content is synced. Every action is optional, transparent, and fully editable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
-    <div class="text-center mt-12 text-sm text-white/80">
-      <p>© 2025 AutoList Canada. All rights reserved.</p>
-      <p class="mt-1">Built in Canada. Powered by psychology-backed automation. Designed for sellers.</p>
-      <p class="mt-1">
-        <a href="privacy.html" class="underline">Privacy Policy</a> ·
-        <a href="terms.html" class="underline">Terms of Service</a>
-      </p>
-    </div>
-
-    <!-- CTA Button -->
-    <div class="text-center mt-8">
-      <p class="mb-2 text-white/90 italic">Still have a question?</p>
-      <a href="mailto:support@autolistcanada.ca" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded-full transition duration-300">
-        Contact Support
-      </a>
-    </div>
+    <footer class="text-center mt-20 space-y-4">
+      <div class="flex justify-center gap-6">
+        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" class="w-16">
+        <img src="ai-powered-tools-badge.png" alt="AI Powered Tools Badge" class="w-16">
+        <img src="privacy-first-badge.png" alt="Privacy First Badge" class="w-16">
+      </div>
+      <nav class="text-sm mt-2 space-x-6">
+        <a href="terms.html" class="text-gray-500 hover:text-orange-500 font-medium">Terms of Service</a>
+        <a href="privacy.html" class="text-gray-500 hover:text-orange-500 font-medium">Privacy Policy</a>
+      </nav>
+      <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
+    </footer>
   </main>
-
 </body>
 </html>
