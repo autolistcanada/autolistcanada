@@ -2,141 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada | FAQ</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <style>
-    body {
-      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-      background-image: url('faq-background.png');
-      background-size: cover;
-      background-position: center;
-    }
-    .faq-item summary {
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .faq-item details[open] summary::after {
-      content: "▲";
-      float: right;
-    }
-    .faq-item summary::after {
-      content: "▼";
-      float: right;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ – AutoList Canada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="text-white">
-  <div class="flex">
-    <!-- Sidebar -->
-    <aside class="w-60 bg-green-900 min-h-screen px-4 py-6 text-sm">
-      <img src="logo.png" alt="AutoList Logo" class="w-20 mb-4">
-      <img src="title.png" alt="AutoList Canada" class="mb-8">
-      <nav class="space-y-3">
-        <a href="index.html" class="block hover:text-yellow-300">Home</a>
-        <a href="dashboard.html" class="block hover:text-yellow-300">Dashboard</a>
-        <a href="listings.html" class="block hover:text-yellow-300">Listings</a>
-        <a href="ai-tools.html" class="block hover:text-yellow-300">AI Tools</a>
-        <a href="index.html#how-it-works" class="block hover:text-yellow-300">How It Works</a>
-        <a href="faq.html" class="block font-bold text-yellow-400">FAQ</a>
-        <a href="import.html" class="block hover:text-yellow-300">Listings Import</a>
-        <a href="terms.html" class="block mt-8 text-xs hover:text-yellow-300">Terms of Service</a>
-        <a href="privacy.html" class="block text-xs hover:text-yellow-300">Privacy Policy</a>
-      </nav>
-    </aside>
+<body class="flex font-sans text-white">
+  <!-- Sidebar -->
+  <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
+    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
+    <nav class="flex flex-col gap-5 text-sm mt-6">
+      <a href="index.html" class="btn-link">Home</a>
+      <a href="dashboard.html" class="btn-link">Dashboard</a>
+      <a href="listings.html" class="btn-link">Listings</a>
+      <a href="ai-tools.html" class="btn-link">AI Tools</a>
+      <a href="how-it-works.html" class="btn-link">How It Works</a>
+      <a href="faq.html" class="btn-link">FAQ</a>
+      <a href="#" class="btn-link">Listings Import</a>
+      <a href="terms.html" class="btn-link text-xs text-gray-300">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-gray-300">Privacy Policy</a>
+    </nav>
+  </aside>
 
-    <!-- FAQ Content -->
-    <main class="flex-1 px-8 py-12">
-      <h1 class="text-4xl font-bold mb-2">Frequently Asked Questions</h1>
-      <p class="mb-10 text-lg max-w-2xl">All the clarity, science, and trust-building answers you need — so you can list smarter with confidence.</p>
+  <!-- Main FAQ Content -->
+  <main class="w-4/5 min-h-screen" style="background-image: url('faq-background.png'); background-size: cover; background-position: center;">
+    <div class="max-w-3xl mx-auto py-16 px-8">
+      <h1 class="text-3xl font-bold mb-2">Frequently Asked Questions</h1>
+      <p class="text-lg mb-10">All the clarity, science, and trust-building answers you need — so you can list smarter with confidence.</p>
 
-      <section class="space-y-4">
-        <!-- One section example -->
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Psychology & AI</summary>
-            <div class="mt-2 text-sm">
-              AutoList’s AI uses behavior-backed psychology patterns including clarity bias, listing flow logic, and buyer tone engagement. We use GPT-enhanced prompts tailored to Canadian resale trends.
-            </div>
-          </details>
-        </div>
+      <!-- Accordion Section -->
+      <div class="space-y-4 text-white">
+        <!-- FAQ Items -->
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Psychology & AI</summary>
+          <p class="mt-2 text-sm">AutoList Canada uses behavioral science to guide every listing suggestion. Titles, descriptions, tags, and prices are generated using trust signals, clarity principles, and emotional resonance logic — making your items more clickable and conversion-ready.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Privacy & Data</summary>
-            <div class="mt-2 text-sm">
-              We operate under zero-trust data principles. We never sell your information, and all API syncs use encrypted access protocols.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Privacy & Data</summary>
+          <p class="mt-2 text-sm">Your listings and login data are securely stored and never shared. We comply with Canadian data protection guidelines and prioritize user control.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Pricing & Plans</summary>
-            <div class="mt-2 text-sm">
-              Free tier: 10 listings/mo · Pro tier: 400 listings · Agency tier: unlimited. See all tiers on our Pricing page.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Pricing & Plans</summary>
+          <p class="mt-2 text-sm">We offer a free tier for beginners, plus paid plans for pros and agencies. Monthly options include AI credits, crosslist syncs, and more. Visit our <a href="pricing.html" class="underline text-orange-300">Pricing page</a> for details.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Crosslisting Logic</summary>
-            <div class="mt-2 text-sm">
-              AutoList supports: eBay, Poshmark, Etsy, Depop, Facebook Marketplace, Grailed, Vinted, Mercari, Kidizen, Shopify, and more. Listings are synced across platforms using smart AI-mapped logic.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Crosslisting Logic</summary>
+          <p class="mt-2 text-sm">AutoList Canada supports eBay, Poshmark, Etsy, Facebook Marketplace, Depop, Shopify, and more. Our sync logic ensures each listing matches the platform's style and buyer psychology. You remain in control of edits and delisting.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Support & Features</summary>
-            <div class="mt-2 text-sm">
-              We offer human-guided AI tools, import assistance, sync reports, and smart tag advisors. More tools are added regularly.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Support & Features</summary>
+          <p class="mt-2 text-sm">Need help with listings, syncing, or your account? Our team is here. Click the button below or email us directly at <strong>support@autolistcanada.ca</strong>.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Do I need to use AI?</summary>
-            <div class="mt-2 text-sm">
-              No. Every tool is optional. You can manually control all titles, descriptions, and tags — or choose AI for enhanced suggestions.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Do I need to use AI?</summary>
+          <p class="mt-2 text-sm">Nope — all AI tools are optional. But we believe they give sellers a major edge by removing guesswork and boosting listing quality.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>Will it work with French listings?</summary>
-            <div class="mt-2 text-sm">
-              Yes. Our AI tools can detect and adapt to French listings. Language support will expand with more custom training.
-            </div>
-          </details>
-        </div>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ Will it work with French listings?</summary>
+          <p class="mt-2 text-sm">Yes. AutoList Canada is designed for bilingual sellers. Our AI tools can analyze and optimize French-language listings with clear structure and tone logic.</p>
+        </details>
 
-        <div class="faq-item bg-white bg-opacity-10 rounded-xl p-4">
-          <details>
-            <summary>How do I cancel or switch plans?</summary>
-            <div class="mt-2 text-sm">
-              You can switch or cancel anytime from your dashboard billing tab. All changes take effect at the end of your billing cycle.
-            </div>
-          </details>
-        </div>
-      </section>
-
-      <div class="mt-12 text-center">
-        <p class="italic mb-2 text-sm">Still have a question?</p>
-        <a href="#" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-full font-bold">Contact Support</a>
+        <details class="bg-white bg-opacity-10 rounded-lg p-4">
+          <summary class="cursor-pointer font-semibold">▶ How do I cancel or switch plans?</summary>
+          <p class="mt-2 text-sm">You can manage your subscription anytime via the dashboard. Plans are flexible, and there’s no penalty for canceling or upgrading.</p>
+        </details>
       </div>
 
-      <footer class="mt-16 text-sm text-gray-300">
+      <!-- Support CTA -->
+      <div class="mt-16 text-center">
+        <p class="italic text-sm mb-2">Still have a question?</p>
+        <a href="mailto:support@autolistcanada.ca" class="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-orange-600">Contact Support</a>
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-16 text-center text-xs text-white opacity-80">
         <p class="mb-1">© 2025 AutoList Canada. All rights reserved.</p>
-        <p class="mb-1">Built in Canada. Powered by psychology-backed automation. Designed for sellers.</p>
-        <a href="privacy.html" class="underline mr-4">Privacy Policy</a>
-        <a href="terms.html" class="underline">Terms of Service</a>
+        <p class="mb-2">Built in Canada. Powered by psychology-backed automation. Designed for sellers.</p>
+        <div class="space-x-3">
+          <a href="privacy.html" class="underline">Privacy Policy</a>
+          <a href="terms.html" class="underline">Terms of Service</a>
+        </div>
       </footer>
-    </main>
-  </div>
+    </div>
+  </main>
 </body>
 </html>
