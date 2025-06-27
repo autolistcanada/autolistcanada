@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support – AutoList Canada</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-orange-50 text-gray-800">
-  <div class="flex">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support – AutoList Canada</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(145deg, #fef9c3, #d1fae5, #fde68a);
+        background-size: 300% 300%;
+        animation: gradientFlow 15s ease infinite;
+      }
+      @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    </style>
+  </head>
+  <body class="flex">
     <!-- Sidebar -->
-    <aside class="w-64 min-h-screen bg-teal-900 text-white p-6 space-y-4">
-      <img src="sidebar-logo.png" alt="AutoList Canada" class="w-12 mb-4" />
-      <h1 class="text-2xl font-bold">AutoList Canada</h1>
-      <nav class="space-y-2 mt-6">
+    <aside class="w-64 min-h-screen bg-green-900 text-white p-6">
+      <img src="sidebar-background.png" alt="AutoList Canada Sidebar Graphic" class="mb-4 rounded-xl" />
+      <h1 class="text-2xl font-extrabold mb-6">AutoList Canada</h1>
+      <nav class="space-y-4 text-white">
         <a href="index.html" class="block hover:underline">Home</a>
         <a href="dashboard.html" class="block hover:underline">Dashboard</a>
         <a href="listings.html" class="block hover:underline">Listings</a>
@@ -24,20 +37,64 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-10 bg-gradient-to-br from-orange-100 via-yellow-100 to-green-100">
-      <h2 class="text-3xl font-bold mb-4 text-orange-700">Need Support?</h2>
-      <p class="mb-6 text-lg max-w-xl">
-        We're here to help. If you’re having trouble with your dashboard, AI tools, or listing sync — contact our team directly.
-      </p>
-      <p class="mb-4">📧 <strong>Email us:</strong> 
-        <a href="mailto:autolistcanada@myyahoo.com" class="text-blue-600 underline">
-          autolistcanada@myyahoo.com
-        </a>
-      </p>
-      <p class="text-sm text-gray-600 mt-6">
-        We typically respond within 24 hours. If your issue is urgent, include "URGENT" in the subject line.
-      </p>
+    <main class="flex-1 px-10 py-12 text-gray-800">
+      <section class="mb-12">
+        <h2 class="text-4xl font-extrabold text-orange-600 mb-4">Need Support?</h2>
+        <p class="text-lg leading-relaxed max-w-3xl">
+          We’re here to help — powered by <span class="font-semibold">science-backed automation</span>, 
+          emotional engagement research, and AI logic tuned to sellers' real needs. 
+          Whether you’re stuck, scaling, or syncing — AutoList Canada has your back.
+        </p>
+      </section>
+
+      <!-- Support Email Block -->
+      <section class="mb-10 p-6 bg-white bg-opacity-80 shadow-xl rounded-xl">
+        <h3 class="text-2xl font-bold text-green-800 mb-2">📨 Email Us</h3>
+        <p>
+          Reach our seller-first support team at:
+          <a href="mailto:autolistcanada@myyahoo.com" class="text-blue-700 underline font-medium">autolistcanada@myyahoo.com</a>
+        </p>
+        <p class="text-sm mt-2 text-gray-600">We usually respond in under 24 hours. For urgent issues, include "URGENT" in the subject line.</p>
+      </section>
+
+      <!-- Response Time / Urgency -->
+      <section class="mb-10 p-6 bg-green-100 rounded-xl shadow-sm">
+        <h3 class="text-xl font-bold mb-2">⏱️ Response Time</h3>
+        <p>Average response: <span class="font-bold text-orange-700">6-12 hours</span></p>
+        <p class="mt-1">Weekends may vary, but we monitor inboxes daily — because sellers can’t afford to wait.</p>
+      </section>
+
+      <!-- Mini FAQ Blocks -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white bg-opacity-90 p-5 rounded-xl shadow">
+          <h4 class="font-bold text-green-800 mb-1">🔁 Sync Issues</h4>
+          <p class="text-sm text-gray-700">Listings not updating? Try refreshing your sync settings on the dashboard.</p>
+        </div>
+        <div class="bg-white bg-opacity-90 p-5 rounded-xl shadow">
+          <h4 class="font-bold text-green-800 mb-1">💬 AI Output Concerns</h4>
+          <p class="text-sm text-gray-700">Not getting the right AI descriptions or prices? Email us with your listing sample and we’ll debug it.</p>
+        </div>
+        <div class="bg-white bg-opacity-90 p-5 rounded-xl shadow">
+          <h4 class="font-bold text-green-800 mb-1">⚙️ Feature Requests</h4>
+          <p class="text-sm text-gray-700">Want something added? Suggest it! Sellers shape our roadmap.</p>
+        </div>
+      </section>
+
+      <!-- Smart Stats Badge -->
+      <section class="mt-12 text-sm text-gray-600 italic text-center">
+        <p>
+          Backed by cognitive UX research, rhythm science, and emotion-mapping algorithms. 
+          <span class="text-orange-700 font-semibold">AutoList Canada’s support isn’t just helpful — it’s engineered to work.</span>
+        </p>
+      </section>
+
+      <!-- Footer -->
+      <footer class="text-center text-xs text-white mt-16">
+        <p class="mt-10">© 2025 AutoList Canada. All rights reserved.</p>
+        <p>Built in Canada. Powered by psychology-backed automation. Designed for sellers.</p>
+        <a href="privacy.html" class="underline mr-2">Privacy Policy</a>
+        <a href="terms.html" class="underline">Terms of Service</a>
+      </footer>
     </main>
-  </div>
-</body>
+  </body>
 </html>
