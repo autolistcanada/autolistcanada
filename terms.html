@@ -2,16 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Use – AutoList Canada</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms of Use - AutoList Canada</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
+    body {
+      background-image: url('terms-background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .btn-link {
+      color: white;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-link:hover {
+      color: #fcd34d;
+      text-decoration: underline;
     }
   </style>
 </head>
-<body class="flex">
+<body class="flex text-white font-sans">
+  
   <!-- Sidebar -->
   <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
     <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
@@ -24,100 +37,104 @@
       <a href="how-it-works.html" class="btn-link">How It Works</a>
       <a href="faq.html" class="btn-link">FAQ</a>
       <a href="#" class="btn-link">Listings Import</a>
-      <a href="terms.html" class="btn-link font-bold text-xs">Terms of Service</a>
-      <a href="privacy.html" class="btn-link text-xs text-gray-600">Privacy Policy</a>
+      <a href="terms.html" class="btn-link font-bold">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-gray-400">Privacy Policy</a>
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="w-4/5 bg-cover bg-no-repeat bg-center px-10 py-12 text-gray-900" style="background-image: url('terms-background.png');">
-    <h1 class="text-3xl font-bold mb-2">AutoList Canada – Terms of Use</h1>
-    <p class="text-sm text-gray-700 mb-10">Effective Date: May 2025</p>
+  <main class="w-4/5 px-10 py-14 bg-black bg-opacity-40 backdrop-blur-md overflow-y-auto">
+    <h1 class="text-4xl font-bold mb-2">AutoList Canada – Terms of Use</h1>
+    <p class="text-sm text-gray-300 mb-10">Effective Date: May 2025</p>
 
+    <!-- Section Template -->
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">1. Acceptance of Terms</h2>
-      <p>By accessing or using AutoList Canada ("the Service"), you agree to be bound by these Terms of Use. If you do not agree with these Terms, you may not use the platform. These Terms govern your relationship with AutoList Canada, including all services, features, and tools offered. Use of the platform constitutes agreement to all terms outlined here. AutoList Canada reserves the right to enforce compliance and restrict access if Terms are violated.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">1. Acceptance of Terms</h2>
+      <p>By accessing or using AutoList Canada ("the Service"), you agree to be bound by these Terms. If you do not agree, you may not use the platform.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">2. Eligibility</h2>
-      <p>You must be at least 18 years old and capable of forming legally binding agreements under Canadian law. Users must also be the rightful owner or authorized representative of any listings they submit. By using AutoList, you confirm compliance with all applicable local laws, platform-specific requirements, and community standards. AutoList Canada reserves the right to suspend any account found misrepresenting age, authority, or legal capacity.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">2. Eligibility</h2>
+      <p>You must be at least 18 and authorized to submit listings. AutoList Canada may suspend accounts that misrepresent legal age, ownership, or authority.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">3. Service Description</h2>
-      <p>AutoList Canada provides listing automation, cross-platform syncing, tone-based optimization, AI-generated content tools, and strategic sales assistance. The service is tailored to Canadian resellers of vintage and secondhand goods. Users can access tools that generate titles, descriptions, tags, pricing suggestions, and synchronize inventory across platforms. AutoList’s tools are offered as-is and subject to continuous improvement based on platform integration and AI development.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">3. Service Description</h2>
+      <p>AutoList Canada helps Canadian resellers crosslist secondhand inventory using AI tools. Users can auto-generate descriptions, titles, tags, and sync listings across platforms.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">4. User Responsibilities</h2>
-      <ul class="list-disc ml-5">
-        <li>Do not engage in any unlawful or fraudulent activities using the Service.</li>
-        <li>Do not attempt to access restricted code, backend systems, or database layers without authorization.</li>
-        <li>You may not copy, resell, repackage, or commercialize AutoList's tools or visual layout logic without written consent.</li>
-        <li>Users are responsible for ensuring all listing content is accurate, truthful, and does not infringe third-party rights.</li>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">4. User Responsibilities</h2>
+      <ul class="list-disc ml-5 space-y-1">
+        <li>Do not use the platform for fraudulent or illegal purposes.</li>
+        <li>Do not access backend systems or protected code.</li>
+        <li>Do not resell, copy, or clone our tools, logic, or layout.</li>
+        <li>You are responsible for accuracy, truthfulness, and respecting third-party rights.</li>
       </ul>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">5. Account Security</h2>
-      <p>You are responsible for safeguarding your account login details and restricting access to your credentials. Any activity occurring under your account will be assumed to be authorized by you unless promptly reported. We recommend enabling two-factor authentication (2FA) where available and using strong, unique passwords. AutoList Canada is not liable for account breaches due to user negligence.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">5. Account Security</h2>
+      <p>You're responsible for your login security. Use unique passwords and enable 2FA if available. AutoList is not liable for unauthorized activity under your account.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">6. Intellectual Property & Architecture Protection</h2>
-      <p>AutoList Canada owns all rights, title, and interest in the Service’s AI tools, listing engines, backend flows, and design logic. All tone engines, content patterns, and sync automation are protected by Canadian copyright, trade secret, and startup defense law. You may not replicate, rebrand, resell, or mirror these systems without explicit permission. Attempts to reverse engineer, clone, or analyze AutoList's backend structure for competitive purposes will result in legal action and immediate termination.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">6. Intellectual Property & Architecture Protection</h2>
+      <p>All AutoList tools, workflows, sync logic, and backend structure are protected by Canadian copyright and startup defense law. Reverse-engineering is prohibited and may result in account removal.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">7. AI Tool Use</h2>
-      <p>AutoList’s AI tools generate outputs based on user prompts, but final responsibility lies with the user. You agree to review and edit all titles, descriptions, tags, and pricing suggestions before publishing. We make no guarantees about performance, engagement, or legal compliance of generated content. Using these tools signifies acceptance of the risks and acknowledges that results may vary. AI outputs may reflect behavioral patterns or platform constraints but do not constitute formal advice.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">7. AI Tool Use</h2>
+      <p>All AI results are based on user input. You are responsible for reviewing and editing all generated content. Results may vary and do not constitute legal or financial advice.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">8. Subscription & Payments</h2>
-      <p>AutoList Canada offers multiple subscription tiers with features and credit limits. Users are billed monthly or annually, with automatic renewal unless canceled. Free plans include limited functionality and may be subject to trial caps. Refunds are not provided except where required by law. Users can manage plans via their dashboard. Subscription misuse, such as sharing accounts or attempting unauthorized upgrades, will result in account restrictions.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">8. Subscription & Payments</h2>
+      <p>Subscriptions are billed monthly or annually. Free trials may apply. All payments are non-refundable. Upgrades and downgrades are managed via your dashboard.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">9. Termination</h2>
-      <p>We may suspend, disable, or delete your account for any breach of these Terms, including abuse, security violations, or scraping behavior. Serious infractions, such as IP theft or user manipulation, will be reported to relevant authorities. Termination may occur without warning. Data stored within your account may not be recoverable once an account is deleted. Repeated violations may result in permanent bans from AutoList Canada.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">9. Termination</h2>
+      <p>We may suspend or terminate access at any time due to violations, misuse, or manipulation. Data may be removed without notice and is not guaranteed to be recoverable.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">10. Limitation of Liability</h2>
-      <p>AutoList Canada provides its services on an “as-is” basis, without warranties of any kind. We are not responsible for platform downtime, listing delays, missed syncs, or loss of sales. To the fullest extent permitted by law, AutoList Canada disclaims liability for indirect, incidental, or consequential damages, including data loss. Users are advised to maintain backups of critical information and monitor their sync results regularly.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">10. Limitation of Liability</h2>
+      <p>We offer the platform “as-is.” AutoList Canada is not liable for damages, downtime, or missed sales. Users should backup all data and listing content independently.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">11. Indemnification</h2>
-      <p>You agree to defend and indemnify AutoList Canada against all claims, liabilities, or damages resulting from your use of the platform or violation of these Terms. This includes legal costs, third-party disputes, and platform abuse. If your actions cause reputational harm or infrastructure disruption, you may be liable for damages. AutoList reserves the right to pursue legal remedies in accordance with Canadian law.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">11. Indemnification</h2>
+      <p>You agree to hold harmless AutoList Canada from legal claims, costs, or third-party actions related to your use of the platform or violation of these Terms.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">12. Governing Law</h2>
-      <p>These Terms shall be interpreted and enforced under the laws of British Columbia, Canada. Any disputes will be handled in B.C. courts, with no conflict-of-law exceptions. If any portion of these Terms is deemed invalid or unenforceable, the remaining sections will continue in full effect. Users agree not to pursue class actions or collective claims against AutoList Canada.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">12. Governing Law</h2>
+      <p>These Terms are governed by the laws of British Columbia, Canada. Disputes will be handled locally unless otherwise agreed in writing.</p>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">13. Changes to Terms</h2>
-      <p>We may revise these Terms at any time. Updates will be announced via your dashboard or email. Your continued use of AutoList Canada after changes constitutes agreement to the revised Terms. If you disagree with any update, your sole remedy is to discontinue use of the Service. We encourage users to review the Terms periodically to stay informed.</p>
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">13. Changes to Terms</h2>
+      <p>We may update these Terms at any time. Continued use of the platform implies agreement. Updates may be announced by email or inside the dashboard.</p>
     </section>
 
-    <section class="mb-16">
-      <h2 class="text-xl font-bold text-orange-600 mb-2">14. Contact</h2>
-      <p>If you have questions or legal concerns regarding these Terms, please contact us at:</p>
-      <p><strong>AutoList Canada</strong><br>Email: <a href="mailto:autolistcanada@myyahoo.com" class="text-blue-700 underline">autolistcanada@myyahoo.com</a></p>
+    <section class="mb-8">
+      <h2 class="text-xl font-bold text-yellow-300 mb-2">14. Contact</h2>
+      <p>If you have questions, contact us at:</p>
+      <p class="mt-2 font-semibold">AutoList Canada</p>
+      <p>Email: <a href="mailto:autolistcanada@myyahoo.com" class="underline text-blue-300">autolistcanada@myyahoo.com</a></p>
     </section>
 
-    <footer class="text-xs text-gray-600 text-center border-t pt-6">
-      <p class="mb-2">&copy; 2025 AutoList Canada. Built in Canada. Powered by psychology-backed automation.</p>
-      <nav class="space-x-4">
-        <a href="terms.html" class="underline">Terms of Use</a>
-        <a href="privacy.html" class="underline">Privacy Policy</a>
-        <a href="contact.html" class="underline">Contact</a>
-      </nav>
+    <!-- Footer -->
+    <footer class="mt-16 text-sm text-gray-300">
+      <p>© 2025 AutoList Canada. Built in Canada. Powered by psychology-backed automation.</p>
+      <p class="space-x-4 mt-2">
+        <a href="terms.html" class="underline hover:text-yellow-300">Terms of Use</a>
+        <a href="privacy.html" class="underline hover:text-yellow-300">Privacy Policy</a>
+        <a href="contact.html" class="underline hover:text-yellow-300">Contact</a>
+      </p>
     </footer>
   </main>
+
 </body>
 </html>
