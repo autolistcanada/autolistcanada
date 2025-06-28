@@ -1,517 +1,792 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-50">
+<html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <title>Listings Dashboard – AutoList Canada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Tailwind CSS CDN -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoList Canada — Listings</title>
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Heroicons for icons -->
+  <!-- Leaflet CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Icons (Heroicons for simplicity) -->
   <script src="https://unpkg.com/feather-icons"></script>
   <style>
-    .sidebar-bg {
-      background-image: url('sidebar-background.png');
-      background-size: cover;
-      background-repeat: no-repeat;
+    body {
+      min-height: 100vh;
+      background: url('listings-background.png') center/cover no-repeat fixed;
+      position: relative;
     }
-    .tone-badge {
-      @apply px-2 py-0.5 rounded text-xs font-semibold uppercase;
+    .cream-overlay {
+      background: rgba(253, 246, 240, 0.93);
+      backdrop-filter: blur(0.5px);
+      min-height: 100vh;
+      min-width: 100vw;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
-    /* Custom scrollbar for sidebar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #e1e1e1; border-radius: 8px; }
+    .sidebar-shadow {
+      box-shadow: 2px 0 18px 0 rgba(0,0,0,0.09);
+    }
+    .dropdown-shadow {
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+    }
+    .tone-animate {
+      transition: background 0.4s, color 0.4s;
+      animation: tonePulse 3s infinite alternate;
+    }
+    @keyframes tonePulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,140,0,0.14);}
+      100% { box-shadow: 0 0 12px 6px rgba(255,140,0,0.09);}
+    }
+    .leaflet-container {
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07);
+    }
   </style>
 </head>
-<body class="font-sans antialiased flex bg-gray-50">
-
-<!-- Sidebar -->
-<aside class="sidebar-bg fixed top-0 left-0 h-full w-64 flex flex-col justify-between z-30 shadow-lg">
-  <div>
-    <div class="flex flex-col items-center mt-7 mb-4">
-      <img src="autolist-logo.png" alt="AutoList Logo" class="w-14 h-14 mb-3" />
-      <img src="autolist-title.png" alt="AutoList Canada" class="w-32 mb-8" />
-    </div>
-    <!-- Sidebar Links -->
-    <nav class="px-6">
-      <ul class="space-y-1 font-medium text-gray-100">
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="home" class="mr-2"></span>Home</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="bar-chart-2" class="mr-2"></span>Dashboard</a></li>
-        <li>
-          <a href="#" class="flex items-center py-2 px-3 rounded bg-orange-600 text-white font-semibold shadow hover:bg-orange-700 transition">
-            <span data-feather="list" class="mr-2"></span>Listings
-          </a>
-        </li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="cpu" class="mr-2"></span>AI Tools</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="info" class="mr-2"></span>How It Works</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="help-circle" class="mr-2"></span>FAQ</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="upload" class="mr-2"></span>Import</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="file-text" class="mr-2"></span>Terms</a></li>
-        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="shield" class="mr-2"></span>Privacy</a></li>
-      </ul>
+<body class="h-full w-full relative overflow-x-hidden">
+  <div class="cream-overlay"></div>
+  <!-- SIDEBAR -->
+  <aside class="fixed top-0 left-0 h-full w-64 bg-white/95 sidebar-shadow z-30 flex flex-col items-center py-6">
+    <img src="autolist-logo.png" class="w-16 h-16 rounded-full mb-2 shadow" alt="AutoList Logo">
+    <img src="autolist-title.png" class="w-36 mb-8" alt="AutoList Title">
+    <nav class="flex-1 w-full flex flex-col gap-2 px-4">
+      <button class="sidebar-btn" data-nav="Home">Home</button>
+      <button class="sidebar-btn" data-nav="Dashboard">Dashboard</button>
+      <button class="sidebar-btn active" data-nav="Listings">Listings</button>
+      <button class="sidebar-btn" data-nav="AI Tools">AI Tools</button>
+      <button class="sidebar-btn" data-nav="How It Works">How It Works</button>
+      <button class="sidebar-btn" data-nav="FAQ">FAQ</button>
+      <button class="sidebar-btn" data-nav="Import">Import</button>
+      <button class="sidebar-btn" data-nav="Terms">Terms</button>
+      <button class="sidebar-btn" data-nav="Privacy">Privacy</button>
     </nav>
-  </div>
-  <!-- Language toggle -->
-  <div class="px-6 pb-7">
-    <div class="flex items-center justify-start space-x-2 text-gray-200 text-sm">
-      <span class="font-bold">CA</span>
-      <button class="px-2 py-1 rounded bg-gray-800 hover:bg-orange-500 focus:bg-orange-600 transition">EN</button>
-      <span>/</span>
-      <button class="px-2 py-1 rounded hover:bg-orange-500 focus:bg-orange-600 transition">FR</button>
-    </div>
-  </div>
-</aside>
-
-<!-- Main Content Wrapper -->
-<div class="flex flex-col flex-1 ml-64 min-h-screen">
-
-  <!-- Header Section -->
-  <header class="flex flex-wrap items-center justify-between px-10 py-6 border-b border-gray-200 bg-white shadow-sm">
-    <!-- Search and filters -->
-    <div class="flex items-center space-x-4 flex-1">
-      <input id="searchInput" type="text" placeholder="Search listings..." class="w-64 px-5 py-2.5 rounded-full border border-gray-200 focus:border-orange-400 outline-none text-gray-700 shadow-sm" oninput="filterListings()" />
-      <select id="platformFilter" class="px-3 py-2 rounded border border-gray-200 text-gray-600 focus:border-orange-400 outline-none" onchange="filterListings()">
-        <option value="">All Platforms</option>
-        <option value="ebay">eBay</option>
-        <option value="poshmark">Poshmark</option>
-        <option value="facebook">Facebook</option>
-      </select>
-      <select id="toneFilter" class="px-3 py-2 rounded border border-gray-200 text-gray-600 focus:border-orange-400 outline-none" onchange="filterListings()">
-        <option value="">All Buyer Intents</option>
-        <option value="Cozy">Cozy</option>
-        <option value="Luxury">Luxury</option>
-        <option value="Eco">Eco</option>
-        <option value="Vintage">Vintage</option>
-        <option value="Budget">Budget</option>
-      </select>
-      <label class="flex items-center ml-3 space-x-2 cursor-pointer">
-        <input type="checkbox" id="hideSold" class="accent-orange-500 w-5 h-5" onchange="filterListings()" />
-        <span class="text-gray-700 font-medium">Hide Sold</span>
-      </label>
-      <div class="flex items-center ml-6">
-        <button id="listViewBtn" class="px-2 py-1 mr-2 rounded-full border border-gray-300 bg-orange-600 text-white font-bold shadow hover:bg-orange-700 transition" onclick="toggleView('list')"><span data-feather="list"></span></button>
-        <button id="gridViewBtn" class="px-2 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-orange-200 hover:text-orange-700 transition" onclick="toggleView('grid')"><span data-feather="grid"></span></button>
+    <!-- Language Toggle -->
+    <div class="mt-8 w-full flex flex-col items-center">
+      <span class="mb-2 text-xs text-gray-500">Language</span>
+      <div class="flex items-center gap-3 px-4">
+        <span class="text-sm font-medium">EN</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="lang-toggle" class="sr-only peer" autocomplete="off">
+          <div class="w-11 h-6 bg-orange-200 peer-focus:outline-none rounded-full peer peer-checked:bg-rose-400 transition"></div>
+          <span class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition peer-checked:translate-x-5"></span>
+        </label>
+        <span class="text-sm font-medium">FR</span>
       </div>
+      <span class="mt-1 text-xs text-gray-400">🇨🇦</span>
     </div>
-    <!-- Sync status buttons -->
-    <div class="flex items-center space-x-2">
-      <button onclick="connectMarketplace('ebay')" id="ebayConnectBtn" class="flex items-center px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow">
-        <span data-feather="check-circle" class="mr-2"></span>Connect eBay
-      </button>
-      <button onclick="connectMarketplace('poshmark')" id="poshmarkConnectBtn" class="flex items-center px-4 py-2 rounded bg-pink-600 text-white font-semibold hover:bg-pink-700 transition shadow">
-        <span data-feather="check-circle" class="mr-2"></span>Connect Poshmark
-      </button>
-      <button onclick="connectMarketplace('facebook')" id="facebookConnectBtn" class="flex items-center px-4 py-2 rounded bg-gray-900 text-white font-semibold hover:bg-gray-800 transition shadow">
-        <span data-feather="check-circle" class="mr-2"></span>Connect Facebook
-      </button>
-    </div>
-  </header>
+  </aside>
 
-  <!-- Bulk Listings Sync / Table -->
-  <main class="flex-1 px-10 py-6 bg-gray-50">
-    <!-- Bulk sync alert if not connected -->
-    <div id="bulkSyncAlert" class="hidden mb-6">
-      <div class="flex items-center bg-orange-100 border-l-4 border-orange-500 text-orange-800 p-5 rounded">
-        <span data-feather="alert-triangle" class="mr-3"></span>
-        <div>
-          <div class="font-bold mb-1">Connect to eBay to import your listings</div>
-          <button onclick="connectMarketplace('ebay')" class="mt-1 px-3 py-1.5 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition">Connect Now</button>
+  <!-- MAIN CONTENT -->
+  <main class="relative min-h-screen pl-64 z-10">
+    <!-- TOP CONNECTION PANEL -->
+    <section class="flex items-center justify-between px-10 pt-8 pb-2">
+      <div class="flex gap-4 w-full max-w-4xl">
+        <!-- Platform Connection Cards -->
+        <div id="connection-cards" class="flex gap-4">
+          <!-- Cards will be injected by JS -->
         </div>
       </div>
-    </div>
-    <!-- Listings Table -->
-    <div id="listingsSection">
-      <section id="listingsTableView">
-        <table class="min-w-full table-auto border-separate border-spacing-y-2 shadow bg-white rounded-lg overflow-hidden">
-          <thead>
-            <tr class="text-left text-xs font-bold tracking-widest text-gray-600 uppercase bg-gray-100">
-              <th class="pl-5 py-3">Image</th>
-              <th class="py-3">Title</th>
-              <th class="py-3">Actions</th>
-              <th class="py-3">SKU</th>
-              <th class="py-3">Price</th>
-              <th class="py-3">Platforms</th>
-              <th class="py-3 pr-5">Tone</th>
-            </tr>
-          </thead>
-          <tbody id="listingsTableBody" class="text-gray-700 text-sm"></tbody>
-        </table>
-      </section>
-      <section id="listingsGridView" class="hidden">
-        <div id="gridListings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-      </section>
-    </div>
-    <!-- Buyer Psychology Map -->
-    <section class="mt-10 max-w-xl bg-white rounded-lg shadow p-6">
-      <div class="flex items-center mb-4">
-        <span data-feather="map" class="mr-3 text-orange-500"></span>
-        <h2 class="font-bold text-lg text-gray-700">Buyer Psychology Map</h2>
-      </div>
-      <div id="buyerMap" class="w-full h-72 rounded shadow border border-gray-200"></div>
-      <div class="flex flex-wrap mt-4 space-x-6 text-sm">
-        <div class="flex items-center"><span class="text-blue-500 mr-1">🧊</span>Minimalist (BC)</div>
-        <div class="flex items-center"><span class="text-orange-500 mr-1">☀️</span>Warm (QC)</div>
-        <div class="flex items-center"><span class="text-pink-500 mr-1">🧸</span>Cozy (Prairies)</div>
-        <div class="flex items-center"><span class="text-purple-500 mr-1">💎</span>Luxury (Toronto)</div>
-        <div class="flex items-center"><span class="text-green-500 mr-1">🌱</span>Budget (Maritimes)</div>
+      <!-- User session -->
+      <div class="flex items-center gap-2">
+        <span id="user-session" class="font-semibold text-gray-800"></span>
+        <button id="sign-in-btn" class="hidden px-4 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600 shadow">Sign In</button>
       </div>
     </section>
+    
+    <!-- SEARCH + FILTER BAR -->
+    <section class="flex flex-wrap gap-4 items-center px-10 py-4 bg-white bg-opacity-70 rounded-xl mx-6 mb-3 shadow-sm dropdown-shadow">
+      <input type="text" id="search-bar" placeholder="Search your listings..." class="flex-1 px-4 py-2 rounded-lg border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-200 bg-[#fdf6f0]">
+      <select id="platform-filter" class="px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm focus:ring-orange-200">
+        <option value="All">All Platforms</option>
+        <option value="eBay">eBay</option>
+        <option value="Poshmark">Poshmark</option>
+        <option value="Facebook">Facebook</option>
+        <option value="Etsy">Etsy</option>
+        <option value="Depop">Depop</option>
+        <option value="Shopify">Shopify</option>
+        <option value="Mercari">Mercari</option>
+        <option value="Instagram">Instagram</option>
+        <option value="TikTok">TikTok</option>
+      </select>
+      <select id="intent-filter" class="px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm focus:ring-orange-200">
+        <option value="All">All Buyer Intents</option>
+        <option value="Cozy">Cozy</option>
+        <option value="Minimalist">Minimalist</option>
+        <option value="Budget">Budget</option>
+        <option value="Luxury">Luxury</option>
+        <option value="Warm">Warm</option>
+      </select>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" id="hide-sold" class="accent-orange-500 scale-125">
+        <span class="text-gray-600">Hide Sold</span>
+      </label>
+      <div class="flex gap-2 ml-auto">
+        <button id="view-list" class="p-2 rounded-lg text-orange-500 bg-orange-100 border border-orange-200 shadow-sm" aria-label="List View">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="4" y="6" width="16" height="2" rx="1"/><rect x="4" y="11" width="16" height="2" rx="1"/><rect x="4" y="16" width="16" height="2" rx="1"/></svg>
+        </button>
+        <button id="view-grid" class="p-2 rounded-lg text-gray-500 hover:text-orange-500 bg-gray-100 border border-gray-200 shadow-sm" aria-label="Grid View">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- BULK ACTIONS BAR -->
+    <section id="bulk-actions-bar" class="flex gap-3 items-center px-10 py-3 bg-orange-50 border-b border-orange-100 shadow-sm mx-6 rounded-t-xl hidden">
+      <span class="font-semibold text-orange-700">Bulk Actions:</span>
+      <button class="bulk-btn" data-action="sync">Bulk Sync</button>
+      <button class="bulk-btn" data-action="editprice">Bulk Edit Price</button>
+      <button class="bulk-btn" data-action="sold">Bulk Mark as Sold</button>
+      <span class="ml-auto text-sm text-gray-600" id="bulk-count"></span>
+      <button class="ml-4 px-2 py-1 rounded text-gray-500 hover:text-rose-500 font-bold" id="bulk-cancel">&times; Cancel</button>
+    </section>
+
+    <!-- LISTINGS (TABLE + GRID) -->
+    <section id="listings-section" class="px-10 pb-1">
+      <!-- TABLE VIEW -->
+      <div id="listings-table-view" class="bg-white bg-opacity-80 rounded-xl shadow-md mt-3 overflow-x-auto">
+        <table class="min-w-full divide-y divide-orange-100">
+          <thead class="bg-orange-50">
+            <tr>
+              <th class="p-4"><input type="checkbox" id="select-all" class="accent-orange-500 scale-125"></th>
+              <th class="p-4">Image</th>
+              <th class="p-4">Title</th>
+              <th class="p-4">Actions</th>
+              <th class="p-4">SKU</th>
+              <th class="p-4">Price</th>
+              <th class="p-4">Platforms</th>
+              <th class="p-4">Tone</th>
+            </tr>
+          </thead>
+          <tbody id="listings-table-body" class="bg-white divide-y divide-orange-50">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+      <!-- GRID VIEW -->
+      <div id="listings-grid-view" class="hidden mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- BUYER PSYCHOLOGY MAP -->
+    <section class="px-10 mt-10">
+      <h2 class="text-xl font-bold text-orange-700 mb-2">Buyer Psychology Map</h2>
+      <div id="buyer-map" class="w-full h-80 rounded-xl overflow-hidden"></div>
+      <div class="flex flex-wrap items-center gap-4 mt-3 font-medium text-sm">
+        <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-blue-100 rounded-full"></span> Minimalist 🧊</span>
+        <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-yellow-100 rounded-full"></span> Warm ☀️</span>
+        <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-orange-100 rounded-full"></span> Cozy 🧸</span>
+        <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-rose-100 rounded-full"></span> Luxury 💎</span>
+        <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-green-100 rounded-full"></span> Budget 🌱</span>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="flex flex-col md:flex-row md:justify-between items-center gap-4 px-10 py-7 mt-12 mb-2 bg-white bg-opacity-80 rounded-xl shadow-sm mx-6">
+      <div class="flex gap-4">
+        <img src="canadian-owned-badge.png" class="h-12" alt="Canadian Owned">
+        <img src="ai-powered-tools-badge.png" class="h-12" alt="AI Powered">
+        <img src="privacy-first-badge.png" class="h-12" alt="Privacy First">
+      </div>
+      <div class="text-gray-700 text-center font-medium text-sm">
+        AutoList Canada © 2025 — Built with trust, science, and Canadian soul 🇨🇦
+      </div>
+    </footer>
   </main>
-</div>
 
-<!-- Modals and Drawers (Delete, AI Enhance, Edit) -->
-<div id="modalBackdrop" class="hidden fixed inset-0 z-40 bg-black bg-opacity-30 flex items-center justify-center"></div>
-<!-- Delete Modal -->
-<div id="deleteModal" class="hidden fixed z-50 top-1/2 left-1/2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg">
-  <h3 class="font-bold text-lg text-gray-900 mb-3 flex items-center"><span data-feather="trash-2" class="mr-2 text-red-500"></span>Delete Listing</h3>
-  <div class="mb-4 text-gray-700">Are you sure you want to delete <span id="deleteTitle" class="font-semibold"></span>? This action can’t be undone.</div>
-  <div class="flex justify-end space-x-2">
-    <button onclick="closeDeleteModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Cancel</button>
-    <button onclick="confirmDeleteListing()" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 font-semibold">Delete</button>
+  <!-- MODALS -->
+  <!-- AI Suggest Modal -->
+  <div id="ai-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
+      <button class="absolute top-2 right-3 text-2xl text-gray-400 hover:text-rose-500" onclick="closeAIModal()">&times;</button>
+      <h3 class="text-lg font-bold mb-2 text-orange-600">AI-Suggested Listing</h3>
+      <div id="ai-suggest-body" class="mb-4 text-gray-800 text-base whitespace-pre-line"></div>
+      <div class="flex justify-end gap-2">
+        <button class="px-4 py-1.5 rounded bg-gray-100 hover:bg-gray-200 text-gray-700" onclick="closeAIModal()">Close</button>
+        <button class="px-4 py-1.5 rounded bg-orange-500 text-white hover:bg-orange-600" onclick="applyAISuggestion()">Apply</button>
+      </div>
+    </div>
   </div>
-</div>
-<!-- AI Enhance Modal -->
-<div id="aiModal" class="hidden fixed z-50 top-1/2 left-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 bg-white p-7 rounded-lg shadow-lg">
-  <h3 class="font-bold text-lg text-gray-900 mb-3 flex items-center"><span data-feather="zap" class="mr-2 text-orange-500"></span>AI Enhancement</h3>
-  <div id="aiSuggestions" class="mb-6 text-gray-700"></div>
-  <div class="flex justify-end">
-    <button onclick="closeAIModal()" class="px-4 py-2 rounded bg-orange-500 text-white hover:bg-orange-600 font-semibold">Close</button>
+  <!-- Comment Modal -->
+  <div id="comment-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative">
+      <button class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-rose-500" onclick="closeCommentModal()">&times;</button>
+      <h3 class="text-lg font-bold text-orange-600 mb-2">Listing Comments</h3>
+      <textarea id="comment-text" rows="5" class="w-full border border-orange-200 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-200"></textarea>
+      <div class="flex justify-end gap-2">
+        <button class="px-4 py-1.5 rounded bg-gray-100 hover:bg-gray-200 text-gray-700" onclick="closeCommentModal()">Cancel</button>
+        <button class="px-4 py-1.5 rounded bg-orange-500 text-white hover:bg-orange-600" onclick="saveComment()">Save</button>
+      </div>
+    </div>
   </div>
-</div>
-<!-- Edit Inline Row Template (hidden for cloning) -->
-<table class="hidden"><tbody>
-<tr id="editRowTemplate">
-  <td class="pl-5 py-2"><img src="" class="w-12 h-12 rounded object-cover border" id="editImg" /></td>
-  <td>
-    <input type="text" class="border rounded px-2 py-1 w-full" id="editTitle" />
-  </td>
-  <td class="flex space-x-2">
-    <button onclick="saveEditListing(event)" class="px-3 py-1.5 rounded bg-green-500 text-white font-semibold hover:bg-green-600">Save</button>
-    <button onclick="cancelEditListing(event)" class="px-3 py-1.5 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Cancel</button>
-  </td>
-  <td>
-    <input type="text" class="border rounded px-2 py-1 w-32" id="editSku" />
-  </td>
-  <td>
-    <input type="text" class="border rounded px-2 py-1 w-20" id="editPrice" />
-  </td>
-  <td>
-    <div class="flex space-x-2" id="editPlatforms"></div>
-  </td>
-  <td>
-    <select id="editTone" class="border rounded px-2 py-1 w-24">
-      <option>Cozy</option>
-      <option>Luxury</option>
-      <option>Eco</option>
-      <option>Vintage</option>
-      <option>Budget</option>
-    </select>
-  </td>
-</tr>
-</tbody></table>
 
-<script>
-/* ---- STATE ---- */
-let isEbayConnected = true; // Simulate eBay connected
-let isPoshmarkConnected = true;
-let isFacebookConnected = true;
-let listings = [
-  {
-    title: "Vintage Denim Jacket",
-    sku: "CA-JACKET-412",
-    price: "$110.00",
-    image: "jacket.jpg",
-    platforms: ["ebay", "poshmark", "facebook"],
-    tone: "Vintage"
-  },
-  {
-    title: "Cozy Fleece Hoodie",
-    sku: "CA-HOOD-101",
-    price: "$48.99",
-    image: "hoodie.jpg",
-    platforms: ["ebay"],
-    tone: "Cozy"
-  },
-  {
-    title: "Luxury Leather Bag",
-    sku: "CA-BAG-309",
-    price: "$225.50",
-    image: "bag.jpg",
-    platforms: ["facebook"],
-    tone: "Luxury"
-  }
-];
-let filteredListings = [...listings];
-let currentView = 'list';
-let listingToDelete = null;
-let editingIndex = null;
+  <!-- SCRIPTS -->
+  <script>
+    // ------------- GLOBAL STATE -----------
+    // Simulated data for platforms and listings
+    const platforms = [
+      {name: 'eBay', color: 'bg-[#1e59b0]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ebay.svg', connected: true},
+      {name: 'Poshmark', color: 'bg-[#d3215a]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/poshmark.svg', connected: true},
+      {name: 'Facebook', color: 'bg-[#1778f2]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg', connected: true},
+      {name: 'Etsy', color: 'bg-[#f1641e]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/etsy.svg', connected: false},
+      {name: 'Depop', color: 'bg-[#ff2200]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/depop.svg', connected: false},
+      {name: 'Shopify', color: 'bg-[#96bf48]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg', connected: false},
+      {name: 'Mercari', color: 'bg-[#2274a5]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/mercari.svg', connected: false},
+      {name: 'Instagram', color: 'bg-gradient-to-tr from-pink-400 via-red-400 to-yellow-400', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg', connected: false},
+      {name: 'TikTok', color: 'bg-[#010101]', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg', connected: false},
+    ];
+    const tones = [
+      {name: 'Cozy', color: 'bg-orange-100 text-orange-800', emoji: '🧸'},
+      {name: 'Minimalist', color: 'bg-blue-100 text-blue-800', emoji: '🧊'},
+      {name: 'Budget', color: 'bg-green-100 text-green-800', emoji: '🌱'},
+      {name: 'Luxury', color: 'bg-rose-100 text-rose-800', emoji: '💎'},
+      {name: 'Warm', color: 'bg-yellow-100 text-yellow-800', emoji: '☀️'},
+    ];
+    let userSession = { email: "seller@canada.ca", signedIn: true };
 
-/* ---- UTILS ---- */
-function platformIcon(p) {
-  if(p==='ebay') return '<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/EBay_logo_2012.svg" alt="eBay" class="w-6 h-6 rounded" />';
-  if(p==='poshmark') return '<img src="https://seeklogo.com/images/P/poshmark-logo-9F4B5F18A2-seeklogo.com.png" alt="Poshmark" class="w-6 h-6 rounded" />';
-  if(p==='facebook') return '<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="w-6 h-6 rounded bg-gray-200 p-0.5" />';
-  return '';
-}
-function toneBadge(tone) {
-  let map = {
-    'Cozy': 'bg-pink-100 text-pink-600',
-    'Luxury': 'bg-purple-100 text-purple-700',
-    'Eco': 'bg-green-100 text-green-700',
-    'Budget': 'bg-green-50 text-green-600',
-    'Vintage': 'bg-yellow-100 text-yellow-700',
-    'Minimalist': 'bg-blue-100 text-blue-600',
-    'Warm': 'bg-orange-100 text-orange-600'
-  };
-  return `<span class="tone-badge ${map[tone]||'bg-gray-200 text-gray-600'}">${tone}</span>`;
-}
-function fallbackImg(img) {
-  return img && img.trim() ? img : 'https://via.placeholder.com/60x60?text=No+Image';
-}
+    // Simulated Listings Data
+    let listings = [
+      {
+        id: 1,
+        image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=300&q=80',
+        title: 'Cozy Hand-knit Scarf',
+        sku: 'SCF-001',
+        price: 34.99,
+        platforms: {eBay: true, Poshmark: true, Facebook: false, Etsy: false, Depop: false, Shopify: false, Mercari: false, Instagram: false, TikTok: false},
+        tone: 'Cozy',
+        sold: false,
+        comment: 'Great winter seller!',
+        visible: true,
+      },
+      {
+        id: 2,
+        image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80',
+        title: 'Minimalist Ceramic Vase',
+        sku: 'VAS-101',
+        price: 58.00,
+        platforms: {eBay: true, Poshmark: false, Facebook: true, Etsy: true, Depop: false, Shopify: false, Mercari: false, Instagram: false, TikTok: false},
+        tone: 'Minimalist',
+        sold: false,
+        comment: '',
+        visible: true,
+      },
+      {
+        id: 3,
+        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80',
+        title: 'Luxury Cashmere Throw',
+        sku: 'THR-202',
+        price: 199.99,
+        platforms: {eBay: true, Poshmark: true, Facebook: true, Etsy: false, Depop: false, Shopify: false, Mercari: false, Instagram: true, TikTok: false},
+        tone: 'Luxury',
+        sold: false,
+        comment: '',
+        visible: true,
+      },
+      {
+        id: 4,
+        image: 'https://images.unsplash.com/photo-1526178613658-3f1622045557?auto=format&fit=crop&w=300&q=80',
+        title: 'Budget Kitchen Utensil Set',
+        sku: 'KIT-303',
+        price: 14.50,
+        platforms: {eBay: false, Poshmark: false, Facebook: true, Etsy: false, Depop: false, Shopify: false, Mercari: true, Instagram: false, TikTok: false},
+        tone: 'Budget',
+        sold: true,
+        comment: '',
+        visible: true,
+      },
+      {
+        id: 5,
+        image: 'https://images.unsplash.com/photo-1526171111615-368b1d4bcebb?auto=format&fit=crop&w=300&q=80',
+        title: 'Warm Woollen Hat',
+        sku: 'HAT-404',
+        price: 28.00,
+        platforms: {eBay: true, Poshmark: false, Facebook: true, Etsy: false, Depop: true, Shopify: false, Mercari: false, Instagram: false, TikTok: false},
+        tone: 'Warm',
+        sold: false,
+        comment: 'Popular last fall.',
+        visible: true,
+      }
+    ];
 
-/* ---- MAIN RENDERERS ---- */
-function renderListingsTable() {
-  const body = document.getElementById('listingsTableBody');
-  body.innerHTML = '';
-  filteredListings.forEach((listing, i) => {
-    if(editingIndex === i) {
-      // Inline edit row
-      let editRow = document.getElementById('editRowTemplate').cloneNode(true);
-      editRow.removeAttribute('id');
-      editRow.style.display = '';
-      editRow.querySelector('#editImg').src = fallbackImg(listing.image);
-      editRow.querySelector('#editTitle').value = listing.title;
-      editRow.querySelector('#editSku').value = listing.sku;
-      editRow.querySelector('#editPrice').value = listing.price;
-      // Platforms
-      let platDiv = editRow.querySelector('#editPlatforms');
-      ['ebay','poshmark','facebook'].forEach(p=>{
-        let chk = document.createElement('input');
-        chk.type = 'checkbox';
-        chk.checked = listing.platforms.includes(p);
-        chk.className = 'accent-orange-500 w-5 h-5 mx-0.5';
-        chk.dataset.platform = p;
-        platDiv.appendChild(chk);
+    // For bulk actions
+    let selectedListings = new Set();
+
+    // ------------- SIDEBAR LOGIC -----------
+    // Sidebar styling
+    function updateSidebarActive() {
+      document.querySelectorAll('.sidebar-btn').forEach(btn => {
+        if (btn.dataset.nav === "Listings") {
+          btn.classList.add('bg-orange-500', 'text-white', 'shadow-md');
+        } else {
+          btn.classList.remove('bg-orange-500', 'text-white', 'shadow-md');
+        }
       });
-      // Tone
-      editRow.querySelector('#editTone').value = listing.tone;
-      // Save/Cancel button events
-      editRow.querySelector('button[onclick="saveEditListing(event)"]').onclick = e => saveEditListing(i, e);
-      editRow.querySelector('button[onclick="cancelEditListing(event)"]').onclick = e => cancelEditListing(i, e);
-      body.appendChild(editRow);
-      return;
     }
-    let tr = document.createElement('tr');
-    tr.className = "rounded bg-white shadow hover:shadow-lg transition";
-    tr.innerHTML = `
-      <td class="pl-5 py-2"><img src="${fallbackImg(listing.image)}" class="w-12 h-12 rounded object-cover border" /></td>
-      <td class="font-semibold">${listing.title}</td>
-      <td>
-        <div class="flex space-x-2">
-          <button onclick="editListing(${i})" class="p-1 rounded hover:bg-orange-100" title="Edit"><span data-feather="edit-3"></span></button>
-          <button onclick="openDeleteModal(${i})" class="p-1 rounded hover:bg-red-100" title="Delete"><span data-feather="trash-2" class="text-red-500"></span></button>
-          <button onclick="openAIModal(${i})" class="p-1 rounded hover:bg-orange-100" title="AI Enhance"><span data-feather="zap"></span></button>
+    // Initial sidebar button styles
+    document.querySelectorAll('.sidebar-btn').forEach(btn => {
+      btn.classList.add(
+        'w-full', 'text-left', 'px-4', 'py-2.5', 'mb-1', 'rounded-lg',
+        'bg-white', 'text-gray-700', 'hover:bg-orange-100',
+        'transition', 'shadow-sm', 'font-semibold', 'text-base', 'relative'
+      );
+      if (btn.dataset.nav === "Listings") btn.classList.add('bg-orange-500','text-white','shadow-md');
+      btn.addEventListener('click', () => {
+        // Simulate navigation
+        alert('Navigation to "'+btn.dataset.nav+'" simulated.');
+      });
+    });
+
+    // Language toggle
+    document.getElementById('lang-toggle').addEventListener('change', function() {
+      let lang = this.checked ? 'FR' : 'EN';
+      // Simulate language change (just alert for demo)
+      alert('Language switched to '+lang+' (simulation)');
+    });
+
+    // ------------- CONNECTION PANEL LOGIC -----------
+    function renderConnectionCards() {
+      const wrap = document.getElementById('connection-cards');
+      wrap.innerHTML = '';
+      platforms.forEach((plat, i) => {
+        const connected = plat.connected;
+        wrap.innerHTML += `
+        <div class="flex items-center gap-2 bg-white border ${connected ? 'border-orange-200' : 'border-gray-200 opacity-60'} shadow-sm px-3 py-2 rounded-lg min-w-[110px] transition relative group">
+          <span class="w-7 h-7 rounded-full flex items-center justify-center ${plat.color} shadow-lg ${connected ? '' : 'grayscale'}">
+            <img src="${plat.icon}" class="w-5 h-5 object-contain" alt="${plat.name}">
+          </span>
+          <span class="font-semibold text-sm ${connected ? 'text-gray-700' : 'text-gray-400'}">${plat.name}</span>
+          ${connected ? `
+            <span class="ml-1 text-[11px] px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-semibold">Connected</span>
+          ` : `
+            <button onclick="connectPlatform('${plat.name}')" class="ml-2 px-2 py-0.5 rounded bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 shadow">Connect</button>
+          `}
         </div>
-      </td>
-      <td>${listing.sku}</td>
-      <td class="font-bold">${listing.price}</td>
-      <td>
-        <div class="flex items-center space-x-1">
-          ${['ebay','poshmark','facebook'].map(p=>
-            `<input type="checkbox" class="accent-orange-500 w-5 h-5" ${listing.platforms.includes(p)?'checked':''} onclick="togglePlatform(${i},'${p}')" title="${p[0].toUpperCase()+p.slice(1)}" />`
-          ).join('')}
-        </div>
-      </td>
-      <td>${toneBadge(listing.tone)}</td>
-    `;
-    body.appendChild(tr);
-  });
-  feather.replace();
-}
+        `;
+      });
+    }
+    function connectPlatform(name) {
+      setTimeout(() => {
+        platforms.find(p=>p.name===name).connected = true;
+        renderConnectionCards();
+        alert(`Simulated ${name} connection successful!`);
+        renderListingsTable();
+        renderListingsGrid();
+      }, 650);
+    }
+    renderConnectionCards();
 
-function renderListingsGrid() {
-  const grid = document.getElementById('gridListings');
-  grid.innerHTML = '';
-  filteredListings.forEach((listing, i) => {
-    let div = document.createElement('div');
-    div.className = "bg-white rounded-xl shadow-lg flex flex-col p-5 items-center hover:shadow-2xl transition";
-    div.innerHTML = `
-      <img src="${fallbackImg(listing.image)}" class="w-28 h-28 object-cover rounded border mb-3" />
-      <div class="font-bold text-lg mb-1 text-center">${listing.title}</div>
-      <div class="font-semibold text-orange-600 mb-1">${listing.price}</div>
-      <div class="mb-2">${toneBadge(listing.tone)}</div>
-      <div class="flex items-center space-x-2 mb-3">
-        ${listing.platforms.map(platformIcon).join('')}
-      </div>
-      <div class="flex space-x-2">
-        <button onclick="openAIModal(${i})" class="px-3 py-1 rounded bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition">AI Title Fix</button>
-        <button onclick="editListing(${i})" class="px-3 py-1 rounded bg-gray-200 text-gray-700 text-xs font-bold hover:bg-gray-300 transition">Edit Description</button>
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-  feather.replace();
-}
+    // Session logic
+    function updateUserSession() {
+      const emailEl = document.getElementById('user-session');
+      const signInBtn = document.getElementById('sign-in-btn');
+      if (userSession.signedIn) {
+        emailEl.textContent = userSession.email;
+        signInBtn.classList.add('hidden');
+      } else {
+        emailEl.textContent = '';
+        signInBtn.classList.remove('hidden');
+      }
+    }
+    document.getElementById('sign-in-btn').onclick = () => {
+      userSession = {email:"seller@canada.ca", signedIn: true};
+      updateUserSession();
+    }
+    updateUserSession();
 
-/* ---- VIEW TOGGLE ---- */
-function toggleView(view) {
-  currentView = view;
-  document.getElementById('listViewBtn').classList.toggle('bg-orange-600', view==='list');
-  document.getElementById('listViewBtn').classList.toggle('text-white', view==='list');
-  document.getElementById('listViewBtn').classList.toggle('text-gray-500', view!=='list');
-  document.getElementById('gridViewBtn').classList.toggle('bg-orange-600', view==='grid');
-  document.getElementById('gridViewBtn').classList.toggle('text-white', view==='grid');
-  document.getElementById('gridViewBtn').classList.toggle('text-gray-500', view!=='grid');
-  document.getElementById('listingsTableView').classList.toggle('hidden', view!=='list');
-  document.getElementById('listingsGridView').classList.toggle('hidden', view!=='grid');
-  if(view==='list') renderListingsTable();
-  else renderListingsGrid();
-}
+    // ------------- SEARCH & FILTER LOGIC -----------
+    function filterListings() {
+      let search = document.getElementById('search-bar').value.trim().toLowerCase();
+      let plat = document.getElementById('platform-filter').value;
+      let intent = document.getElementById('intent-filter').value;
+      let hideSold = document.getElementById('hide-sold').checked;
+      let filtered = listings.filter(list => {
+        if (search && !list.title.toLowerCase().includes(search) && !list.sku.toLowerCase().includes(search)) return false;
+        if (plat !== 'All' && !list.platforms[plat]) return false;
+        if (intent !== 'All' && list.tone !== intent) return false;
+        if (hideSold && list.sold) return false;
+        return true;
+      });
+      return filtered;
+    }
+    ['search-bar','platform-filter','intent-filter','hide-sold'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', ()=>{ renderListingsTable(); renderListingsGrid(); });
+      document.getElementById(id).addEventListener('change', ()=>{ renderListingsTable(); renderListingsGrid(); });
+    });
 
-/* ---- FILTERING ---- */
-function filterListings() {
-  const search = document.getElementById('searchInput').value.trim().toLowerCase();
-  const plat = document.getElementById('platformFilter').value;
-  const tone = document.getElementById('toneFilter').value;
-  const hideSold = document.getElementById('hideSold').checked;
-  filteredListings = listings.filter(l => {
-    let match = true;
-    if(search && !(l.title.toLowerCase().includes(search) || l.sku.toLowerCase().includes(search))) match = false;
-    if(plat && !l.platforms.includes(plat)) match = false;
-    if(tone && l.tone !== tone) match = false;
-    if(hideSold && l.sold) match = false;
-    return match;
-  });
-  if(currentView === 'list') renderListingsTable();
-  else renderListingsGrid();
-}
+    // ------------- VIEW TOGGLE -----------
+    let viewMode = 'list';
+    document.getElementById('view-list').addEventListener('click', () => {
+      viewMode = 'list';
+      setView();
+    });
+    document.getElementById('view-grid').addEventListener('click', () => {
+      viewMode = 'grid';
+      setView();
+    });
+    function setView() {
+      if (viewMode === 'list') {
+        document.getElementById('listings-table-view').classList.remove('hidden');
+        document.getElementById('listings-grid-view').classList.add('hidden');
+        document.getElementById('view-list').classList.add('text-orange-500','bg-orange-100','border-orange-200');
+        document.getElementById('view-list').classList.remove('text-gray-500','bg-gray-100','border-gray-200');
+        document.getElementById('view-grid').classList.remove('text-orange-500','bg-orange-100','border-orange-200');
+        document.getElementById('view-grid').classList.add('text-gray-500','bg-gray-100','border-gray-200');
+      } else {
+        document.getElementById('listings-table-view').classList.add('hidden');
+        document.getElementById('listings-grid-view').classList.remove('hidden');
+        document.getElementById('view-grid').classList.add('text-orange-500','bg-orange-100','border-orange-200');
+        document.getElementById('view-grid').classList.remove('text-gray-500','bg-gray-100','border-gray-200');
+        document.getElementById('view-list').classList.remove('text-orange-500','bg-orange-100','border-orange-200');
+        document.getElementById('view-list').classList.add('text-gray-500','bg-gray-100','border-gray-200');
+      }
+    }
+    setView();
 
-/* ---- PLATFORM TOGGLE ---- */
-function togglePlatform(i, p) {
-  let idx = listings[i].platforms.indexOf(p);
-  if(idx > -1) listings[i].platforms.splice(idx,1);
-  else listings[i].platforms.push(p);
-  filterListings();
-}
+    // ------------- LISTINGS TABLE LOGIC -----------
+    function renderListingsTable() {
+      let filtered = filterListings();
+      let tbody = document.getElementById('listings-table-body');
+      tbody.innerHTML = '';
+      filtered.forEach(list => {
+        let isChecked = selectedListings.has(list.id) ? 'checked' : '';
+        let platformIcons = platforms.map(plat => `
+          <label class="inline-flex items-center mr-1">
+            <input type="checkbox" class="accent-orange-500" ${list.platforms[plat.name] ? 'checked' : ''} data-listing="${list.id}" data-platform="${plat.name}" onchange="togglePlatformSync(${list.id},'${plat.name}')">
+            <img src="${plat.icon}" class="inline w-5 h-5 ml-1 ${list.platforms[plat.name] && plat.connected ? '' : 'grayscale opacity-40'}" alt="${plat.name}">
+          </label>
+        `).join('');
+        let toneObj = tones.find(t=>t.name===list.tone)||{color:'bg-gray-100',emoji:'❓'};
+        tbody.innerHTML += `
+          <tr class="${list.sold ? 'opacity-60 bg-gray-100' : ''}" id="listing-row-${list.id}">
+            <td class="p-4"><input type="checkbox" class="select-row accent-orange-500 scale-125" value="${list.id}" ${isChecked}></td>
+            <td class="p-4">
+              <img src="${list.image}" class="w-14 h-14 rounded-lg object-cover shadow" alt="${list.title}">
+            </td>
+            <td class="p-4 font-semibold text-gray-900" id="title-cell-${list.id}">
+              <span>${list.title}</span>
+            </td>
+            <td class="p-4">
+              <button class="p-1 rounded hover:bg-orange-50" title="Edit" onclick="editListing(${list.id})"><i data-feather="edit" class="w-5 h-5 text-orange-500"></i></button>
+              <button class="p-1 rounded hover:bg-orange-50" title="Delete" onclick="deleteListing(${list.id})"><i data-feather="trash-2" class="w-5 h-5 text-rose-400"></i></button>
+              <button class="p-1 rounded hover:bg-orange-50" title="AI Suggest" onclick="showAIModal(${list.id})"><i data-feather="zap" class="w-5 h-5 text-yellow-500"></i></button>
+              <button class="p-1 rounded hover:bg-orange-50" title="Comment" onclick="showCommentModal(${list.id})"><i data-feather="message-circle" class="w-5 h-5 text-blue-400"></i></button>
+            </td>
+            <td class="p-4">${list.sku}</td>
+            <td class="p-4 price-edit" id="price-cell-${list.id}">
+              <span>$${list.price.toFixed(2)}</span>
+            </td>
+            <td class="p-4">${platformIcons}</td>
+            <td class="p-4">
+              <span class="inline-flex items-center px-3 py-1 rounded-full font-semibold tone-animate ${toneObj.color}">
+                <span class="mr-1">${toneObj.emoji}</span> ${list.tone}
+              </span>
+            </td>
+          </tr>
+        `;
+      });
+      feather.replace();
+      // Add event listeners for row selection
+      document.querySelectorAll('.select-row').forEach(cb => {
+        cb.onchange = function() {
+          let id = parseInt(this.value);
+          if (this.checked) {
+            selectedListings.add(id);
+          } else {
+            selectedListings.delete(id);
+          }
+          updateBulkBar();
+        }
+      });
+      // Select all checkbox
+      document.getElementById('select-all').checked = (filtered.length > 0 && filtered.every(l=>selectedListings.has(l.id)));
+      updateBulkBar();
+    }
+    // Inline edit
+    function editListing(id) {
+      let row = document.getElementById('listing-row-' + id);
+      let listing = listings.find(l=>l.id===id);
+      // Title
+      let titleCell = document.getElementById('title-cell-' + id);
+      titleCell.innerHTML = `<input id="edit-title-${id}" value="${listing.title}" class="px-2 py-1 border rounded bg-white w-44 text-gray-800 font-medium">`;
+      // Price
+      let priceCell = document.getElementById('price-cell-' + id);
+      priceCell.innerHTML = `<input id="edit-price-${id}" type="number" step="0.01" value="${listing.price}" class="px-2 py-1 border rounded bg-white w-20 text-gray-800 font-medium">`;
+      // Save on blur or Enter
+      document.getElementById('edit-title-' + id).addEventListener('blur', function() {
+        listing.title = this.value;
+        renderListingsTable();
+        renderListingsGrid();
+      });
+      document.getElementById('edit-price-' + id).addEventListener('blur', function() {
+        listing.price = parseFloat(this.value) || listing.price;
+        renderListingsTable();
+        renderListingsGrid();
+      });
+      document.getElementById('edit-title-' + id).addEventListener('keydown', function(e){
+        if(e.key==='Enter'){ this.blur();}
+      });
+      document.getElementById('edit-price-' + id).addEventListener('keydown', function(e){
+        if(e.key==='Enter'){ this.blur();}
+      });
+      document.getElementById('edit-title-' + id).focus();
+    }
+    // Platform sync toggle
+    function togglePlatformSync(listingId, platformName) {
+      let listing = listings.find(l=>l.id===listingId);
+      if (platforms.find(p=>p.name===platformName).connected)
+        listing.platforms[platformName] = !listing.platforms[platformName];
+      else {
+        alert(`${platformName} is not connected. Please connect first.`);
+      }
+      renderListingsTable();
+      renderListingsGrid();
+    }
+    // Delete
+    function deleteListing(id) {
+      if (confirm('Delete this listing?')) {
+        listings = listings.filter(l => l.id !== id);
+        selectedListings.delete(id);
+        renderListingsTable();
+        renderListingsGrid();
+      }
+    }
+    // Select all
+    document.getElementById('select-all').onchange = function() {
+      let filtered = filterListings();
+      if (this.checked) {
+        filtered.forEach(l=>selectedListings.add(l.id));
+      } else {
+        filtered.forEach(l=>selectedListings.delete(l.id));
+      }
+      renderListingsTable();
+      updateBulkBar();
+    };
 
-/* ---- EDITING ---- */
-function editListing(i) {
-  editingIndex = i;
-  renderListingsTable();
-}
-function saveEditListing(i, e) {
-  const row = e.target.closest('tr');
-  listings[i].title = row.querySelector('#editTitle').value;
-  listings[i].sku = row.querySelector('#editSku').value;
-  listings[i].price = row.querySelector('#editPrice').value;
-  let platforms = [];
-  row.querySelectorAll('#editPlatforms input[type=checkbox]').forEach(chk=>{
-    if(chk.checked) platforms.push(chk.dataset.platform);
-  });
-  listings[i].platforms = platforms;
-  listings[i].tone = row.querySelector('#editTone').value;
-  editingIndex = null;
-  filterListings();
-}
-function cancelEditListing(i, e) {
-  editingIndex = null;
-  renderListingsTable();
-}
+    // ------------- BULK ACTIONS LOGIC -----------
+    function updateBulkBar() {
+      let bar = document.getElementById('bulk-actions-bar');
+      let count = Array.from(selectedListings).filter(id=>listings.some(l=>l.id===id && !l.sold)).length;
+      if (count > 0) {
+        bar.classList.remove('hidden');
+        document.getElementById('bulk-count').textContent = `${count} selected`;
+      } else {
+        bar.classList.add('hidden');
+      }
+    }
+    document.querySelectorAll('.bulk-btn').forEach(btn=>{
+      btn.onclick = function() {
+        let action = this.dataset.action;
+        let ids = Array.from(selectedListings);
+        if (action === 'sync') {
+          ids.forEach(id=>{
+            let l = listings.find(x=>x.id===id);
+            Object.keys(l.platforms).forEach(p=>{
+              if (platforms.find(plat=>plat.name===p).connected) l.platforms[p]=true;
+            });
+          });
+          alert('Listings have been synced to all connected platforms (simulated).');
+        } else if (action === 'editprice') {
+          let newPrice = prompt('Bulk price update: Enter new price for selected listings:');
+          if (newPrice) {
+            ids.forEach(id=>{
+              let l = listings.find(x=>x.id===id);
+              l.price = parseFloat(newPrice);
+            });
+          }
+        } else if (action === 'sold') {
+          ids.forEach(id=>{
+            let l = listings.find(x=>x.id===id);
+            l.sold = true;
+          });
+        }
+        selectedListings.clear();
+        renderListingsTable();
+        renderListingsGrid();
+      }
+    });
+    document.getElementById('bulk-cancel').onclick=function(){
+      selectedListings.clear();
+      renderListingsTable();
+      renderListingsGrid();
+    };
 
-/* ---- DELETE ---- */
-function openDeleteModal(i) {
-  listingToDelete = i;
-  document.getElementById('deleteTitle').textContent = listings[i].title;
-  document.getElementById('modalBackdrop').classList.remove('hidden');
-  document.getElementById('deleteModal').classList.remove('hidden');
-}
-function closeDeleteModal() {
-  document.getElementById('modalBackdrop').classList.add('hidden');
-  document.getElementById('deleteModal').classList.add('hidden');
-  listingToDelete = null;
-}
-function confirmDeleteListing() {
-  if(listingToDelete!=null) {
-    listings.splice(listingToDelete, 1);
-    filterListings();
-  }
-  closeDeleteModal();
-}
+    // ------------- GRID VIEW LOGIC -----------
+    function renderListingsGrid() {
+      let filtered = filterListings();
+      let grid = document.getElementById('listings-grid-view');
+      grid.innerHTML = '';
+      filtered.forEach(list=>{
+        let toneObj = tones.find(t=>t.name===list.tone)||{color:'bg-gray-100',emoji:'❓'};
+        let platformIcons = platforms.map(plat=>`
+          <img src="${plat.icon}" class="inline w-5 h-5 mr-1 ${list.platforms[plat.name] && plat.connected ? '' : 'grayscale opacity-40'}" alt="${plat.name}">
+        `).join('');
+        grid.innerHTML += `
+          <div class="bg-white rounded-xl shadow-md relative flex flex-col p-4 group ${list.sold ? 'opacity-60 bg-gray-100' : ''}">
+            <img src="${list.image}" class="rounded-lg object-cover w-full h-40 mb-2 shadow" alt="${list.title}">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-base text-gray-800">${list.title}</span>
+              <span class="font-semibold text-orange-600 text-lg">$${list.price.toFixed(2)}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 mb-2">${platformIcons}</div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full font-semibold text-sm mb-2 tone-animate ${toneObj.color}">
+              <span class="mr-1">${toneObj.emoji}</span> ${list.tone}
+            </span>
+            <div class="flex items-center gap-3 mt-auto">
+              <button class="p-1 rounded hover:bg-orange-50" title="Edit" onclick="editListingGrid(${list.id}, this)"><i data-feather="edit" class="w-5 h-5 text-orange-500"></i></button>
+              <button class="p-1 rounded hover:bg-orange-50" title="AI Suggest" onclick="showAIModal(${list.id})"><i data-feather="zap" class="w-5 h-5 text-yellow-500"></i></button>
+              <button class="p-1 rounded hover:bg-orange-50" title="Comment" onclick="showCommentModal(${list.id})"><i data-feather="message-circle" class="w-5 h-5 text-blue-400"></i></button>
+              <label class="ml-auto flex items-center gap-1 text-xs font-medium">
+                <input type="checkbox" ${list.visible ? 'checked' : ''} onchange="toggleVisibility(${list.id})" class="accent-orange-500">
+                <span>${list.visible ? 'Visible' : 'Hidden'}</span>
+              </label>
+            </div>
+          </div>
+        `;
+      });
+      feather.replace();
+    }
+    function editListingGrid(id, btn) {
+      let listing = listings.find(l=>l.id===id);
+      let card = btn.closest('.flex.flex-col');
+      card.querySelector('.font-bold').innerHTML = `<input id="edit-title-g${id}" value="${listing.title}" class="px-2 py-1 border rounded bg-white w-36 text-gray-800 font-medium">`;
+      card.querySelector('.font-semibold.text-orange-600').innerHTML = `<input id="edit-price-g${id}" type="number" step="0.01" value="${listing.price}" class="px-2 py-1 border rounded bg-white w-16 text-gray-800 font-medium">`;
+      document.getElementById('edit-title-g'+id).addEventListener('blur', function() {
+        listing.title = this.value;
+        renderListingsGrid();
+        renderListingsTable();
+      });
+      document.getElementById('edit-price-g'+id).addEventListener('blur', function() {
+        listing.price = parseFloat(this.value)||listing.price;
+        renderListingsGrid();
+        renderListingsTable();
+      });
+      document.getElementById('edit-title-g'+id).addEventListener('keydown', function(e){
+        if(e.key==='Enter'){ this.blur();}
+      });
+      document.getElementById('edit-price-g'+id).addEventListener('keydown', function(e){
+        if(e.key==='Enter'){ this.blur();}
+      });
+      document.getElementById('edit-title-g'+id).focus();
+    }
+    function toggleVisibility(id) {
+      let listing = listings.find(l=>l.id===id);
+      listing.visible = !listing.visible;
+      renderListingsGrid();
+      renderListingsTable();
+    }
 
-/* ---- AI ENHANCE ---- */
-function openAIModal(i) {
-  document.getElementById('modalBackdrop').classList.remove('hidden');
-  document.getElementById('aiModal').classList.remove('hidden');
-  let l = listings[i];
-  document.getElementById('aiSuggestions').innerHTML = `
-    <div class="mb-3"><strong>AI Suggestions for:</strong> <span class="text-orange-600">${l.title}</span></div>
-    <ul class="list-disc pl-5 text-gray-700">
-      <li>Optimize title: <em>"${l.title.replace(/(Vintage|Luxury|Cozy|Eco|Budget)/gi, '')} – ${l.tone} Style"</em></li>
-      <li>Price check: <em>${l.price} is ${Math.random()>0.5?'competitive':'above average'} for ${l.tone} items</em></li>
-      <li>Add platform: <em>${['ebay','poshmark','facebook'].filter(p=>!l.platforms.includes(p)).map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(', ')||'All connected'}</em></li>
-      <li>Image quality: <em>${l.image&&l.image!=='https://via.placeholder.com/60x60?text=No+Image'?'Looks good':'Consider adding an image'}</em></li>
-    </ul>
-  `;
-}
-function closeAIModal() {
-  document.getElementById('modalBackdrop').classList.add('hidden');
-  document.getElementById('aiModal').classList.add('hidden');
-}
+    // ------------- AI SUGGEST MODAL LOGIC -----------
+    let aiModalListingId = null;
+    function showAIModal(id) {
+      aiModalListingId = id;
+      const listing = listings.find(l=>l.id===id);
+      const suggestion = `Title: ${listing.title}
+Description: 
+${listing.tone === 'Cozy' ? 'Snuggle up with this hand-knit scarf, perfect for chilly Canadian winters. Soft, stylish, and sure to sell fast.' : ''}
+${listing.tone === 'Minimalist' ? 'Clean lines, timeless design. This ceramic vase brings calm and clarity to any space.' : ''}
+${listing.tone === 'Luxury' ? 'Indulge in the rich softness of cashmere. This throw transforms any room into a sanctuary of comfort.' : ''}
+${listing.tone === 'Budget' ? 'Essential kitchen tools at a price that makes sense. Upgrade your kitchen without breaking the bank.' : ''}
+${listing.tone === 'Warm' ? 'Classic beanie for cozy warmth. A staple for braving Canadian breezes.' : ''}
+Price: $${listing.price.toFixed(2)}
+Platforms: ${Object.keys(listing.platforms).filter(p=>listing.platforms[p]).join(', ')}
+Tone: ${listing.tone}`;
+      document.getElementById('ai-suggest-body').textContent = suggestion;
+      document.getElementById('ai-modal').classList.remove('hidden');
+    }
+    function closeAIModal() {
+      document.getElementById('ai-modal').classList.add('hidden');
+      aiModalListingId = null;
+    }
+    function applyAISuggestion() {
+      if (aiModalListingId !== null) {
+        alert('AI suggestion applied to listing (simulation)');
+        closeAIModal();
+      }
+    }
 
-/* ---- MARKETPLACE CONNECT ---- */
-function connectMarketplace(market) {
-  if(market==='ebay') isEbayConnected = true;
-  if(market==='poshmark') isPoshmarkConnected = true;
-  if(market==='facebook') isFacebookConnected = true;
-  updateBulkSyncAlert();
-  filterListings();
-}
+    // ------------- COMMENTS MODAL LOGIC -----------
+    let commentModalListingId = null;
+    function showCommentModal(id) {
+      commentModalListingId = id;
+      const listing = listings.find(l=>l.id===id);
+      document.getElementById('comment-text').value = listing.comment || '';
+      document.getElementById('comment-modal').classList.remove('hidden');
+    }
+    function closeCommentModal() {
+      document.getElementById('comment-modal').classList.add('hidden');
+      commentModalListingId = null;
+    }
+    function saveComment() {
+      if (commentModalListingId !== null) {
+        const val = document.getElementById('comment-text').value;
+        listings.find(l=>l.id===commentModalListingId).comment = val;
+        closeCommentModal();
+      }
+    }
 
-/* ---- BULK SYNC ALERT ---- */
-function updateBulkSyncAlert() {
-  if(!isEbayConnected) {
-    document.getElementById('bulkSyncAlert').classList.remove('hidden');
-    document.getElementById('listingsSection').classList.add('hidden');
-  } else {
-    document.getElementById('bulkSyncAlert').classList.add('hidden');
-    document.getElementById('listingsSection').classList.remove('hidden');
-  }
-}
+    // ------------- INITIAL RENDER -----------
+    renderListingsTable();
+    renderListingsGrid();
 
-/* ---- MAP ---- */
-function renderMap() {
-  let map = L.map('buyerMap').setView([56.1304, -106.3468], 3.5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: ''
-  }).addTo(map);
-  // Emoji markers
-  const regions = [
-    {lat:53.7267, lng:-127.6476, emoji:'🧊', color:'#60a5fa', text:'Minimalist (BC)'},      // BC
-    {lat:52.9399, lng:-73.5491, emoji:'☀️', color:'#f59e42', text:'Warm (QC)'},             // Quebec
-    {lat:53.9333, lng:-116.5765, emoji:'🧸', color:'#ec4899', text:'Cozy (Prairies)'},      // Prairies (AB, MB, SK)
-    {lat:43.6532, lng:-79.3832, emoji:'💎', color:'#a78bfa', text:'Luxury (Toronto)'},      // Toronto
-    {lat:46.5653, lng:-66.4619, emoji:'🌱', color:'#4ade80', text:'Budget (Maritimes)'}     // Maritimes
-  ];
-  regions.forEach(r=>{
-    L.circle([r.lat, r.lng], {
-      color: r.color,
-      fillColor: r.color,
-      fillOpacity: 0.4,
-      radius: 180000
-    }).addTo(map).bindTooltip(r.emoji+" "+r.text, {permanent:true, direction:'top', className:'font-bold text-lg'});
-  });
-}
+    // ------------- BUYER PSYCHOLOGY MAP (LEAFLET) -----------
+    // Bubble regions: BC, Quebec, Prairies, Toronto, Maritimes
+    const regionData = [
+      { name: "BC", lat: 53.7267, lng: -127.6476, tone: "Minimalist", emoji: "🧊", color: "#bfdbfe", buyerCount: 120 },
+      { name: "Quebec", lat: 52.9399, lng: -71.4548, tone: "Warm", emoji: "☀️", color: "#fde68a", buyerCount: 80 },
+      { name: "Prairies", lat: 53.9333, lng: -106.4509, tone: "Cozy", emoji: "🧸", color: "#fed7aa", buyerCount: 60 },
+      { name: "Toronto", lat: 43.6532, lng: -79.3832, tone: "Luxury", emoji: "💎", color: "#fecdd3", buyerCount: 90 },
+      { name: "Maritimes", lat: 46.5653, lng: -66.4619, tone: "Budget", emoji: "🌱", color: "#bbf7d0", buyerCount: 55 },
+    ];
+    setTimeout(()=>{
+      const map = L.map('buyer-map', {
+        zoomControl: false,
+        dragging: false,
+        tap: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        attributionControl: false
+      }).setView([54, -97], 3.2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 3,
+        maxZoom: 6,
+        opacity: 0.6
+      }).addTo(map);
+      regionData.forEach(region => {
+        let radius = 18 + region.buyerCount * 0.6;
+        let marker = L.circleMarker([region.lat, region.lng], {
+          radius: radius,
+          fillColor: region.color,
+          color: "#fff",
+          weight: 2,
+          fillOpacity: 0.9,
+          className: "buyer-bubble"
+        }).addTo(map);
+        marker.bindTooltip(`<div style="font-size:17px;font-weight:bold;">${region.emoji} ${region.tone}</div>
+          <div style="font-size:14px;">${region.name}<br>Buyers: <b>${region.buyerCount}</b></div>`, {direction:'top', offset:[0,-10]});
+        marker.on('mouseover', function() { marker.openTooltip(); });
+        marker.on('mouseout', function() { marker.closeTooltip(); });
+      });
+    }, 200);
 
-/* ---- INIT ---- */
-window.onload = function() {
-  updateBulkSyncAlert();
-  feather.replace();
-  filterListings();
-  renderMap();
-  toggleView('list');
-};
-</script>
+    // ------------- UTILS -----------
+    window.showAIModal = showAIModal;
+    window.closeAIModal = closeAIModal;
+    window.applyAISuggestion = applyAISuggestion;
+    window.showCommentModal = showCommentModal;
+    window.closeCommentModal = closeCommentModal;
+    window.saveComment = saveComment;
+    window.togglePlatformSync = togglePlatformSync;
+    window.deleteListing = deleteListing;
+    window.editListing = editListing;
+    window.editListingGrid = editListingGrid;
+    window.toggleVisibility = toggleVisibility;
+    window.connectPlatform = connectPlatform;
+
+  </script>
 </body>
 </html>
