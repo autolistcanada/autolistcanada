@@ -1,595 +1,494 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100">
+<html lang="en" class="bg-gray-50">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>AutoList Canada Listings Dashboard</title>
-  <!-- TailwindCSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN (for analytics) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Leaflet CDN (for map heatmap) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AutoList Canada — Listings Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <!-- Platform Icons (FontAwesome) -->
-  <script src="https://kit.fontawesome.com/fb5e1c7ad3.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .sidebar-bg {
-      background: url('sidebar-background.png') no-repeat center center;
-      background-size: cover;
-    }
-    .fade-sold {
-      opacity: 0.5;
-      position: relative;
-    }
-    .fade-sold::after {
-      content: 'SOLD';
-      position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      background: #e3342f;
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 4px;
-      z-index: 10;
-    }
-    .leaflet-container { height: 200px; }
-    .platform-toggle input:checked + span {
-      background-color: #22d3ee !important;
-      color: #fff !important;
-    }
-    .modal-bg {
-      background: rgba(0,0,0,0.45);
-    }
-    /* Custom scrollbar for sidebar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      background: #CAD3E2;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #64748b;
-      border-radius: 8px;
+    .modal-bg { background: rgba(31,41,55,0.90); }
+    .sold-row { background-color: #F3F4F6; opacity: 0.65; }
+    .platform-icon { width: 22px; height: 22px; }
+    .badge { @apply inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs mr-2; }
+    .footer-link { @apply underline hover:text-indigo-700 transition; }
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .sidebar-mobile { display: block !important; }
+      .analytics-panel { flex-direction: column; }
     }
   </style>
 </head>
-<body class="h-full flex flex-col min-h-screen">
-
-<!-- Sidebar -->
-<div class="sidebar-bg fixed inset-y-0 left-0 w-64 flex flex-col z-30 shadow-xl">
-  <div class="flex items-center gap-3 h-20 px-6 pt-4">
-    <img src="logo.png" alt="AutoList Logo" class="w-10 h-10 rounded-full bg-white shadow"/>
-    <img src="autolist-title.png" alt="AutoList Canada" class="h-8"/>
-  </div>
-  <nav class="flex-1 mt-8 px-4 space-y-2 text-lg font-semibold text-gray-800 overflow-y-auto">
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-    <a href="#" class="block py-2 px-3 rounded-lg bg-cyan-700 text-white flex items-center gap-2"><i class="fa-solid fa-table-list"></i> Listings</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-robot"></i> AI Tools</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-lightbulb"></i> How It Works</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-circle-question"></i> FAQ</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-upload"></i> Import</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-scale-balanced"></i> Terms</a>
-    <a href="#" class="block py-2 px-3 rounded-lg hover:bg-cyan-100 flex items-center gap-2"><i class="fa-solid fa-tags"></i> Pricing</a>
-  </nav>
-  <div class="mt-auto mb-4 px-4">
-    <a href="https://autolist.ca" class="block text-center text-xs text-gray-400 hover:underline">AutoList Canada &copy; 2025</a>
-  </div>
-</div>
-
-<!-- Main Content Area -->
-<div class="pl-64 flex flex-col min-h-screen">
-  <!-- Header -->
-  <header class="bg-white shadow sticky top-0 z-20">
-    <div class="flex flex-col md:flex-row md:items-center justify-between px-6 py-4 gap-3">
-      <div class="flex-1 flex items-center gap-3">
-        <div class="relative w-full max-w-xs">
-          <input id="searchBar" type="text" placeholder="Search listings..." class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
-          <span class="absolute left-3 top-2.5 text-gray-400"><i class="fa fa-search"></i></span>
-        </div>
-        <select id="filterPlatform" class="ml-2 border rounded px-2 py-1 text-gray-700">
+<body class="min-h-screen flex flex-col">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar w-56 bg-white border-r border-gray-200 flex flex-col fixed h-full z-30">
+    <div class="flex items-center h-16 px-6 font-bold text-lg text-indigo-700 border-b border-gray-100">
+      <span>AutoList Canada</span>
+    </div>
+    <nav class="flex-1 px-6 py-5 space-y-4">
+      <a href="#" class="block text-gray-900 font-medium hover:text-indigo-700">Listings</a>
+      <a href="#" class="block text-gray-500 hover:text-indigo-700">Analytics</a>
+      <a href="#" class="block text-gray-500 hover:text-indigo-700">Settings</a>
+      <a href="#" class="block text-gray-500 hover:text-indigo-700">Help</a>
+    </nav>
+    <div class="px-6 pb-4 mt-auto">
+      <span class="text-xs text-gray-400">Dashboard v2.0</span>
+    </div>
+  </aside>
+  <!-- Main Panel -->
+  <div class="lg:ml-56 flex-1 flex flex-col min-h-screen">
+    <!-- Top Controls -->
+    <header class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 px-4 lg:px-10 py-6 border-b bg-white">
+      <div class="flex flex-wrap gap-3">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search by title, SKU, or tags..."
+          class="w-60 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          oninput="filterListings()"
+        >
+        <select
+          id="platformFilter"
+          onchange="filterListings()"
+          class="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+        >
           <option value="">All Platforms</option>
-          <option value="ebay">eBay</option>
-          <option value="poshmark">Poshmark</option>
-          <option value="etsy">Etsy</option>
-          <option value="facebook">Facebook Marketplace</option>
-          <option value="shopify">Shopify</option>
-          <option value="depop">Depop</option>
-          <option value="grailed">Grailed</option>
+          <option value="eBay">eBay</option>
+          <option value="Poshmark">Poshmark</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Etsy">Etsy</option>
         </select>
-        <select id="perPage" class="ml-2 border rounded px-2 py-1 text-gray-700">
-          <option>8</option>
-          <option>16</option>
-          <option>32</option>
-        </select>
-        <span id="pageStatus" class="ml-3 text-sm text-gray-500">1 of 2</span>
+        <button
+          onclick="toggleBulkEdit()"
+          class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition"
+        >Bulk Edit</button>
       </div>
-      <div class="flex items-center gap-2">
-        <button id="customizeBtn" class="bg-cyan-500 hover:bg-cyan-700 text-white px-3 py-1 rounded shadow flex items-center gap-1"><i class="fa fa-sliders"></i> Customize</button>
-        <button id="bulkEditBtn" class="bg-orange-400 hover:bg-orange-600 text-white px-3 py-1 rounded shadow flex items-center gap-1"><i class="fa fa-edit"></i> Bulk Edit</button>
-        <label class="flex items-center gap-1 ml-4 cursor-pointer">
-          <input type="checkbox" id="wideViewToggle" class="hidden peer" />
-          <span class="peer-checked:bg-cyan-600 peer-checked:text-white text-cyan-600 border border-cyan-600 px-2 py-1 rounded transition">Wide View</span>
-        </label>
-        <label class="flex items-center gap-1 ml-2 cursor-pointer">
-          <input type="checkbox" id="hideSoldToggle" class="hidden peer" />
-          <span class="peer-checked:bg-orange-600 peer-checked:text-white text-orange-600 border border-orange-600 px-2 py-1 rounded transition">Hide Sold</span>
-        </label>
-        <span class="ml-4 text-gray-700 font-semibold hidden md:inline">Welcome back, <span id="userName">Einstein</span>!</span>
+      <div class="mt-2 lg:mt-0 flex items-center gap-3">
+        <span class="font-semibold text-lg text-gray-700">Listings Dashboard</span>
+        <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">LIVE</span>
       </div>
-    </div>
-  </header>
-
-  <!-- Main Section -->
-  <main class="flex-1 flex flex-col lg:flex-row gap-6 p-6">
-    <!-- Listings Data Table -->
-    <section class="flex-1 bg-white rounded-xl shadow-lg overflow-x-auto min-w-[400px]">
-      <table class="min-w-full text-sm" id="listingsTable">
-        <thead class="bg-cyan-700 text-white">
-          <tr>
-            <th class="p-3 text-left">Image</th>
-            <th class="p-3 text-left">Title</th>
-            <th class="p-3 text-center">Actions</th>
-            <th class="p-3 text-left">SKU</th>
-            <th class="p-3 text-right">Price</th>
-            <th class="p-3 text-center">Platforms</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <!-- JS will populate -->
-        </tbody>
-      </table>
-      <div class="flex justify-between items-center p-4 border-t">
-        <button id="prevPage" class="px-3 py-1 bg-gray-200 rounded hover:bg-cyan-100"><i class="fa fa-arrow-left"></i> Prev</button>
-        <button id="nextPage" class="px-3 py-1 bg-gray-200 rounded hover:bg-cyan-100">Next <i class="fa fa-arrow-right"></i></button>
-      </div>
-    </section>
-
-    <!-- Analytics + Map Panel -->
-    <aside class="w-full lg:w-[350px] flex flex-col gap-6">
-      <div class="bg-white rounded-xl shadow-lg p-4">
-        <h3 class="font-bold text-cyan-700 mb-2 text-lg">Sales Psychology Map</h3>
-        <div id="canadaMap" class="w-full h-[200px] rounded overflow-hidden"></div>
-      </div>
-      <div class="bg-white rounded-xl shadow-lg p-4">
-        <h3 class="font-bold text-cyan-700 mb-2 text-lg">World Market Analytics</h3>
-        <canvas id="worldChart" width="360" height="120"></canvas>
-      </div>
-    </aside>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white mt-auto">
-    <div class="max-w-7xl mx-auto py-4 px-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <div class="bg-gray-800 rounded px-2 py-1 mb-1 text-xs inline-block">Misc AI Listing Adjustments</div>
-        <span class="bg-cyan-700 rounded px-2 py-1 text-xs font-bold ml-2">Our Tools for Listing Dashboard</span>
-      </div>
-      <div class="text-xs text-gray-300 flex flex-col md:flex-row md:gap-2 items-start md:items-center">
-        <a href="#" class="hover:underline">All Rights Reserved</a>
-        <a href="#" class="hover:underline">Privacy</a>
-        <a href="#" class="hover:underline">Terms of Service</a>
-        <span class="ml-2">Canadian Legal: PIPEDA-compliant. No scraping. 🇨🇦</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Edit Listing Modal -->
-  <div id="editModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-bg">
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 relative">
-      <button id="closeModal" class="absolute right-4 top-4 text-gray-500 hover:text-cyan-700 text-xl"><i class="fa fa-times"></i></button>
-      <h2 class="text-xl font-bold mb-4 text-cyan-700">Edit Listing</h2>
-      <form id="editForm" class="space-y-3">
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Title</label>
-          <input type="text" id="editTitle" class="w-full rounded border px-2 py-1" required>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col lg:flex-row gap-6 px-2 lg:px-10 py-6 bg-gray-50">
+      <!-- Listings Table -->
+      <section class="flex-1 min-w-0">
+        <table class="w-full bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
+          <thead class="bg-gray-100 text-sm font-semibold text-gray-700">
+            <tr>
+              <th class="p-3 text-left w-12"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
+              <th class="p-3 text-left w-14">Image</th>
+              <th class="p-3 text-left">Title</th>
+              <th class="p-3 text-left w-24">SKU</th>
+              <th class="p-3 text-left w-20">Price</th>
+              <th class="p-3 text-left w-32">Platforms</th>
+              <th class="p-3 text-center w-32">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="listingsTable" class="text-gray-800">
+            <!-- Listings will be rendered here -->
+          </tbody>
+        </table>
+      </section>
+      <!-- Analytics Panel (Map + Chart) -->
+      <aside class="analytics-panel flex flex-col gap-6 w-full lg:w-[420px]">
+        <!-- Sales Psychology Map -->
+        <div class="bg-white rounded-xl shadow p-4">
+          <h3 class="font-semibold text-gray-700 mb-2">Sales Psychology Map</h3>
+          <div id="salesMap" style="height:220px; border-radius:0.75rem; overflow:hidden;"></div>
         </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Price</label>
-          <input type="number" id="editPrice" class="w-full rounded border px-2 py-1" min="0" step="0.01" required>
+        <!-- World Analytics Chart -->
+        <div class="bg-white rounded-xl shadow p-4">
+          <h3 class="font-semibold text-gray-700 mb-2">World Market Analytics</h3>
+          <canvas id="analyticsChart" height="120"></canvas>
         </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Tags (comma-separated)</label>
-          <input type="text" id="editTags" class="w-full rounded border px-2 py-1">
+      </aside>
+    </main>
+    <!-- Footer -->
+    <footer class="mt-auto w-full bg-white border-t py-6 px-4 lg:px-10">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="badge bg-indigo-50 text-indigo-700">Our Tools for Listing Dashboard</span>
+          <span class="badge bg-yellow-50 text-yellow-700">Misc AI Listing Adjustments</span>
         </div>
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1">Platforms</label>
-          <div id="editPlatforms" class="flex flex-wrap gap-2">
-            <!-- JS will fill -->
+        <div class="flex flex-col text-xs text-gray-400">
+          <span>AutoList Canada is PIPEDA compliant. All data handled in accordance with Canadian privacy law.</span>
+          <div class="flex gap-4 mt-1">
+            <a href="#" class="footer-link">All Rights Reserved</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+            <a href="#" class="footer-link">Privacy</a>
           </div>
         </div>
-        <div class="flex gap-2 justify-end pt-3">
-          <button type="button" class="px-4 py-1 rounded bg-gray-200 hover:bg-gray-300" id="cancelEdit">Cancel</button>
-          <button type="submit" class="px-4 py-1 rounded bg-cyan-700 text-white hover:bg-cyan-800">Save Changes</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="fixed inset-0 z-40 flex items-center justify-center hidden">
+    <div class="absolute inset-0 modal-bg transition-opacity duration-300" onclick="closeEditModal()"></div>
+    <div class="relative bg-white rounded-xl shadow-xl p-8 w-full max-w-md z-50 animate-slideInUp">
+      <h2 class="text-lg font-bold mb-4 text-indigo-700">Edit Listing</h2>
+      <form id="editForm" onsubmit="saveEdit(event)">
+        <label class="block mb-2 text-sm font-semibold">Title
+          <input type="text" id="editTitle" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" required>
+        </label>
+        <label class="block mb-2 text-sm font-semibold">Price
+          <input type="number" id="editPrice" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" required min="0" step="0.01">
+        </label>
+        <label class="block mb-2 text-sm font-semibold">Tags
+          <textarea id="editTags" rows="2" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"></textarea>
+        </label>
+        <div class="mb-3">
+          <span class="block mb-1 text-sm font-semibold">Platforms</span>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="platform-ebay" class="accent-indigo-600">
+              <img src="https://img.icons8.com/color/24/000000/ebay.png" alt="eBay" title="eBay" class="platform-icon" />
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="platform-poshmark" class="accent-indigo-600">
+              <img src="https://img.icons8.com/color/24/000000/poshmark.png" alt="Poshmark" title="Poshmark" class="platform-icon" />
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="platform-facebook" class="accent-indigo-600">
+              <img src="https://img.icons8.com/color/24/000000/facebook-new.png" alt="Facebook" title="Facebook" class="platform-icon" />
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="platform-etsy" class="accent-indigo-600">
+              <img src="https://img.icons8.com/color/24/000000/etsy.png" alt="Etsy" title="Etsy" class="platform-icon" />
+            </label>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">Save</button>
+          <button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300 transition">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Confirm Delete Modal -->
-  <div id="deleteModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-bg">
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 relative">
-      <button id="closeDelete" class="absolute right-4 top-4 text-gray-500 hover:text-red-700 text-xl"><i class="fa fa-times"></i></button>
-      <h2 class="text-xl font-bold mb-4 text-red-700">Delete Listing?</h2>
-      <p class="mb-6 text-gray-700">Are you sure you want to delete this listing? This action cannot be undone.</p>
-      <div class="flex gap-2 justify-end">
-        <button class="px-4 py-1 rounded bg-gray-200 hover:bg-gray-300" id="cancelDelete">Cancel</button>
-        <button class="px-4 py-1 rounded bg-red-600 text-white hover:bg-red-800" id="confirmDelete">Delete</button>
-      </div>
+  <!-- Bulk Edit Drawer -->
+  <div id="bulkDrawer" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
+    <div class="flex items-center justify-between px-6 py-4 border-b">
+      <span class="font-bold text-lg text-indigo-700">Bulk Edit</span>
+      <button onclick="toggleBulkEdit()" class="text-gray-400 hover:text-indigo-700 text-2xl">&times;</button>
     </div>
-  </div>
-</div>
-
-<script>
-/* ========== DUMMY DATA ========== */
-const platformsAll = [
-  {id:'ebay', name:'eBay', icon:'fa-brands fa-ebay', color:'text-[#0064d2]'},
-  {id:'poshmark', name:'Poshmark', icon:'fa-solid fa-p', color:'text-rose-500'},
-  {id:'etsy', name:'Etsy', icon:'fa-brands fa-etsy', color:'text-orange-600'},
-  {id:'facebook', name:'Facebook', icon:'fa-brands fa-facebook', color:'text-blue-600'},
-  {id:'shopify', name:'Shopify', icon:'fa-brands fa-shopify', color:'text-green-600'},
-  {id:'depop', name:'Depop', icon:'fa-solid fa-d', color:'text-red-500'},
-  {id:'grailed', name:'Grailed', icon:'fa-solid fa-g', color:'text-gray-700'},
-];
-let listings = [
-  {
-    id:"1", title:"Rare 80s Levi’s 501 Jeans", img:"https://i.imgur.com/Jeans1.jpg", sku:"SKU12345", price:180.00, tags:["vintage","denim"], sold:false,
-    platforms:{ebay:true, poshmark:true, etsy:false, facebook:true, shopify:false, depop:false, grailed:false}
-  },
-  {
-    id:"2", title:"Champion Toronto Raptors Hoodie", img:"https://i.imgur.com/Hoodie1.jpg", sku:"SKU12346", price:75.00, tags:["sportswear"], sold:true,
-    platforms:{ebay:false, poshmark:true, etsy:true, facebook:false, shopify:true, depop:false, grailed:true}
-  },
-  {
-    id:"3", title:"Vintage Roots Canada Crewneck", img:"https://i.imgur.com/Roots1.jpg", sku:"SKU12347", price:110.00, tags:["roots","canadian"], sold:false,
-    platforms:{ebay:true, poshmark:true, etsy:true, facebook:false, shopify:false, depop:true, grailed:false}
-  },
-  {
-    id:"4", title:"Y2K Nike Air Max Sneakers", img:"https://i.imgur.com/Nike1.jpg", sku:"SKU12348", price:220.00, tags:["y2k","sneakers"], sold:false,
-    platforms:{ebay:true, poshmark:false, etsy:true, facebook:true, shopify:true, depop:false, grailed:true}
-  },
-  {
-    id:"5", title:"Etsy-Ready Upcycled Flannel", img:"https://i.imgur.com/Flannel1.jpg", sku:"SKU12349", price:60.00, tags:["flannel"], sold:true,
-    platforms:{ebay:false, poshmark:false, etsy:true, facebook:false, shopify:false, depop:true, grailed:false}
-  },
-  {
-    id:"6", title:"Grailed Supreme Box Logo Tee", img:"https://i.imgur.com/Supreme1.jpg", sku:"SKU12350", price:500.00, tags:["supreme"], sold:false,
-    platforms:{ebay:false, poshmark:false, etsy:false, facebook:false, shopify:true, depop:false, grailed:true}
-  },
-  {
-    id:"7", title:"Poshmark Adidas Track Jacket", img:"https://i.imgur.com/Adidas1.jpg", sku:"SKU12351", price:95.00, tags:["adidas"], sold:false,
-    platforms:{ebay:true, poshmark:true, etsy:false, facebook:true, shopify:false, depop:false, grailed:false}
-  },
-  {
-    id:"8", title:"Depop Doc Martens Boots", img:"https://i.imgur.com/Docs1.jpg", sku:"SKU12352", price:150.00, tags:["boots"], sold:false,
-    platforms:{ebay:false, poshmark:false, etsy:false, facebook:true, shopify:false, depop:true, grailed:false}
-  },
-  {
-    id:"9", title:"Shopify ‘90s Patagonia Fleece", img:"https://i.imgur.com/Patagonia1.jpg", sku:"SKU12353", price:125.00, tags:["patagonia"], sold:true,
-    platforms:{ebay:true, poshmark:false, etsy:false, facebook:false, shopify:true, depop:false, grailed:false}
-  },
-  {
-    id:"10", title:"Canadian Olympic Parka", img:"https://i.imgur.com/Parka1.jpg", sku:"SKU12354", price:140.00, tags:["olympic"], sold:false,
-    platforms:{ebay:true, poshmark:true, etsy:true, facebook:false, shopify:false, depop:false, grailed:true}
-  },
-  {
-    id:"11", title:"Vintage Montreal Expos Cap", img:"https://i.imgur.com/Expos1.jpg", sku:"SKU12355", price:55.00, tags:["expos"], sold:false,
-    platforms:{ebay:true, poshmark:false, etsy:false, facebook:true, shopify:false, depop:true, grailed:false}
-  },
-  {
-    id:"12", title:"Rare Grailed Comme des Garçons", img:"https://i.imgur.com/Garcons1.jpg", sku:"SKU12356", price:350.00, tags:["cdg"], sold:true,
-    platforms:{ebay:false, poshmark:false, etsy:false, facebook:false, shopify:false, depop:false, grailed:true}
-  },
-  {
-    id:"13", title:"Etsy Retro Leather Satchel", img:"https://i.imgur.com/Satchel1.jpg", sku:"SKU12357", price:105.00, tags:["leather"], sold:false,
-    platforms:{ebay:true, poshmark:false, etsy:true, facebook:true, shopify:false, depop:false, grailed:false}
-  },
-  {
-    id:"14", title:"Denim Overalls - Y2K Vibes", img:"https://i.imgur.com/Overalls1.jpg", sku:"SKU12358", price:88.00, tags:["denim"], sold:false,
-    platforms:{ebay:true, poshmark:true, etsy:false, facebook:false, shopify:false, depop:false, grailed:false}
-  },
-  {
-    id:"15", title:"Shopify Modernist Wool Scarf", img:"https://i.imgur.com/Scarf1.jpg", sku:"SKU12359", price:40.00, tags:["wool"], sold:false,
-    platforms:{ebay:false, poshmark:false, etsy:true, facebook:true, shopify:true, depop:false, grailed:false}
-  },
-  {
-    id:"16", title:"Etsy Patchwork Quilt", img:"https://i.imgur.com/Quilt1.jpg", sku:"SKU12360", price:95.00, tags:["quilt"], sold:false,
-    platforms:{ebay:false, poshmark:false, etsy:true, facebook:true, shopify:false, depop:false, grailed:false}
-  }
-];
-let userName = "Einstein";
-
-/* ========== PAGINATION / FILTER STATE ========== */
-let page = 1;
-let perPage = 8;
-let filterPlatform = "";
-let searchTerm = "";
-let hideSold = false;
-
-/* ========== UTILS ========== */
-function getPlatformIcon(id) {
-  let p = platformsAll.find(x=>x.id===id);
-  if (!p) return '';
-  return `<span class="${p.color} text-xl mr-1" title="${p.name}"><i class="${p.icon}"></i></span>`;
-}
-
-/* ========== TABLE RENDERING ========== */
-function renderTable() {
-  let filtered = listings.filter(l => {
-    if (hideSold && l.sold) return false;
-    if (filterPlatform && !l.platforms[filterPlatform]) return false;
-    if (searchTerm && !l.title.toLowerCase().includes(searchTerm.toLowerCase()) && !l.sku.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-    return true;
-  });
-  let totalPages = Math.ceil(filtered.length / perPage);
-  if (page > totalPages) page = totalPages || 1;
-  document.getElementById('pageStatus').textContent = `${page} of ${totalPages || 1}`;
-  // paging
-  let start = (page-1)*perPage, end = start+perPage;
-  let rows = filtered.slice(start, end).map(l => `
-    <tr class="group ${l.sold ? 'fade-sold' : ''} cursor-pointer hover:bg-cyan-50 transition" data-id="${l.id}">
-      <td class="p-2 w-[66px]" onclick="event.stopPropagation();openModal('${l.id}')">
-        <img src="${l.img}" alt="${l.title}" class="w-14 h-14 rounded shadow object-cover border"/>
-      </td>
-      <td class="p-2" onclick="event.stopPropagation();openModal('${l.id}')">
-        <div class="font-semibold">${l.title}</div>
-        <div class="text-xs text-gray-500">${l.tags.join(", ")}</div>
-      </td>
-      <td class="p-2 text-center">
-        <button title="Edit" onclick="event.stopPropagation();openModal('${l.id}')" class="text-cyan-700 hover:text-cyan-900 px-1"><i class="fa fa-pen"></i></button>
-        <button title="Sync" onclick="event.stopPropagation();syncListing('${l.id}')" class="text-green-600 hover:text-green-800 px-1"><i class="fa fa-arrows-rotate"></i></button>
-        <button title="Clone" onclick="event.stopPropagation();cloneListing('${l.id}')" class="text-purple-500 hover:text-purple-700 px-1"><i class="fa fa-copy"></i></button>
-        <button title="Delete" onclick="event.stopPropagation();openDelete('${l.id}')" class="text-red-600 hover:text-red-800 px-1"><i class="fa fa-trash"></i></button>
-      </td>
-      <td class="p-2 text-xs" onclick="event.stopPropagation();openModal('${l.id}')">${l.sku}</td>
-      <td class="p-2 text-right font-mono" onclick="event.stopPropagation();openModal('${l.id}')">$${l.price.toFixed(2)}</td>
-      <td class="p-2 text-center flex flex-wrap gap-1 justify-center" onclick="event.stopPropagation();openModal('${l.id}')">
-        ${platformsAll.map(p => l.platforms[p.id] ? getPlatformIcon(p.id) : '').join('')}
-      </td>
-    </tr>
-  `).join("");
-  document.getElementById('tableBody').innerHTML = rows || `<tr><td colspan="6" class="text-center p-8 text-gray-400">No listings found.</td></tr>`;
-}
-window.renderTable = renderTable; // for button onclick in HTML
-
-/* ========== MODAL LOGIC ========== */
-let editingId = null;
-function openModal(id) {
-  editingId = id;
-  let l = listings.find(x=>x.id===id);
-  if (!l) return;
-  document.getElementById('editTitle').value = l.title;
-  document.getElementById('editPrice').value = l.price;
-  document.getElementById('editTags').value = l.tags.join(", ");
-  let plats = platformsAll.map(p => `
-    <label class="inline-flex items-center mr-3 platform-toggle">
-      <input type="checkbox" class="hidden" data-platform="${p.id}" ${l.platforms[p.id] ? 'checked' : ''}>
-      <span class="p-1 rounded cursor-pointer border ${p.color} text-lg" title="${p.name}"><i class="${p.icon}"></i></span>
-    </label>
-  `).join('');
-  document.getElementById('editPlatforms').innerHTML = plats;
-  document.getElementById('editModal').classList.remove('hidden');
-}
-window.openModal = openModal;
-
-document.getElementById('closeModal').onclick = 
-document.getElementById('cancelEdit').onclick = function() {
-  document.getElementById('editModal').classList.add('hidden');
-};
-
-document.getElementById('editForm').onsubmit = function(e) {
-  e.preventDefault();
-  let l = listings.find(x=>x.id===editingId);
-  if (!l) return;
-  l.title = document.getElementById('editTitle').value.trim();
-  l.price = parseFloat(document.getElementById('editPrice').value);
-  l.tags = document.getElementById('editTags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  // platforms
-  document.querySelectorAll('#editPlatforms input[type=checkbox]').forEach(cb => {
-    l.platforms[cb.dataset.platform] = cb.checked;
-  });
-  document.getElementById('editModal').classList.add('hidden');
-  renderTable();
-};
-
-document.getElementById('editPlatforms').onclick = function(e) {
-  // Toggle visual feedback
-  if (e.target.closest('label')) {
-    let inp = e.target.closest('label').querySelector('input[type="checkbox"]');
-    inp.checked = !inp.checked;
-    inp.dispatchEvent(new Event('change'));
-  }
-};
-
-/* ========== DELETE MODAL ========== */
-let deletingId = null;
-function openDelete(id) {
-  deletingId = id;
-  document.getElementById('deleteModal').classList.remove('hidden');
-}
-window.openDelete = openDelete;
-
-document.getElementById('closeDelete').onclick = 
-document.getElementById('cancelDelete').onclick = function() {
-  document.getElementById('deleteModal').classList.add('hidden');
-};
-document.getElementById('confirmDelete').onclick = function() {
-  listings = listings.filter(x=>x.id!==deletingId);
-  deletingId = null;
-  document.getElementById('deleteModal').classList.add('hidden');
-  renderTable();
-};
-
-/* ========== ACTION BUTTONS ========== */
-function syncListing(id) {
-  alert('Sync triggered for listing #' + id + ' (OAuth logic simulated)');
-}
-window.syncListing = syncListing;
-
-function cloneListing(id) {
-  let l = listings.find(x=>x.id===id);
-  if (!l) return;
-  let newL = JSON.parse(JSON.stringify(l));
-  newL.id = (Date.now() + Math.random()).toString();
-  newL.title += " (Copy)";
-  listings.unshift(newL);
-  renderTable();
-}
-window.cloneListing = cloneListing;
-
-/* ========== FILTER / SEARCH / PAGINATION ========== */
-document.getElementById('searchBar').oninput = function(e) {
-  searchTerm = e.target.value;
-  page = 1;
-  renderTable();
-};
-document.getElementById('filterPlatform').onchange = function(e) {
-  filterPlatform = e.target.value;
-  page = 1;
-  renderTable();
-};
-document.getElementById('perPage').onchange = function(e) {
-  perPage = parseInt(e.target.value,10);
-  page = 1;
-  renderTable();
-};
-document.getElementById('hideSoldToggle').onchange = function(e) {
-  hideSold = e.target.checked;
-  page = 1;
-  renderTable();
-};
-document.getElementById('prevPage').onclick = function() {
-  if (page > 1) { page--; renderTable(); }
-};
-document.getElementById('nextPage').onclick = function() {
-  let filtered = listings.filter(l => {
-    if (hideSold && l.sold) return false;
-    if (filterPlatform && !l.platforms[filterPlatform]) return false;
-    if (searchTerm && !l.title.toLowerCase().includes(searchTerm.toLowerCase()) && !l.sku.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-    return true;
-  });
-  let totalPages = Math.ceil(filtered.length / perPage);
-  if (page < totalPages) { page++; renderTable(); }
-};
-
-/* ========== USERNAME ========== */
-document.getElementById('userName').textContent = userName;
-
-/* ========== ANALYTICS CHARTS ========== */
-function renderWorldChart() {
-  const ctx = document.getElementById('worldChart').getContext('2d');
-  if (window._worldChart) window._worldChart.destroy();
-  window._worldChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Canada','USA','UK','France','Japan','Australia'],
-      datasets: [{
-        label: 'Units Sold',
-        data: [22,12,7,6,3,2],
-        backgroundColor: ['#06b6d4','#f87171','#fbbf24','#a3e635','#818cf8','#f472b6']
-      }]
-    },
-    options: {
-      plugins: { legend: {display: false}},
-      scales: { y: {beginAtZero:true}}
-    }
-  });
-}
-
-/* ========== LEAFLET MAP ========== */
-function renderCanadaMap() {
-  if (window._canadaMap) { window._canadaMap.remove(); }
-  let map = window._canadaMap = L.map('canadaMap').setView([56.1304, -106.3468], 3.5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'&copy; OpenStreetMap'
-  }).addTo(map);
-  // Dummy heatmap zones
-  let sales = [
-    {lat:43.7, lon:-79.42, value:8},    // Toronto
-    {lat:45.42, lon:-75.69, value:5},   // Ottawa
-    {lat:49.25, lon:-123.1, value:6},   // Vancouver
-    {lat:51.05, lon:-114.07, value:4},  // Calgary
-    {lat:53.54, lon:-113.49, value:3},  // Edmonton
-    {lat:46.81, lon:-71.21, value:5},   // Quebec City
-    {lat:45.50, lon:-73.57, value:7},   // Montreal
-    {lat:44.65, lon:-63.57, value:2},   // Halifax
-    {lat:49.9, lon:-97.13, value:2},    // Winnipeg
-  ];
-  sales.forEach(loc => {
-    let color = loc.value >= 7 ? '#06b6d4' : loc.value >= 5 ? '#fbbf24' : '#f87171';
-    let radius = loc.value*5000;
-    L.circle([loc.lat, loc.lon], {
-      color: color,
-      fillColor: color,
-      fillOpacity: 0.4,
-      radius: radius
-    }).addTo(map).bindTooltip(`${loc.value} buyers`);
-  });
-}
-
-/* ========== INIT ========== */
-window.onload = function() {
-  renderTable();
-  renderCanadaMap();
-  renderWorldChart();
-};
-/* Responsive map redraw (Leaflet hack) */
-window.addEventListener('resize', function() {
-  if (window._canadaMap) setTimeout(()=>window._canadaMap.invalidateSize(), 100);
-});
-</script>
-<!-- ================== MODAL: LISTING EDIT ================== -->
-<div id="listingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 transition-all duration-200">
-  <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 p-6 relative animate-slideInUp">
-    <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition" aria-label="Close">
-      <svg width="22" height="22" fill="none" stroke="currentColor"><path d="M6 6l10 10M16 6l-10 10" stroke-width="2" /></svg>
-    </button>
-    <h2 class="text-xl font-bold mb-3">Edit Listing</h2>
-    <form id="modalForm" class="space-y-4">
+    <form id="bulkEditForm" onsubmit="applyBulkEdit(event)" class="p-6 flex flex-col gap-4">
+      <label class="block font-semibold">New Price
+        <input type="number" id="bulkPrice" class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" min="0" step="0.01" placeholder="Leave blank to skip">
+      </label>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Title</label>
-        <input id="modalTitle" type="text" class="mt-1 w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+        <span class="block mb-1 font-semibold">Platforms</span>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input type="checkbox" id="bulk-ebay" class="accent-indigo-600">
+            <img src="https://img.icons8.com/color/24/000000/ebay.png" alt="eBay" class="platform-icon" />
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input type="checkbox" id="bulk-poshmark" class="accent-indigo-600">
+            <img src="https://img.icons8.com/color/24/000000/poshmark.png" alt="Poshmark" class="platform-icon" />
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input type="checkbox" id="bulk-facebook" class="accent-indigo-600">
+            <img src="https://img.icons8.com/color/24/000000/facebook-new.png" alt="Facebook" class="platform-icon" />
+          </label>
+          <label class="flex items-center gap-1 cursor-pointer">
+            <input type="checkbox" id="bulk-etsy" class="accent-indigo-600">
+            <img src="https://img.icons8.com/color/24/000000/etsy.png" alt="Etsy" class="platform-icon" />
+          </label>
+        </div>
       </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Price ($CAD)</label>
-        <input id="modalPrice" type="number" min="0" step="0.01" class="mt-1 w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Tags</label>
-        <textarea id="modalTags" rows="2" class="mt-1 w-full border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-400"></textarea>
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Platforms (Sync)</label>
-        <div id="modalPlatforms" class="flex flex-wrap gap-2"></div>
-      </div>
-      <div class="flex justify-end gap-3 mt-5">
-        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded border text-gray-600 bg-gray-50 hover:bg-gray-100">Cancel</button>
-        <button type="submit" class="px-4 py-2 rounded bg-cyan-500 text-white hover:bg-cyan-600 shadow">Save</button>
-      </div>
+      <label class="block font-semibold">Mark as Sold
+        <input type="checkbox" id="bulkSold" class="accent-indigo-600 ml-2">
+      </label>
+      <button type="submit" class="bg-indigo-600 text-white py-2 mt-3 rounded-md hover:bg-indigo-700 transition">Apply to Selected</button>
     </form>
   </div>
-</div>
-<style>
-@keyframes slideInUp { from { transform:translateY(40px); opacity:0; } to { transform:translateY(0); opacity:1; } }
-.animate-slideInUp { animation:slideInUp .18s cubic-bezier(.4,0,.2,1) both; }
-</style>
+  <div id="bulkDrawerBg" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden" onclick="toggleBulkEdit()"></div>
 
-<!-- ================== BULK EDIT DRAWER ================== -->
-<div id="bulkDrawer" class="fixed top-0 right-0 h-full w-full md:w-[420px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-200 flex flex-col">
-  <div class="flex items-center justify-between p-5 border-b">
-    <h3 class="text-lg font-bold">Bulk Edit Listings</h3>
-    <button onclick="closeBulkDrawer()" class="text-gray-400 hover:text-red-500" aria-label="Close">
-      <svg width="22" height="22" fill="none" stroke="currentColor"><path d="M6 6l10 10M16 6l-10 10" stroke-width="2" /></svg>
-    </button>
-  </div>
-  <form id="bulkForm" class="flex-1 flex flex-col gap-5 p-5 overflow-auto">
-    <div>
-      <label class="block text-sm font-medium mb-1">Change Price</label>
-      <input id="bulkPrice" type="number" min="0" step="0.01" placeholder="Leave blank to skip" class="w-full border rounded px-2 py-1" />
-    </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">Sold Status</label>
-      <select id="bulkSold" class="w-full border rounded px-2 py-1">
-        <option value="">No Change</option>
-        <option value="sold">Mark Sold</option>
-        <option value="unsold">Mark Unsold
+  <script>
+    // ---- DUMMY DATA (Replace with AJAX/fetch to data.json as needed) ----
+    let listings = [
+      {
+        id: 1,
+        image: "https://i.imgur.com/5b6p7hS.jpg",
+        title: "Red Nike Air Max 90",
+        sku: "NK-AM90-RD",
+        price: 149.99,
+        tags: "shoes, sneakers, red",
+        platforms: ["eBay", "Poshmark"],
+        sold: false
+      },
+      {
+        id: 2,
+        image: "https://i.imgur.com/ZKjz7B3.jpg",
+        title: "Vintage Levi's 501 Jeans",
+        sku: "LV-501-VTG",
+        price: 59.99,
+        tags: "jeans, vintage, denim",
+        platforms: ["eBay", "Etsy"],
+        sold: true
+      },
+      {
+        id: 3,
+        image: "https://i.imgur.com/3BuF3Gj.jpg",
+        title: "Google Home Mini",
+        sku: "GHM-WHT",
+        price: 39.99,
+        tags: "electronics, smart home, google",
+        platforms: ["Facebook"],
+        sold: false
+      },
+      {
+        id: 4,
+        image: "https://i.imgur.com/QVF0yYd.jpg",
+        title: "Kate Spade Purse",
+        sku: "KS-PURSE-BLK",
+        price: 99.99,
+        tags: "purse, kate spade, fashion",
+        platforms: ["Poshmark", "eBay", "Etsy"],
+        sold: false
+      }
+    ];
+
+    // ---- Map Dummy Data ----
+    let buyerLocations = [
+      { city: "Toronto", lat: 43.7, lng: -79.4, buyers: 12 },
+      { city: "Vancouver", lat: 49.3, lng: -123.1, buyers: 7 },
+      { city: "Calgary", lat: 51.0, lng: -114.1, buyers: 4 },
+      { city: "Montreal", lat: 45.5, lng: -73.6, buyers: 6 },
+      { city: "New York", lat: 40.7, lng: -74.0, buyers: 3 },
+      { city: "London", lat: 51.5, lng: -0.1, buyers: 2 }
+    ];
+
+    // ---- State ----
+    let editIndex = null;
+    let selectedIds = [];
+    let filterPlatform = "";
+    let searchQuery = "";
+
+    // ---- Utility: Platform Icon URLs ----
+    const platformIcons = {
+      "eBay": "https://img.icons8.com/color/24/000000/ebay.png",
+      "Poshmark": "https://img.icons8.com/color/24/000000/poshmark.png",
+      "Facebook": "https://img.icons8.com/color/24/000000/facebook-new.png",
+      "Etsy": "https://img.icons8.com/color/24/000000/etsy.png"
+    };
+
+    // ---- RENDERING ----
+    function renderListings() {
+      const tbody = document.getElementById('listingsTable');
+      tbody.innerHTML = "";
+      // Filtering by platform and search
+      let filtered = listings.filter(l => {
+        let matchPlat = filterPlatform ? l.platforms.includes(filterPlatform) : true;
+        let matchSearch = searchQuery
+          ? (l.title.toLowerCase().includes(searchQuery) ||
+             l.sku.toLowerCase().includes(searchQuery) ||
+             l.tags.toLowerCase().includes(searchQuery))
+          : true;
+        return matchPlat && matchSearch;
+      });
+      filtered.forEach((l, idx) => {
+        const isSelected = selectedIds.includes(l.id);
+        tbody.innerHTML += `
+          <tr class="cursor-pointer transition hover:bg-indigo-50 ${l.sold ? 'sold-row' : ''}"
+              onclick="openEditModal(${l.id})">
+            <td class="p-2 text-center align-middle" onclick="event.stopPropagation()">
+              <input type="checkbox" class="rowCheckbox accent-indigo-600" data-id="${l.id}" ${isSelected ? 'checked' : ''} onclick="toggleRowSelect(event, ${l.id})">
+            </td>
+            <td class="p-2 align-middle"><img src="${l.image}" alt="${l.title}" class="h-12 w-12 object-cover rounded-lg border"></td>
+            <td class="p-2 align-middle flex flex-col gap-1">
+              <span class="font-semibold text-gray-900">${l.title}</span>
+              ${l.sold ? `<span class="inline-block text-xs bg-gray-300 text-gray-700 rounded px-2 ml-1">SOLD</span>` : ""}
+              <span class="text-xs text-gray-400">${l.tags}</span>
+            </td>
+            <td class="p-2 align-middle font-mono text-xs">${l.sku}</td>
+            <td class="p-2 align-middle font-bold ${l.sold ? 'text-gray-400 line-through' : 'text-indigo-700'}">$${l.price.toFixed(2)}</td>
+            <td class="p-2 align-middle">
+              <div class="flex gap-2">
+                ${l.platforms.map(p => `<img src="${platformIcons[p]}" alt="${p}" title="${p}" class="platform-icon" />`).join('')}
+              </div>
+            </td>
+            <td class="p-2 align-middle text-center">
+              <div class="flex gap-3 justify-center">
+                <button title="Edit" onclick="event.stopPropagation(); openEditModal(${l.id})"
+                  class="hover:scale-110 hover:shadow-lg transition"><svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536M9 11l6 6M4 20h7.586a2 2 0 0 0 1.414-.586l7.586-7.586a2 2 0 0 0 0-2.828l-7.586-7.586a2 2 0 0 0-2.828 0l-7.586 7.586A2 2 0 0 0 4 20z"/></svg></button>
+                <button title="Sync" onclick="event.stopPropagation();" class="hover:scale-110 hover:shadow-lg transition"><svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582M20 20v-5h-.581M19.418 15A7.978 7.978 0 0 1 12 20a8 8 0 1 1 8-8"/><path d="M15 12l3.5 3.5M15 12l-3.5 3.5"/></svg></button>
+                <button title="Clone" onclick="event.stopPropagation(); cloneListing(${l.id})" class="hover:scale-110 hover:shadow-lg transition"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" /><rect x="2" y="2" width="13" height="13" rx="2" /></svg></button>
+                <button title="Delete" onclick="event.stopPropagation(); deleteListing(${l.id})" class="hover:scale-110 hover:shadow-lg transition"><svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg></button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // ---- FILTERS, SEARCH ----
+    function filterListings() {
+      filterPlatform = document.getElementById('platformFilter').value;
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      renderListings();
+    }
+
+    // ---- MODAL LOGIC ----
+    function openEditModal(id) {
+      editIndex = listings.findIndex(l => l.id === id);
+      if (editIndex === -1) return;
+      const l = listings[editIndex];
+      document.getElementById('editTitle').value = l.title;
+      document.getElementById('editPrice').value = l.price;
+      document.getElementById('editTags').value = l.tags;
+      document.getElementById('platform-ebay').checked = l.platforms.includes('eBay');
+      document.getElementById('platform-poshmark').checked = l.platforms.includes('Poshmark');
+      document.getElementById('platform-facebook').checked = l.platforms.includes('Facebook');
+      document.getElementById('platform-etsy').checked = l.platforms.includes('Etsy');
+      document.getElementById('editModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('editModal').classList.add('animate-slideInUp'), 10);
+    }
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+    function saveEdit(e) {
+      e.preventDefault();
+      const l = listings[editIndex];
+      l.title = document.getElementById('editTitle').value;
+      l.price = parseFloat(document.getElementById('editPrice').value);
+      l.tags = document.getElementById('editTags').value;
+      l.platforms = [];
+      if (document.getElementById('platform-ebay').checked) l.platforms.push('eBay');
+      if (document.getElementById('platform-poshmark').checked) l.platforms.push('Poshmark');
+      if (document.getElementById('platform-facebook').checked) l.platforms.push('Facebook');
+      if (document.getElementById('platform-etsy').checked) l.platforms.push('Etsy');
+      closeEditModal();
+      renderListings();
+    }
+
+    // ---- BULK EDIT LOGIC ----
+    function toggleBulkEdit() {
+      const drawer = document.getElementById('bulkDrawer');
+      const bg = document.getElementById('bulkDrawerBg');
+      if (drawer.classList.contains('translate-x-full')) {
+        drawer.classList.remove('translate-x-full');
+        bg.classList.remove('hidden');
+      } else {
+        drawer.classList.add('translate-x-full');
+        bg.classList.add('hidden');
+      }
+    }
+    function toggleRowSelect(e, id) {
+      if (e.target.checked) {
+        if (!selectedIds.includes(id)) selectedIds.push(id);
+      } else {
+        selectedIds = selectedIds.filter(x => x !== id);
+      }
+      e.stopPropagation();
+    }
+    function toggleSelectAll(el) {
+      const checkboxes = document.querySelectorAll('.rowCheckbox');
+      if (el.checked) {
+        selectedIds = listings.map(l => l.id);
+        checkboxes.forEach(cb => cb.checked = true);
+      } else {
+        selectedIds = [];
+        checkboxes.forEach(cb => cb.checked = false);
+      }
+    }
+    function applyBulkEdit(e) {
+      e.preventDefault();
+      const newPrice = document.getElementById('bulkPrice').value;
+      const platforms = [];
+      if (document.getElementById('bulk-ebay').checked) platforms.push('eBay');
+      if (document.getElementById('bulk-poshmark').checked) platforms.push('Poshmark');
+      if (document.getElementById('bulk-facebook').checked) platforms.push('Facebook');
+      if (document.getElementById('bulk-etsy').checked) platforms.push('Etsy');
+      const markSold = document.getElementById('bulkSold').checked;
+      listings.forEach(l => {
+        if (selectedIds.includes(l.id)) {
+          if (newPrice) l.price = parseFloat(newPrice);
+          if (platforms.length) l.platforms = platforms.slice();
+          if (markSold) l.sold = true;
+        }
+      });
+      toggleBulkEdit();
+      renderListings();
+    }
+
+    // ---- ICON LOGIC ----
+    function cloneListing(id) {
+      const l = listings.find(x => x.id === id);
+      if (l) {
+        const copy = {...l, id: Math.max(...listings.map(x => x.id)) + 1, title: l.title + " (Copy)"};
+        listings.push(copy);
+        renderListings();
+      }
+    }
+    function deleteListing(id) {
+      if (confirm("Delete this listing?")) {
+        listings = listings.filter(l => l.id !== id);
+        renderListings();
+      }
+    }
+
+    // ---- LEAFLET MAP ----
+    let map;
+    function renderMap() {
+      map = L.map('salesMap', {zoomControl: false, attributionControl: false}).setView([56.13, -106.35], 3.5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 3,
+        maxZoom: 6
+      }).addTo(map);
+      buyerLocations.forEach(loc => {
+        const marker = L.circleMarker([loc.lat, loc.lng], {
+          radius: 8 + Math.log2(loc.buyers + 1) * 3,
+          fillColor: "#6366f1",
+          color: "#3730a3",
+          weight: 1,
+          fillOpacity: 0.7
+        }).addTo(map);
+        marker.bindTooltip(`${loc.buyers} buyers from ${loc.city}`, {permanent: false, direction: "top"});
+      });
+    }
+
+    // ---- CHART.JS ----
+    function renderChart() {
+      const ctx = document.getElementById('analyticsChart').getContext('2d');
+      const data = {
+        labels: ['Canada', 'USA', 'UK', 'Other'],
+        datasets: [{
+          label: 'Sales',
+          data: [25, 12, 7, 3],
+          backgroundColor: [
+            '#6366f1',   // Canada (highlight)
+            '#A5B4FC',
+            '#C7D2FE',
+            '#E0E7FF'
+          ],
+          borderWidth: 1
+        }]
+      };
+      new Chart(ctx, {
+        type: 'bar',
+        data,
+        options: {
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: {display: false} },
+            x: { grid: {display: false} }
+          }
+        }
+      });
+    }
+
+    // ---- INITIALIZE ----
+    window.onload = () => {
+      renderListings();
+      renderMap();
+      renderChart();
+    };
+  </script>
+</body>
+</html>
