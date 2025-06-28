@@ -1,601 +1,417 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-white antialiased">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Listings Dashboard | AutoList Canada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/static/autolistcanada-logo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'autolist-orange': '#FF6F1F',
-            'autolist-green': '#34B27B',
-            'autolist-warm': '#FFD9C0',
-            'autolist-luxury': '#3B4252',
-            'autolist-minimal': '#F6F7F9',
-            'autolist-budget': '#6EE7B7',
-            'autolist-cozy': '#FBC2A4',
-          }
-        }
-      }
-    };
-  </script>
+  <title>AutoList Canada — Listings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    .sidebar-bg {
-      background-image: url('/static/sidebar-bg-orange-green.jpg');
-      background-size: cover;
-      background-position: center;
+    /* Sidebar styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f9fafb;
+      color: #222;
     }
-    .tone-pill-cozy { background-color: #FBC2A4; color: #92400e; }
-    .tone-pill-budget { background-color: #6EE7B7; color: #065f46; }
-    .tone-pill-minimalist { background-color: #F6F7F9; color: #374151; border: 1px solid #d1d5db; }
-    .tone-pill-luxury { background-color: #3B4252; color: #FDE68A; }
-    .tone-pill-warm { background-color: #FFD9C0; color: #92400e; }
-    .platform-status:hover .tooltip { display: block; }
-    .tooltip { display: none; position: absolute; z-index: 10; background: #23272f; color: #fff; font-size: 0.875rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; white-space: nowrap; left: 50%; transform: translateX(-50%); top: 2.5rem; }
-    .map-bubble { border-radius: 50%; position: absolute; opacity: 0.85; }
-    .sidebar-link.active, .sidebar-link:hover { background: rgba(255,255,255,0.13); }
-    .badge { font-size: 0.75rem; background: rgba(255,255,255,0.17); border-radius: 0.375rem; color: #fff; padding: 0.25rem 0.75rem; margin-right: 0.5rem; }
-    .sidebar-link { transition: background 0.2s; }
-    .filter-btn.active, .filter-btn:hover { background: #FF6F1F; color: #fff; }
-    .dropdown-menu { display: none; position: absolute; background: #fff; border: 1px solid #e5e7eb; border-radius: 0.375rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); z-index: 20; min-width: 10rem; }
-    .dropdown:hover .dropdown-menu { display: block; }
-    .map-legend-pill { display: inline-flex; align-items: center; gap: 0.5rem; }
-    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
-    .scrollbar-thin::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 240px;
+      background: url('sidebar-bg.png') center center/cover no-repeat, #17223b;
+      color: #fff;
+      box-shadow: 2px 0 8px rgba(20,20,20,0.08);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 24px 0;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      padding: 32px 28px 18px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-logo {
+      width: 48px; height: 48px;
+      margin-right: 14px;
+      background: #fff;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+    }
+    .sidebar-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      line-height: 1.1;
+    }
+    .sidebar-nav {
+      margin: 32px 0 0 0;
+      padding: 0 0 0 28px;
+      flex: 1;
+    }
+    .sidebar-nav a {
+      display: block;
+      color: #fff;
+      font-weight: 500;
+      padding: 12px 0;
+      opacity: 0.86;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background .18s, opacity .18s;
+    }
+    .sidebar-nav a.active, .sidebar-nav a:hover {
+      background: rgba(255,255,255,0.08);
+      opacity: 1;
+    }
+    .sidebar-footer {
+      padding: 0 0 0 28px;
+      font-size: 0.95em;
+      color: #e0e6ef;
+    }
+    /* Main content */
+    .main-content {
+      margin-left: 240px;
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      background: #f9fafb;
+    }
+    /* Sticky Filters & Bulk Actions */
+    .filters-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      background: #fff;
+      padding: 18px 38px 10px 38px;
+      box-shadow: 0 2px 18px -10px #0002;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tabs {
+      display: flex;
+      gap: 12px;
+    }
+    .tab {
+      font-weight: 600;
+      color: #888;
+      padding: 8px 20px;
+      border-radius: 22px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      transition: background .2s, color .2s, box-shadow .2s;
+      box-shadow: none;
+      font-size: 1.01em;
+    }
+    .tab.active {
+      background: linear-gradient(90deg, #1dbecd 60%, #0d8ed4 100%);
+      color: #fff;
+      box-shadow: 0 2px 12px -1px #0d8ed455;
+      transform: scale(1.08);
+    }
+    .tab:not(.active):hover {
+      background: #e8f7fa;
+      color: #0d8ed4;
+    }
+    .bulk-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .bulk-btn {
+      background: #fff;
+      color: #0d8ed4;
+      border: 1.5px solid #0d8ed4;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px -2px #0d8ed410;
+      transition: background .16s, box-shadow .18s, color .15s;
+      outline: none;
+    }
+    .bulk-btn:hover {
+      background: #0d8ed4;
+      color: #fff;
+      box-shadow: 0 4px 16px -1px #0d8ed422;
+    }
+    /* Listings Table */
+    .listings-table-container {
+      margin: 32px 38px 30px 38px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px -8px #0d8ed410;
+      overflow-x: auto;
+      padding-bottom: 16px;
+    }
+    table.listings-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 950px;
+    }
+    .listings-table th, .listings-table td {
+      padding: 13px 10px;
+      text-align: left;
+      font-size: 1em;
+      vertical-align: middle;
+    }
+    .listings-table th {
+      font-weight: 700;
+      color: #0d8ed4;
+      background: #f7fafc;
+      border-bottom: 2px solid #e6f1f6;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .listings-table td {
+      border-bottom: 1px solid #f2f2f4;
+      background: #fff;
+    }
+    .listing-img {
+      width: 64px; height: 64px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 7px -2px #0d8ed422;
+    }
+    .listing-title {
+      font-weight: 600; color: #0d8ed4; text-decoration: none; font-size: 1.07em;
+      transition: color .15s;
+    }
+    .listing-title:hover { color: #1dbecd; }
+    .tone-tag {
+      display: inline-block;
+      padding: 4px 11px;
+      border-radius: 16px;
+      font-size: 0.94em;
+      font-weight: 500;
+      color: #fff;
+      margin-right: 5px;
+      box-shadow: 0 1px 6px -2px #0003;
+    }
+    .tone-cozy { background: linear-gradient(90deg,#ffaf7b,#d76d77); }
+    .tone-budget { background: linear-gradient(90deg,#84fab0,#8fd3f4); color: #245; }
+    .tone-minimalist { background: linear-gradient(90deg,#fff,#e0e0e0); color: #222; border: 1px solid #eee; }
+    .tone-warm { background: linear-gradient(90deg,#f7971e,#ffd200); color: #654; }
+    /* Platform icons + status */
+    .platform-icons {
+      display: flex;
+      gap: 11px;
+      align-items: center;
+    }
+    .platform {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.92em;
+      min-width: 36px;
+    }
+    .platform img {
+      width: 18px; height: 18px; margin-bottom: 2px;
+      filter: drop-shadow(0 0 2px #fff);
+    }
+    .platform-status {
+      font-size: 1.13em;
+      margin-top: -2px;
+    }
+    .status-synced { color: #2ecc71; }
+    .status-unsynced { color: #e74c3c; }
+    .status-pending { color: #f39c12; }
+    /* Action buttons */
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.16em;
+      margin-right: 5px;
+      padding: 5px 7px;
+      border-radius: 6px;
+      transition: background .13s;
+    }
+    .action-btn.edit:hover { background: #e0f7fa; color: #0d8ed4; }
+    .action-btn.copy:hover { background: #f3f8fb; color: #1dbecd; }
+    .action-btn.delete:hover { background: #ffeaea; color: #e74c3c; }
+    /* AI Tool Buttons */
+    .ai-btn {
+      background: linear-gradient(90deg,#1dbecd 70%,#0d8ed4 100%);
+      color: #fff;
+      font-weight: 500;
+      border: none;
+      border-radius: 7px;
+      padding: 6px 14px;
+      font-size: 0.98em;
+      margin-right: 6px;
+      box-shadow: 0 2px 10px -4px #0d8ed422;
+      cursor: pointer;
+      transition: box-shadow .18s, background .15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-btn:hover {
+      background: linear-gradient(90deg,#0d8ed4 60%, #1dbecd 100%);
+      box-shadow: 0 4px 18px -5px #0d8ed422;
+    }
+    /* Buyer Psychology Map */
+    .psychology-map-container {
+      background: #fff;
+      margin: 0 38px 22px 38px;
+      border-radius: 14px;
+      box-shadow: 0 3px 18px -9px #0d8ed410;
+      padding: 21px 27px 18px 27px;
+    }
+    .map-title {
+      font-weight: 700;
+      font-size: 1.14em;
+      color: #0d8ed4;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .canada-map {
+      position: relative;
+      width: 340px;
+      height: 170px;
+      background: url('canada-map-outline.png') center/contain no-repeat;
+      margin-bottom: 8px;
+    }
+    .province-dot {
+      position: absolute;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2.5px solid #fff;
+      box-shadow: 0 1px 6px -2px #0003;
+      transition: transform .14s;
+      opacity: 0.91;
+    }
+    .province-dot:hover {
+      transform: scale(1.18);
+      z-index: 3;
+      filter: brightness(1.18);
+      opacity: 1;
+    }
+    .legend {
+      display: flex; gap: 18px; margin-top: 8px; font-size: 0.98em;
+      align-items: center;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .legend-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      display: inline-block;
+      margin-right: 2px;
+    }
+    .legend-cozy { background: linear-gradient(90deg,#ffaf7b,#d76d77); }
+    .legend-budget { background: linear-gradient(90deg,#84fab0,#8fd3f4); }
+    .legend-minimalist { background: linear-gradient(90deg,#fff,#e0e0e0); border: 1px solid #eee;}
+    .legend-warm { background: linear-gradient(90deg,#f7971e,#ffd200);}
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main-content { margin-left: 0; }
+      .sidebar { display: none; }
+      .filters-sticky, .listings-table-container, .psychology-map-container { margin: 0 4vw 18px 4vw; }
+    }
+    @media (max-width: 600px) {
+      .listings-table th, .listings-table td { padding: 7px 3px; }
+    }
   </style>
 </head>
-<body class="h-full flex bg-autolist-minimal text-gray-900">
-  <aside class="sidebar-bg w-64 min-h-screen flex flex-col justify-between py-6 px-4 z-40">
-    <div>
-      <div class="flex items-center mb-10">
-        <img src="/static/autolistcanada-logo.png" alt="AutoList Canada Logo" class="h-12 w-12 mr-3 rounded shadow-lg">
-        <span class="text-2xl font-bold text-white tracking-tight">AutoList <span class="text-autolist-orange">Canada</span></span>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="logo-autolist.png" class="sidebar-logo" alt="AutoList Canada Logo">
+      <div>
+        <div class="sidebar-title">AutoList<br>Canada</div>
       </div>
-      <nav class="space-y-1">
-        <a href="#" class="flex items-center sidebar-link active px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-house mr-3"></i> Home
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-chart-line mr-3"></i> Dashboard
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-table-list mr-3"></i> Listings
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-brain mr-3"></i> AI Tools
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-flask mr-3"></i> How It Works
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-circle-question mr-3"></i> FAQ
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-cloud-arrow-up mr-3"></i> Import
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-file-contract mr-3"></i> Terms
-        </a>
-        <a href="#" class="flex items-center sidebar-link px-4 py-2 rounded-lg font-medium text-white">
-          <i class="fa-solid fa-shield-halved mr-3"></i> Privacy
-        </a>
-      </nav>
     </div>
-    <div>
-      <div class="flex items-center justify-between mb-4">
-        <span class="text-xs text-gray-100 font-semibold uppercase">Language</span>
-        <div class="flex items-center gap-2 text-sm">
-          <button id="lang-en" class="px-2 py-1 rounded bg-white text-autolist-orange font-bold shadow-sm ring-2 ring-autolist-orange focus:outline-none">EN</button>
-          <span class="text-white font-bold">/</span>
-          <button id="lang-fr" class="px-2 py-1 rounded hover:bg-white hover:text-autolist-green transition-colors">FR</button>
-        </div>
-      </div>
-      <div class="flex space-x-2 mb-2">
-        <span class="badge"><i class="fa-solid fa-maple-leaf mr-1 text-autolist-orange"></i> Canadian-Owned</span>
-        <span class="badge"><i class="fa-solid fa-robot mr-1 text-autolist-green"></i> AI-Powered</span>
-      </div>
-      <div class="flex space-x-2">
-        <span class="badge"><i class="fa-solid fa-user-shield mr-1 text-autolist-orange"></i> Privacy-First</span>
-      </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="active">Listings</a>
+      <a href="#">Analytics</a>
+      <a href="#">Settings</a>
+      <a href="#">Support</a>
+    </nav>
+    <div class="sidebar-footer">
+      &copy; 2025 AutoList Canada
     </div>
   </aside>
-  <div class="flex-1 flex flex-col min-h-screen">
-    <header class="sticky top-0 bg-white z-30 border-b border-gray-200 flex flex-col">
-      <div class="flex flex-wrap items-center px-6 py-4 gap-3 md:gap-6">
-        <div class="flex flex-wrap gap-2">
-          <button class="filter-btn px-3 py-1 rounded-full border border-autolist-orange text-autolist-orange font-semibold mr-1 active" onclick="filterStatus('Active')">Active</button>
-          <button class="filter-btn px-3 py-1 rounded-full border border-gray-400 text-gray-700 font-semibold mr-1" onclick="filterStatus('Draft')">Draft</button>
-          <button class="filter-btn px-3 py-1 rounded-full border border-gray-400 text-gray-700 font-semibold mr-1" onclick="filterStatus('Unlisted')">Unlisted</button>
-          <button class="filter-btn px-3 py-1 rounded-full border border-gray-400 text-gray-700 font-semibold mr-1" onclick="filterStatus('Sold')">Sold</button>
-          <button class="filter-btn px-3 py-1 rounded-full border border-red-400 text-red-600 font-semibold" onclick="filterStatus('Error')">Error</button>
-        </div>
-        <div class="dropdown relative ml-2">
-          <button class="px-3 py-1 border rounded-full text-gray-700 font-semibold flex items-center gap-2"><i class="fa-solid fa-tags"></i> Filter by Tone <i class="fa-solid fa-chevron-down"></i></button>
-          <div class="dropdown-menu mt-2 shadow-lg">
-            <button class="block px-4 py-2 hover:bg-autolist-cozy w-full text-left" onclick="filterTone('Cozy')">Cozy</button>
-            <button class="block px-4 py-2 hover:bg-autolist-budget w-full text-left" onclick="filterTone('Budget')">Budget</button>
-            <button class="block px-4 py-2 hover:bg-autolist-luxury w-full text-left" onclick="filterTone('Luxury')">Luxury</button>
-            <button class="block px-4 py-2 hover:bg-autolist-warm w-full text-left" onclick="filterTone('Warm')">Warm</button>
-            <button class="block px-4 py-2 hover:bg-autolist-minimal w-full text-left" onclick="filterTone('Minimalist')">Minimalist</button>
-          </div>
-        </div>
-        <div class="dropdown relative ml-2">
-          <button class="px-3 py-1 border rounded-full text-gray-700 font-semibold flex items-center gap-2"><i class="fa-solid fa-store"></i> Filter by Platform <i class="fa-solid fa-chevron-down"></i></button>
-          <div class="dropdown-menu mt-2 shadow-lg">
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('eBay')"><i class="fa-brands fa-ebay mr-2 text-blue-600"></i>eBay</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('Etsy')"><i class="fa-brands fa-etsy mr-2 text-orange-700"></i>Etsy</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('Shopify')"><i class="fa-brands fa-shopify mr-2 text-green-600"></i>Shopify</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('Poshmark')"><i class="fa-solid fa-hat-cowboy mr-2 text-fuchsia-700"></i>Poshmark</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('Depop')"><i class="fa-brands fa-deezer mr-2 text-rose-500"></i>Depop</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="filterPlatform('TikTok')"><i class="fa-brands fa-tiktok mr-2 text-black"></i>TikTok</button>
-          </div>
-        </div>
-        <div class="flex-1 flex justify-end items-center">
-          <input id="searchBar" type="text" placeholder="Search by title or SKU…" class="rounded-full border border-gray-300 px-4 py-1.5 w-64 focus:ring-2 focus:ring-autolist-orange mr-2" oninput="searchListings()">
-          <i class="fa-solid fa-magnifying-glass text-autolist-orange text-lg"></i>
-        </div>
+  <div class="main-content">
+    <!-- Sticky Filters & Bulk Actions -->
+    <div class="filters-sticky">
+      <div class="tabs" id="status-tabs">
+        <button class="tab active" data-status="active">Active</button>
+        <button class="tab" data-status="draft">Draft</button>
+        <button class="tab" data-status="sold">Sold</button>
+        <button class="tab" data-status="archived">Archived</button>
       </div>
-      <div class="flex flex-wrap gap-3 justify-end items-center px-6 pb-2 sticky top-0 bg-white z-20">
-        <button class="px-4 py-2 bg-autolist-orange hover:bg-orange-600 text-white font-semibold rounded-lg shadow transition transform hover:-translate-y-1" onclick="bulkDelist()">Bulk Delist</button>
-        <button class="px-4 py-2 bg-autolist-green hover:bg-green-700 text-white font-semibold rounded-lg shadow transition transform hover:-translate-y-1" onclick="bulkRelist()">Bulk Relist</button>
-        <div class="dropdown relative">
-          <button class="px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white font-semibold rounded-lg shadow flex items-center gap-2 transition transform hover:-translate-y-1">
-            <i class="fa-solid fa-share-nodes"></i> Crosslist to…
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="dropdown-menu mt-2 shadow-lg right-0">
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('eBay')"><i class="fa-brands fa-ebay mr-2 text-blue-600"></i>eBay</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('Etsy')"><i class="fa-brands fa-etsy mr-2 text-orange-700"></i>Etsy</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('Shopify')"><i class="fa-brands fa-shopify mr-2 text-green-600"></i>Shopify</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('Poshmark')"><i class="fa-solid fa-hat-cowboy mr-2 text-fuchsia-700"></i>Poshmark</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('Depop')"><i class="fa-brands fa-deezer mr-2 text-rose-500"></i>Depop</button>
-            <button class="block px-4 py-2 hover:bg-autolist-orange w-full text-left" onclick="crosslistTo('TikTok')"><i class="fa-brands fa-tiktok mr-2 text-black"></i>TikTok</button>
-          </div>
-        </div>
-      </div>
-    </header>
-    <main class="flex-1 flex flex-col overflow-y-auto pb-8 px-2 sm:px-6 bg-autolist-minimal scrollbar-thin">
-      <section class="bg-white rounded-xl shadow-lg mt-6 overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-autolist-orange">
-            <tr>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Thumbnail</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Title</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">AI</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">SKU</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Price (CAD)</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Tone</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Platforms</th>
-              <th class="px-3 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="listingsTable" class="bg-white divide-y divide-gray-100">
-          </tbody>
-        </table>
-      </section>
-      <section class="mt-10 bg-white rounded-xl shadow-lg p-6">
-        <div class="mb-4 flex items-center gap-3">
-          <i class="fa-solid fa-map-location-dot text-2xl text-autolist-orange"></i>
-          <h2 class="text-xl font-bold text-autolist-orange">Canadian Buyer Psychology Map</h2>
-        </div>
-        <div class="relative w-full max-w-4xl h-80 mx-auto mb-6" id="psychMap" style="background: url('/static/canada-map-outline.png') center/contain no-repeat;">
-        </div>
-        <div class="flex flex-wrap gap-6 justify-center items-center">
-          <div class="map-legend-pill"><span class="w-4 h-4 rounded-full inline-block" style="background:#FBC2A4"></span> Cozy</div>
-          <div class="map-legend-pill"><span class="w-4 h-4 rounded-full inline-block" style="background:#6EE7B7"></span> Budget</div>
-          <div class="map-legend-pill"><span class="w-4 h-4 rounded-full inline-block" style="background:#F6F7F9; border: 1px solid #d1d5db;"></span> Minimalist</div>
-          <div class="map-legend-pill"><span class="w-4 h-4 rounded-full inline-block" style="background:#3B4252"></span> Luxury</div>
-          <div class="map-legend-pill"><span class="w-4 h-4 rounded-full inline-block" style="background:#FFD9C0"></span> Warm</div>
-        </div>
-      </section>
-    </main>
-
-    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-      <div id="modalContent" class="bg-white rounded-xl shadow-2xl p-8 max-w-lg w-full relative">
-        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-autolist-orange text-xl"><i class="fa-solid fa-xmark"></i></button>
-        <div id="modalBody"></div>
+      <div class="bulk-actions">
+        <button class="bulk-btn" id="bulk-delist">Bulk Delist</button>
+        <button class="bulk-btn" id="bulk-relist">Bulk Relist</button>
+        <button class="bulk-btn" id="bulk-crosslist">Crosslist</button>
       </div>
     </div>
-  </div>
-  <script>
-    const toneDescriptions = {
-      "Cozy": "This listing uses Cozy tone for emotional storytelling.",
-      "Minimalist": "This listing uses Minimalist tone for clarity and no clutter.",
-      "Luxury": "This listing uses Luxury tone with trust anchors and pacing.",
-      "Budget": "This listing uses Budget tone for clarity and pricing triggers.",
-      "Warm": "This listing uses Warm tone to evoke nostalgia."
-    };
 
-    const platformIcons = {
-      "eBay": '<i class="fa-brands fa-ebay text-blue-600"></i>',
-      "Etsy": '<i class="fa-brands fa-etsy text-orange-700"></i>',
-      "Shopify": '<i class="fa-brands fa-shopify text-green-600"></i>',
-      "Poshmark": '<i class="fa-solid fa-hat-cowboy text-fuchsia-700"></i>',
-      "Depop": '<i class="fa-brands fa-deezer text-rose-500"></i>',
-      "TikTok": '<i class="fa-brands fa-tiktok text-black"></i>'
-    };
-
-    const platformStatusLabels = {
-      "connected": {icon: '<i class="fa-solid fa-circle-check text-green-600"></i>', label: 'Connected'},
-      "pending": {icon: '<i class="fa-solid fa-clock text-yellow-500"></i>', label: 'Pending Sync'},
-      "not_synced": {icon: '<i class="fa-solid fa-circle-xmark text-red-500"></i>', label: 'Not Synced'}
-    };
-
-    let listings = [
-      {
-        id: 1,
-        thumbnail: "/static/listings/vintage-lamp.jpg",
-        title: "Mid-Century Modern Lamp",
-        ai: {quick: true, rewrite: true},
-        sku: "CAN-00123",
-        price: "89.00",
-        tones: ["Cozy", "Luxury"],
-        platforms: {
-          "eBay": "connected",
-          "Etsy": "not_synced",
-          "Shopify": "pending",
-          "Poshmark": "connected",
-          "Depop": "not_synced",
-          "TikTok": "not_synced"
-        },
-        status: "Active"
-      },
-      {
-        id: 2,
-        thumbnail: "/static/listings/denim-jacket.jpg",
-        title: "Vintage Levi’s Denim Jacket",
-        ai: {quick: true, rewrite: true},
-        sku: "CAN-00456",
-        price: "120.00",
-        tones: ["Minimalist", "Budget"],
-        platforms: {
-          "eBay": "not_synced",
-          "Etsy": "connected",
-          "Shopify": "connected",
-          "Poshmark": "pending",
-          "Depop": "connected",
-          "TikTok": "not_synced"
-        },
-        status: "Active"
-      },
-      {
-        id: 3,
-        thumbnail: "/static/listings/teacup-set.jpg",
-        title: "Royal Albert Teacup Set",
-        ai: {quick: true, rewrite: true},
-        sku: "CAN-00999",
-        price: "47.50",
-        tones: ["Warm"],
-        platforms: {
-          "eBay": "pending",
-          "Etsy": "connected",
-          "Shopify": "not_synced",
-          "Poshmark": "not_synced",
-          "Depop": "not_synced",
-          "TikTok": "connected"
-        },
-        status: "Draft"
-      },
-      {
-        id: 4,
-        thumbnail: "/static/listings/retro-chair.jpg",
-        title: "Retro Club Chair",
-        ai: {quick: true, rewrite: true},
-        sku: "CAN-00664",
-        price: "210.00",
-        tones: ["Luxury", "Minimalist"],
-        platforms: {
-          "eBay": "connected",
-          "Etsy": "pending",
-          "Shopify": "not_synced",
-          "Poshmark": "pending",
-          "Depop": "connected",
-          "TikTok": "not_synced"
-        },
-        status: "Unlisted"
-      },
-      {
-        id: 5,
-        thumbnail: "/static/listings/ceramic-vase.jpg",
-        title: "Handmade Ceramic Vase",
-        ai: {quick: true, rewrite: true},
-        sku: "CAN-00234",
-        price: "40.00",
-        tones: ["Cozy", "Warm"],
-        platforms: {
-          "eBay": "connected",
-          "Etsy": "connected",
-          "Shopify": "connected",
-          "Poshmark": "not_synced",
-          "Depop": "not_synced",
-          "TikTok": "pending"
-        },
-        status: "Sold"
-      }
-    ];
-
-    let selectedListings = new Set();
-    let currentStatusFilter = "Active";
-    let currentToneFilter = null;
-    let currentPlatformFilter = null;
-    let currentSearchQuery = "";
-
-    function renderListings() {
-      let tbody = document.getElementById('listingsTable');
-      tbody.innerHTML = '';
-      let filtered = listings.filter(listing => {
-        let byStatus = currentStatusFilter ? listing.status === currentStatusFilter : true;
-        let byTone = currentToneFilter ? listing.tones.includes(currentToneFilter) : true;
-        let byPlatform = currentPlatformFilter ? listing.platforms[currentPlatformFilter] === "connected" : true;
-        let bySearch = currentSearchQuery
-          ? (listing.title.toLowerCase().includes(currentSearchQuery) || listing.sku.toLowerCase().includes(currentSearchQuery))
-          : true;
-        return byStatus && byTone && byPlatform && bySearch;
-      });
-      for (let l of filtered) {
-        let tonesHtml = l.tones.slice(0,2).map(tone => `
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mr-1 cursor-pointer tone-pill-${tone.toLowerCase()}"
-                onmouseenter="showToneDesc(event,'${tone}')"
-                onmouseleave="hideToneDesc(event)">
-            ${tone}
-            <span class="absolute tooltip z-30">${toneDescriptions[tone]}</span>
-          </span>
-        `).join('');
-        let platformsHtml = Object.keys(platformIcons).map(platform => {
-          let status = l.platforms[platform];
-          let {icon: statusIcon, label} = platformStatusLabels[status] || platformStatusLabels["not_synced"];
-          return `<span class="relative inline-flex items-center mr-1 platform-status group cursor-pointer">
-            <span class="text-lg align-middle">${platformIcons[platform]}</span>
-            <span class="ml-1">${statusIcon}</span>
-            <span class="tooltip">${label}</span>
-          </span>`;
-        }).join('');
-        tbody.innerHTML += `
-        <tr class="hover:bg-autolist-warm/40 transition-colors" data-id="${l.id}">
-          <td class="px-3 py-3">
-            <input type="checkbox" class="listing-checkbox" data-id="${l.id}" ${selectedListings.has(l.id) ? "checked" : ""} onclick="toggleListingSelect(${l.id})">
-          </td>
-          <td class="px-3 py-3">
-            <img src="${l.thumbnail}" alt="${l.title}" class="h-14 w-14 object-cover rounded shadow">
-          </td>
-          <td class="px-3 py-3">
-            <a href="#" class="text-autolist-orange font-bold hover:underline" onclick="showListingModal(${l.id});return false;">${l.title}</a>
-          </td>
-          <td class="px-3 py-3">
-            <button onclick="quickSuggest(${l.id})" class="inline-flex items-center px-2 py-1 bg-autolist-green text-white rounded shadow mr-1 hover:bg-green-700 transition"><i class="fa-solid fa-bolt mr-1"></i> Quick Suggest</button>
-            <button onclick="smartRewrite(${l.id})" class="inline-flex items-center px-2 py-1 bg-autolist-orange text-white rounded shadow hover:bg-orange-700 transition"><i class="fa-solid fa-brain mr-1"></i> Smart Rewrite</button>
-          </td>
-          <td class="px-3 py-3 font-mono text-sm text-gray-700">${l.sku}</td>
-          <td class="px-3 py-3 font-semibold text-gray-900">$${l.price}</td>
-          <td class="px-3 py-3">${tonesHtml}</td>
-          <td class="px-3 py-3">${platformsHtml}</td>
-          <td class="px-3 py-3 flex gap-2">
-            <button onclick="editListing(${l.id})" class="text-blue-600 hover:text-blue-900 text-lg" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button onclick="copyListing(${l.id})" class="text-autolist-orange hover:text-orange-700 text-lg" title="Copy"><i class="fa-solid fa-copy"></i></button>
-            <button onclick="deleteListing(${l.id})" class="text-red-600 hover:text-red-900 text-lg" title="Delete"><i class="fa-solid fa-trash"></i></button>
-          </td>
-        </tr>`;
-      }
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-10 text-gray-500">No listings found. Try adjusting your filters or search.</td></tr>`;
-      }
-    }
-
-    function filterStatus(status) {
-      currentStatusFilter = status;
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-autolist-orange', 'text-white'));
-      event.target.classList.add('active', 'bg-autolist-orange', 'text-white');
-      renderListings();
-    }
-    function filterTone(tone) {
-      currentToneFilter = tone;
-      renderListings();
-    }
-    function filterPlatform(platform) {
-      currentPlatformFilter = platform;
-      renderListings();
-    }
-    function searchListings() {
-      currentSearchQuery = document.getElementById('searchBar').value.trim().toLowerCase();
-      renderListings();
-    }
-    function toggleSelectAll(el) {
-      let checkboxes = document.querySelectorAll('.listing-checkbox');
-      if (el.checked) {
-        checkboxes.forEach(cb => { cb.checked = true; selectedListings.add(Number(cb.dataset.id)); });
-      } else {
-        checkboxes.forEach(cb => { cb.checked = false; selectedListings.delete(Number(cb.dataset.id)); });
-      }
-    }
-    function toggleListingSelect(id) {
-      if (selectedListings.has(id)) selectedListings.delete(id);
-      else selectedListings.add(id);
-    }
-    function showToneDesc(event, tone) {
-      let tooltip = event.currentTarget.querySelector('.tooltip');
-      tooltip.style.display = 'block';
-    }
-    function hideToneDesc(event) {
-      let tooltip = event.currentTarget.querySelector('.tooltip');
-      tooltip.style.display = 'none';
-    }
-    function showListingModal(id) {
-      let listing = listings.find(l => l.id === id);
-      let modalBody = document.getElementById('modalBody');
-      modalBody.innerHTML = `
-        <h3 class="text-2xl font-bold text-autolist-orange mb-2">${listing.title}</h3>
-        <img src="${listing.thumbnail}" alt="${listing.title}" class="h-40 w-40 object-cover rounded shadow mb-3">
-        <p class="font-mono text-gray-700 mb-2">SKU: <span class="font-semibold">${listing.sku}</span></p>
-        <p class="font-semibold text-lg mb-2">Price: $${listing.price} CAD</p>
-        <div class="mb-2">Tones: ${listing.tones.map(tone => `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold mr-1 tone-pill-${tone.toLowerCase()}">${tone}</span>`).join('')}</div>
-        <div class="mb-4">
-          Platforms:
-          ${Object.keys(listing.platforms).map(platform => {
-            let status = listing.platforms[platform];
-            let {icon: statusIcon, label} = platformStatusLabels[status] || platformStatusLabels["not_synced"];
-            return `<span class="inline-flex items-center mr-2">${platformIcons[platform]} ${statusIcon}<span class="ml-1 text-xs text-gray-500">${label}</span></span>`;
-          }).join('')}
-        </div>
-        <div class="flex gap-3">
-          <button class="px-4 py-2 bg-autolist-orange text-white rounded shadow" onclick="quickSuggest(${id})">⚡ Quick Suggest</button>
-          <button class="px-4 py-2 bg-autolist-green text-white rounded shadow" onclick="smartRewrite(${id})">🧠 Smart Rewrite</button>
-        </div>
-      `;
-      document.getElementById('modalOverlay').classList.remove('hidden');
-    }
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.add('hidden');
-    }
-    function quickSuggest(id) {
-      let listing = listings.find(l => l.id === id);
-      document.getElementById('modalBody').innerHTML = `
-        <div class="flex items-center gap-2 mb-3">
-          <i class="fa-solid fa-bolt text-autolist-green text-xl"></i>
-          <h4 class="text-lg font-bold text-autolist-green">AI Quick Suggest for "${listing.title}"</h4>
-        </div>
-        <p class="mb-3">Here’s an instant improvement suggestion for your listing’s title and description, tailored to Canadian buyers and your tone:</p>
-        <ul class="list-disc ml-6 mb-4">
-          <li>Add a story element to highlight provenance.</li>
-          <li>Emphasize warmth and authenticity in your first sentence.</li>
-          <li>Suggest price as “fair” for vintage.</li>
-        </ul>
-        <button class="px-4 py-2 bg-autolist-orange text-white rounded shadow" onclick="closeModal()">Close</button>
-      `;
-      document.getElementById('modalOverlay').classList.remove('hidden');
-    }
-    function smartRewrite(id) {
-      let listing = listings.find(l => l.id === id);
-      document.getElementById('modalBody').innerHTML = `
-        <div class="flex items-center gap-2 mb-3">
-          <i class="fa-solid fa-brain text-autolist-orange text-xl"></i>
-          <h4 class="text-lg font-bold text-autolist-orange">AI Smart Rewrite for "${listing.title}"</h4>
-        </div>
-        <p class="mb-3">Psychology-based rewrite in progress... (sample below)</p>
-        <div class="bg-gray-50 p-4 rounded mb-4">
-          <strong>Before:</strong> ${listing.title}<br>
-          <strong>After:</strong> ${listing.title} — “Lovingly cared for, perfect for cozy Canadian homes.”<br>
-          <em>Using <span class="font-bold">${listing.tones[0]}</span> tone: ${toneDescriptions[listing.tones[0]]}</em>
-        </div>
-        <button class="px-4 py-2 bg-autolist-green text-white rounded shadow" onclick="closeModal()">Close</button>
-      `;
-      document.getElementById('modalOverlay').classList.remove('hidden');
-    }
-    function editListing(id) {
-      let tr = document.querySelector(`tr[data-id='${id}']`);
-      let listing = listings.find(l => l.id === id);
-      tr.innerHTML = `
-        <td class="px-3 py-3"><input type="checkbox" class="listing-checkbox" checked disabled></td>
-        <td class="px-3 py-3"><img src="${listing.thumbnail}" class="h-14 w-14 object-cover rounded shadow"></td>
-        <td class="px-3 py-3"><input value="${listing.title}" class="border px-2 py-1 rounded w-full"></td>
-        <td class="px-3 py-3">
-          <button class="px-2 py-1 bg-autolist-green text-white rounded shadow mr-1" disabled>⚡</button>
-          <button class="px-2 py-1 bg-autolist-orange text-white rounded shadow" disabled>🧠</button>
-        </td>
-        <td class="px-3 py-3 font-mono text-sm text-gray-700"><input value="${listing.sku}" class="border px-2 py-1 rounded w-full"></td>
-        <td class="px-3 py-3 font-semibold text-gray-900"><input value="${listing.price}" class="border px-2 py-1 rounded w-16"></td>
-        <td class="px-3 py-3">${listing.tones.map(tone => `<span class="inline-block px-2 py-1 rounded-full text-xs font-semibold mr-1 tone-pill-${tone.toLowerCase()}">${tone}</span>`).join('')}</td>
-        <td class="px-3 py-3">—</td>
-        <td class="px-3 py-3 flex gap-2">
-          <button onclick="saveListing(${listing.id})" class="text-green-700 hover:text-green-900 text-lg" title="Save"><i class="fa-solid fa-floppy-disk"></i></button>
-          <button onclick="renderListings()" class="text-gray-500 hover:text-gray-800 text-lg" title="Cancel"><i class="fa-solid fa-xmark"></i></button>
-        </td>
-      `;
-    }
-    function saveListing(id) {
-      let tr = document.querySelector(`tr[data-id='${id}']`);
-      let inputs = tr.querySelectorAll('input');
-      let [titleInput, skuInput, priceInput] = [inputs[1], inputs[2], inputs[3]];
-      let l = listings.find(l => l.id === id);
-      l.title = titleInput.value;
-      l.sku = skuInput.value;
-      l.price = priceInput.value;
-      renderListings();
-    }
-    function copyListing(id) {
-      let listing = listings.find(l => l.id === id);
-      let newId = Math.max(...listings.map(l => l.id)) + 1;
-      let copy = {...listing, id: newId, sku: listing.sku + "-COPY", title: listing.title + " (Copy)"};
-      listings.unshift(copy);
-      renderListings();
-    }
-    function deleteListing(id) {
-      document.getElementById('modalBody').innerHTML = `
-        <div class="flex items-center gap-2 mb-4">
-          <i class="fa-solid fa-trash text-red-600 text-2xl"></i>
-          <h4 class="text-lg font-bold text-red-600">Delete Listing</h4>
-        </div>
-        <p>Are you sure you want to delete this listing? This action cannot be undone.</p>
-        <div class="mt-6 flex gap-3">
-          <button onclick="confirmDelete(${id})" class="px-4 py-2 bg-red-600 text-white rounded shadow">Delete</button>
-          <button onclick="closeModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded shadow">Cancel</button>
-        </div>
-      `;
-      document.getElementById('modalOverlay').classList.remove('hidden');
-    }
-    function confirmDelete(id) {
-      listings = listings.filter(l => l.id !== id);
-      closeModal();
-      renderListings();
-    }
-    function bulkDelist() {
-      if (!selectedListings.size) { alert('Select at least one listing to delist.'); return; }
-      listings.forEach(l => { if (selectedListings.has(l.id)) l.status = 'Unlisted'; });
-      renderListings();
-    }
-    function bulkRelist() {
-      if (!selectedListings.size) { alert('Select at least one listing to relist.'); return; }
-      listings.forEach(l => { if (selectedListings.has(l.id)) l.status = 'Active'; });
-      renderListings();
-    }
-    function crosslistTo(platform) {
-      alert("Preview: Crosslisting selected listings to " + platform + ". (AI-powered preview coming soon!)");
-    }
-
-    // Language toggle
-    document.getElementById('lang-en').onclick = function() { alert('English mode activated! (Full i18n coming soon)'); };
-    document.getElementById('lang-fr').onclick = function() { alert('Mode français activé ! (Traduction complète bientôt)'); };
-
-    // Simulated Buyer Psychology Map
-    function renderPsychMap() {
-      let el = document.getElementById('psychMap');
-      el.innerHTML = '';
-      let provinces = [
-        {name: 'BC', left: '12%', top: '60%', tone: 'Cozy'},
-        {name: 'AB', left: '24%', top: '52%', tone: 'Budget'},
-        {name: 'SK', left: '33%', top: '53%', tone: 'Minimalist'},
-        {name: 'MB', left: '43%', top: '56%', tone: 'Minimalist'},
-        {name: 'ON', left: '58%', top: '59%', tone: 'Luxury'},
-        {name: 'QC', left: '71%', top: '55%', tone: 'Cozy'},
-        {name: 'NS', left: '86%', top: '70%', tone: 'Warm'},
-        {name: 'NB', left: '83%', top: '68%', tone: 'Warm'},
-        {name: 'NL', left: '96%', top: '68%', tone: 'Cozy'},
-        {name: 'PE', left: '90%', top: '73%', tone: 'Budget'},
-        {name: 'YT', left: '9%', top: '32%', tone: 'Minimalist'},
-        {name: 'NT', left: '22%', top: '27%', tone: 'Luxury'},
-        {name: 'NU', left: '52%', top: '19%', tone: 'Warm'}
-      ];
-      let toneColors = {
-        "Cozy": "#FBC2A4",
-        "Budget": "#6EE7B7",
-        "Minimalist": "#F6F7F9",
-        "Luxury": "#3B4252",
-        "Warm": "#FFD9C0"
-      };
-      for (let p of provinces) {
-        let sz = 30 + Math.floor(Math.random() * 30);
-        el.innerHTML += `<div class="map-bubble" style="background:${toneColors[p.tone]}; left:${p.left}; top:${p.top}; width:${sz}px; height:${sz}px; border:2px solid #fff;" title="${p.name} - ${p.tone}"></div>`;
-      }
-    }
-
-    // Initial Render
-    renderListings();
-    renderPsychMap();
-  </script>
-</body>
-</html>
+    <!-- Listings Table -->
+    <div class="listings-table-container">
+      <table class="listings-table" id="listings-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>SKU</th>
+            <th>Price (CAD)</th>
+            <th>AI Tools</th>
+            <th>Tone</th>
+            <th>Platforms</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Listing 1 -->
+          <tr>
+            <td><img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=64&q=80" class="listing-img" alt="Cozy Mug"></td>
+            <td><a href="#" class="listing-title">Handmade Cozy Mug</a></td>
+            <td>SKU-CA-1001</td>
+            <td>$28.00</td>
+            <td>
+              <button class="ai-btn" onclick="simulateAI('desc', 1)">🧠 Desc</button>
+              <button class="ai-btn" onclick="simulateAI('boost', 1)">⚡ Boost</button>
+            </td>
+            <td>
+              <span class="tone-tag tone-cozy">Cozy</span>
+              <span class="tone-tag tone-warm">Warm</span>
+            </td>
+            <td>
+              <div class="platform-icons">
+                <div class="platform"><img src="ebay.png" alt="eBay"><span class="platform-status status-synced">✅</span></div>
+                <div class="platform"><img src="etsy.png" alt="Etsy"><span class="platform-status status-pending">⏳</span></div>
+                <div class="platform"><img src="shopify.png" alt="Shopify"><span class="platform-status status-synced">✅</span></div>
+                <div class="platform"><img src="depop.png" alt="Depop"><span class="platform-status status-unsynced">❌</span></div>
+              </div>
+            </td>
+            <td>
+              <button class="action-btn edit" title="Edit"><span>✏️</span></button>
+              <button class="action-btn copy" title="Copy"><span>📋</span></button>
+              <button class="action-btn delete" title="Delete" onclick="deleteRow(this)"><span>🗑</span></button>
+            </td>
+          </tr>
+          <!-- Example Listing 2 -->
+          <tr>
+            <td><img src="https://images.unsplash.com/photo-1526178613658-3f1622045557?w=64&q=80" class="listing-img" alt="Minimalist Lamp"></td>
+            <td><a href="#" class="listing-title">Minimalist Table Lamp</a></td>
+            <td>SKU-CA-1002</td>
+            <td>$74.50</td>
+            <td>
+              <button class="ai-btn" onclick="simulateAI('desc', 2)">🧠 Desc</button>
+              <button class="ai-btn" onclick="simulateAI('boost', 2)">⚡ Boost</button>
+            </td>
+            <td>
+              <span class="tone-tag tone-minimalist">Minimalist</span>
+            </td>
+            <td>
+              <div class="platform-icons">
+                <div class="platform"><img src="ebay.png" alt="eBay"><span class="platform-status status-unsynced">❌</span></div>
+                <div class="platform"><img src="etsy.png" alt="Etsy"><span class="platform-status status-synced">✅</span></div>
+                <div class="platform"><img src="shopify.png" alt="Shopify"><span class="platform-status status-synced">✅</span></div>
+                <div class="platform"><img src="
