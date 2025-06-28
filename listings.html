@@ -1,623 +1,517 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#F6F3EF]">
+<html lang="en" class="bg-gray-50">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Listings – AutoList Canada</title>
-  <link rel="icon" type="image/png" href="/assets/favicon.png">
-  <!-- TailwindCSS CDN -->
+  <meta charset="UTF-8" />
+  <title>Listings Dashboard – AutoList Canada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Leaflet.js CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Heroicons for icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
   <style>
-    /* Frosted Glass */
-    .frosted {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(10px);
-    }
-    /* Sidebar organic curve (SVG background) */
     .sidebar-bg {
-      background: url('/assets/sidebar-background.png') center/cover no-repeat;
+      background-image: url('sidebar-background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
     }
-    /* Soft wave divider */
-    .wave-divider {
-      display: block;
-      width: 100%;
-      height: 40px;
-      background: none;
-      margin: 0;
+    .tone-badge {
+      @apply px-2 py-0.5 rounded text-xs font-semibold uppercase;
     }
-    /* Hide scrollbar */
-    ::-webkit-scrollbar { width: 0 !important }
-    .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    /* Card Animations */
-    .card-animate { animation: fadeInScale 0.5s ease; }
-    @keyframes fadeInScale {
-      0% { opacity: 0; transform: scale(0.95);}
-      100% { opacity: 1; transform: scale(1);}
-    }
+    /* Custom scrollbar for sidebar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #e1e1e1; border-radius: 8px; }
   </style>
 </head>
-<body class="flex min-h-screen bg-[#F6F3EF] text-[#2B2320] font-sans">
+<body class="font-sans antialiased flex bg-gray-50">
 
 <!-- Sidebar -->
-<aside class="sidebar-bg w-64 flex flex-col text-white min-h-screen relative z-10">
-  <div class="flex flex-col items-center py-8">
-    <img src="/assets/logo.png" alt="AutoList Canada Logo" class="w-16 h-16 mb-2 rounded-full shadow-lg">
-    <img src="/assets/autolist-title.png" alt="AutoList Canada" class="w-40 mb-6">
+<aside class="sidebar-bg fixed top-0 left-0 h-full w-64 flex flex-col justify-between z-30 shadow-lg">
+  <div>
+    <div class="flex flex-col items-center mt-7 mb-4">
+      <img src="autolist-logo.png" alt="AutoList Logo" class="w-14 h-14 mb-3" />
+      <img src="autolist-title.png" alt="AutoList Canada" class="w-32 mb-8" />
+    </div>
+    <!-- Sidebar Links -->
+    <nav class="px-6">
+      <ul class="space-y-1 font-medium text-gray-100">
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="home" class="mr-2"></span>Home</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="bar-chart-2" class="mr-2"></span>Dashboard</a></li>
+        <li>
+          <a href="#" class="flex items-center py-2 px-3 rounded bg-orange-600 text-white font-semibold shadow hover:bg-orange-700 transition">
+            <span data-feather="list" class="mr-2"></span>Listings
+          </a>
+        </li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="cpu" class="mr-2"></span>AI Tools</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="info" class="mr-2"></span>How It Works</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="help-circle" class="mr-2"></span>FAQ</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="upload" class="mr-2"></span>Import</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="file-text" class="mr-2"></span>Terms</a></li>
+        <li><a href="#" class="flex items-center py-2 px-3 rounded hover:bg-orange-50 hover:text-orange-600 transition"><span data-feather="shield" class="mr-2"></span>Privacy</a></li>
+      </ul>
+    </nav>
   </div>
-  <nav class="flex-1 px-6 space-y-2">
-    <a href="/home" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Home</a>
-    <a href="/dashboard" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Dashboard</a>
-    <a href="/listings" class="block py-2 px-4 rounded-lg bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold shadow-inner">Listings</a>
-    <a href="/ai-tools" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">AI Tools</a>
-    <a href="/how-it-works" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">How It Works</a>
-    <a href="/faq" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">FAQ</a>
-    <a href="/import" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Import</a>
-    <a href="/terms" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Terms</a>
-    <a href="/privacy" class="block py-2 px-4 rounded-lg hover:bg-white/10 transition">Privacy</a>
-  </nav>
-  <div class="absolute bottom-0 w-full pb-6 px-6">
-    <div class="flex items-center justify-between">
-      <span class="text-xs text-white/70">CA EN</span>
-      <button id="lang-toggle" class="text-xs bg-white/20 py-1 px-3 rounded-full font-semibold hover:bg-white/40 transition">FR</button>
+  <!-- Language toggle -->
+  <div class="px-6 pb-7">
+    <div class="flex items-center justify-start space-x-2 text-gray-200 text-sm">
+      <span class="font-bold">CA</span>
+      <button class="px-2 py-1 rounded bg-gray-800 hover:bg-orange-500 focus:bg-orange-600 transition">EN</button>
+      <span>/</span>
+      <button class="px-2 py-1 rounded hover:bg-orange-500 focus:bg-orange-600 transition">FR</button>
     </div>
   </div>
 </aside>
 
-<!-- Main Content -->
-<main class="flex-1 flex flex-col bg-[#F6F3EF]">
-  <!-- Listings Header -->
-  <section class="relative px-8 pt-10 pb-6 bg-[#F6F3EF] z-0">
-    <div class="flex flex-wrap items-center gap-4">
-      <!-- Search Bar -->
-      <div class="flex items-center bg-white rounded-lg shadow px-3 py-2 w-full max-w-xs mr-4">
-        <svg class="w-5 h-5 text-[#E0985D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"/></svg>
-        <input id="search" type="text" placeholder="Search title…" class="ml-2 outline-none bg-transparent w-full text-[#2B2320]"/>
-      </div>
-      <!-- Platform Filter -->
-      <select id="platform-filter" class="bg-white rounded-lg px-3 py-2 shadow text-[#2B2320]">
+<!-- Main Content Wrapper -->
+<div class="flex flex-col flex-1 ml-64 min-h-screen">
+
+  <!-- Header Section -->
+  <header class="flex flex-wrap items-center justify-between px-10 py-6 border-b border-gray-200 bg-white shadow-sm">
+    <!-- Search and filters -->
+    <div class="flex items-center space-x-4 flex-1">
+      <input id="searchInput" type="text" placeholder="Search listings..." class="w-64 px-5 py-2.5 rounded-full border border-gray-200 focus:border-orange-400 outline-none text-gray-700 shadow-sm" oninput="filterListings()" />
+      <select id="platformFilter" class="px-3 py-2 rounded border border-gray-200 text-gray-600 focus:border-orange-400 outline-none" onchange="filterListings()">
         <option value="">All Platforms</option>
-        <option value="eBay">eBay</option>
-        <option value="Poshmark">Poshmark</option>
-        <option value="Facebook">Facebook</option>
+        <option value="ebay">eBay</option>
+        <option value="poshmark">Poshmark</option>
+        <option value="facebook">Facebook</option>
       </select>
-      <!-- Buyer Intent Filter -->
-      <select id="tone-filter" class="bg-white rounded-lg px-3 py-2 shadow text-[#2B2320]">
+      <select id="toneFilter" class="px-3 py-2 rounded border border-gray-200 text-gray-600 focus:border-orange-400 outline-none" onchange="filterListings()">
         <option value="">All Buyer Intents</option>
         <option value="Cozy">Cozy</option>
         <option value="Luxury">Luxury</option>
         <option value="Eco">Eco</option>
-        <option value="Minimalist">Minimalist</option>
-        <option value="Sporty">Sporty</option>
+        <option value="Vintage">Vintage</option>
         <option value="Budget">Budget</option>
       </select>
-      <!-- Hide Sold Toggle -->
-      <label class="flex items-center cursor-pointer ml-4">
-        <input id="hide-sold" type="checkbox" class="hidden peer">
-        <span class="peer-checked:bg-[#E0985D] bg-gray-300 w-10 h-5 rounded-full flex items-center transition shadow-inner">
-          <span class="peer-checked:translate-x-5 translate-x-1 inline-block w-4 h-4 bg-white rounded-full shadow transition"></span>
-        </span>
-        <span class="ml-2 text-sm font-medium">Hide Sold</span>
+      <label class="flex items-center ml-3 space-x-2 cursor-pointer">
+        <input type="checkbox" id="hideSold" class="accent-orange-500 w-5 h-5" onchange="filterListings()" />
+        <span class="text-gray-700 font-medium">Hide Sold</span>
       </label>
-      <!-- Grid/List Toggle -->
-      <div class="flex items-center ml-4">
-        <button id="list-view-btn" class="px-2 py-1 rounded-l-lg bg-[#E0985D] text-white font-semibold shadow focus:outline-none"><svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="4" rx="2"/><rect x="4" y="14" width="16" height="4" rx="2"/></svg></button>
-        <button id="grid-view-btn" class="px-2 py-1 rounded-r-lg bg-white text-[#E0985D] font-semibold shadow focus:outline-none"><svg class="inline w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></button>
-      </div>
-      <!-- Connected Platforms -->
-      <div class="flex items-center ml-auto gap-3">
-        <button id="ebay-btn" class="flex items-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-[#0071CE] to-[#86C3E6] text-white font-semibold shadow hover:shadow-lg transition" onclick="connectMarketplace('eBay')">
-          <img src="/assets/ebay-logo.png" alt="eBay" class="w-5 h-5"> <span id="ebay-status">Connect eBay</span>
-        </button>
-        <button id="poshmark-btn" class="flex items-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-[#B8006B] to-[#F7ADC6] text-white font-semibold shadow hover:shadow-lg transition" onclick="connectMarketplace('Poshmark')">
-          <img src="/assets/poshmark-logo.png" alt="Poshmark" class="w-5 h-5"> <span id="poshmark-status">Connect Poshmark</span>
-        </button>
-        <button id="facebook-btn" class="flex items-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-[#1877F2] to-[#68A5F2] text-white font-semibold shadow hover:shadow-lg transition" onclick="connectMarketplace('Facebook')">
-          <img src="/assets/facebook-logo.png" alt="Facebook" class="w-5 h-5"> <span id="facebook-status">Connect Facebook</span>
-        </button>
+      <div class="flex items-center ml-6">
+        <button id="listViewBtn" class="px-2 py-1 mr-2 rounded-full border border-gray-300 bg-orange-600 text-white font-bold shadow hover:bg-orange-700 transition" onclick="toggleView('list')"><span data-feather="list"></span></button>
+        <button id="gridViewBtn" class="px-2 py-1 rounded-full border border-gray-300 text-gray-500 hover:bg-orange-200 hover:text-orange-700 transition" onclick="toggleView('grid')"><span data-feather="grid"></span></button>
       </div>
     </div>
-  </section>
-
-  <!-- Wave Divider -->
-  <svg class="wave-divider" viewBox="0 0 1440 40" fill="none" preserveAspectRatio="none"><path d="M0,20 C360,60 1080,0 1440,20 L1440,40 L0,40 Z" fill="#F6F3EF"/></svg>
-  
-  <!-- Bulk Sync Engine -->
-  <section id="bulk-sync-section" class="px-8 py-4">
-    <div id="connect-prompt" class="hidden bg-[#FFF5E5] border border-[#E0985D] text-[#2B2320] rounded-lg p-6 flex items-center justify-between shadow">
-      <span class="text-lg font-semibold">Connect to eBay to import your listings.</span>
-      <button class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold py-2 px-6 rounded-lg shadow hover:shadow-lg transition" onclick="connectMarketplace('eBay')">
-        <img src="/assets/ebay-logo.png" class="inline w-6 h-6 mr-2" alt="eBay"> Connect eBay
+    <!-- Sync status buttons -->
+    <div class="flex items-center space-x-2">
+      <button onclick="connectMarketplace('ebay')" id="ebayConnectBtn" class="flex items-center px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow">
+        <span data-feather="check-circle" class="mr-2"></span>Connect eBay
+      </button>
+      <button onclick="connectMarketplace('poshmark')" id="poshmarkConnectBtn" class="flex items-center px-4 py-2 rounded bg-pink-600 text-white font-semibold hover:bg-pink-700 transition shadow">
+        <span data-feather="check-circle" class="mr-2"></span>Connect Poshmark
+      </button>
+      <button onclick="connectMarketplace('facebook')" id="facebookConnectBtn" class="flex items-center px-4 py-2 rounded bg-gray-900 text-white font-semibold hover:bg-gray-800 transition shadow">
+        <span data-feather="check-circle" class="mr-2"></span>Connect Facebook
       </button>
     </div>
-    <div id="sync-loading" class="hidden flex items-center gap-2">
-      <svg class="animate-spin w-6 h-6 text-[#E0985D]" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
-      <span class="font-medium">Syncing your eBay listings…</span>
-    </div>
-  </section>
+  </header>
 
-  <!-- Listings Table (List View) -->
-  <section id="listings-list-section" class="px-8 pb-8">
-    <div class="overflow-x-auto rounded-lg shadow bg-white">
-      <table id="listings-table" class="min-w-full text-left">
-        <thead class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320]">
-          <tr>
-            <th class="py-3 px-4">Image</th>
-            <th class="py-3 px-4">Title</th>
-            <th class="py-3 px-4">Actions</th>
-            <th class="py-3 px-4">SKU</th>
-            <th class="py-3 px-4">Price</th>
-            <th class="py-3 px-4">Platforms</th>
-            <th class="py-3 px-4">Tone</th>
-          </tr>
-        </thead>
-        <tbody id="listings-tbody" class="divide-y divide-[#F6F3EF]">
-          <!-- Listings injected by JS -->
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Listings Grid View -->
-  <section id="listings-grid-section" class="px-8 pb-8 hidden">
-    <div id="listings-grid" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <!-- Cards injected by JS -->
-    </div>
-  </section>
-
-  <!-- Buyer Psychology Map (Leaflet.js) -->
-  <section class="max-w-xl px-8 pb-8">
-    <h2 class="text-xl font-semibold mb-2">Buyer Psychology Map</h2>
-    <div id="buyer-psychology-map" class="rounded-lg shadow overflow-hidden" style="height: 340px; max-width: 600px;"></div>
-    <!-- Legend -->
-    <div class="mt-2 flex flex-wrap gap-2 items-center text-sm">
-      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-4 rounded-full bg-[#F8D478]"></span> Cozy ☀️</span>
-      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-4 rounded-full bg-[#F7B4E1]"></span> Luxury 🧠</span>
-      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-4 rounded-full bg-[#B3E2CD]"></span> Eco 🍃</span>
-      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-4 rounded-full bg-[#E3E8F2]"></span> Minimalist 🧊</span>
-      <span class="inline-flex items-center gap-1"><span class="inline-block w-4 h-4 rounded-full bg-[#F6E6C8]"></span> Budget 💰</span>
-    </div>
-  </section>
-
-  <!-- Modals -->
-  <div id="edit-modal" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50 hidden">
-    <div class="frosted rounded-xl shadow-xl p-8 max-w-xl w-full">
-      <h3 class="text-lg font-semibold mb-4">Edit Listing</h3>
-      <form id="edit-form" class="space-y-4">
-        <input type="hidden" id="edit-id">
+  <!-- Bulk Listings Sync / Table -->
+  <main class="flex-1 px-10 py-6 bg-gray-50">
+    <!-- Bulk sync alert if not connected -->
+    <div id="bulkSyncAlert" class="hidden mb-6">
+      <div class="flex items-center bg-orange-100 border-l-4 border-orange-500 text-orange-800 p-5 rounded">
+        <span data-feather="alert-triangle" class="mr-3"></span>
         <div>
-          <label class="block text-sm mb-1">Title</label>
-          <input id="edit-title" type="text" class="w-full rounded-lg bg-white border border-gray-200 px-3 py-2 outline-none">
+          <div class="font-bold mb-1">Connect to eBay to import your listings</div>
+          <button onclick="connectMarketplace('ebay')" class="mt-1 px-3 py-1.5 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition">Connect Now</button>
         </div>
-        <div>
-          <label class="block text-sm mb-1">Price</label>
-          <input id="edit-price" type="number" class="w-full rounded-lg bg-white border border-gray-200 px-3 py-2 outline-none">
-        </div>
-        <div>
-          <label class="block text-sm mb-1">SKU</label>
-          <input id="edit-sku" type="text" class="w-full rounded-lg bg-white border border-gray-200 px-3 py-2 outline-none">
-        </div>
-        <div class="flex gap-2 justify-end">
-          <button type="button" class="bg-white px-4 py-2 rounded-lg text-[#E0985D] font-semibold hover:bg-[#F2C88A]" onclick="closeEditModal()">Cancel</button>
-          <button type="submit" class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold px-4 py-2 rounded-lg shadow hover:shadow-lg">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div id="ai-modal" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50 hidden">
-    <div class="frosted rounded-xl shadow-xl p-8 max-w-xl w-full">
-      <h3 class="text-lg font-semibold mb-4">AI Suggestions</h3>
-      <div id="ai-suggestions" class="space-y-3">
-        <!-- AI suggestions injected by JS -->
-      </div>
-      <div class="flex justify-end mt-4">
-        <button class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold px-4 py-2 rounded-lg shadow hover:shadow-lg" onclick="closeAIModal()">Close</button>
       </div>
     </div>
-  </div>
-  <div id="delete-modal" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50 hidden">
-    <div class="frosted rounded-xl shadow-xl p-8 max-w-sm w-full text-center">
-      <h3 class="text-lg font-semibold mb-4">Delete Listing?</h3>
-      <p class="mb-6">Are you sure you want to delete this listing? This action cannot be undone.</p>
-      <div class="flex gap-2 justify-center">
-        <button class="bg-white px-4 py-2 rounded-lg text-[#E0985D] font-semibold hover:bg-[#F2C88A]" onclick="closeDeleteModal()">Cancel</button>
-        <button class="bg-gradient-to-r from-[#E0985D] to-[#F2C88A] text-[#2B2320] font-bold px-4 py-2 rounded-lg shadow hover:shadow-lg" onclick="confirmDelete()">Delete</button>
-      </div>
+    <!-- Listings Table -->
+    <div id="listingsSection">
+      <section id="listingsTableView">
+        <table class="min-w-full table-auto border-separate border-spacing-y-2 shadow bg-white rounded-lg overflow-hidden">
+          <thead>
+            <tr class="text-left text-xs font-bold tracking-widest text-gray-600 uppercase bg-gray-100">
+              <th class="pl-5 py-3">Image</th>
+              <th class="py-3">Title</th>
+              <th class="py-3">Actions</th>
+              <th class="py-3">SKU</th>
+              <th class="py-3">Price</th>
+              <th class="py-3">Platforms</th>
+              <th class="py-3 pr-5">Tone</th>
+            </tr>
+          </thead>
+          <tbody id="listingsTableBody" class="text-gray-700 text-sm"></tbody>
+        </table>
+      </section>
+      <section id="listingsGridView" class="hidden">
+        <div id="gridListings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
     </div>
-  </div>
-  <div id="comment-modal" class="fixed inset-0 flex items-center justify-center bg-black/30 z-50 hidden">
-    <div class="frosted rounded-xl shadow-xl p-8 max-w-md w-full">
-      <h3 class="text-lg font-semibold mb-4">Comments</h3>
-      <p class="mb-4 text-gray-500">Annotation sidebar coming soon.</p>
-      <div class="flex justify-end">
-        <button class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold px-4 py-2 rounded-lg shadow hover:shadow-lg" onclick="closeCommentModal()">Close</button>
+    <!-- Buyer Psychology Map -->
+    <section class="mt-10 max-w-xl bg-white rounded-lg shadow p-6">
+      <div class="flex items-center mb-4">
+        <span data-feather="map" class="mr-3 text-orange-500"></span>
+        <h2 class="font-bold text-lg text-gray-700">Buyer Psychology Map</h2>
       </div>
-    </div>
-  </div>
+      <div id="buyerMap" class="w-full h-72 rounded shadow border border-gray-200"></div>
+      <div class="flex flex-wrap mt-4 space-x-6 text-sm">
+        <div class="flex items-center"><span class="text-blue-500 mr-1">🧊</span>Minimalist (BC)</div>
+        <div class="flex items-center"><span class="text-orange-500 mr-1">☀️</span>Warm (QC)</div>
+        <div class="flex items-center"><span class="text-pink-500 mr-1">🧸</span>Cozy (Prairies)</div>
+        <div class="flex items-center"><span class="text-purple-500 mr-1">💎</span>Luxury (Toronto)</div>
+        <div class="flex items-center"><span class="text-green-500 mr-1">🌱</span>Budget (Maritimes)</div>
+      </div>
+    </section>
+  </main>
+</div>
 
-  <!-- Footer -->
-  <footer class="mt-auto bg-[#FAF7F2] px-8 py-8">
-    <div class="flex flex-wrap items-center justify-between max-w-5xl mx-auto">
-      <div class="flex gap-4">
-        <img src="/assets/trust-badge1.png" alt="Trust 1" class="h-8">
-        <img src="/assets/trust-badge2.png" alt="Trust 2" class="h-8">
-        <img src="/assets/trust-badge3.png" alt="Trust 3" class="h-8">
-      </div>
-      <span class="text-sm text-[#2B2320] font-light">AutoList Canada © 2025 — Built with trust, science, and Canadian soul 🇨🇦</span>
-    </div>
-  </footer>
-</main>
-
-<!-- SVG wave divider -->
-<svg class="wave-divider" viewBox="0 0 1440 40" fill="none" preserveAspectRatio="none"><path d="M0,20 C360,60 1080,0 1440,20 L1440,40 L0,40 Z" fill="#FAF7F2"/></svg>
+<!-- Modals and Drawers (Delete, AI Enhance, Edit) -->
+<div id="modalBackdrop" class="hidden fixed inset-0 z-40 bg-black bg-opacity-30 flex items-center justify-center"></div>
+<!-- Delete Modal -->
+<div id="deleteModal" class="hidden fixed z-50 top-1/2 left-1/2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg">
+  <h3 class="font-bold text-lg text-gray-900 mb-3 flex items-center"><span data-feather="trash-2" class="mr-2 text-red-500"></span>Delete Listing</h3>
+  <div class="mb-4 text-gray-700">Are you sure you want to delete <span id="deleteTitle" class="font-semibold"></span>? This action can’t be undone.</div>
+  <div class="flex justify-end space-x-2">
+    <button onclick="closeDeleteModal()" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Cancel</button>
+    <button onclick="confirmDeleteListing()" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 font-semibold">Delete</button>
+  </div>
+</div>
+<!-- AI Enhance Modal -->
+<div id="aiModal" class="hidden fixed z-50 top-1/2 left-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 bg-white p-7 rounded-lg shadow-lg">
+  <h3 class="font-bold text-lg text-gray-900 mb-3 flex items-center"><span data-feather="zap" class="mr-2 text-orange-500"></span>AI Enhancement</h3>
+  <div id="aiSuggestions" class="mb-6 text-gray-700"></div>
+  <div class="flex justify-end">
+    <button onclick="closeAIModal()" class="px-4 py-2 rounded bg-orange-500 text-white hover:bg-orange-600 font-semibold">Close</button>
+  </div>
+</div>
+<!-- Edit Inline Row Template (hidden for cloning) -->
+<table class="hidden"><tbody>
+<tr id="editRowTemplate">
+  <td class="pl-5 py-2"><img src="" class="w-12 h-12 rounded object-cover border" id="editImg" /></td>
+  <td>
+    <input type="text" class="border rounded px-2 py-1 w-full" id="editTitle" />
+  </td>
+  <td class="flex space-x-2">
+    <button onclick="saveEditListing(event)" class="px-3 py-1.5 rounded bg-green-500 text-white font-semibold hover:bg-green-600">Save</button>
+    <button onclick="cancelEditListing(event)" class="px-3 py-1.5 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Cancel</button>
+  </td>
+  <td>
+    <input type="text" class="border rounded px-2 py-1 w-32" id="editSku" />
+  </td>
+  <td>
+    <input type="text" class="border rounded px-2 py-1 w-20" id="editPrice" />
+  </td>
+  <td>
+    <div class="flex space-x-2" id="editPlatforms"></div>
+  </td>
+  <td>
+    <select id="editTone" class="border rounded px-2 py-1 w-24">
+      <option>Cozy</option>
+      <option>Luxury</option>
+      <option>Eco</option>
+      <option>Vintage</option>
+      <option>Budget</option>
+    </select>
+  </td>
+</tr>
+</tbody></table>
 
 <script>
-  // --- Brand Tone Colors ---
-  const TONE_COLORS = {
-    'Cozy': '#F8D478',           // ☀️
-    'Luxury': '#F7B4E1',         // 🧠
-    'Eco': '#B3E2CD',            // 🍃
-    'Minimalist': '#E3E8F2',     // 🧊
-    'Sporty': '#B7D0F8',
-    'Budget': '#F6E6C8'
-  };
-  const TONE_EMOJIS = {
-    'Cozy': '☀️',
-    'Luxury': '🧠',
-    'Eco': '🍃',
-    'Minimalist': '🧊',
-    'Sporty': '🏃',
-    'Budget': '💰'
-  };
-
-  // --- Marketplace Connection State ---
-  let connections = {
-    'eBay': false,
-    'Poshmark': false,
-    'Facebook': false
-  };
-
-  // Listings Data (in-memory demo, replace with live API)
-  let listings = [];
-
-  // --- Marketplace OAuth Simulation ---
-  function connectMarketplace(platform) {
-    // Simulate OAuth
-    const btn = document.getElementById(platform.toLowerCase() + '-btn');
-    const status = document.getElementById(platform.toLowerCase() + '-status');
-    btn.classList.remove('bg-gradient-to-r', 'from-[#E0985D]', 'to-[#F2C88A]');
-    btn.classList.add('bg-gradient-to-r', 'from-green-400', 'to-green-600');
-    status.textContent = 'Connected ✅';
-    connections[platform] = true;
-
-    // On eBay connect, sync listings
-    if (platform === 'eBay') {
-      document.getElementById('connect-prompt').classList.add('hidden');
-      syncEbayListings();
-    }
+/* ---- STATE ---- */
+let isEbayConnected = true; // Simulate eBay connected
+let isPoshmarkConnected = true;
+let isFacebookConnected = true;
+let listings = [
+  {
+    title: "Vintage Denim Jacket",
+    sku: "CA-JACKET-412",
+    price: "$110.00",
+    image: "jacket.jpg",
+    platforms: ["ebay", "poshmark", "facebook"],
+    tone: "Vintage"
+  },
+  {
+    title: "Cozy Fleece Hoodie",
+    sku: "CA-HOOD-101",
+    price: "$48.99",
+    image: "hoodie.jpg",
+    platforms: ["ebay"],
+    tone: "Cozy"
+  },
+  {
+    title: "Luxury Leather Bag",
+    sku: "CA-BAG-309",
+    price: "$225.50",
+    image: "bag.jpg",
+    platforms: ["facebook"],
+    tone: "Luxury"
   }
+];
+let filteredListings = [...listings];
+let currentView = 'list';
+let listingToDelete = null;
+let editingIndex = null;
 
-  // --- Listings Sync (eBay) ---
-  function syncEbayListings() {
-    document.getElementById('sync-loading').classList.remove('hidden');
-    setTimeout(() => {
-      // Simulate live API: GET /inventory
-      listings = [
-        {
-          id: 'ebay-001',
-          image: '/assets/listing1.jpg',
-          title: 'Vintage Wool Sweater',
-          price: 59.99,
-          sku: 'VW123',
-          platforms: {eBay: true, Poshmark: false, Facebook: false},
-          tone: 'Cozy',
-          lastUpdated: '2025-06-26T10:00:00Z',
-          sold: false
-        },
-        {
-          id: 'ebay-002',
-          image: '/assets/listing2.jpg',
-          title: 'Eco Denim Jacket',
-          price: 48.50,
-          sku: 'EDJ88',
-          platforms: {eBay: true, Poshmark: true, Facebook: false},
-          tone: 'Eco',
-          lastUpdated: '2025-06-25T09:00:00Z',
-          sold: true
-        },
-        {
-          id: 'ebay-003',
-          image: '/assets/listing3.jpg',
-          title: 'Minimalist Canvas Tote',
-          price: 29.95,
-          sku: 'MCT456',
-          platforms: {eBay: true, Poshmark: false, Facebook: true},
-          tone: 'Minimalist',
-          lastUpdated: '2025-06-24T11:00:00Z',
-          sold: false
-        },
-        {
-          id: 'ebay-004',
-          image: '',
-          title: 'Luxury Silk Scarf',
-          price: 120.00,
-          sku: 'LSS999',
-          platforms: {eBay: true, Poshmark: true, Facebook: true},
-          tone: 'Luxury',
-          lastUpdated: '2025-06-27T08:50:00Z',
-          sold: false
-        }
-      ];
-      document.getElementById('sync-loading').classList.add('hidden');
-      renderListings();
-    }, 1200);
-  }
+/* ---- UTILS ---- */
+function platformIcon(p) {
+  if(p==='ebay') return '<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/EBay_logo_2012.svg" alt="eBay" class="w-6 h-6 rounded" />';
+  if(p==='poshmark') return '<img src="https://seeklogo.com/images/P/poshmark-logo-9F4B5F18A2-seeklogo.com.png" alt="Poshmark" class="w-6 h-6 rounded" />';
+  if(p==='facebook') return '<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="w-6 h-6 rounded bg-gray-200 p-0.5" />';
+  return '';
+}
+function toneBadge(tone) {
+  let map = {
+    'Cozy': 'bg-pink-100 text-pink-600',
+    'Luxury': 'bg-purple-100 text-purple-700',
+    'Eco': 'bg-green-100 text-green-700',
+    'Budget': 'bg-green-50 text-green-600',
+    'Vintage': 'bg-yellow-100 text-yellow-700',
+    'Minimalist': 'bg-blue-100 text-blue-600',
+    'Warm': 'bg-orange-100 text-orange-600'
+  };
+  return `<span class="tone-badge ${map[tone]||'bg-gray-200 text-gray-600'}">${tone}</span>`;
+}
+function fallbackImg(img) {
+  return img && img.trim() ? img : 'https://via.placeholder.com/60x60?text=No+Image';
+}
 
-  // --- Render Listings ---
-  let listView = true;
-
-  function renderListings() {
-    // Filtering logic
-    const search = document.getElementById('search').value.toLowerCase();
-    const platformFilter = document.getElementById('platform-filter').value;
-    const toneFilter = document.getElementById('tone-filter').value;
-    const hideSold = document.getElementById('hide-sold').checked;
-
-    let filtered = listings.filter(l => {
-      if (search && !l.title.toLowerCase().includes(search)) return false;
-      if (platformFilter && !l.platforms[platformFilter]) return false;
-      if (toneFilter && l.tone !== toneFilter) return false;
-      if (hideSold && l.sold) return false;
-      return true;
-    });
-
-    // Sort: latest updated first
-    filtered.sort((a, b) => (new Date(b.lastUpdated) - new Date(a.lastUpdated)) || a.title.localeCompare(b.title));
-
-    // List View
-    if (listView) {
-      document.getElementById('listings-list-section').classList.remove('hidden');
-      document.getElementById('listings-grid-section').classList.add('hidden');
-      const tbody = document.getElementById('listings-tbody');
-      tbody.innerHTML = '';
-      filtered.forEach(l => {
-        tbody.innerHTML += `
-          <tr class="hover:bg-[#FAF7F2] transition">
-            <td class="py-2 px-4">
-              <img src="${l.image || '/assets/image-placeholder.png'}" alt="Listing" class="w-14 h-14 object-cover rounded shadow border border-gray-100" onerror="this.onerror=null;this.src='/assets/image-placeholder.png';">
-            </td>
-            <td class="py-2 px-4 font-semibold">${l.title}${l.sold ? ' <span class="ml-2 text-xs rounded px-2 py-1 bg-[#F6E6C8] text-[#7A5C2E]">SOLD</span>' : ''}</td>
-            <td class="py-2 px-4 flex gap-2">
-              <button class="p-2 rounded hover:bg-[#F2C88A]" onclick="openEditModal('${l.id}')">✏️</button>
-              <button class="p-2 rounded hover:bg-[#F2C88A]" onclick="openDeleteModal('${l.id}')">🗑️</button>
-              <button class="p-2 rounded hover:bg-[#F2C88A]" onclick="openAIModal('${l.id}')">⚡</button>
-              <button class="p-2 rounded hover:bg-[#F2C88A]" onclick="openCommentModal('${l.id}')">💬</button>
-            </td>
-            <td class="py-2 px-4">${l.sku}</td>
-            <td class="py-2 px-4">$${l.price.toFixed(2)}</td>
-            <td class="py-2 px-4 flex gap-1 items-center">
-              ${platformIcon('eBay', l.platforms.eBay)}
-              ${platformIcon('Poshmark', l.platforms.Poshmark)}
-              ${platformIcon('Facebook', l.platforms.Facebook)}
-            </td>
-            <td class="py-2 px-4">
-              <span class="inline-block px-2 py-1 rounded-full font-medium" style="background:${TONE_COLORS[l.tone] || '#EEE'}">
-                ${l.tone} ${TONE_EMOJIS[l.tone] || ''}
-              </span>
-            </td>
-          </tr>
-        `;
+/* ---- MAIN RENDERERS ---- */
+function renderListingsTable() {
+  const body = document.getElementById('listingsTableBody');
+  body.innerHTML = '';
+  filteredListings.forEach((listing, i) => {
+    if(editingIndex === i) {
+      // Inline edit row
+      let editRow = document.getElementById('editRowTemplate').cloneNode(true);
+      editRow.removeAttribute('id');
+      editRow.style.display = '';
+      editRow.querySelector('#editImg').src = fallbackImg(listing.image);
+      editRow.querySelector('#editTitle').value = listing.title;
+      editRow.querySelector('#editSku').value = listing.sku;
+      editRow.querySelector('#editPrice').value = listing.price;
+      // Platforms
+      let platDiv = editRow.querySelector('#editPlatforms');
+      ['ebay','poshmark','facebook'].forEach(p=>{
+        let chk = document.createElement('input');
+        chk.type = 'checkbox';
+        chk.checked = listing.platforms.includes(p);
+        chk.className = 'accent-orange-500 w-5 h-5 mx-0.5';
+        chk.dataset.platform = p;
+        platDiv.appendChild(chk);
       });
-    } else {
-      // Grid View
-      document.getElementById('listings-list-section').classList.add('hidden');
-      document.getElementById('listings-grid-section').classList.remove('hidden');
-      const grid = document.getElementById('listings-grid');
-      grid.innerHTML = '';
-      filtered.forEach(l => {
-        grid.innerHTML += `
-          <div class="bg-white rounded-xl shadow p-4 flex flex-col card-animate">
-            <img src="${l.image || '/assets/image-placeholder.png'}" alt="Listing" class="w-full h-40 object-cover rounded mb-2" onerror="this.onerror=null;this.src='/assets/image-placeholder.png';">
-            <div class="flex-1">
-              <div class="font-semibold text-lg mb-1">${l.title}${l.sold ? ' <span class="ml-2 text-xs rounded px-2 py-1 bg-[#F6E6C8] text-[#7A5C2E]">SOLD</span>' : ''}</div>
-              <div class="text-sm mb-1 flex gap-1">
-                ${platformIcon('eBay', l.platforms.eBay)}
-                ${platformIcon('Poshmark', l.platforms.Poshmark)}
-                ${platformIcon('Facebook', l.platforms.Facebook)}
-              </div>
-              <div class="mt-2 flex gap-2">
-                <button class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold px-3 py-1 rounded shadow hover:shadow-lg" onclick="openAIModal('${l.id}')">Fix Title</button>
-                <button class="bg-gradient-to-r from-[#E0985D] to-[#F2C88A] text-[#2B2320] font-bold px-3 py-1 rounded shadow hover:shadow-lg" onclick="openAIModal('${l.id}')">Edit Description</button>
-              </div>
-            </div>
-            <div class="mt-3">
-              <span class="inline-block px-2 py-1 rounded-full font-medium" style="background:${TONE_COLORS[l.tone] || '#EEE'}">
-                ${l.tone} ${TONE_EMOJIS[l.tone] || ''}
-              </span>
-            </div>
-          </div>
-        `;
-      });
+      // Tone
+      editRow.querySelector('#editTone').value = listing.tone;
+      // Save/Cancel button events
+      editRow.querySelector('button[onclick="saveEditListing(event)"]').onclick = e => saveEditListing(i, e);
+      editRow.querySelector('button[onclick="cancelEditListing(event)"]').onclick = e => cancelEditListing(i, e);
+      body.appendChild(editRow);
+      return;
     }
-  }
+    let tr = document.createElement('tr');
+    tr.className = "rounded bg-white shadow hover:shadow-lg transition";
+    tr.innerHTML = `
+      <td class="pl-5 py-2"><img src="${fallbackImg(listing.image)}" class="w-12 h-12 rounded object-cover border" /></td>
+      <td class="font-semibold">${listing.title}</td>
+      <td>
+        <div class="flex space-x-2">
+          <button onclick="editListing(${i})" class="p-1 rounded hover:bg-orange-100" title="Edit"><span data-feather="edit-3"></span></button>
+          <button onclick="openDeleteModal(${i})" class="p-1 rounded hover:bg-red-100" title="Delete"><span data-feather="trash-2" class="text-red-500"></span></button>
+          <button onclick="openAIModal(${i})" class="p-1 rounded hover:bg-orange-100" title="AI Enhance"><span data-feather="zap"></span></button>
+        </div>
+      </td>
+      <td>${listing.sku}</td>
+      <td class="font-bold">${listing.price}</td>
+      <td>
+        <div class="flex items-center space-x-1">
+          ${['ebay','poshmark','facebook'].map(p=>
+            `<input type="checkbox" class="accent-orange-500 w-5 h-5" ${listing.platforms.includes(p)?'checked':''} onclick="togglePlatform(${i},'${p}')" title="${p[0].toUpperCase()+p.slice(1)}" />`
+          ).join('')}
+        </div>
+      </td>
+      <td>${toneBadge(listing.tone)}</td>
+    `;
+    body.appendChild(tr);
+  });
+  feather.replace();
+}
 
-  function platformIcon(platform, checked) {
-    let iconSrc = {
-      eBay: '/assets/ebay-logo.png',
-      Poshmark: '/assets/poshmark-logo.png',
-      Facebook: '/assets/facebook-logo.png'
-    }[platform];
-    return `<label class="flex items-center gap-1 mr-2"><input type="checkbox" class="accent-[#E0985D]" ${checked ? 'checked' : ''} onchange="togglePlatform('${platform}', this.checked)"><img src="${iconSrc}" alt="${platform}" class="w-5 h-5"></label>`;
-  }
-  function togglePlatform(platform, checked) {
-    // Noop for demo; in production, update listing's platform sync
-  }
-
-  // --- Modal Logic ---
-  let currentEditId = null;
-  let currentDeleteId = null;
-
-  function openEditModal(id) {
-    currentEditId = id;
-    const l = listings.find(l => l.id === id);
-    document.getElementById('edit-id').value = l.id;
-    document.getElementById('edit-title').value = l.title;
-    document.getElementById('edit-price').value = l.price;
-    document.getElementById('edit-sku').value = l.sku;
-    document.getElementById('edit-modal').classList.remove('hidden');
-  }
-  function closeEditModal() {
-    document.getElementById('edit-modal').classList.add('hidden');
-    currentEditId = null;
-  }
-  document.getElementById('edit-form').onsubmit = function(e){
-    e.preventDefault();
-    const id = document.getElementById('edit-id').value;
-    const l = listings.find(l => l.id === id);
-    l.title = document.getElementById('edit-title').value;
-    l.price = parseFloat(document.getElementById('edit-price').value);
-    l.sku = document.getElementById('edit-sku').value;
-    closeEditModal();
-    renderListings();
-  }
-
-  function openDeleteModal(id) {
-    currentDeleteId = id;
-    document.getElementById('delete-modal').classList.remove('hidden');
-  }
-  function closeDeleteModal() {
-    document.getElementById('delete-modal').classList.add('hidden');
-    currentDeleteId = null;
-  }
-  function confirmDelete() {
-    listings = listings.filter(l => l.id !== currentDeleteId);
-    closeDeleteModal();
-    renderListings();
-  }
-
-  function openAIModal(id) {
-    const l = listings.find(l => l.id === id);
-    document.getElementById('ai-suggestions').innerHTML = `
-      <div class="bg-[#F6F3EF] rounded-lg p-4 shadow">
-        <div class="font-semibold mb-1">AI Title Suggestion:</div>
-        <div class="text-[#E0985D] mb-1">"${generateAITitle(l.title)}"</div>
-        <button onclick="applyAItitle('${id}')" class="bg-gradient-to-r from-[#F2C88A] to-[#E0985D] text-[#2B2320] font-bold px-3 py-1 rounded shadow hover:shadow-lg">Apply</button>
+function renderListingsGrid() {
+  const grid = document.getElementById('gridListings');
+  grid.innerHTML = '';
+  filteredListings.forEach((listing, i) => {
+    let div = document.createElement('div');
+    div.className = "bg-white rounded-xl shadow-lg flex flex-col p-5 items-center hover:shadow-2xl transition";
+    div.innerHTML = `
+      <img src="${fallbackImg(listing.image)}" class="w-28 h-28 object-cover rounded border mb-3" />
+      <div class="font-bold text-lg mb-1 text-center">${listing.title}</div>
+      <div class="font-semibold text-orange-600 mb-1">${listing.price}</div>
+      <div class="mb-2">${toneBadge(listing.tone)}</div>
+      <div class="flex items-center space-x-2 mb-3">
+        ${listing.platforms.map(platformIcon).join('')}
       </div>
-      <div class="bg-[#F6F3EF] rounded-lg p-4 shadow">
-        <div class="font-semibold mb-1">AI Description Suggestion:</div>
-        <div class="text-gray-700 mb-1">${generateAIDesc(l)}</div>
+      <div class="flex space-x-2">
+        <button onclick="openAIModal(${i})" class="px-3 py-1 rounded bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition">AI Title Fix</button>
+        <button onclick="editListing(${i})" class="px-3 py-1 rounded bg-gray-200 text-gray-700 text-xs font-bold hover:bg-gray-300 transition">Edit Description</button>
       </div>
     `;
-    document.getElementById('ai-modal').classList.remove('hidden');
-  }
-  function closeAIModal() {
-    document.getElementById('ai-modal').classList.add('hidden');
-  }
-  function applyAItitle(id) {
-    const l = listings.find(l => l.id === id);
-    l.title = generateAITitle(l.title);
-    closeAIModal();
-    renderListings();
-  }
-  function generateAITitle(title) {
-    // Simple AI: add adjectives based on tone
-    const adj = {
-      'Cozy': 'Warm',
-      'Luxury': 'Elegant',
-      'Eco': 'Sustainable',
-      'Minimalist': 'Simple',
-      'Sporty': 'Active',
-      'Budget': 'Affordable'
-    };
-    const l = listings.find(l => l.title === title);
-    let prefix = l && l.tone && adj[l.tone] ? adj[l.tone] + ' ' : '';
-    return prefix + title;
-  }
-  function generateAIDesc(l) {
-    // Simple AI: contextual description
-    return `This ${l.tone ? l.tone.toLowerCase() : ''} piece is perfect for your Canadian wardrobe. Ships fast from trusted seller.`;
-  }
+    grid.appendChild(div);
+  });
+  feather.replace();
+}
 
-  function openCommentModal(id) {
-    document.getElementById('comment-modal').classList.remove('hidden');
+/* ---- VIEW TOGGLE ---- */
+function toggleView(view) {
+  currentView = view;
+  document.getElementById('listViewBtn').classList.toggle('bg-orange-600', view==='list');
+  document.getElementById('listViewBtn').classList.toggle('text-white', view==='list');
+  document.getElementById('listViewBtn').classList.toggle('text-gray-500', view!=='list');
+  document.getElementById('gridViewBtn').classList.toggle('bg-orange-600', view==='grid');
+  document.getElementById('gridViewBtn').classList.toggle('text-white', view==='grid');
+  document.getElementById('gridViewBtn').classList.toggle('text-gray-500', view!=='grid');
+  document.getElementById('listingsTableView').classList.toggle('hidden', view!=='list');
+  document.getElementById('listingsGridView').classList.toggle('hidden', view!=='grid');
+  if(view==='list') renderListingsTable();
+  else renderListingsGrid();
+}
+
+/* ---- FILTERING ---- */
+function filterListings() {
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const plat = document.getElementById('platformFilter').value;
+  const tone = document.getElementById('toneFilter').value;
+  const hideSold = document.getElementById('hideSold').checked;
+  filteredListings = listings.filter(l => {
+    let match = true;
+    if(search && !(l.title.toLowerCase().includes(search) || l.sku.toLowerCase().includes(search))) match = false;
+    if(plat && !l.platforms.includes(plat)) match = false;
+    if(tone && l.tone !== tone) match = false;
+    if(hideSold && l.sold) match = false;
+    return match;
+  });
+  if(currentView === 'list') renderListingsTable();
+  else renderListingsGrid();
+}
+
+/* ---- PLATFORM TOGGLE ---- */
+function togglePlatform(i, p) {
+  let idx = listings[i].platforms.indexOf(p);
+  if(idx > -1) listings[i].platforms.splice(idx,1);
+  else listings[i].platforms.push(p);
+  filterListings();
+}
+
+/* ---- EDITING ---- */
+function editListing(i) {
+  editingIndex = i;
+  renderListingsTable();
+}
+function saveEditListing(i, e) {
+  const row = e.target.closest('tr');
+  listings[i].title = row.querySelector('#editTitle').value;
+  listings[i].sku = row.querySelector('#editSku').value;
+  listings[i].price = row.querySelector('#editPrice').value;
+  let platforms = [];
+  row.querySelectorAll('#editPlatforms input[type=checkbox]').forEach(chk=>{
+    if(chk.checked) platforms.push(chk.dataset.platform);
+  });
+  listings[i].platforms = platforms;
+  listings[i].tone = row.querySelector('#editTone').value;
+  editingIndex = null;
+  filterListings();
+}
+function cancelEditListing(i, e) {
+  editingIndex = null;
+  renderListingsTable();
+}
+
+/* ---- DELETE ---- */
+function openDeleteModal(i) {
+  listingToDelete = i;
+  document.getElementById('deleteTitle').textContent = listings[i].title;
+  document.getElementById('modalBackdrop').classList.remove('hidden');
+  document.getElementById('deleteModal').classList.remove('hidden');
+}
+function closeDeleteModal() {
+  document.getElementById('modalBackdrop').classList.add('hidden');
+  document.getElementById('deleteModal').classList.add('hidden');
+  listingToDelete = null;
+}
+function confirmDeleteListing() {
+  if(listingToDelete!=null) {
+    listings.splice(listingToDelete, 1);
+    filterListings();
   }
-  function closeCommentModal() {
-    document.getElementById('comment-modal').classList.add('hidden');
+  closeDeleteModal();
+}
+
+/* ---- AI ENHANCE ---- */
+function openAIModal(i) {
+  document.getElementById('modalBackdrop').classList.remove('hidden');
+  document.getElementById('aiModal').classList.remove('hidden');
+  let l = listings[i];
+  document.getElementById('aiSuggestions').innerHTML = `
+    <div class="mb-3"><strong>AI Suggestions for:</strong> <span class="text-orange-600">${l.title}</span></div>
+    <ul class="list-disc pl-5 text-gray-700">
+      <li>Optimize title: <em>"${l.title.replace(/(Vintage|Luxury|Cozy|Eco|Budget)/gi, '')} – ${l.tone} Style"</em></li>
+      <li>Price check: <em>${l.price} is ${Math.random()>0.5?'competitive':'above average'} for ${l.tone} items</em></li>
+      <li>Add platform: <em>${['ebay','poshmark','facebook'].filter(p=>!l.platforms.includes(p)).map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(', ')||'All connected'}</em></li>
+      <li>Image quality: <em>${l.image&&l.image!=='https://via.placeholder.com/60x60?text=No+Image'?'Looks good':'Consider adding an image'}</em></li>
+    </ul>
+  `;
+}
+function closeAIModal() {
+  document.getElementById('modalBackdrop').classList.add('hidden');
+  document.getElementById('aiModal').classList.add('hidden');
+}
+
+/* ---- MARKETPLACE CONNECT ---- */
+function connectMarketplace(market) {
+  if(market==='ebay') isEbayConnected = true;
+  if(market==='poshmark') isPoshmarkConnected = true;
+  if(market==='facebook') isFacebookConnected = true;
+  updateBulkSyncAlert();
+  filterListings();
+}
+
+/* ---- BULK SYNC ALERT ---- */
+function updateBulkSyncAlert() {
+  if(!isEbayConnected) {
+    document.getElementById('bulkSyncAlert').classList.remove('hidden');
+    document.getElementById('listingsSection').classList.add('hidden');
+  } else {
+    document.getElementById('bulkSyncAlert').classList.add('hidden');
+    document.getElementById('listingsSection').classList.remove('hidden');
   }
+}
 
-  // --- UI Event Listeners ---
-  document.getElementById('search').oninput =
-    document.getElementById('platform-filter').onchange =
-    document.getElementById('tone-filter').onchange =
-    document.getElementById('hide-sold').onchange =
-    () => renderListings();
+/* ---- MAP ---- */
+function renderMap() {
+  let map = L.map('buyerMap').setView([56.1304, -106.3468], 3.5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: ''
+  }).addTo(map);
+  // Emoji markers
+  const regions = [
+    {lat:53.7267, lng:-127.6476, emoji:'🧊', color:'#60a5fa', text:'Minimalist (BC)'},      // BC
+    {lat:52.9399, lng:-73.5491, emoji:'☀️', color:'#f59e42', text:'Warm (QC)'},             // Quebec
+    {lat:53.9333, lng:-116.5765, emoji:'🧸', color:'#ec4899', text:'Cozy (Prairies)'},      // Prairies (AB, MB, SK)
+    {lat:43.6532, lng:-79.3832, emoji:'💎', color:'#a78bfa', text:'Luxury (Toronto)'},      // Toronto
+    {lat:46.5653, lng:-66.4619, emoji:'🌱', color:'#4ade80', text:'Budget (Maritimes)'}     // Maritimes
+  ];
+  regions.forEach(r=>{
+    L.circle([r.lat, r.lng], {
+      color: r.color,
+      fillColor: r.color,
+      fillOpacity: 0.4,
+      radius: 180000
+    }).addTo(map).bindTooltip(r.emoji+" "+r.text, {permanent:true, direction:'top', className:'font-bold text-lg'});
+  });
+}
 
-  document.getElementById('list-view-btn').onclick = function() {
-    listView = true;
-    this.classList.add('bg-[#E0985D]', 'text-white');
-    document.getElementById('grid-view-btn').classList.remove('bg-[#E0985D]', 'text-white');
-    document.getElementById('grid-view-btn').classList.add('bg-white', 'text-[#E0985D]');
-    renderListings();
-  };
-  document.getElementById('grid-view-btn').onclick = function() {
-    listView = false;
-    this.classList.add('bg-[#E0985D]', 'text-white');
-    document.getElementById('list-view-btn').classList.remove('bg-[#E0985D]', 'text-white');
-    document.getElementById('list-view-btn').classList.add('bg-white', 'text-[#E0985D]');
-    renderListings();
-  };
-
-  // --- Language Toggle ---
-  document.getElementById('lang-toggle').onclick = function(){
-    // For demo only; in production, switch language
-    alert('Français coming soon!');
-  };
-
-  // --- Initial State ---
-  window.onload = function() {
-    // eBay connection check (simulate not connected)
-    if (!connections['eBay']) {
-      document.getElementById('connect-prompt').classList.remove('hidden');
-    } else {
-      syncEbayListings();
-    }
-    // Map
-    setupBuyerPsychologyMap();
-  };
-
-  // --- Leaflet.js: Buyer Psychology Map ---
-  function setupBuyerPsychologyMap() {
-    const map = L.map('buyer-psychology-map', {
-      center: [54, -96.5],
-      zoom: 3.3,
-      zoomControl: false,
-      scrollWheelZoom: false,
-      dragging: true
-    });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: ''}).addTo(map);
-
-    // Regions
-    const regions = [
-      { name: 'Quebec', coord: [46.8, -71.2], tone: 'Cozy' },
-      { name: 'BC', coord: [49.2, -123.1], tone: 'Minimalist' },
-      { name: 'Prairies', coord: [53.5, -113.5], tone: 'Cozy' },
-      { name: 'Toronto', coord: [43.7, -79.4], tone: 'Luxury' },
-      { name: 'Maritimes', coord: [45.4, -63.2], tone: 'Budget' }
-    ];
-    regions.forEach(r => {
-      L.circleMarker(r.coord, {
-        radius: 18,
-        color: TONE_COLORS[r.tone],
-        fillColor: TONE_COLORS[r.tone],
-        fillOpacity: 0.45,
-        weight: 7
-      }).addTo(map)
-        .bindTooltip(`${r.name} (${r.tone} ${TONE_EMOJIS[r.tone]})`, {permanent: false});
-    });
-  }
+/* ---- INIT ---- */
+window.onload = function() {
+  updateBulkSyncAlert();
+  feather.replace();
+  filterListings();
+  renderMap();
+  toggleView('list');
+};
 </script>
 </body>
 </html>
