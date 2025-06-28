@@ -1,495 +1,492 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100 font-sans antialiased">
+<html lang="en" class="bg-white h-full" style="background-image: url('listings-background.png'); background-size: cover; background-attachment: fixed;">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Listings Dashboard – AutoList Canada</title>
-  <link rel="icon" type="image/png" href="sidebar-background.png">
+  <title>AutoList Canada Listings Dashboard</title>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Custom scrollbar for sidebar */
-    ::-webkit-scrollbar { width: 8px; background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
-    /* Hide number arrows in input */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    /* Modal background blur */
-    .modal-bg { backdrop-filter: blur(3px); }
-    /* Tooltips */
-    .tooltip {
-      position: relative;
-      cursor: pointer;
-    }
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: max-content;
-      background-color: #111827;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 6px 12px;
-      position: absolute;
-      z-index: 10;
-      bottom: 125%;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.2s;
-      font-size: 0.875rem;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-    .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+    html, body { font-family: 'Inter', sans-serif; }
+    .sidebar-link.active, .sidebar-link:hover { background: #f59e42; color: white; }
+    .tone-Cozy { background: #f59e42; color: white; }
+    .tone-Luxury { background: #23b56b; color: white; }
+    .tone-Minimalist { background: #f3f4f6; color: #374151; }
+    .tone-Budget { background: #fbbf24; color: white; }
+    .tone-Warm { background: #fb7185; color: white; }
+    .status-synced { color: #23b56b; }
+    .status-notlisted { color: #ef4444; }
+    .status-syncing { color: #f59e42; animation: spin 1s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .custom-scrollbar::-webkit-scrollbar { width: 8px; background: #f3f4f6; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 6px; }
   </style>
 </head>
-<body class="relative min-h-screen flex bg-gray-100">
-
+<body class="min-h-screen flex bg-white bg-opacity-90">
   <!-- Sidebar -->
-  <aside id="sidebar" class="fixed top-0 left-0 z-30 h-full w-64 bg-gray-900 text-white shadow-lg flex flex-col transition-all duration-200
-    bg-cover bg-left-bottom" style="background-image: url('sidebar-background.png');">
-    <div class="flex flex-col items-center pt-8 pb-4">
-      <img src="logo.png" alt="AutoList Canada Logo" class="w-12 h-12 mb-2 rounded shadow" />
-      <img src="title.png" alt="AutoList Canada" class="w-40 h-auto mb-6" />
+  <aside class="fixed left-0 top-0 h-full w-64 z-20 bg-white bg-opacity-95 shadow-lg flex flex-col items-center py-6 border-r border-gray-200">
+    <div class="mb-8 flex flex-col items-center">
+      <img src="https://autolistcanada.s3.ca-central-1.amazonaws.com/logo.png" alt="AutoList Canada Logo" class="w-28 mb-2" />
+      <span class="font-bold text-xl text-orange-500">AutoList Canada</span>
     </div>
-    <nav class="flex-1 px-4">
-      <ul class="space-y-1">
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">🏠</span> HOME
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">📊</span> Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded bg-gray-800 font-semibold shadow-inner">
-            <span class="mr-3">📋</span> Listings
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">🤖</span> AI Tools
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">❓</span> How It Works
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">📝</span> FAQ
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">⬇️</span> Listing Import
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">📜</span> Terms & Service
-          </a>
-        </li>
-        <li>
-          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
-            <span class="mr-3">⚖️</span> Privacy / Legal
-          </a>
-        </li>
+    <nav class="flex-1 w-full">
+      <ul class="flex flex-col gap-1 px-4 text-lg font-medium">
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition active">🏠 Home</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">📊 Dashboard</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">📋 Listings</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">🤖 AI Tools</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">❓ How It Works</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">💡 FAQ</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">⬆️ Listing Import</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">📄 Terms</a></li>
+        <li><a href="#" class="sidebar-link flex items-center px-4 py-2 rounded-lg transition">🔒 Privacy</a></li>
       </ul>
     </nav>
-    <div class="mt-auto flex flex-col items-center pb-6">
-      <button id="sidebar-collapse" class="lg:hidden mt-2 px-3 py-1 text-sm rounded bg-gray-800/80 hover:bg-gray-700/90">
-        ☰
-      </button>
+    <!-- Language Switcher -->
+    <div class="mt-6 flex gap-2 items-center">
+      <button id="lang-en" class="px-3 py-1 rounded text-sm font-semibold border border-orange-400 text-orange-600 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400" aria-label="Switch to English">EN</button>
+      <button id="lang-fr" class="px-3 py-1 rounded text-sm font-semibold border border-green-400 text-green-600 bg-white focus:outline-none focus:ring-2 focus:ring-green-400" aria-label="Passer en français">FR</button>
     </div>
   </aside>
 
   <!-- Main Content -->
-  <div class="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64 transition-all duration-200">
-
-    <!-- Top Header Bar -->
-    <header class="sticky top-0 z-20 bg-white/70 backdrop-blur border-b border-gray-200 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between px-4 py-3">
-        <div>
-          <h1 class="text-2xl font-bold tracking-tight text-gray-900">Your Listings</h1>
-          <p class="text-sm text-gray-500">Welcome back, <span id="userName">User</span>! Syncing across marketplaces.</p>
-        </div>
-        <div class="flex items-center space-x-3">
-          <!-- Search bar -->
-          <div class="flex items-center bg-gray-100 border border-gray-300 rounded-md px-2 py-1">
-            <svg class="w-5 h-5 text-gray-400 mr-1" fill="none" stroke="currentColor" stroke-width="2"
-                 viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input id="searchInput" type="text" placeholder="Search listings..."
-                   class="bg-transparent outline-none text-sm w-32 md:w-48" oninput="filterListings()"/>
-          </div>
-          <!-- EN/FR toggle -->
-          <button id="langToggle"
-                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
-                  title="Toggle Language">EN / FR</button>
-          <!-- Customize (column selector) -->
-          <button onclick="alert('Column customization coming soon!')"
-                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
-                  title="Customize columns">Customize</button>
-          <!-- Bulk Edit -->
-          <button onclick="alert('Bulk edit coming soon!')"
-                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
-                  title="Bulk edit selected listings">Bulk Edit</button>
-          <!-- Pagination -->
-          <div class="flex items-center ml-2 space-x-1">
-            <button onclick="prevPage()" class="text-gray-500 hover:text-gray-800 px-1" title="Previous page">&lt;</button>
-            <span id="paginationStatus" class="text-xs text-gray-700">1 of 1</span>
-            <button onclick="nextPage()" class="text-gray-500 hover:text-gray-800 px-1" title="Next page">&gt;</button>
-          </div>
-        </div>
+  <main class="flex-1 ml-64 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 px-8 py-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Listings Dashboard</h1>
+        <p class="text-gray-500 text-md mt-1">Sync and manage your marketplace listings in one place.</p>
       </div>
-      <!-- Status Filters -->
-      <div class="flex items-center px-4 py-2 bg-gray-50 border-t border-gray-100 space-x-4 overflow-x-auto text-sm">
-        <div class="flex items-center gap-2">
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100 active:bg-blue-200 text-blue-700 font-semibold bg-blue-50"
-                  data-status="all" onclick="setStatusFilter('all')">All</button>
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="active" onclick="setStatusFilter('active')">Active</button>
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="draft" onclick="setStatusFilter('draft')">Draft</button>
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="unlisted" onclick="setStatusFilter('unlisted')">Unlisted</button>
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="sold" onclick="setStatusFilter('sold')">Sold</button>
-          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="issues" onclick="setStatusFilter('issues')">Issues</button>
-        </div>
-        <label class="flex items-center ml-4 gap-2">
-          <input id="hideSold" type="checkbox" class="rounded focus:ring-blue-400" onchange="toggleHide('sold')" />
-          <span>Hide Sold</span>
-        </label>
-        <label class="flex items-center gap-2">
-          <input id="hideDraft" type="checkbox" class="rounded focus:ring-blue-400" onchange="toggleHide('draft')" />
-          <span>Hide Draft</span>
-        </label>
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-3 items-center">
+        <input type="text" id="search" class="px-3 py-2 rounded bg-white border border-gray-200 shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-200" placeholder="🔍 Search listings..." aria-label="Search listings">
+        <select id="toneFilter" class="px-3 py-2 rounded bg-white border border-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-200" aria-label="Filter by Tone">
+          <option value="">All Tones</option>
+          <option value="Cozy">Cozy</option>
+          <option value="Luxury">Luxury</option>
+          <option value="Minimalist">Minimalist</option>
+          <option value="Budget">Budget</option>
+          <option value="Warm">Warm</option>
+        </select>
+        <select id="platformFilter" class="px-3 py-2 rounded bg-white border border-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-200" aria-label="Filter by Platform">
+          <option value="">All Platforms</option>
+          <option value="eBay">eBay</option>
+          <option value="Etsy">Etsy</option>
+          <option value="Poshmark">Poshmark</option>
+          <option value="Depop">Depop</option>
+          <option value="Shopify">Shopify</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Facebook">Facebook</option>
+          <option value="TikTok">TikTok</option>
+        </select>
       </div>
     </header>
 
-    <!-- Table Section -->
-    <main class="flex-1 overflow-x-auto p-2 sm:p-6">
-      <div class="bg-white rounded shadow-lg overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200 text-sm">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-3 py-2 w-8"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"/></th>
-              <th class="px-3 py-2 w-16">Image</th>
-              <th class="px-3 py-2 text-left cursor-pointer">Title</th>
-              <th class="px-3 py-2 w-32">Actions</th>
-              <th class="px-3 py-2 w-20">SKU</th>
-              <th class="px-3 py-2 w-24">Price</th>
-              <th class="px-3 py-2 w-44">Platforms</th>
-            </tr>
-          </thead>
-          <tbody id="listingsTable" class="divide-y divide-gray-100">
-            <!-- JS populates rows here -->
-          </tbody>
-        </table>
+    <!-- Listings Table -->
+    <section class="flex-1 px-8 pb-8 custom-scrollbar overflow-x-auto">
+      <table class="min-w-full bg-white rounded-2xl shadow-xl border-collapse">
+        <thead>
+          <tr class="text-left text-gray-600 text-sm">
+            <th class="px-4 py-3">
+              <input type="checkbox" id="select-all" aria-label="Select all listings" />
+            </th>
+            <th class="px-4 py-3">Image</th>
+            <th class="px-4 py-3">Title</th>
+            <th class="px-4 py-3">AI</th>
+            <th class="px-4 py-3">SKU</th>
+            <th class="px-4 py-3">Price (CAD)</th>
+            <th class="px-4 py-3">Tones</th>
+            <th class="px-4 py-3">Platforms</th>
+            <th class="px-4 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="listing-tbody" class="text-base font-medium text-gray-800">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Buyer Psychology Map -->
+    <section class="px-8 pt-8 pb-4">
+      <h2 class="text-xl font-bold text-gray-800 mb-2">Buyer Psychology Map</h2>
+      <div class="flex flex-col md:flex-row gap-6 items-start">
+        <div class="relative w-[375px] h-[250px] bg-white rounded-lg shadow-lg overflow-hidden">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Blank_map_of_Canada.png" alt="Canada Map" class="absolute inset-0 w-full h-full object-contain" />
+          <!-- Bubble Overlays (JS) -->
+          <svg id="map-bubbles" class="absolute inset-0 w-full h-full pointer-events-none"></svg>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-4 h-4 rounded-full bg-orange-400"></span> Cozy</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-4 h-4 rounded-full bg-pink-400"></span> Warm</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-4 h-4 rounded-full bg-gray-200 border"></span> Minimalist</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-4 h-4 rounded-full bg-green-500"></span> Luxury</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-4 h-4 rounded-full bg-yellow-400"></span> Budget</span>
+        </div>
       </div>
-    </main>
+    </section>
 
     <!-- Footer -->
-    <footer class="w-full py-4 px-4 bg-cover bg-center flex items-center justify-between text-xs text-gray-700 font-medium"
-            style="background-image: url('listings-background.png'); background-blend-mode:soft-light;">
-      <span>Misc Adjustments AI</span>
-      <span class="text-center">All Rights Reserved</span>
-      <span>Our Tools for Listing Dashboard</span>
+    <footer class="w-full px-8 py-4 bg-white bg-opacity-80 border-t flex flex-col md:flex-row items-center justify-between gap-4 mt-4 rounded-t-2xl">
+      <div class="flex gap-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/197/197430.png" alt="Canadian Owned" class="w-7 h-7" title="Canadian Owned" />
+        <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 rounded-full px-3 py-1 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2l4-4"></path></svg> AI-Powered Tools
+        </span>
+        <span class="inline-flex items-center gap-1 bg-orange-100 text-orange-700 rounded-full px-3 py-1 text-xs font-semibold">
+          <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v.01"></path><path d="M12 8v4"></path></svg> Privacy First
+        </span>
+      </div>
+      <span class="text-xs text-gray-500">&copy; 2025 AutoList Canada. All rights reserved.</span>
     </footer>
-  </div>
+  </main>
 
-  <!-- Modal (hidden by default) -->
-  <div id="modalBg" class="fixed inset-0 bg-black/40 modal-bg z-50 hidden items-center justify-center">
-    <div id="listingModal"
-         class="bg-white rounded shadow-2xl p-6 max-w-3xl w-full mx-4 flex flex-col gap-4 relative">
-      <button onclick="closeModal()" class="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 rounded-full w-8 h-8 flex items-center justify-center">
-        <span class="text-lg font-bold text-gray-700">&times;</span>
-      </button>
-      <div id="modalImages" class="grid grid-cols-3 gap-2 mb-4">
-        <!-- images injected here -->
-      </div>
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="flex-1">
-          <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
-          <div class="text-gray-600 mb-1"><span id="modalSKU"></span> &bull; <span id="modalPrice"></span> &bull; <span id="modalQty"></span></div>
-          <div id="modalPlatforms" class="flex gap-2 mb-2"></div>
-        </div>
-        <div class="flex flex-col gap-2 w-48">
-          <button class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded shadow-sm transition">Crosslist</button>
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded shadow-sm transition">Edit</button>
-          <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded shadow-sm transition">Duplicate</button>
-          <button class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded shadow-sm transition">New Listing</button>
-        </div>
-      </div>
+  <!-- Listing Detail Modal -->
+  <div id="listing-modal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-[90vw] max-w-lg relative">
+      <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-orange-500" aria-label="Close modal">&times;</button>
+      <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+      <img id="modal-image" class="w-32 h-32 object-cover rounded mb-3" src="" alt="Listing preview" />
+      <div class="mb-2 text-gray-600 text-sm">SKU: <span id="modal-sku"></span></div>
+      <div class="mb-2 text-gray-600 text-sm">Price: $<span id="modal-price"></span> CAD</div>
+      <div class="mb-2 flex gap-2" id="modal-tones"></div>
+      <div class="mb-2" id="modal-platforms"></div>
+      <div class="text-gray-700" id="modal-description"></div>
     </div>
   </div>
 
-  <!-- AI Suggestion Modal (inline suggestion tooltips) -->
-  <div id="aiSuggestionTooltip" class="fixed z-50 text-sm text-gray-700 bg-white border border-blue-200 rounded shadow-lg px-4 py-2 hidden"></div>
-
-  <!-- SVG ICONS -->
-  <svg style="display:none;">
-    <symbol id="ebay" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#e53238"/></symbol>
-    <symbol id="etsy" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#f1641e"/></symbol>
-    <symbol id="shopify" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#95bf47"/></symbol>
-    <symbol id="depop" viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="8" rx="2" fill="#ff2a2a"/></symbol>
-    <symbol id="poshmark" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#5d162f"/></symbol>
-    <symbol id="check" viewBox="0 0 20 20"><polyline points="5 10 9 14 15 6" fill="none" stroke="#22c55e" stroke-width="2"/></symbol>
-    <symbol id="cross" viewBox="0 0 20 20"><line x1="6" y1="6" x2="14" y2="14" stroke="#ef4444" stroke-width="2"/><line x1="14" y1="6" x2="6" y2="14" stroke="#ef4444" stroke-width="2"/></symbol>
-    <symbol id="sync" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" stroke="#fbbf24" stroke-width="2" fill="none"/><path d="M10 3v4m0 6v4m7-7h-4m-6 0H3" stroke="#fbbf24" stroke-width="2"/></symbol>
-  </svg>
-
-  <!-- Script Section -->
   <script>
-    // SIMULATED DATA
+    // --- Data Section ---
     const listings = [
       {
-        title: "Marx Toys Western Cowboy Figure Set, 1960s Era",
-        sku: "00122",
-        price: 99.99,
-        image: "images/cowboy-figures.jpg",
-        platforms: ["eBay", "Poshmark"],
-        status: 'active',
-        qty: 1,
-        images: [
-          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg",
-          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg",
-          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg"
-        ]
+        id: 1,
+        image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=128&q=80",
+        title: "Handmade Wool Mittens",
+        sku: "MTN-001",
+        price: "34.99",
+        tones: ["Cozy", "Warm"],
+        description: "Ultra-soft, eco-friendly wool mittens for Canadian winters.",
+        platforms: {
+          "eBay": { status: "synced", updated: "2h ago" },
+          "Etsy": { status: "synced", updated: "35m ago" },
+          "Poshmark": { status: "notlisted", updated: null },
+          "Depop": { status: "syncing", updated: null },
+          "Shopify": { status: "synced", updated: "1h ago" },
+          "Instagram": { status: "notlisted", updated: null },
+          "Facebook": { status: "synced", updated: "15m ago" },
+          "TikTok": { status: "notlisted", updated: null }
+        }
       },
       {
-        title: "Mini-Sew Hand-Operated Sewing Machine – 1960s",
-        sku: "00126",
-        price: 49.99,
-        image: "images/sewing-machine.jpg",
-        platforms: ["eBay", "Poshmark"],
-        status: 'draft',
-        qty: 2,
-        images: [
-          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg",
-          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg",
-          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg"
-        ]
+        id: 2,
+        image: "https://images.unsplash.com/photo-1519985176271-adb1088fa94c?auto=format&fit=crop&w=128&q=80",
+        title: "Organic Cotton Throw Blanket",
+        sku: "THR-734",
+        price: "59.00",
+        tones: ["Minimalist"],
+        description: "Soft, large throw blanket. Sustainably sourced.",
+        platforms: {
+          "eBay": { status: "notlisted", updated: null },
+          "Etsy": { status: "synced", updated: "10m ago" },
+          "Poshmark": { status: "syncing", updated: null },
+          "Depop": { status: "notlisted", updated: null },
+          "Shopify": { status: "synced", updated: "8m ago" },
+          "Instagram": { status: "synced", updated: "3m ago" },
+          "Facebook": { status: "notlisted", updated: null },
+          "TikTok": { status: "notlisted", updated: null }
+        }
       },
       {
-        title: "1980s Cabbage Patch Kids Watch – Regal Toy Sealed MOC",
-        sku: "00127",
-        price: 70.00,
-        image: "images/cabbage-watch.jpg",
-        platforms: ["eBay", "Poshmark"],
-        status: 'active',
-        qty: 1,
-        images: [
-          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg",
-          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg",
-          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg"
-        ]
+        id: 3,
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=128&q=80",
+        title: "Luxury Scented Soy Candle",
+        sku: "CND-455",
+        price: "27.50",
+        tones: ["Luxury"],
+        description: "Hand-poured, non-toxic soy candle. 60hr burn.",
+        platforms: {
+          "eBay": { status: "syncing", updated: null },
+          "Etsy": { status: "notlisted", updated: null },
+          "Poshmark": { status: "synced", updated: "1h ago" },
+          "Depop": { status: "synced", updated: "2h ago" },
+          "Shopify": { status: "synced", updated: "10m ago" },
+          "Instagram": { status: "notlisted", updated: null },
+          "Facebook": { status: "synced", updated: "2m ago" },
+          "TikTok": { status: "notlisted", updated: null }
+        }
+      },
+      {
+        id: 4,
+        image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=128&q=80",
+        title: "Budget-Friendly Ceramic Mug",
+        sku: "MUG-888",
+        price: "12.90",
+        tones: ["Budget", "Warm"],
+        description: "Durable mug, dishwasher safe. Best value for home or gifts.",
+        platforms: {
+          "eBay": { status: "notlisted", updated: null },
+          "Etsy": { status: "notlisted", updated: null },
+          "Poshmark": { status: "synced", updated: "20m ago" },
+          "Depop": { status: "synced", updated: "25m ago" },
+          "Shopify": { status: "synced", updated: "5m ago" },
+          "Instagram": { status: "synced", updated: "1m ago" },
+          "Facebook": { status: "notlisted", updated: null },
+          "TikTok": { status: "syncing", updated: null }
+        }
       }
     ];
-    // Simulate platform status per row
-    const allPlatforms = ["eBay", "Etsy", "Shopify", "Depop", "Poshmark"];
-    // To simulate sync status, randomize for demo
-    function getPlatformStatus(listing, platform) {
-      if (listing.platforms.includes(platform)) {
-        // Simulate synced for eBay, syncing for Poshmark
-        if (platform === "eBay") return {icon: "check", tip: "Last synced: 3h ago"};
-        if (platform === "Poshmark") return {icon: "sync", tip: "Syncing... (Last: 2m ago)"};
-        return {icon: "check", tip: "Last synced: 1h ago"};
-      }
-      return {icon: "cross", tip: "Not listed"};
+
+    const platformIcons = {
+      "eBay": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ebay.svg",
+      "Etsy": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/etsy.svg",
+      "Poshmark": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/poshmark.svg",
+      "Depop": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/depop.svg",
+      "Shopify": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg",
+      "Instagram": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg",
+      "Facebook": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg",
+      "TikTok": "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
+    };
+
+    const tonesColor = {
+      "Cozy": "tone-Cozy",
+      "Luxury": "tone-Luxury",
+      "Minimalist": "tone-Minimalist",
+      "Budget": "tone-Budget",
+      "Warm": "tone-Warm"
+    };
+
+    // --- Helper Functions ---
+    function getStatusIcon(status) {
+      if (status === "synced")    return `<span class="status-synced" title="Synced"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg></span>`;
+      if (status === "notlisted") return `<span class="status-notlisted" title="Not Listed"><svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" /></svg></span>`;
+      if (status === "syncing")   return `<span class="status-syncing" title="Syncing"><svg class="w-5 h-5 inline animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-dasharray="80" stroke-dashoffset="60"/></svg></span>`;
+      return "";
     }
-    // PAGINATION
-    let currentPage = 1;
-    const perPage = 10;
-    let filteredListings = [...listings];
 
-    // FILTERING STATE
-    let statusFilter = "all";
-    let hideSold = false;
-    let hideDraft = false;
+    function getStatusTooltip(platform, data) {
+      if (data.status === "synced") return `${platform} – Synced ${data.updated}`;
+      if (data.status === "notlisted") return `${platform} – Not listed`;
+      if (data.status === "syncing") return `${platform} – Sync in progress`;
+      return platform;
+    }
 
-    // RENDER LISTINGS TABLE
+    // --- Listing Table Rendering ---
     function renderListings() {
-      const table = document.getElementById('listingsTable');
-      table.innerHTML = '';
-      // Apply search and status filters
-      let rows = filteredListings.filter(l => {
-        if (statusFilter !== "all" && l.status !== statusFilter) return false;
-        if (hideSold && l.status === 'sold') return false;
-        if (hideDraft && l.status === 'draft') return false;
-        return true;
-      });
-      // Pagination
-      const totalPages = Math.max(1, Math.ceil(rows.length / perPage));
-      currentPage = Math.min(currentPage, totalPages);
-      const start = (currentPage - 1) * perPage;
-      const pageRows = rows.slice(start, start + perPage);
-      // Table rows
-      for (let [idx, listing] of pageRows.entries()) {
-        const tr = document.createElement('tr');
-        tr.className = (listing.status === 'draft' ? 'bg-yellow-50' : '') + (listing.status === 'sold' ? 'opacity-60 line-through' : '');
-        tr.innerHTML = `
-          <td class="px-3 py-2 text-center"><input type="checkbox" class="rowCheckbox"/></td>
-          <td class="px-3 py-2"><img src="${listing.image}" alt="" class="w-12 h-12 object-cover rounded shadow" /></td>
-          <td class="px-3 py-2">
-            <button class="text-blue-700 font-semibold hover:underline" onclick="openModal(${start + idx})">${listing.title}</button>
-          </td>
-          <td class="px-3 py-2 flex gap-2">
-            <button class="tooltip" onclick="aiSuggest(this, ${start + idx})">
-              <span class="text-yellow-500">⚡</span>
-              <span class="tooltiptext">AI Suggest</span>
-            </button>
-            <button class="tooltip" onclick="editListing(${start + idx})">
-              <span>✏️</span>
-              <span class="tooltiptext">Edit</span>
-            </button>
-            <button class="tooltip" onclick="duplicateListing(${start + idx})">
-              <span>📄</span>
-              <span class="tooltiptext">Duplicate</span>
-            </button>
-            <button class="tooltip" onclick="deleteListing(${start + idx})">
-              <span>🗑️</span>
-              <span class="tooltiptext">Delete</span>
-            </button>
-          </td>
-          <td class="px-3 py-2 text-center">${listing.sku}</td>
-          <td class="px-3 py-2 text-right font-semibold">$${listing.price.toFixed(2)} <span class="text-xs font-normal text-gray-400">CAD</span></td>
-          <td class="px-3 py-2">
-            <div class="flex gap-2 items-center">
-              ${allPlatforms.map(platform => {
-                const {icon, tip} = getPlatformStatus(listing, platform);
-                return `<span class="tooltip" onclick="handlePlatformClick('${platform}')">
-                  <svg class="inline w-6 h-6 -mb-1" aria-label="${platform}">
-                    <use xlink:href="#${platform.toLowerCase()}"/>
-                  </svg>
-                  <svg class="w-4 h-4 absolute -ml-5 mt-4"><use xlink:href="#${icon}"/></svg>
-                  <span class="tooltiptext">${platform}: ${tip}</span>
-                </span>`;
-              }).join('')}
-            </div>
-          </td>
-        `;
-        table.appendChild(tr);
-      }
-      // Pagination status
-      document.getElementById('paginationStatus').textContent = `${currentPage} of ${totalPages}`;
-    }
-    // FILTER LOGIC
-    function filterListings() {
-      const q = document.getElementById("searchInput").value.toLowerCase();
-      filteredListings = listings.filter(l =>
-        l.title.toLowerCase().includes(q) ||
-        l.sku.toLowerCase().includes(q) ||
-        String(l.price).includes(q)
-      );
-      currentPage = 1;
-      renderListings();
-    }
-    function setStatusFilter(status) {
-      statusFilter = status;
-      document.querySelectorAll('.status-filter').forEach(btn =>
-        btn.classList.toggle('bg-blue-50', btn.dataset.status === status)
-      );
-      renderListings();
-    }
-    function toggleHide(type) {
-      if (type === 'sold') hideSold = document.getElementById('hideSold').checked;
-      if (type === 'draft') hideDraft = document.getElementById('hideDraft').checked;
-      renderListings();
-    }
-    // PAGINATION CONTROLS
-    function nextPage() { currentPage++; renderListings(); }
-    function prevPage() { if (currentPage > 1) currentPage--; renderListings(); }
-    // SELECT ALL
-    function toggleSelectAll(checkbox) {
-      document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = checkbox.checked);
-    }
+      const tbody = document.getElementById('listing-tbody');
+      tbody.innerHTML = '';
+      let filtered = listings
+        .filter(l => {
+          const search = document.getElementById('search').value.trim().toLowerCase();
+          if (search) {
+            return l.title.toLowerCase().includes(search) || l.sku.toLowerCase().includes(search);
+          }
+          return true;
+        })
+        .filter(l => {
+          const tone = document.getElementById('toneFilter').value;
+          if (tone) return l.tones.includes(tone);
+          return true;
+        })
+        .filter(l => {
+          const plat = document.getElementById('platformFilter').value;
+          if (plat) return l.platforms[plat]?.status === "synced";
+          return true;
+        });
 
-    // MODAL LOGIC
-    function openModal(idx) {
-      const listing = filteredListings[idx];
-      document.getElementById('modalTitle').textContent = listing.title;
-      document.getElementById('modalSKU').textContent = 'SKU: ' + listing.sku;
-      document.getElementById('modalPrice').textContent = '$' + listing.price.toFixed(2) + ' CAD';
-      document.getElementById('modalQty').textContent = 'Qty: ' + (listing.qty || 1);
-      // Images
-      const imgs = listing.images || [listing.image];
-      document.getElementById('modalImages').innerHTML =
-        imgs.map(src => `<img src="${src}" alt="" class="w-full h-24 object-cover rounded shadow" />`).join('');
-      // Platforms
-      document.getElementById('modalPlatforms').innerHTML =
-        allPlatforms.map(platform => {
-          const {icon, tip} = getPlatformStatus(listing, platform);
-          return `<span class="tooltip">
-            <svg class="inline w-7 h-7" aria-label="${platform}">
-              <use xlink:href="#${platform.toLowerCase()}"/>
-            </svg>
-            <svg class="w-4 h-4 absolute -ml-6 mt-5"><use xlink:href="#${icon}"/></svg>
-            <span class="tooltiptext">${platform}: ${tip}</span>
-          </span>`;
+      for (const listing of filtered) {
+        const toneChips = listing.tones.map(tone =>
+          `<span class="inline-block px-2 py-1 mr-1 rounded text-xs font-semibold border ${tonesColor[tone]}">${tone}</span>`
+        ).join('');
+        const platformCells = Object.keys(platformIcons).map(platform => {
+          const p = listing.platforms[platform] || { status: "notlisted", updated: null };
+          return `
+            <span class="inline-block mr-1 align-middle" title="${getStatusTooltip(platform, p)}">
+              <img src="${platformIcons[platform]}" alt="${platform}" class="w-5 h-5 inline-block align-middle" />
+              ${getStatusIcon(p.status)}
+            </span>`;
         }).join('');
-      document.getElementById('modalBg').classList.remove('hidden');
-      document.getElementById('modalBg').classList.add('flex');
-    }
-    function closeModal() {
-      document.getElementById('modalBg').classList.add('hidden');
-      document.getElementById('modalBg').classList.remove('flex');
-    }
-    window.onclick = function(event) {
-      if (event.target === document.getElementById('modalBg')) closeModal();
-    }
-
-    // AI SUGGESTION SIMULATION
-    function aiSuggest(btn, idx) {
-      // Simulate async call & show suggestion tooltip near the button
-      const listing = filteredListings[idx];
-      const tooltip = document.getElementById('aiSuggestionTooltip');
-      tooltip.innerHTML = `
-        <strong>AI Suggestions:</strong><br/>
-        &bull; <span class="text-blue-800">Title:</span> "${listing.title.replace(/(\w{6,})/, '$1 (Enhanced)')}"<br/>
-        &bull; <span class="text-green-700">Price:</span> $${(listing.price * 1.07).toFixed(2)}<br/>
-        &bull; <span class="text-purple-700">Tags:</span> #vintage #canada #collectible<br/>
-        &bull; <span class="text-pink-700">Call-to-Action:</span> "Claim this rare find today!"<br/>
-        <button class="mt-2 bg-blue-600 text-white px-3 py-1 rounded shadow hover:bg-blue-700" onclick="applyAISuggestion(${idx})">Apply All</button>
-      `;
-      // Position tooltip
-      const rect = btn.getBoundingClientRect();
-      tooltip.style.top = (window.scrollY + rect.bottom + 6) + 'px';
-      tooltip.style.left = (window.scrollX + rect.left - 40) + 'px';
-      tooltip.classList.remove('hidden');
-      setTimeout(() => tooltip.classList.add('hidden'), 4500);
-    }
-    function applyAISuggestion(idx) {
-      // For demo, just close tooltip and show alert
-      document.getElementById('aiSuggestionTooltip').classList.add('hidden');
-      alert('AI suggestions applied! (Simulation)');
-    }
-
-    // Platform click handler
-    function handlePlatformClick(platform) {
-      alert(`Connect or manage ${platform} integration (Simulation)`);
-    }
-
-    // Dummy edit/duplicate/delete
-    function editListing(idx) { alert('Edit Listing (Simulation)'); }
-    function duplicateListing(idx) { alert('Duplicate Listing (Simulation)'); }
-    function deleteListing(idx) {
-      if (confirm('Delete this listing?')) {
-        listings.splice(idx, 1);
-        filterListings();
+        tbody.innerHTML += `
+          <tr class="hover:bg-orange-50 transition-all group">
+            <td class="px-4 py-3">
+              <input type="checkbox" class="row-checkbox" aria-label="Select listing ${listing.title}">
+            </td>
+            <td class="px-4 py-3">
+              <img src="${listing.image}" alt="Preview" class="w-14 h-14 rounded shadow object-cover lazyload" loading="lazy">
+            </td>
+            <td class="px-4 py-3 font-semibold cursor-pointer hover:underline text-orange-600 title-cell" data-id="${listing.id}" tabindex="0">${listing.title}</td>
+            <td class="px-4 py-3">
+              <button class="ai-suggest-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 text-orange-600 font-semibold transition focus:outline-none" data-id="${listing.id}" aria-label="AI Suggest new title">⚡</button>
+            </td>
+            <td class="px-4 py-3">${listing.sku}</td>
+            <td class="px-4 py-3">$${listing.price}</td>
+            <td class="px-4 py-3">${toneChips}</td>
+            <td class="px-4 py-3">${platformCells}</td>
+            <td class="px-4 py-3 flex gap-1">
+              <button class="edit-btn px-2 py-1 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold focus:outline-none" aria-label="Edit listing">✏️</button>
+              <button class="delete-btn px-2 py-1 rounded bg-red-100 hover:bg-red-200 text-red-600 font-semibold focus:outline-none" aria-label="Delete listing">🗑️</button>
+              <button class="duplicate-btn px-2 py-1 rounded bg-green-100 hover:bg-green-200 text-green-600 font-semibold focus:outline-none" aria-label="Duplicate listing">📋</button>
+            </td>
+          </tr>
+        `;
       }
     }
 
-    // SIDEBAR COLLAPSE (mobile)
-    document.getElementById('sidebar-collapse').onclick = () => {
-      document.getElementById('sidebar').classList.toggle('-translate-x-64');
-    };
+    // --- Modal Logic ---
+    function showModal(listing) {
+      document.getElementById('modal-title').textContent = listing.title;
+      document.getElementById('modal-image').src = listing.image;
+      document.getElementById('modal-sku').textContent = listing.sku;
+      document.getElementById('modal-price').textContent = listing.price;
+      document.getElementById('modal-description').textContent = listing.description;
+      document.getElementById('modal-tones').innerHTML = listing.tones.map(tone =>
+        `<span class="inline-block px-2 py-1 mr-1 rounded text-xs font-semibold border ${tonesColor[tone]}">${tone}</span>`
+      ).join('');
+      document.getElementById('modal-platforms').innerHTML = Object.keys(platformIcons).map(platform => {
+        const p = listing.platforms[platform] || { status: "notlisted", updated: null };
+        return `
+          <span class="inline-block mr-1 align-middle" title="${getStatusTooltip(platform, p)}">
+            <img src="${platformIcons[platform]}" alt="${platform}" class="w-5 h-5 inline-block align-middle" />
+            ${getStatusIcon(p.status)}
+          </span>`;
+      }).join('');
+      document.getElementById('listing-modal').classList.remove('hidden');
+      document.getElementById('close-modal').focus();
+    }
 
-    // INIT
-    window.onload = () => {
+    // --- AI Suggest Logic ---
+    function generateAiTitle(title, tones) {
+      // Simulate smart, tone-based AI suggestion
+      let newTitle = title;
+      if (tones.includes("Cozy"))      newTitle = "Cozy " + title.replace(/^(Cozy |Luxury |Minimalist |Budget |Warm )/, "");
+      if (tones.includes("Luxury"))    newTitle = "Luxury " + title.replace(/^(Cozy |Luxury |Minimalist |Budget |Warm )/, "");
+      if (tones.includes("Minimalist"))newTitle = "Minimalist " + title.replace(/^(Cozy |Luxury |Minimalist |Budget |Warm )/, "");
+      if (tones.includes("Budget"))    newTitle = "Budget " + title.replace(/^(Cozy |Luxury |Minimalist |Budget |Warm )/, "");
+      if (tones.includes("Warm"))      newTitle = "Warm " + title.replace(/^(Cozy |Luxury |Minimalist |Budget |Warm )/, "");
+      if (newTitle === title) newTitle += " – Loved in Canada";
+      return newTitle;
+    }
+
+    function setupAiSuggest() {
+      document.querySelectorAll('.ai-suggest-btn').forEach(btn => {
+        btn.onclick = function(e) {
+          const id = +btn.dataset.id;
+          const row = btn.closest('tr');
+          const cell = row.querySelector('.title-cell');
+          const origTitle = cell.textContent;
+          const listing = listings.find(l => l.id === id);
+          const aiTitle = generateAiTitle(listing.title, listing.tones);
+          if (cell.querySelector('.ai-apply')) return; // already suggested
+
+          // Replace title cell with suggestion and Apply/Undo
+          cell.innerHTML = `
+            <span class="text-orange-700 font-bold">${aiTitle}</span>
+            <button class="ai-apply ml-2 px-2 py-1 rounded bg-green-100 text-green-700 font-semibold text-xs focus:outline-none" aria-label="Apply AI suggestion">Apply</button>
+            <button class="ai-undo ml-1 px-2 py-1 rounded bg-gray-100 text-gray-700 font-semibold text-xs focus:outline-none" aria-label="Undo AI suggestion">Undo</button>
+          `;
+          cell.querySelector('.ai-apply').onclick = function() {
+            listing.title = aiTitle;
+            renderListings();
+            setupUiHandlers();
+          };
+          cell.querySelector('.ai-undo').onclick = function() {
+            cell.textContent = origTitle;
+          };
+        };
+      });
+    }
+
+    // --- Language Switcher ---
+    function setupLangSwitcher() {
+      document.getElementById('lang-en').onclick = () => setLang('en');
+      document.getElementById('lang-fr').onclick = () => setLang('fr');
+    }
+    function setLang(lang) {
+      // For production, use i18n, but here is a minimal example
+      if (lang === 'fr') {
+        document.querySelector('h1').textContent = "Tableau de bord des annonces";
+        document.querySelector('header p').textContent = "Synchronisez et gérez vos annonces de marché en un seul endroit.";
+        document.getElementById('search').placeholder = "🔍 Rechercher des annonces...";
+        document.getElementById('toneFilter').options[0].text = "Tous les tons";
+        document.getElementById('toneFilter').options[1].text = "Chaleureux";
+        document.getElementById('toneFilter').options[2].text = "Luxe";
+        document.getElementById('toneFilter').options[3].text = "Minimaliste";
+        document.getElementById('toneFilter').options[4].text = "Économique";
+        document.getElementById('toneFilter').options[5].text = "Chaud";
+        document.getElementById('platformFilter').options[0].text = "Toutes les plateformes";
+        // ...additional translation for the rest of the UI...
+      } else {
+        document.querySelector('h1').textContent = "Listings Dashboard";
+        document.querySelector('header p').textContent = "Sync and manage your marketplace listings in one place.";
+        document.getElementById('search').placeholder = "🔍 Search listings...";
+        document.getElementById('toneFilter').options[0].text = "All Tones";
+        document.getElementById('toneFilter').options[1].text = "Cozy";
+        document.getElementById('toneFilter').options[2].text = "Luxury";
+        document.getElementById('toneFilter').options[3].text = "Minimalist";
+        document.getElementById('toneFilter').options[4].text = "Budget";
+        document.getElementById('toneFilter').options[5].text = "Warm";
+        document.getElementById('platformFilter').options[0].text = "All Platforms";
+      }
+    }
+
+    // --- Buyer Psychology Map Bubbles ---
+    function renderMapBubbles() {
+      // Example: draw bubbles for tones in major provinces
+      // Coordinates are [cx, cy, r, color] for SVG over 375x250 img
+      const bubbles = [
+        // [x, y, r, color, tone]
+        [110,155,28,'#f59e42','Cozy'],    // Ontario
+        [180,65,18,'#fb7185','Warm'],     // Quebec
+        [55,110,16,'#23b56b','Luxury'],   // BC
+        [220,180,12,'#fbbf24','Budget'],  // Manitoba
+        [300,80,22,'#f3f4f6','Minimalist']// Atlantic
+      ];
+      const svg = document.getElementById('map-bubbles');
+      svg.innerHTML = bubbles.map(([x,y,r,c,_]) =>
+        `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" fill-opacity="0.45" />`
+      ).join('');
+    }
+
+    // --- Event Handlers for UI ---
+    function setupUiHandlers() {
+      // Title modal
+      document.querySelectorAll('.title-cell').forEach(cell => {
+        cell.onclick = function() {
+          const id = +cell.dataset.id;
+          const listing = listings.find(l => l.id === id);
+          showModal(listing);
+        };
+        cell.onkeydown = function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            const id = +cell.dataset.id;
+            const listing = listings.find(l => l.id === id);
+            showModal(listing);
+          }
+        };
+      });
+      document.getElementById('close-modal').onclick = () => {
+        document.getElementById('listing-modal').classList.add('hidden');
+      };
+      setupAiSuggest();
+    }
+
+    // --- Bulk Select ---
+    document.addEventListener('DOMContentLoaded', () => {
       renderListings();
-      setStatusFilter("all");
-    };
+      setupUiHandlers();
+      setupLangSwitcher();
+      renderMapBubbles();
+
+      document.getElementById('search').oninput =
+      document.getElementById('toneFilter').onchange =
+      document.getElementById('platformFilter').onchange = () => {
+        renderListings();
+        setupUiHandlers();
+      };
+      document.getElementById('select-all').onchange = function() {
+        document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = this.checked);
+      };
+    });
   </script>
 </body>
 </html>
