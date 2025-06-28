@@ -1,636 +1,495 @@
-<!-- Full code begins -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100 font-sans antialiased">
 <head>
-  <meta charset="UTF-8">
-  <title>AutoList Canada – Listings Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Tailwind CSS CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Listings Dashboard – AutoList Canada</title>
+  <link rel="icon" type="image/png" href="sidebar-background.png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <!-- FontAwesome for icons -->
-  <script src="https://kit.fontawesome.com/94008b18c5.js" crossorigin="anonymous"></script>
   <style>
-    html, body {
-      height: 100%;
-      background: url('listings-background.png') center center / cover no-repeat #FDF8F4;
-      font-family: 'Nunito Rounded', 'Quicksand', 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
+    /* Custom scrollbar for sidebar */
+    ::-webkit-scrollbar { width: 8px; background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+    /* Hide number arrows in input */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    /* Modal background blur */
+    .modal-bg { backdrop-filter: blur(3px); }
+    /* Tooltips */
+    .tooltip {
+      position: relative;
+      cursor: pointer;
     }
-    .sidebar-bg {
-      background: url('sidebar-background.png') center center / cover no-repeat #2C5F2D;
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: max-content;
+      background-color: #111827;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 6px 12px;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-size: 0.875rem;
+      pointer-events: none;
+      white-space: nowrap;
     }
-    .tone-Cozy { background: #FEC89A; color: #2C5F2D; }
-    .tone-Minimalist { background: #BCE3DA; color: #2C5F2D; }
-    .tone-Luxury { background: #F7E9E3; color: #FF6A00; }
-    .tone-Budget { background: #F5E8DD; color: #2C5F2D; }
-    .tone-Warm { background: #FFF1C9; color: #FF6A00; }
-    /* Faded styling for sold */
-    .row-sold { opacity: 0.5; background: #e2e8f0; }
-    .floating-action-bar {
-      position: fixed;
-      bottom: 2.5rem;
-      right: 2.5rem;
-      z-index: 50;
-    }
-    .language-toggle {
-      position: fixed;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      z-index: 50;
-    }
-    /* Custom scrollbar for horizontal connect bar */
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    /* Table/grid switch icons */
-    .view-switch .active {
-      color: #FF6A00;
-      font-weight: bold;
-    }
-    /* Responsive tweaks */
-    @media (max-width: 1023px) {
-      .sidebar {
-        min-width: 72px !important;
-        width: 72px !important;
-        padding: 0.5rem !important;
-      }
-      .sidebar .sidebar-content {
-        display: none;
-      }
-      .sidebar .sidebar-logo {
-        justify-content: center;
-      }
-    }
+    .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
   </style>
 </head>
-<body class="flex h-full">
+<body class="relative min-h-screen flex bg-gray-100">
+
   <!-- Sidebar -->
-  <aside class="sidebar sidebar-bg flex flex-col justify-between min-w-[260px] w-[260px] h-screen py-6 px-4 shadow-xl">
-    <div>
-      <div class="flex items-center mb-8 sidebar-logo">
-        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="h-12 w-12 rounded-lg shadow-md mr-3">
-        <img src="autolist-title.png" alt="AutoList Canada" class="h-8">
-      </div>
-      <nav class="sidebar-content">
-        <ul class="space-y-2 text-lg mt-8">
-          <li>
-            <a href="#" class="flex items-center px-3 py-2 rounded-lg bg-[#FF6A00] text-white font-semibold shadow transition hover:bg-orange-600">
-              <i class="fa-solid fa-table mr-3"></i>
-              Listings
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-orange-100 hover:text-[#FF6A00] transition">
-              <i class="fa-solid fa-chart-pie mr-3"></i>
-              Analytics
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-3 py-2 rounded-lg text-white hover:bg-orange-100 hover:text-[#FF6A00] transition">
-              <i class="fa-solid fa-gear mr-3"></i>
-              Settings
-            </a>
-          </li>
-        </ul>
-      </nav>
+  <aside id="sidebar" class="fixed top-0 left-0 z-30 h-full w-64 bg-gray-900 text-white shadow-lg flex flex-col transition-all duration-200
+    bg-cover bg-left-bottom" style="background-image: url('sidebar-background.png');">
+    <div class="flex flex-col items-center pt-8 pb-4">
+      <img src="logo.png" alt="AutoList Canada Logo" class="w-12 h-12 mb-2 rounded shadow" />
+      <img src="title.png" alt="AutoList Canada" class="w-40 h-auto mb-6" />
     </div>
-    <div class="sidebar-content">
-      <img src="sidebar-background.png" alt="Sidebar background" class="w-full h-24 object-cover rounded-lg mt-8 opacity-60 shadow-lg">
-    </div>
-  </aside>
-  <!-- Main Content -->
-  <main class="flex-1 flex flex-col min-h-screen">
-    <!-- Header / Marketplace Connect Row -->
-    <section class="w-full px-6 pt-6 pb-2">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <!-- Page Title -->
-        <div class="flex items-center gap-3">
-          <h1 class="text-3xl font-extrabold text-[#2C5F2D] tracking-tight">Listings Dashboard</h1>
-          <div class="view-switch flex items-center ml-4 space-x-2 bg-[#FDF8F4] rounded-full px-2 py-1 border border-orange-100 shadow">
-            <button id="tableViewBtn" class="p-2 rounded-full active" title="Table View">
-              <span class="text-2xl">🧾</span>
-            </button>
-            <button id="gridViewBtn" class="p-2 rounded-full" title="Grid View">
-              <span class="text-2xl">🟦</span>
-            </button>
-          </div>
-        </div>
-        <!-- Marketplace Connect Row -->
-        <div class="flex-1">
-          <div class="flex items-center space-x-3 overflow-x-auto scrollbar-hide py-2">
-            <!-- Marketplace Platform Connect Buttons -->
-            <div class="flex items-center gap-2">
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-ebay text-[#3665F3]"></i> eBay
-                <span class="ml-2 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded">Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-facebook text-[#1877F3]"></i> Facebook
-                <span class="ml-2 text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded">Not Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-etsy text-[#F1641E]"></i> Etsy
-                <span class="ml-2 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded">Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-shopify text-[#96BF48]"></i> Shopify
-                <span class="ml-2 text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded">Not Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-instagram text-[#E4405F]"></i> Instagram
-                <span class="ml-2 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded">Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-tiktok text-[#000000]"></i> TikTok
-                <span class="ml-2 text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded">Not Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-depop text-black"></i> Depop
-                <span class="ml-2 text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded">Connected</span>
-              </button>
-              <button class="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg shadow border border-gray-200 hover:bg-orange-50 transition">
-                <i class="fa-brands fa-mercury text-[#FF6A00]"></i> Mercari
-                <span class="ml-2 text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded">Not Connected</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Search + Filter Bar -->
-    <section class="w-full px-6 pt-2 pb-4">
-      <form class="flex flex-col md:flex-row md:items-end gap-4">
-        <div class="flex-1 flex items-center gap-2">
-          <label for="search" class="sr-only">Search Listings</label>
-          <input id="search" name="search" type="search" placeholder="Search by title, SKU, or tag…" class="flex-1 rounded-lg border border-orange-200 px-4 py-2 shadow text-base focus:ring-2 focus:ring-orange-200" />
-          <button type="submit" class="ml-1 px-4 py-2 bg-[#FF6A00] text-white rounded-lg shadow font-semibold hover:bg-orange-700 transition">Search</button>
-        </div>
-        <div class="flex gap-2">
-          <select class="rounded-lg border border-orange-200 px-3 py-2 shadow text-base focus:ring-2 focus:ring-orange-200">
-            <option>All Tones</option>
-            <option>Cozy 🧶</option>
-            <option>Minimalist 🌀</option>
-            <option>Luxury 💎</option>
-            <option>Budget 🪙</option>
-            <option>Warm ☀️</option>
-          </select>
-          <select class="rounded-lg border border-orange-200 px-3 py-2 shadow text-base focus:ring-2 focus:ring-orange-200">
-            <option>All Status</option>
-            <option>Listed</option>
-            <option>Sold</option>
-            <option>Draft</option>
-          </select>
-          <button type="button" class="px-4 py-2 bg-[#2C5F2D] text-white rounded-lg shadow font-semibold hover:bg-green-700 transition">
-            <i class="fa-solid fa-filter mr-2"></i>Advanced
-          </button>
-        </div>
-      </form>
-    </section>
-    <!-- Listings Table/Grid Section -->
-    <section id="listings-section" class="w-full px-6 pb-6 flex-1">
-      <!-- Table View -->
-      <div id="tableView" class="">
-        <div class="overflow-x-auto bg-white rounded-xl shadow-lg">
-          <table class="min-w-full divide-y divide-gray-200 text-base">
-            <thead class="bg-[#FDF8F4]">
-              <tr>
-                <th class="px-4 py-3 text-left">
-                  <input type="checkbox" id="selectAll" class="h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </th>
-                <th class="px-4 py-3 text-left">Title</th>
-                <th class="px-4 py-3 text-left">Price</th>
-                <th class="px-4 py-3 text-left">Status</th>
-                <th class="px-4 py-3 text-left">Tones</th>
-                <th class="px-4 py-3 text-left">Platforms</th>
-                <th class="px-4 py-3 text-left">AI</th>
-                <th class="px-4 py-3 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-100">
-              <!-- Row 1 -->
-              <tr>
-                <td class="px-4 py-3">
-                  <input type="checkbox" class="rowCheckbox h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </td>
-                <td class="px-4 py-3 font-semibold text-[#2C5F2D] editable" data-field="title">Vintage Wool Blanket</td>
-                <td class="px-4 py-3 text-[#FF6A00] font-bold editable" data-field="price">$89.00</td>
-                <td class="px-4 py-3">
-                  <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-semibold">
-                    <i class="fa-solid fa-circle-check mr-1"></i> Listed
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-2 py-1 rounded tone-Cozy mr-1 text-xs">Cozy 🧶</span>
-                </td>
-                <td class="px-4 py-3 flex items-center space-x-1">
-                  <i class="fa-brands fa-ebay text-[#3665F3] opacity-100" title="eBay"></i>
-                  <i class="fa-brands fa-etsy text-[#F1641E] opacity-100" title="Etsy"></i>
-                  <i class="fa-brands fa-facebook text-[#1877F3] opacity-80" title="Facebook"></i>
-                  <i class="fa-brands fa-instagram text-[#E4405F] opacity-20" title="Instagram"></i>
-                  <i class="fa-brands fa-tiktok text-[#000000] opacity-20" title="TikTok"></i>
-                  <i class="fa-brands fa-depop text-black opacity-20" title="Depop"></i>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                    <span class="text-xl">⚡</span>
-                  </button>
-                </td>
-                <td class="px-4 py-3 flex items-center gap-2">
-                  <button class="px-2 py-1 rounded hover:bg-orange-50" title="Edit">
-                    <i class="fa-solid fa-pen text-orange-600"></i>
-                  </button>
-                  <button class="px-2 py-1 rounded hover:bg-red-50" title="Delete">
-                    <i class="fa-solid fa-trash text-red-500"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Row 2 (Sold) -->
-              <tr class="row-sold">
-                <td class="px-4 py-3">
-                  <input type="checkbox" class="rowCheckbox h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </td>
-                <td class="px-4 py-3 font-semibold text-[#2C5F2D] editable" data-field="title">Midcentury Teak Chair</td>
-                <td class="px-4 py-3 text-[#FF6A00] font-bold editable" data-field="price">$120.00</td>
-                <td class="px-4 py-3">
-                  <span class="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-500 text-xs rounded font-semibold">
-                    <i class="fa-solid fa-skull mr-1"></i> Sold
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-2 py-1 rounded tone-Minimalist mr-1 text-xs">Minimalist 🌀</span>
-                </td>
-                <td class="px-4 py-3 flex items-center space-x-1">
-                  <i class="fa-brands fa-ebay text-[#3665F3] opacity-20" title="eBay"></i>
-                  <i class="fa-brands fa-etsy text-[#F1641E] opacity-80" title="Etsy"></i>
-                  <i class="fa-brands fa-facebook text-[#1877F3] opacity-100" title="Facebook"></i>
-                  <i class="fa-brands fa-instagram text-[#E4405F] opacity-20" title="Instagram"></i>
-                  <i class="fa-brands fa-tiktok text-[#000000] opacity-20" title="TikTok"></i>
-                  <i class="fa-brands fa-depop text-black opacity-20" title="Depop"></i>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                    <span class="text-xl">⚡</span>
-                  </button>
-                </td>
-                <td class="px-4 py-3 flex items-center gap-2">
-                  <button class="px-2 py-1 rounded hover:bg-orange-50" title="Edit">
-                    <i class="fa-solid fa-pen text-orange-600"></i>
-                  </button>
-                  <button class="px-2 py-1 rounded hover:bg-red-50" title="Delete">
-                    <i class="fa-solid fa-trash text-red-500"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Row 3 -->
-              <tr>
-                <td class="px-4 py-3">
-                  <input type="checkbox" class="rowCheckbox h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </td>
-                <td class="px-4 py-3 font-semibold text-[#2C5F2D] editable" data-field="title">Crystal Carafe Set</td>
-                <td class="px-4 py-3 text-[#FF6A00] font-bold editable" data-field="price">$55.00</td>
-                <td class="px-4 py-3">
-                  <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-semibold">
-                    <i class="fa-solid fa-circle-check mr-1"></i> Listed
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-2 py-1 rounded tone-Luxury mr-1 text-xs">Luxury 💎</span>
-                  <span class="inline-block px-2 py-1 rounded tone-Warm mr-1 text-xs">Warm ☀️</span>
-                </td>
-                <td class="px-4 py-3 flex items-center space-x-1">
-                  <i class="fa-brands fa-ebay text-[#3665F3] opacity-100" title="eBay"></i>
-                  <i class="fa-brands fa-etsy text-[#F1641E] opacity-20" title="Etsy"></i>
-                  <i class="fa-brands fa-facebook text-[#1877F3] opacity-100" title="Facebook"></i>
-                  <i class="fa-brands fa-instagram text-[#E4405F] opacity-80" title="Instagram"></i>
-                  <i class="fa-brands fa-tiktok text-[#000000] opacity-20" title="TikTok"></i>
-                  <i class="fa-brands fa-depop text-black opacity-20" title="Depop"></i>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                    <span class="text-xl">⚡</span>
-                  </button>
-                </td>
-                <td class="px-4 py-3 flex items-center gap-2">
-                  <button class="px-2 py-1 rounded hover:bg-orange-50" title="Edit">
-                    <i class="fa-solid fa-pen text-orange-600"></i>
-                  </button>
-                  <button class="px-2 py-1 rounded hover:bg-red-50" title="Delete">
-                    <i class="fa-solid fa-trash text-red-500"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Row 4 -->
-              <tr>
-                <td class="px-4 py-3">
-                  <input type="checkbox" class="rowCheckbox h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </td>
-                <td class="px-4 py-3 font-semibold text-[#2C5F2D] editable" data-field="title">Retro Desk Lamp</td>
-                <td class="px-4 py-3 text-[#FF6A00] font-bold editable" data-field="price">$42.00</td>
-                <td class="px-4 py-3">
-                  <span class="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded font-semibold">
-                    <i class="fa-solid fa-circle-pause mr-1"></i> Draft
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-2 py-1 rounded tone-Budget mr-1 text-xs">Budget 🪙</span>
-                  <span class="inline-block px-2 py-1 rounded tone-Cozy mr-1 text-xs">Cozy 🧶</span>
-                </td>
-                <td class="px-4 py-3 flex items-center space-x-1">
-                  <i class="fa-brands fa-ebay text-[#3665F3] opacity-20" title="eBay"></i>
-                  <i class="fa-brands fa-etsy text-[#F1641E] opacity-20" title="Etsy"></i>
-                  <i class="fa-brands fa-facebook text-[#1877F3] opacity-100" title="Facebook"></i>
-                  <i class="fa-brands fa-instagram text-[#E4405F] opacity-80" title="Instagram"></i>
-                  <i class="fa-brands fa-tiktok text-[#000000] opacity-20" title="TikTok"></i>
-                  <i class="fa-brands fa-depop text-black opacity-20" title="Depop"></i>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                    <span class="text-xl">⚡</span>
-                  </button>
-                </td>
-                <td class="px-4 py-3 flex items-center gap-2">
-                  <button class="px-2 py-1 rounded hover:bg-orange-50" title="Edit">
-                    <i class="fa-solid fa-pen text-orange-600"></i>
-                  </button>
-                  <button class="px-2 py-1 rounded hover:bg-red-50" title="Delete">
-                    <i class="fa-solid fa-trash text-red-500"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Row 5 -->
-              <tr>
-                <td class="px-4 py-3">
-                  <input type="checkbox" class="rowCheckbox h-5 w-5 rounded border-gray-300 text-[#FF6A00] focus:ring-orange-200">
-                </td>
-                <td class="px-4 py-3 font-semibold text-[#2C5F2D] editable" data-field="title">Quebec Folk Art Print</td>
-                <td class="px-4 py-3 text-[#FF6A00] font-bold editable" data-field="price">$37.00</td>
-                <td class="px-4 py-3">
-                  <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-semibold">
-                    <i class="fa-solid fa-circle-check mr-1"></i> Listed
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-2 py-1 rounded tone-Warm mr-1 text-xs">Warm ☀️</span>
-                  <span class="inline-block px-2 py-1 rounded tone-Budget mr-1 text-xs">Budget 🪙</span>
-                </td>
-                <td class="px-4 py-3 flex items-center space-x-1">
-                  <i class="fa-brands fa-ebay text-[#3665F3] opacity-80" title="eBay"></i>
-                  <i class="fa-brands fa-etsy text-[#F1641E] opacity-100" title="Etsy"></i>
-                  <i class="fa-brands fa-facebook text-[#1877F3] opacity-20" title="Facebook"></i>
-                  <i class="fa-brands fa-instagram text-[#E4405F] opacity-100" title="Instagram"></i>
-                  <i class="fa-brands fa-tiktok text-[#000000] opacity-20" title="TikTok"></i>
-                  <i class="fa-brands fa-depop text-black opacity-20" title="Depop"></i>
-                </td>
-                <td class="px-4 py-3 text-center">
-                  <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                    <span class="text-xl">⚡</span>
-                  </button>
-                </td>
-                <td class="px-4 py-3 flex items-center gap-2">
-                  <button class="px-2 py-1 rounded hover:bg-orange-50" title="Edit">
-                    <i class="fa-solid fa-pen text-orange-600"></i>
-                  </button>
-                  <button class="px-2 py-1 rounded hover:bg-red-50" title="Delete">
-                    <i class="fa-solid fa-trash text-red-500"></i>
-                  </button>
-                </td>
-              </tr>
-              <!-- Add more rows as needed -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- Grid View (hidden by default) -->
-      <div id="gridView" class="hidden">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Example Card 1 -->
-          <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col gap-3">
-            <div class="flex justify-between items-center">
-              <span class="inline-block px-2 py-1 rounded tone-Cozy text-xs">Cozy 🧶</span>
-              <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs rounded font-semibold">
-                <i class="fa-solid fa-circle-check mr-1"></i> Listed
-              </span>
-            </div>
-            <h2 class="font-semibold text-xl text-[#2C5F2D] editable" data-field="title">Vintage Wool Blanket</h2>
-            <div class="flex items-center justify-between">
-              <span class="text-lg font-bold text-[#FF6A00] editable" data-field="price">$89.00</span>
-              <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                <span class="text-xl">⚡</span>
-              </button>
-            </div>
-            <div class="flex gap-2 mt-2">
-              <i class="fa-brands fa-ebay text-[#3665F3]" title="eBay"></i>
-              <i class="fa-brands fa-etsy text-[#F1641E]" title="Etsy"></i>
-              <i class="fa-brands fa-facebook text-[#1877F3] opacity-80" title="Facebook"></i>
-            </div>
-          </div>
-          <!-- Example Card 2... repeat for other items (mock data as above) -->
-          <div class="bg-white rounded-xl shadow-lg p-5 flex flex-col gap-3 opacity-50">
-            <div class="flex justify-between items-center">
-              <span class="inline-block px-2 py-1 rounded tone-Minimalist text-xs">Minimalist 🌀</span>
-              <span class="inline-flex items-center px-2 py-1 bg-gray-200 text-gray-500 text-xs rounded font-semibold">
-                <i class="fa-solid fa-skull mr-1"></i> Sold
-              </span>
-            </div>
-            <h2 class="font-semibold text-xl text-[#2C5F2D] editable" data-field="title">Midcentury Teak Chair</h2>
-            <div class="flex items-center justify-between">
-              <span class="text-lg font-bold text-[#FF6A00] editable" data-field="price">$120.00</span>
-              <button class="ai-btn px-2 py-1 rounded bg-orange-100 hover:bg-orange-200 transition shadow" title="Get AI Suggestion">
-                <span class="text-xl">⚡</span>
-              </button>
-            </div>
-            <div class="flex gap-2 mt-2">
-              <i class="fa-brands fa-ebay text-[#3665F3] opacity-20" title="eBay"></i>
-              <i class="fa-brands fa-etsy text-[#F1641E] opacity-80" title="Etsy"></i>
-              <i class="fa-brands fa-facebook text-[#1877F3] opacity-100" title="Facebook"></i>
-            </div>
-          </div>
-          <!-- More cards... -->
-        </div>
-      </div>
-      <!-- Floating Bulk Action Bar -->
-      <div id="bulkActionBar" class="floating-action-bar hidden">
-        <div class="flex items-center gap-3 bg-[#2C5F2D] text-white px-6 py-3 rounded-lg shadow-lg">
-          <span class="font-semibold">3 selected</span>
-          <button class="px-3 py-2 rounded bg-[#FF6A00] hover:bg-orange-700 transition">Mark as Sold</button>
-          <button class="px-3 py-2 rounded bg-white text-[#2C5F2D] hover:bg-orange-100 transition">Delete</button>
-        </div>
-      </div>
-    </section>
-    <!-- Buyer Psychology Map -->
-    <section class="w-full px-6 pb-2">
-      <div class="bg-white rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-extrabold text-[#2C5F2D] mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-map-location-dot text-[#FF6A00]"></i>
-          Buyer Psychology Map
-        </h2>
-        <div id="buyerMap" class="w-full h-80 rounded-lg z-0"></div>
-        <!-- Legend -->
-        <div class="flex flex-wrap items-center gap-4 mt-5">
-          <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded-full tone-Cozy"></span> Cozy 🧶</span>
-          <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded-full tone-Minimalist"></span> Minimalist 🌀</span>
-          <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded-full tone-Luxury"></span> Luxury 💎</span>
-          <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded-full tone-Budget"></span> Budget 🪙</span>
-          <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded-full tone-Warm"></span> Warm ☀️</span>
-        </div>
-      </div>
-    </section>
-    <!-- Footer -->
-    <footer class="w-full bg-[#2C5F2D] text-[#FDF8F4] py-8 px-6 mt-auto">
-      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-3">
-          <img src="autolist-logo.png" alt="AutoList Logo" class="h-10 w-10 rounded shadow-md">
-          <span class="font-extrabold text-2xl tracking-tight">AutoList Canada</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <img src="https://cdn-icons-png.flaticon.com/128/1828/1828640.png" alt="SSL Secure" class="h-7 w-7" title="SSL Secure">
-          <img src="https://cdn-icons-png.flaticon.com/128/726/726476.png" alt="Canadian Business" class="h-7 w-7" title="Proudly Canadian">
-          <img src="https://cdn-icons-png.flaticon.com/128/633/633611.png" alt="Trusted Marketplace" class="h-7 w-7" title="Trusted Marketplace">
-        </div>
-        <div class="text-xs opacity-90">
-          &copy; 2025 AutoList Canada. Trusted by Canadians coast to coast.
-        </div>
-      </div>
-    </footer>
-    <!-- Language Toggle -->
-    <div class="language-toggle">
-      <button id="langToggle" class="bg-white border border-orange-200 shadow-lg px-5 py-2 rounded-full text-[#2C5F2D] font-semibold flex items-center gap-2 hover:bg-orange-50 transition">
-        <span class="fa-solid fa-globe-americas"></span>
-        <span id="langLabel">EN</span> / <span id="langAltLabel" class="text-orange-400">FR</span>
+    <nav class="flex-1 px-4">
+      <ul class="space-y-1">
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">🏠</span> HOME
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">📊</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded bg-gray-800 font-semibold shadow-inner">
+            <span class="mr-3">📋</span> Listings
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">🤖</span> AI Tools
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">❓</span> How It Works
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">📝</span> FAQ
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">⬇️</span> Listing Import
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">📜</span> Terms & Service
+          </a>
+        </li>
+        <li>
+          <a href="#" class="flex items-center px-4 py-2 rounded transition hover:bg-gray-800">
+            <span class="mr-3">⚖️</span> Privacy / Legal
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="mt-auto flex flex-col items-center pb-6">
+      <button id="sidebar-collapse" class="lg:hidden mt-2 px-3 py-1 text-sm rounded bg-gray-800/80 hover:bg-gray-700/90">
+        ☰
       </button>
     </div>
-    <!-- AI Suggest Modal (Mock) -->
-    <div id="aiModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center hidden">
-      <div class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md flex flex-col items-center relative">
-        <button onclick="toggleAIModal(false)" class="absolute top-2 right-3 text-2xl text-gray-400 hover:text-red-400">&times;</button>
-        <h3 class="text-2xl font-bold mb-4 text-[#2C5F2D]">AI Suggestion</h3>
-        <p class="mb-6 text-center text-gray-700">[AI Suggestion Placeholder]<br>Here your best listing description or pricing tip will appear.</p>
-        <button onclick="toggleAIModal(false)" class="px-4 py-2 bg-[#FF6A00] text-white rounded-lg hover:bg-orange-700 transition">Close</button>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col min-h-screen ml-0 lg:ml-64 transition-all duration-200">
+
+    <!-- Top Header Bar -->
+    <header class="sticky top-0 z-20 bg-white/70 backdrop-blur border-b border-gray-200 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between px-4 py-3">
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight text-gray-900">Your Listings</h1>
+          <p class="text-sm text-gray-500">Welcome back, <span id="userName">User</span>! Syncing across marketplaces.</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <!-- Search bar -->
+          <div class="flex items-center bg-gray-100 border border-gray-300 rounded-md px-2 py-1">
+            <svg class="w-5 h-5 text-gray-400 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                 viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input id="searchInput" type="text" placeholder="Search listings..."
+                   class="bg-transparent outline-none text-sm w-32 md:w-48" oninput="filterListings()"/>
+          </div>
+          <!-- EN/FR toggle -->
+          <button id="langToggle"
+                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
+                  title="Toggle Language">EN / FR</button>
+          <!-- Customize (column selector) -->
+          <button onclick="alert('Column customization coming soon!')"
+                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
+                  title="Customize columns">Customize</button>
+          <!-- Bulk Edit -->
+          <button onclick="alert('Bulk edit coming soon!')"
+                  class="px-2 py-1 rounded border border-gray-300 text-gray-700 text-sm hover:bg-gray-50 transition"
+                  title="Bulk edit selected listings">Bulk Edit</button>
+          <!-- Pagination -->
+          <div class="flex items-center ml-2 space-x-1">
+            <button onclick="prevPage()" class="text-gray-500 hover:text-gray-800 px-1" title="Previous page">&lt;</button>
+            <span id="paginationStatus" class="text-xs text-gray-700">1 of 1</span>
+            <button onclick="nextPage()" class="text-gray-500 hover:text-gray-800 px-1" title="Next page">&gt;</button>
+          </div>
+        </div>
+      </div>
+      <!-- Status Filters -->
+      <div class="flex items-center px-4 py-2 bg-gray-50 border-t border-gray-100 space-x-4 overflow-x-auto text-sm">
+        <div class="flex items-center gap-2">
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100 active:bg-blue-200 text-blue-700 font-semibold bg-blue-50"
+                  data-status="all" onclick="setStatusFilter('all')">All</button>
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="active" onclick="setStatusFilter('active')">Active</button>
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="draft" onclick="setStatusFilter('draft')">Draft</button>
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="unlisted" onclick="setStatusFilter('unlisted')">Unlisted</button>
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="sold" onclick="setStatusFilter('sold')">Sold</button>
+          <button class="status-filter px-2 py-1 rounded hover:bg-blue-100" data-status="issues" onclick="setStatusFilter('issues')">Issues</button>
+        </div>
+        <label class="flex items-center ml-4 gap-2">
+          <input id="hideSold" type="checkbox" class="rounded focus:ring-blue-400" onchange="toggleHide('sold')" />
+          <span>Hide Sold</span>
+        </label>
+        <label class="flex items-center gap-2">
+          <input id="hideDraft" type="checkbox" class="rounded focus:ring-blue-400" onchange="toggleHide('draft')" />
+          <span>Hide Draft</span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Table Section -->
+    <main class="flex-1 overflow-x-auto p-2 sm:p-6">
+      <div class="bg-white rounded shadow-lg overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-3 py-2 w-8"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"/></th>
+              <th class="px-3 py-2 w-16">Image</th>
+              <th class="px-3 py-2 text-left cursor-pointer">Title</th>
+              <th class="px-3 py-2 w-32">Actions</th>
+              <th class="px-3 py-2 w-20">SKU</th>
+              <th class="px-3 py-2 w-24">Price</th>
+              <th class="px-3 py-2 w-44">Platforms</th>
+            </tr>
+          </thead>
+          <tbody id="listingsTable" class="divide-y divide-gray-100">
+            <!-- JS populates rows here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-4 px-4 bg-cover bg-center flex items-center justify-between text-xs text-gray-700 font-medium"
+            style="background-image: url('listings-background.png'); background-blend-mode:soft-light;">
+      <span>Misc Adjustments AI</span>
+      <span class="text-center">All Rights Reserved</span>
+      <span>Our Tools for Listing Dashboard</span>
+    </footer>
+  </div>
+
+  <!-- Modal (hidden by default) -->
+  <div id="modalBg" class="fixed inset-0 bg-black/40 modal-bg z-50 hidden items-center justify-center">
+    <div id="listingModal"
+         class="bg-white rounded shadow-2xl p-6 max-w-3xl w-full mx-4 flex flex-col gap-4 relative">
+      <button onclick="closeModal()" class="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 rounded-full w-8 h-8 flex items-center justify-center">
+        <span class="text-lg font-bold text-gray-700">&times;</span>
+      </button>
+      <div id="modalImages" class="grid grid-cols-3 gap-2 mb-4">
+        <!-- images injected here -->
+      </div>
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1">
+          <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
+          <div class="text-gray-600 mb-1"><span id="modalSKU"></span> &bull; <span id="modalPrice"></span> &bull; <span id="modalQty"></span></div>
+          <div id="modalPlatforms" class="flex gap-2 mb-2"></div>
+        </div>
+        <div class="flex flex-col gap-2 w-48">
+          <button class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded shadow-sm transition">Crosslist</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded shadow-sm transition">Edit</button>
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded shadow-sm transition">Duplicate</button>
+          <button class="bg-green-100 hover:bg-green-200 text-green-800 px-4 py-2 rounded shadow-sm transition">New Listing</button>
+        </div>
       </div>
     </div>
-  </main>
-  <!-- Scripts for interactivity -->
+  </div>
+
+  <!-- AI Suggestion Modal (inline suggestion tooltips) -->
+  <div id="aiSuggestionTooltip" class="fixed z-50 text-sm text-gray-700 bg-white border border-blue-200 rounded shadow-lg px-4 py-2 hidden"></div>
+
+  <!-- SVG ICONS -->
+  <svg style="display:none;">
+    <symbol id="ebay" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#e53238"/></symbol>
+    <symbol id="etsy" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#f1641e"/></symbol>
+    <symbol id="shopify" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#95bf47"/></symbol>
+    <symbol id="depop" viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="8" rx="2" fill="#ff2a2a"/></symbol>
+    <symbol id="poshmark" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#5d162f"/></symbol>
+    <symbol id="check" viewBox="0 0 20 20"><polyline points="5 10 9 14 15 6" fill="none" stroke="#22c55e" stroke-width="2"/></symbol>
+    <symbol id="cross" viewBox="0 0 20 20"><line x1="6" y1="6" x2="14" y2="14" stroke="#ef4444" stroke-width="2"/><line x1="14" y1="6" x2="6" y2="14" stroke="#ef4444" stroke-width="2"/></symbol>
+    <symbol id="sync" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" stroke="#fbbf24" stroke-width="2" fill="none"/><path d="M10 3v4m0 6v4m7-7h-4m-6 0H3" stroke="#fbbf24" stroke-width="2"/></symbol>
+  </svg>
+
+  <!-- Script Section -->
   <script>
-    // Table/Grid toggle
-    document.getElementById('tableViewBtn').addEventListener('click', function() {
-      document.getElementById('tableView').classList.remove('hidden');
-      document.getElementById('gridView').classList.add('hidden');
-      this.classList.add('active');
-      document.getElementById('gridViewBtn').classList.remove('active');
-    });
-    document.getElementById('gridViewBtn').addEventListener('click', function() {
-      document.getElementById('tableView').classList.add('hidden');
-      document.getElementById('gridView').classList.remove('hidden');
-      this.classList.add('active');
-      document.getElementById('tableViewBtn').classList.remove('active');
-    });
-
-    // Language toggle (UI only)
-    document.getElementById('langToggle').addEventListener('click', function() {
-      const label = document.getElementById('langLabel');
-      const alt = document.getElementById('langAltLabel');
-      if (label.textContent === 'EN') {
-        label.textContent = 'FR';
-        alt.textContent = 'EN';
-      } else {
-        label.textContent = 'EN';
-        alt.textContent = 'FR';
+    // SIMULATED DATA
+    const listings = [
+      {
+        title: "Marx Toys Western Cowboy Figure Set, 1960s Era",
+        sku: "00122",
+        price: 99.99,
+        image: "images/cowboy-figures.jpg",
+        platforms: ["eBay", "Poshmark"],
+        status: 'active',
+        qty: 1,
+        images: [
+          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg",
+          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg",
+          "images/cowboy-figures.jpg","images/cowboy-figures.jpg","images/cowboy-figures.jpg"
+        ]
+      },
+      {
+        title: "Mini-Sew Hand-Operated Sewing Machine – 1960s",
+        sku: "00126",
+        price: 49.99,
+        image: "images/sewing-machine.jpg",
+        platforms: ["eBay", "Poshmark"],
+        status: 'draft',
+        qty: 2,
+        images: [
+          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg",
+          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg",
+          "images/sewing-machine.jpg","images/sewing-machine.jpg","images/sewing-machine.jpg"
+        ]
+      },
+      {
+        title: "1980s Cabbage Patch Kids Watch – Regal Toy Sealed MOC",
+        sku: "00127",
+        price: 70.00,
+        image: "images/cabbage-watch.jpg",
+        platforms: ["eBay", "Poshmark"],
+        status: 'active',
+        qty: 1,
+        images: [
+          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg",
+          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg",
+          "images/cabbage-watch.jpg","images/cabbage-watch.jpg","images/cabbage-watch.jpg"
+        ]
       }
-    });
+    ];
+    // Simulate platform status per row
+    const allPlatforms = ["eBay", "Etsy", "Shopify", "Depop", "Poshmark"];
+    // To simulate sync status, randomize for demo
+    function getPlatformStatus(listing, platform) {
+      if (listing.platforms.includes(platform)) {
+        // Simulate synced for eBay, syncing for Poshmark
+        if (platform === "eBay") return {icon: "check", tip: "Last synced: 3h ago"};
+        if (platform === "Poshmark") return {icon: "sync", tip: "Syncing... (Last: 2m ago)"};
+        return {icon: "check", tip: "Last synced: 1h ago"};
+      }
+      return {icon: "cross", tip: "Not listed"};
+    }
+    // PAGINATION
+    let currentPage = 1;
+    const perPage = 10;
+    let filteredListings = [...listings];
 
-    // Inline editable (simulate only)
-    document.querySelectorAll('.editable').forEach(function(el) {
-      el.addEventListener('click', function() {
-        if (el.querySelector('input')) return;
-        const val = el.textContent;
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = val;
-        input.className = 'rounded border px-2 py-1 w-full';
-        el.textContent = '';
-        el.appendChild(input);
-        input.focus();
-        input.addEventListener('blur', function() {
-          el.textContent = input.value || val;
-        });
-        input.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') input.blur();
-        });
+    // FILTERING STATE
+    let statusFilter = "all";
+    let hideSold = false;
+    let hideDraft = false;
+
+    // RENDER LISTINGS TABLE
+    function renderListings() {
+      const table = document.getElementById('listingsTable');
+      table.innerHTML = '';
+      // Apply search and status filters
+      let rows = filteredListings.filter(l => {
+        if (statusFilter !== "all" && l.status !== statusFilter) return false;
+        if (hideSold && l.status === 'sold') return false;
+        if (hideDraft && l.status === 'draft') return false;
+        return true;
       });
-    });
+      // Pagination
+      const totalPages = Math.max(1, Math.ceil(rows.length / perPage));
+      currentPage = Math.min(currentPage, totalPages);
+      const start = (currentPage - 1) * perPage;
+      const pageRows = rows.slice(start, start + perPage);
+      // Table rows
+      for (let [idx, listing] of pageRows.entries()) {
+        const tr = document.createElement('tr');
+        tr.className = (listing.status === 'draft' ? 'bg-yellow-50' : '') + (listing.status === 'sold' ? 'opacity-60 line-through' : '');
+        tr.innerHTML = `
+          <td class="px-3 py-2 text-center"><input type="checkbox" class="rowCheckbox"/></td>
+          <td class="px-3 py-2"><img src="${listing.image}" alt="" class="w-12 h-12 object-cover rounded shadow" /></td>
+          <td class="px-3 py-2">
+            <button class="text-blue-700 font-semibold hover:underline" onclick="openModal(${start + idx})">${listing.title}</button>
+          </td>
+          <td class="px-3 py-2 flex gap-2">
+            <button class="tooltip" onclick="aiSuggest(this, ${start + idx})">
+              <span class="text-yellow-500">⚡</span>
+              <span class="tooltiptext">AI Suggest</span>
+            </button>
+            <button class="tooltip" onclick="editListing(${start + idx})">
+              <span>✏️</span>
+              <span class="tooltiptext">Edit</span>
+            </button>
+            <button class="tooltip" onclick="duplicateListing(${start + idx})">
+              <span>📄</span>
+              <span class="tooltiptext">Duplicate</span>
+            </button>
+            <button class="tooltip" onclick="deleteListing(${start + idx})">
+              <span>🗑️</span>
+              <span class="tooltiptext">Delete</span>
+            </button>
+          </td>
+          <td class="px-3 py-2 text-center">${listing.sku}</td>
+          <td class="px-3 py-2 text-right font-semibold">$${listing.price.toFixed(2)} <span class="text-xs font-normal text-gray-400">CAD</span></td>
+          <td class="px-3 py-2">
+            <div class="flex gap-2 items-center">
+              ${allPlatforms.map(platform => {
+                const {icon, tip} = getPlatformStatus(listing, platform);
+                return `<span class="tooltip" onclick="handlePlatformClick('${platform}')">
+                  <svg class="inline w-6 h-6 -mb-1" aria-label="${platform}">
+                    <use xlink:href="#${platform.toLowerCase()}"/>
+                  </svg>
+                  <svg class="w-4 h-4 absolute -ml-5 mt-4"><use xlink:href="#${icon}"/></svg>
+                  <span class="tooltiptext">${platform}: ${tip}</span>
+                </span>`;
+              }).join('')}
+            </div>
+          </td>
+        `;
+        table.appendChild(tr);
+      }
+      // Pagination status
+      document.getElementById('paginationStatus').textContent = `${currentPage} of ${totalPages}`;
+    }
+    // FILTER LOGIC
+    function filterListings() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      filteredListings = listings.filter(l =>
+        l.title.toLowerCase().includes(q) ||
+        l.sku.toLowerCase().includes(q) ||
+        String(l.price).includes(q)
+      );
+      currentPage = 1;
+      renderListings();
+    }
+    function setStatusFilter(status) {
+      statusFilter = status;
+      document.querySelectorAll('.status-filter').forEach(btn =>
+        btn.classList.toggle('bg-blue-50', btn.dataset.status === status)
+      );
+      renderListings();
+    }
+    function toggleHide(type) {
+      if (type === 'sold') hideSold = document.getElementById('hideSold').checked;
+      if (type === 'draft') hideDraft = document.getElementById('hideDraft').checked;
+      renderListings();
+    }
+    // PAGINATION CONTROLS
+    function nextPage() { currentPage++; renderListings(); }
+    function prevPage() { if (currentPage > 1) currentPage--; renderListings(); }
+    // SELECT ALL
+    function toggleSelectAll(checkbox) {
+      document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = checkbox.checked);
+    }
 
-    // Bulk action bar logic
-    function updateBulkBar() {
-      const checked = document.querySelectorAll('.rowCheckbox:checked').length;
-      const bar = document.getElementById('bulkActionBar');
-      if (checked > 0) {
-        bar.classList.remove('hidden');
-        bar.querySelector('span').textContent = checked + ' selected';
-      } else {
-        bar.classList.add('hidden');
+    // MODAL LOGIC
+    function openModal(idx) {
+      const listing = filteredListings[idx];
+      document.getElementById('modalTitle').textContent = listing.title;
+      document.getElementById('modalSKU').textContent = 'SKU: ' + listing.sku;
+      document.getElementById('modalPrice').textContent = '$' + listing.price.toFixed(2) + ' CAD';
+      document.getElementById('modalQty').textContent = 'Qty: ' + (listing.qty || 1);
+      // Images
+      const imgs = listing.images || [listing.image];
+      document.getElementById('modalImages').innerHTML =
+        imgs.map(src => `<img src="${src}" alt="" class="w-full h-24 object-cover rounded shadow" />`).join('');
+      // Platforms
+      document.getElementById('modalPlatforms').innerHTML =
+        allPlatforms.map(platform => {
+          const {icon, tip} = getPlatformStatus(listing, platform);
+          return `<span class="tooltip">
+            <svg class="inline w-7 h-7" aria-label="${platform}">
+              <use xlink:href="#${platform.toLowerCase()}"/>
+            </svg>
+            <svg class="w-4 h-4 absolute -ml-6 mt-5"><use xlink:href="#${icon}"/></svg>
+            <span class="tooltiptext">${platform}: ${tip}</span>
+          </span>`;
+        }).join('');
+      document.getElementById('modalBg').classList.remove('hidden');
+      document.getElementById('modalBg').classList.add('flex');
+    }
+    function closeModal() {
+      document.getElementById('modalBg').classList.add('hidden');
+      document.getElementById('modalBg').classList.remove('flex');
+    }
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('modalBg')) closeModal();
+    }
+
+    // AI SUGGESTION SIMULATION
+    function aiSuggest(btn, idx) {
+      // Simulate async call & show suggestion tooltip near the button
+      const listing = filteredListings[idx];
+      const tooltip = document.getElementById('aiSuggestionTooltip');
+      tooltip.innerHTML = `
+        <strong>AI Suggestions:</strong><br/>
+        &bull; <span class="text-blue-800">Title:</span> "${listing.title.replace(/(\w{6,})/, '$1 (Enhanced)')}"<br/>
+        &bull; <span class="text-green-700">Price:</span> $${(listing.price * 1.07).toFixed(2)}<br/>
+        &bull; <span class="text-purple-700">Tags:</span> #vintage #canada #collectible<br/>
+        &bull; <span class="text-pink-700">Call-to-Action:</span> "Claim this rare find today!"<br/>
+        <button class="mt-2 bg-blue-600 text-white px-3 py-1 rounded shadow hover:bg-blue-700" onclick="applyAISuggestion(${idx})">Apply All</button>
+      `;
+      // Position tooltip
+      const rect = btn.getBoundingClientRect();
+      tooltip.style.top = (window.scrollY + rect.bottom + 6) + 'px';
+      tooltip.style.left = (window.scrollX + rect.left - 40) + 'px';
+      tooltip.classList.remove('hidden');
+      setTimeout(() => tooltip.classList.add('hidden'), 4500);
+    }
+    function applyAISuggestion(idx) {
+      // For demo, just close tooltip and show alert
+      document.getElementById('aiSuggestionTooltip').classList.add('hidden');
+      alert('AI suggestions applied! (Simulation)');
+    }
+
+    // Platform click handler
+    function handlePlatformClick(platform) {
+      alert(`Connect or manage ${platform} integration (Simulation)`);
+    }
+
+    // Dummy edit/duplicate/delete
+    function editListing(idx) { alert('Edit Listing (Simulation)'); }
+    function duplicateListing(idx) { alert('Duplicate Listing (Simulation)'); }
+    function deleteListing(idx) {
+      if (confirm('Delete this listing?')) {
+        listings.splice(idx, 1);
+        filterListings();
       }
     }
-    document.querySelectorAll('.rowCheckbox').forEach(cb =>
-      cb.addEventListener('change', updateBulkBar)
-    );
-    document.getElementById('selectAll').addEventListener('change', function() {
-      document.querySelectorAll('.rowCheckbox').forEach(cb => { cb.checked = this.checked; });
-      updateBulkBar();
-    });
 
-    // AI Suggest Modal logic
-    function toggleAIModal(show) {
-      document.getElementById('aiModal').classList.toggle('hidden', !show);
-    }
-    document.querySelectorAll('.ai-btn').forEach(btn =>
-      btn.addEventListener('click', () => toggleAIModal(true))
-    );
+    // SIDEBAR COLLAPSE (mobile)
+    document.getElementById('sidebar-collapse').onclick = () => {
+      document.getElementById('sidebar').classList.toggle('-translate-x-64');
+    };
 
-    // Leaflet map setup for Buyer Psychology Map
-    document.addEventListener('DOMContentLoaded', function () {
-      var map = L.map('buyerMap', {
-        zoomControl: false,
-        attributionControl: false,
-        dragging: true,
-        scrollWheelZoom: false,
-      }).setView([56.1304, -106.3468], 4);
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        minZoom: 3,
-        maxZoom: 8
-      }).addTo(map);
-
-      // Mock data: tone bubbles
-      const tones = [
-        { name: "Minimalist", emoji: "🌀", color: "#BCE3DA", center: [49.2827, -123.1207], count: 18 }, // BC
-        { name: "Cozy", emoji: "🧶", color: "#FEC89A", center: [53.5461, -113.4938], count: 11 }, // Prairies
-        { name: "Luxury", emoji: "💎", color: "#F7E9E3", center: [43.6532, -79.3832], count: 21 }, // Toronto
-        { name: "Warm", emoji: "☀️", color: "#FFF1C9", center: [46.8139, -71.2080], count: 14 }, // Quebec
-        { name: "Budget", emoji: "🪙", color: "#F5E8DD", center: [44.6819, -63.7443], count: 9 }, // Maritimes
-      ];
-      tones.forEach(function(tone, idx) {
-        var circle = L.circle(tone.center, {
-          color: tone.color,
-          fillColor: tone.color,
-          fillOpacity: 0.7,
-          radius: 20000 + (tone.count * 1500),
-          className: `cursor-pointer tone-marker-${tone.name}`
-        }).addTo(map);
-        circle.bindTooltip(`<span style="font-size: 1.1em;">${tone.emoji} <b>${tone.name}</b> (${tone.count})</span>`, {permanent:false});
-        circle.on('click', function() {
-          // Simulate filter (UI only)
-          alert('Filter: ' + tone.name + ' listings');
-        });
-      });
-    });
+    // INIT
+    window.onload = () => {
+      renderListings();
+      setStatusFilter("all");
+    };
   </script>
 </body>
 </html>
-<!-- Full code ends -->
