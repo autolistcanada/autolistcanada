@@ -127,5 +127,180 @@
       <a href="terms.html" class="underline">Terms of Service</a>
     </footer>
   </main>
+  <script>
+// =====================
+// AutolistCanada Listings Dashboard Logic
+// =====================
+(function() {
+  // --- Helper Functions ---
+  function normalize(str) {
+    return str ? str.toLowerCase() : '';
+  }
+  function show(el) {
+    el.classList.remove('hidden');
+  }
+  function hide(el) {
+    el.classList.add('hidden');
+  }
+  function matchesText(listing, text) {
+    const title = normalize(listing.dataset.title || listing.querySelector('.title')?.textContent);
+    const tags = normalize(listing.dataset.tags || listing.querySelector('.tags')?.textContent);
+    return title.includes(text) || tags.includes(text);
+  }
+  function isSold(listing) {
+    const title = normalize(listing.dataset.title || listing.querySelector('.title')?.textContent);
+    const tags = normalize(listing.dataset.tags || listing.querySelector('.tags')?.textContent);
+    return title.includes('sold') || tags.includes('sold');
+  }
+  function hasPlatform(listing, platform) {
+    const platforms = listing.querySelector('.platforms');
+    if (!platforms) return false;
+    if (platform === 'ebay') return platforms.innerHTML.includes('ebay-logo.png');
+    if (platform === 'poshmark') return platforms.innerHTML.includes('poshmark-logo.png');
+    if (platform === 'facebook') return platforms.innerHTML.includes('facebook-logo.png');
+    return false;
+  }
+
+  // --- 1. Search Bar ---
+  const searchInput = document.getElementById('listingSearch');
+  const listingsSection = document.getElementById('listingsSection');
+  function getListings() {
+    return Array.from(listingsSection.querySelectorAll('.listing'));
+  }
+  function filterListings() {
+    const searchText = normalize(searchInput?.value.trim() || '');
+    const platform = platformFilter?.value || 'all';
+    const hideSold = hideSoldToggle?.checked || false;
+    getListings().forEach(listing => {
+      let visible = true;
+      if (searchText && !matchesText(listing, searchText)) visible = false;
+      if (platform !== 'all' && !hasPlatform(listing, platform)) visible = false;
+      if (hideSold && isSold(listing)) visible = false;
+      listing.style.display = visible ? '' : 'none';
+    });
+  }
+  if (searchInput) searchInput.addEventListener('input', filterListings);
+
+  // --- 2. Platform Dropdown ---
+  const platformFilter = document.getElementById('platformFilter');
+  if (platformFilter) platformFilter.addEventListener('change', filterListings);
+
+  // --- 3. Platform Connect Buttons ---
+  function setupPlatformConnectButton(id, ringClass) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const connectedStatus = btn.querySelector('.connected-status');
+    btn.addEventListener('click', function() {
+      const isConnected = !connectedStatus.classList.contains('hidden');
+      if (isConnected) {
+        hide(connectedStatus);
+        btn.classList.remove('ring-green', 'ring-pink', 'ring-blue');
+      } else {
+        show(connectedStatus);
+        btn.classList.remove('ring-green', 'ring-pink', 'ring-blue');
+        btn.classList.add(ringClass);
+      }
+    });
+  }
+  setupPlatformConnectButton('connect-ebay', 'ring-green');
+  setupPlatformConnectButton('connect-poshmark', 'ring-pink');
+  setupPlatformConnectButton('connect-facebook', 'ring-blue');
+
+  // --- 4. Hide Sold Listings ---
+  const hideSoldToggle = document.getElementById('hideSoldToggle');
+  if (hideSoldToggle) hideSoldToggle.addEventListener('change', filterListings);
+
+  // --- 5. View Toggle (Grid/List) ---
+  const gridViewBtn = document.getElementById('gridView');
+  const listViewBtn = document.getElementById('listView');
+  function setView(mode) {
+    if (!listingsSection) return;
+    if (mode === 'grid') {
+      listingsSection.classList.remove('flex', 'flex-col');
+      listingsSection.classList.add('grid', 'grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-4');
+    } else {
+      listingsSection.classList.remove('grid', 'grid-cols-1', 'sm:grid-cols-2', 'lg:grid-cols-3', 'gap-4');
+      listingsSection.classList.add('flex', 'flex-col');
+    }
+  }
+  if (gridViewBtn) {
+    gridViewBtn.addEventListener('click', function() {
+      setView('grid');
+      gridViewBtn.classList.add('bg-gray-200');
+      listViewBtn?.classList.remove('bg-gray-200');
+    });
+  }
+  if (listViewBtn) {
+    listViewBtn.addEventListener('click', function() {
+      setView('list');
+      listViewBtn.classList.add('bg-gray-200');
+      gridViewBtn?.classList.remove('bg-gray-200');
+    });
+  }
+
+  // --- 6. AI Tool Buttons Per Listing ---
+  function setupAIActions() {
+    if (!listingsSection) return;
+    listingsSection.addEventListener('click', function(e) {
+      const btn = e.target.closest('.ai-title, .ai-description');
+      if (!btn) return;
+      const title = btn.dataset.title || btn.closest('.listing')?.dataset.title || '';
+      let msg = '';
+      if (btn.classList.contains('ai-title')) {
+        msg = `AI Title Suggestion Activated for "${title}"`;
+      } else {
+        msg = `AI Description Optimizer Running for "${title}"`;
+      }
+      showModal(msg);
+    });
+  }
+  // Simple Modal
+  let modalEl = null;
+  function showModal(message) {
+    if (!modalEl) {
+      modalEl = document.createElement('div');
+      modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30';
+      modalEl.innerHTML = `
+        <div class="bg-white px-6 py-4 rounded shadow-lg max-w-xs text-center">
+          <p id="modalMsg" class="mb-4 text-gray-800"></p>
+          <button id="modalClose" class="mt-2 px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">OK</button>
+        </div>
+      `;
+      document.body.appendChild(modalEl);
+      modalEl.querySelector('#modalClose').onclick = function() { hide(modalEl); };
+      modalEl.addEventListener('click', function(e) {
+        if (e.target === modalEl) hide(modalEl);
+      });
+    }
+    modalEl.querySelector('#modalMsg').textContent = message;
+    show(modalEl);
+  }
+  setupAIActions();
+
+  // --- 7. Buyer Psychology Map (Leaflet Markers) ---
+  function setupLeafletTooltips() {
+    if (!window.L || !window.L.map) return;
+    if (!window.psychologyMap || !window.psychologyMarkers) return;
+    window.psychologyMarkers.forEach(marker => {
+      marker.off('click');
+      marker.on('click', function(e) {
+        const tone = marker.options.tone;
+        if (!tone) return;
+        const popup = L.popup({ offset: [0, -10], closeButton: false })
+          .setLatLng(marker.getLatLng())
+          .setContent(`<span class="font-semibold" style="color:${tone.color};">${tone.name}</span> – <span>${tone.region}</span>`);
+        window.psychologyMap.openPopup(popup);
+      });
+    });
+  }
+  if (window.L && window.psychologyMarkers) setupLeafletTooltips();
+  else window.addEventListener('DOMContentLoaded', setupLeafletTooltips);
+
+  // --- Initial UI State ---
+  filterListings();
+  // Optionally: Expose for debugging
+  window.autolistDashboard = { filterListings, setView, showModal };
+})();
+</script>
 </body>
 </html>
