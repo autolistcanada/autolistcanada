@@ -1,491 +1,719 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100 h-full">
+<html lang="en" class="bg-gray-50 text-gray-900 antialiased">
 <head>
-  <meta charset="UTF-8">
-  <title>AutoList Canada — Listings</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoList Canada – Listings Dashboard</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Heroicons -->
-  <script src="https://unpkg.com/feather-icons"></script>
-  <!-- Leaflet -->
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet.js CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f697.svg">
   <style>
-    .leaflet-container { min-height: 180px; border-radius: 0.5rem; }
-    .modal-bg { background: rgba(30,41,59,0.22); }
-    .sold-row td { color: #a1a1aa!important; }
-    .sold-row .sold-pill { background: #ef4444; color: #fff; }
-    .icon-btn { transition: transform 0.15s, opacity 0.15s; }
-    .icon-btn:hover { transform: scale(1.15); opacity: 0.85; }
-    .tooltip { @apply absolute z-20 text-xs bg-gray-800 text-white rounded px-2 py-1 shadow; }
+    /* Abstract flowing SVG sidebar background */
+    .sidebar-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .sidebar-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .has-tooltip:hover .tooltip, .has-tooltip:focus .tooltip { opacity: 1; }
+    .tooltip {
+      position: absolute;
+      z-index: 50;
+      background: #111827;
+      color: #fff;
+      border-radius: 0.375rem;
+      white-space: pre-line;
+      opacity: 0;
+      pointer-events: none;
+      padding: 0.5em 0.7em;
+      font-size: 0.85em;
+      margin-left: 0.5rem;
+      min-width: 150px;
+    }
+    @media (max-width: 1024px) {
+      .sidebar-sticky { position: fixed !important; left: 0; top: 0; height: 100vh; z-index: 50; }
+      .sidebar-hidden { transform: translateX(-100%); }
+      .sidebar-visible { transform: translateX(0); }
+    }
+    @media (max-width: 767px) {
+      .listing-row { flex-direction: column !important; align-items: flex-start !important; }
+      .listing-row > * { margin-bottom: 0.5rem; }
+      .listing-row-actions { flex-direction: row !important; }
+    }
   </style>
 </head>
-<body class="h-full">
-<div class="flex h-full min-h-screen">
-  <!-- SIDEBAR -->
-  <aside class="w-56 bg-white border-r border-gray-200 flex flex-col items-center py-8">
-    <img src="https://autolistcanada.ca/logo.svg" alt="AutoList Canada" class="mb-7 w-32">
-    <nav class="flex flex-col gap-3 mt-3 w-full px-6">
-      <a href="#" class="text-blue-700 font-bold flex gap-2 items-center py-2 pl-3 rounded hover:bg-blue-50">
-        <span data-feather="list"></span> Listings
+<body class="min-h-screen flex flex-col font-sans leading-relaxed transition-colors duration-200 bg-gray-50">
+<div class="flex w-full min-h-0">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar-sticky w-72 min-w-[15rem] bg-gradient-to-br from-green-100 via-yellow-50 to-green-50 shadow-lg border-r border-gray-200 flex flex-col px-0 py-0 overflow-y-auto transition-transform duration-200 sidebar-visible" aria-label="Sidebar Navigation">
+    <div class="sidebar-bg pointer-events-none">
+      <!-- Abstract SVG shapes for sidebar background -->
+      <svg width="100%" height="100%" viewBox="0 0 350 1200" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 h-full w-full">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#e5fbe6" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#fdf6b9" stop-opacity="0.55"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="110" cy="100" rx="100" ry="60" fill="url(#g1)" />
+        <ellipse cx="220" cy="300" rx="90" ry="55" fill="#fef3c7" fill-opacity="0.45"/>
+        <ellipse cx="80" cy="600" rx="120" ry="85" fill="#f6e9b4" fill-opacity="0.22"/>
+        <ellipse cx="170" cy="950" rx="140" ry="90" fill="#e3fce1" fill-opacity="0.3"/>
+        <ellipse cx="50" cy="1150" rx="95" ry="60" fill="#fef7d4" fill-opacity="0.3"/>
+        <!-- Abstract flowing path -->
+        <path d="M5,200 Q170,300 30,600 Q160,850 50,1150" stroke="#d1f5d3" stroke-width="28" fill="none" opacity="0.12"/>
+      </svg>
+    </div>
+    <header class="flex items-center gap-3 px-6 py-7 relative z-10">
+      <!-- Logo PNG -->
+      <img src="https://raw.githubusercontent.com/autolistcanada/autolistcanada/main/logo.png" alt="AutoList Canada Logo" class="w-12 h-12 rounded shadow border-2 border-green-300 bg-white" loading="lazy"/>
+      <span class="ml-2 text-2xl font-bold tracking-tight text-green-800 select-none">AutoList <span class="text-yellow-500">Canada</span></span>
+    </header>
+    <nav class="flex flex-col gap-1 px-1 relative z-10 font-medium">
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-blue-700 bg-blue-100 ring-2 ring-blue-400/60 font-semibold shadow transition-all">
+        <span class="text-base">📋</span><span>Listings</span>
       </a>
-      <a href="#" class="text-gray-700 flex gap-2 items-center py-2 pl-3 rounded hover:bg-blue-50">
-        <span data-feather="cpu"></span> AI Tools
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">🤖</span><span>AI Tools</span>
+        <span class="ml-auto px-2 py-0.5 rounded bg-yellow-100 text-yellow-900 text-xs font-semibold">Beta</span>
       </a>
-      <a href="#" class="text-gray-700 flex gap-2 items-center py-2 pl-3 rounded hover:bg-blue-50">
-        <span data-feather="help-circle"></span> How It Works
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">🏠</span><span>Dashboard</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">🧭</span><span>How It Works</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">📥</span><span>Import</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">❓</span><span>FAQ</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">📃</span><span>Terms</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-5 py-2 rounded-lg text-gray-700 hover:bg-green-50">
+        <span class="text-base">💲</span><span>Pricing</span>
       </a>
     </nav>
-    <div class="mt-auto text-xs text-gray-400 pb-2 pt-3">© 2025 AutoList Canada</div>
+    <div class="flex-grow"></div>
+    <footer class="relative z-10 px-6 pb-6 pt-8">
+      <div class="text-xs text-gray-500 flex flex-col gap-2">
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="font-semibold text-gray-700">PIPEDA:</span> All data stays local. AutoList will never sell your info.
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-block px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold text-xs">Our Tools for Listing Dashboard</span>
+        </div>
+        <nav class="flex gap-4 mb-2">
+          <a href="#" class="hover:underline">Terms</a>
+          <a href="#" class="hover:underline">Privacy</a>
+          <a href="#" class="hover:underline">Legal</a>
+          <a href="#" class="hover:underline">Feedback</a>
+        </nav>
+        <button class="w-full flex items-center justify-center px-4 py-2 rounded-md bg-yellow-400 text-yellow-900 font-semibold hover:bg-yellow-300 transition-colors text-sm shadow focus-visible:ring-2 focus-visible:ring-yellow-500 focus:outline-none" type="button">
+          <span class="mr-2">🤖</span> Misc AI Listing Adjustments
+        </button>
+      </div>
+    </footer>
+    <!-- Hamburger/collapse toggle (mobile) -->
+    <button id="sidebarCloseBtn" class="absolute top-4 right-4 bg-white border border-gray-300 rounded-full shadow p-2 text-lg lg:hidden" aria-label="Close sidebar" style="display:none;">✕</button>
   </aside>
-  <!-- MAIN PANEL -->
-  <main class="flex-1 flex flex-col">
-    <!-- TOPBAR -->
-    <header class="flex items-center px-7 py-4 bg-white border-b border-gray-200">
-      <div class="flex items-center gap-4">
-        <select class="bg-gray-100 text-gray-800 rounded px-2 py-1 border border-gray-300">
-          <option>Marketplace: All</option>
-          <option>eBay</option>
-          <option>Poshmark</option>
-          <option>Shopify</option>
-        </select>
-        <select id="items-per-page" class="bg-gray-100 text-gray-800 rounded px-2 py-1 border border-gray-300 ml-2">
-          <option>10/page</option>
-          <option>20/page</option>
-        </select>
+  <!-- Hamburger open button -->
+  <button id="sidebarOpenBtn" class="fixed top-4 left-4 z-50 lg:hidden bg-green-200 border border-green-400 rounded-full shadow p-2 text-2xl" aria-label="Open sidebar" style="display:none;">☰</button>
+  <!-- Main content area -->
+  <main class="flex-1 flex flex-col min-w-0 bg-gray-50">
+    <!-- Top Smart Filter/Toolbar -->
+    <section class="sticky top-0 z-20 bg-white border-b border-gray-200 px-4 md:px-6 py-4 flex flex-wrap items-center gap-4">
+      <!-- Marketplace filter (auto-detect, highlight) -->
+      <div class="flex items-center gap-2">
+        <label class="text-sm text-gray-600 font-semibold">Marketplaces:</label>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold text-xs">eBay</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-green-100 text-green-800 font-semibold text-xs">Shopify</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-semibold text-xs">Poshmark</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-violet-100 text-violet-700 font-semibold text-xs">Kijiji</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-200 text-gray-700 font-semibold text-xs">Etsy</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-yellow-100 text-yellow-800 font-semibold text-xs">Depop</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-200 text-blue-900 font-semibold text-xs">Facebook</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded bg-gray-700 text-white font-semibold text-xs">Grailed</span>
       </div>
-      <div class="ml-auto flex gap-2">
-        <button id="customize-btn" class="icon-btn relative group bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded">
-          <span data-feather="sliders"></span>
-          <span class="absolute tooltip left-1/2 -translate-x-1/2 -top-8 hidden group-hover:block">Customize</span>
-        </button>
-        <button id="bulk-edit-btn" class="icon-btn relative group bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded">
-          <span data-feather="edit-3"></span>
-          <span class="absolute tooltip left-1/2 -translate-x-1/2 -top-8 hidden group-hover:block">Bulk Edit</span>
-        </button>
-        <button id="wide-view-btn" class="icon-btn relative group bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded">
-          <span data-feather="maximize"></span>
-          <span class="absolute tooltip left-1/2 -translate-x-1/2 -top-8 hidden group-hover:block">Wide View</span>
-        </button>
-        <button id="hide-sold-btn" class="icon-btn relative group bg-gray-100 hover:bg-blue-100 px-3 py-2 rounded">
-          <span data-feather="eye-off"></span>
-          <span class="absolute tooltip left-1/2 -translate-x-1/2 -top-8 hidden group-hover:block">Hide Sold</span>
-        </button>
+      <!-- Items per page -->
+      <select id="perpage" class="border border-gray-300 rounded-md px-2 py-2 text-gray-700 bg-white shadow-sm text-sm">
+        <option>10/page</option>
+        <option>25/page</option>
+        <option>50/page</option>
+        <option>100/page</option>
+      </select>
+      <!-- Hide Sold toggle -->
+      <button class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 font-semibold shadow hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-gray-300 focus:outline-none text-sm" id="hideSoldBtn">Hide Sold</button>
+      <!-- Wide View toggle -->
+      <button class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 font-semibold shadow hover:bg-gray-100 focus-visible:ring-2 focus-visible:ring-gray-300 focus:outline-none text-sm" id="wideViewBtn">Wide View</button>
+      <!-- Bulk Edit, Customize -->
+      <button class="px-3 py-2 rounded-md bg-yellow-300 text-yellow-900 font-semibold shadow hover:bg-yellow-400 border-2 border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus:outline-none transition-colors text-sm" type="button">Bulk Edit</button>
+      <button class="px-3 py-2 rounded-md bg-green-500 text-white font-semibold shadow hover:bg-green-600 transition-colors focus-visible:ring-2 focus-visible:ring-green-400 focus:outline-none text-sm" type="button">Customize</button>
+      <div class="flex-grow"></div>
+      <!-- Smart autocomplete search (simulated) -->
+      <div class="relative flex items-center w-72 max-w-full">
+        <input id="smartSearch" type="search" placeholder="Search (title, tag, SKU)..."
+          class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 bg-white shadow-sm focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm pr-12" autocomplete="off"/>
+        <span class="absolute right-3 text-gray-400 pointer-events-none">🔍</span>
+        <!-- Simulated autocomplete dropdown -->
+        <div id="searchAutocomplete" class="absolute left-0 top-12 w-full bg-white border border-gray-200 rounded shadow mt-1 hidden z-30"></div>
       </div>
-    </header>
-    <div class="flex flex-1 overflow-hidden">
-      <!-- LISTINGS TABLE -->
-      <section id="table-panel" class="flex-1 p-6 overflow-auto transition-all duration-300 max-w-5xl">
-        <table class="min-w-full bg-white rounded-lg shadow border">
-          <thead class="bg-gray-50 border-b">
-            <tr>
-              <th></th>
-              <th class="text-left py-2 px-3">Title</th>
-              <th class="text-center py-2 px-3">Actions</th>
-              <th class="text-left py-2 px-3">SKU</th>
-              <th class="text-left py-2 px-3">Price</th>
-              <th class="text-left py-2 px-3">Platforms</th>
-            </tr>
-          </thead>
-          <tbody id="listing-table-body">
-          <!-- JS will render -->
-          </tbody>
-        </table>
+      <!-- Buyer intent filter (simulated) -->
+      <select id="buyerIntent" class="border border-gray-300 rounded-md px-2 py-2 text-gray-700 bg-white shadow-sm text-sm ml-2">
+        <option value="">All buyer intents</option>
+        <option value="high-conversion">High-Conversion Titles</option>
+        <option value="collector">Collector Appeal</option>
+        <option value="nostalgic">Nostalgic</option>
+        <option value="impulse">Impulse Buyer</option>
+      </select>
+      <!-- Greeting -->
+      <span class="ml-4 text-green-700 font-semibold text-base select-none">Welcome back, MapleSeller 🌲</span>
+    </section>
+    <!-- Bulk AI Control Panel -->
+    <section id="bulkBar" class="hidden sticky top-[4.2rem] z-30 bg-green-50 border-b border-green-300 flex items-center gap-3 px-6 py-2 shadow">
+      <span class="font-semibold text-green-700 text-sm" id="bulkBarCount">0 selected</span>
+      <button class="px-2 py-1 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition" id="bulkAIEditBtn">AI Relist</button>
+      <button class="px-2 py-1 rounded bg-yellow-600 text-white text-xs font-semibold hover:bg-yellow-700 transition" id="bulkAIPricingBtn">AI Price Adjust</button>
+      <button class="px-2 py-1 rounded bg-violet-600 text-white text-xs font-semibold hover:bg-violet-700 transition" id="bulkAISyncBtn">Sync Toggle</button>
+      <button class="px-2 py-1 rounded bg-gray-600 text-white text-xs font-semibold hover:bg-gray-700 transition" id="bulkArchiveBtn">Archive/Delist</button>
+      <button class="px-2 py-1 rounded bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 transition" id="bulkTagBtn">Tag Reclassify</button>
+      <span class="ml-3 italic text-xs text-gray-600">Smart Preview: “This will relist 2 items to eBay with optimized titles”</span>
+      <button class="ml-auto underline text-xs text-gray-700" id="selectAllPagesBtn">Select all across pages</button>
+    </section>
+    <!-- Main Table & Analytics -->
+    <section class="flex-1 flex flex-col lg:flex-row gap-0 min-h-0">
+      <!-- Listings Table -->
+      <section class="flex-1 min-w-0 p-2 md:p-4">
+        <div class="bg-white rounded-xl shadow-lg overflow-x-auto border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200 text-sm md:text-base">
+            <thead>
+              <tr class="bg-gray-50">
+                <th class="px-2 py-3 text-left">
+                  <input type="checkbox" id="selectAll" class="w-5 h-5 rounded border-gray-300 accent-blue-600"/>
+                </th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Image</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Title & Subtitle</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">SKU</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Price</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Platforms</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Status</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">AI Trust</th>
+                <th class="px-4 py-3 font-semibold text-left text-gray-800">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="listing-table-body" class="bg-white">
+              <!-- JS renders rows -->
+            </tbody>
+          </table>
+          <!-- Pagination Controls -->
+          <nav class="flex flex-wrap justify-between items-center p-4 border-t border-gray-100 bg-gray-50 gap-2">
+            <button class="px-3 py-1 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-blue-300 focus:outline-none transition" aria-label="Previous Page" disabled>&larr; Prev</button>
+            <span class="text-gray-700 font-semibold">Page 1 of 1</span>
+            <button class="px-3 py-1 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 focus-visible:ring-2 focus-visible:ring-blue-300 focus:outline-none transition" aria-label="Next Page" disabled>Next &rarr;</button>
+          </nav>
+        </div>
       </section>
-      <!-- RIGHT PANEL -->
-      <aside class="w-96 min-w-64 bg-white border-l border-gray-200 p-5 pr-1 flex flex-col gap-5">
+      <!-- Right Sidebar (Analytics) -->
+      <aside class="hidden lg:flex flex-col w-full max-w-sm min-w-[21rem] bg-white border-l border-gray-200 px-4 py-6 gap-8">
         <div>
-          <div class="font-bold text-gray-700 mb-2">Sales Psychology Map</div>
-          <div id="sales-map" class="rounded shadow mb-3" style="height:180px;"></div>
+          <h2 class="text-lg font-semibold mb-2 text-blue-900">Sales Psychology Map</h2>
+          <div id="canada-map" class="rounded-lg border border-gray-200 shadow aspect-[4/3] min-h-[240px] w-full overflow-hidden"></div>
         </div>
         <div>
-          <div class="font-bold text-gray-700 mb-2">World Market Analytics</div>
-          <canvas id="analytics-bar" height="110"></canvas>
+          <h2 class="text-lg font-semibold mb-2 text-blue-900">World Market Analytics</h2>
+          <canvas id="market-bar-chart" class="rounded-lg bg-gray-50 border border-gray-200 shadow w-full h-48"></canvas>
+          <div class="mt-2 text-xs text-blue-900 italic">Your listings perform best in Canada + UK (tone: cozy/minimalist). Test French in Quebec!</div>
         </div>
       </aside>
+    </section>
+    <!-- Right-click AI tools menu (simulated) -->
+    <div id="aiContextMenu" class="fixed z-50 bg-white border border-gray-300 rounded shadow-lg py-1 text-sm hidden">
+      <button class="block w-full text-left px-4 py-2 hover:bg-green-50" onclick="alert('Analyzing listing...')">Analyze Listing</button>
+      <button class="block w-full text-left px-4 py-2 hover:bg-green-50" onclick="alert('Suggesting new title...')">Suggest new title</button>
+      <button class="block w-full text-left px-4 py-2 hover:bg-green-50" onclick="alert('Buyer mood prediction: Impulse')">Show buyer mood prediction</button>
+      <button class="block w-full text-left px-4 py-2 hover:bg-green-50" onclick="alert('Explaining why not converting...')">Explain why not converting</button>
+      <button class="block w-full text-left px-4 py-2 hover:bg-green-50" onclick="alert('Tone mismatch detected!')">Tone mismatch detector</button>
     </div>
   </main>
 </div>
-
-<!-- LISTING MODAL -->
-<div id="listing-modal-bg" class="modal-bg fixed inset-0 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300">
-  <div id="listing-modal" class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md transform scale-95 transition-all duration-300 opacity-0">
-    <div class="flex justify-between items-center mb-5">
-      <h2 class="text-lg font-bold">Edit Listing</h2>
-      <button id="listing-modal-close" class="icon-btn"><span data-feather="x"></span></button>
-    </div>
-    <form id="listing-edit-form" class="space-y-4">
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Title</label>
-        <input id="edit-title" type="text" class="w-full border rounded px-3 py-2" required>
-      </div>
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Price</label>
-        <input id="edit-price" type="number" min="0" step="0.01" class="w-full border rounded px-3 py-2" required>
-      </div>
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Tags</label>
-        <input id="edit-tags" type="text" class="w-full border rounded px-3 py-2">
-      </div>
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Platforms</label>
-        <div class="flex gap-3 mt-1">
-          <label><input type="checkbox" class="edit-platform" value="eBay"> eBay</label>
-          <label><input type="checkbox" class="edit-platform" value="Poshmark"> Poshmark</label>
-          <label><input type="checkbox" class="edit-platform" value="Shopify"> Shopify</label>
-          <label><input type="checkbox" class="edit-platform" value="Kijiji"> Kijiji</label>
+<!-- Responsive: Analytics below on mobile -->
+<aside class="mobile-analytics flex-col gap-8 px-4 pb-8 bg-white border-t border-gray-200 mt-4" style="display:none">
+  <div>
+    <h2 class="text-lg font-semibold mb-2 text-blue-900">Sales Psychology Map</h2>
+    <div id="canada-map-mobile" class="rounded-lg border border-gray-200 shadow aspect-[4/3] min-h-[220px] w-full overflow-hidden"></div>
+  </div>
+  <div>
+    <h2 class="text-lg font-semibold mb-2 text-blue-900">World Market Analytics</h2>
+    <canvas id="market-bar-chart-mobile" class="rounded-lg bg-gray-50 border border-gray-200 shadow w-full h-48"></canvas>
+    <div class="mt-2 text-xs text-blue-900 italic">Your listings perform best in Canada + UK (tone: cozy/minimalist). Test French in Quebec!</div>
+  </div>
+</aside>
+<!-- Listing modal -->
+<div id="modal" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center hidden">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl relative">
+    <button class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold" id="modalCloseBtn" aria-label="Close">&times;</button>
+    <h3 class="text-xl font-semibold mb-6 text-blue-900">Edit Listing</h3>
+    <form id="modalForm" class="grid gap-4">
+      <div class="flex gap-3 items-center">
+        <img id="modalImage" class="w-16 h-16 rounded object-cover border border-gray-300 mb-2" src="" alt="Listing image" />
+        <div class="flex-1">
+          <input type="text" id="modalTitle" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 font-bold text-lg" placeholder="Title" required>
+          <input type="text" id="modalSubtitle" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Subtitle"/>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <label class="flex items-center cursor-pointer">
-          <input id="edit-sold" type="checkbox" class="sr-only">
-          <span class="w-10 h-6 flex items-center bg-gray-200 rounded-full p-1 duration-300" id="sold-toggle-bg">
-            <span class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300" id="sold-toggle-dot"></span>
-          </span>
-          <span class="ml-2 text-sm text-gray-600">Mark as SOLD</span>
-        </label>
+      <textarea id="modalDesc" class="border border-gray-300 rounded-md px-3 py-2" rows="3" placeholder="Description"></textarea>
+      <input type="number" step="0.01" id="modalPrice" class="border border-gray-300 rounded-md px-3 py-2" placeholder="Price" required>
+      <input type="text" id="modalSKU" class="border border-gray-300 rounded-md px-3 py-2" placeholder="SKU/ID" />
+      <select id="modalPlatforms" multiple class="border border-gray-300 rounded-md px-2 py-2">
+        <option>eBay</option>
+        <option>Poshmark</option>
+        <option>Shopify</option>
+        <option>Kijiji</option>
+        <option>Etsy</option>
+        <option>Depop</option>
+        <option>Facebook</option>
+        <option>Grailed</option>
+      </select>
+      <input id="modalTags" class="border border-gray-300 rounded-md px-3 py-2" placeholder="Comma-separated tags" />
+      <select id="modalStatus" class="border border-gray-300 rounded-md px-2 py-2">
+        <option>Active</option>
+        <option>Draft</option>
+        <option>Sold</option>
+        <option>AUTO-AI LOCKED</option>
+      </select>
+      <div class="flex gap-2 items-center">
+        <label class="font-semibold">AI Trust Score: </label>
+        <span id="modalTrust" class="ml-2 px-2 py-0.5 rounded bg-green-100 text-green-800 font-semibold text-sm">Clarity: 94</span>
+        <span class="ml-2 px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold text-sm">Conversion: 88</span>
       </div>
-      <div class="flex gap-4 justify-end pt-3">
-        <button type="button" id="listing-modal-cancel" class="px-4 py-2 rounded border text-gray-600 hover:bg-gray-100">Cancel</button>
-        <button type="submit" class="px-5 py-2 rounded bg-blue-700 text-white hover:bg-blue-800">Save</button>
+      <div class="flex flex-row-reverse">
+        <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Save</button>
       </div>
+      <div class="text-xs mt-2 text-green-800">AI suggestion: “Try shortening the title for clarity.”</div>
     </form>
   </div>
 </div>
-
-<!-- BULK EDIT MODAL -->
-<div id="bulk-modal-bg" class="modal-bg fixed inset-0 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300">
-  <div id="bulk-modal" class="bg-white rounded-lg shadow-xl p-7 w-full max-w-lg transform scale-95 transition-all duration-300 opacity-0">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-bold">Bulk Edit Listings</h2>
-      <button id="bulk-modal-close" class="icon-btn"><span data-feather="x"></span></button>
-    </div>
-    <form id="bulk-edit-form" class="space-y-4">
-      <div>
-        <label class="block text-sm text-gray-600 mb-2">Select Listings</label>
-        <div id="bulk-listings" class="grid grid-cols-2 gap-y-2 gap-x-3"></div>
-      </div>
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">New Price</label>
-        <input id="bulk-price" type="number" min="0" step="0.01" class="w-full border rounded px-3 py-2">
-      </div>
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Platforms</label>
-        <div class="flex gap-3 mt-1">
-          <label><input type="checkbox" class="bulk-platform" value="eBay"> eBay</label>
-          <label><input type="checkbox" class="bulk-platform" value="Poshmark"> Poshmark</label>
-          <label><input type="checkbox" class="bulk-platform" value="Shopify"> Shopify</label>
-          <label><input type="checkbox" class="bulk-platform" value="Kijiji"> Kijiji</label>
-        </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <label class="flex items-center cursor-pointer">
-          <input id="bulk-sold" type="checkbox" class="sr-only">
-          <span class="w-10 h-6 flex items-center bg-gray-200 rounded-full p-1 duration-300" id="bulk-sold-toggle-bg">
-            <span class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300" id="bulk-sold-toggle-dot"></span>
-          </span>
-          <span class="ml-2 text-sm text-gray-600">Mark as SOLD</span>
-        </label>
-      </div>
-      <div class="flex justify-end pt-3">
-        <button type="button" id="bulk-modal-cancel" class="px-4 py-2 rounded border text-gray-600 hover:bg-gray-100">Cancel</button>
-        <button type="submit" class="px-5 py-2 rounded bg-blue-700 text-white hover:bg-blue-800">Apply to Selected</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- CUSTOMIZE MODAL (Placeholder) -->
-<div id="customize-modal-bg" class="modal-bg fixed inset-0 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-300">
-  <div id="customize-modal" class="bg-white rounded-lg shadow-xl p-7 w-full max-w-md transform scale-95 transition-all duration-300 opacity-0">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-bold">Customize Filters (Coming Soon)</h2>
-      <button id="customize-modal-close" class="icon-btn"><span data-feather="x"></span></button>
-    </div>
-    <div class="text-gray-600 py-5 text-center">Filter and customize your view! This feature is on the way.</div>
-    <div class="flex justify-end pt-3">
-      <button type="button" id="customize-modal-cancel" class="px-4 py-2 rounded border text-gray-600 hover:bg-gray-100">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- SCRIPTS -->
 <script>
-//--- Demo Data ---
-let listings = [
+// Platform, tag, and trust score simulation
+const platformStyles = {
+  "eBay": "bg-blue-100 text-blue-800",
+  "Poshmark": "bg-rose-100 text-rose-700",
+  "Shopify": "bg-green-100 text-green-700",
+  "Kijiji": "bg-violet-100 text-violet-700",
+  "Etsy": "bg-gray-200 text-gray-700",
+  "Depop": "bg-yellow-100 text-yellow-800",
+  "Facebook": "bg-blue-200 text-blue-900",
+  "Grailed": "bg-gray-700 text-white"
+};
+const listings = [
   {
     id: 1,
-    img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=80&q=80",
     title: "Vintage Leather Jacket",
-    sku: "VJ-001",
+    subtitle: "Classic 80s, AI Tone: Confident, direct",
+    status: "Active",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=96&q=80",
+    sku: "VLJ-CA-001",
     price: 79.99,
-    tags: "jacket,leather,vintage",
-    platforms: ["eBay", "Poshmark"],
-    sold: false
+    aiPrice: "$82–88",
+    platforms: [
+      { name: "eBay", sync: "✅" },
+      { name: "Poshmark", sync: "⚠️" }
+    ],
+    tags: ["Vintage", "Leather", "Unisex"],
+    trust: { clarity: 92, conversion: 88, consistency: 95 },
+    statusTag: "ACTIVE",
+    selected: false
   },
   {
     id: 2,
-    img: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=80&q=80",
     title: "Retro Sneakers",
-    sku: "RS-002",
+    subtitle: "Streetwear | AI Tone: Nostalgic, energetic",
+    status: "Draft",
+    image: "",
+    sku: "RS-CA-002",
     price: 120.00,
-    tags: "shoes,sneakers,retro",
-    platforms: ["Shopify"],
-    sold: false
+    aiPrice: "$120–135",
+    platforms: [
+      { name: "Shopify", sync: "✅" }
+    ],
+    tags: ["Streetwear", "Unisex"],
+    trust: { clarity: 97, conversion: 87, consistency: 93 },
+    statusTag: "DRAFT",
+    selected: false
   },
   {
     id: 3,
-    img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=80&q=80",
     title: "Canvas Tote Bag",
-    sku: "TB-003",
+    subtitle: "Eco-friendly, AI Tone: Minimalist",
+    status: "Sold",
+    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=96&q=80",
+    sku: "CTB-CA-003",
     price: 29.50,
-    tags: "bag,tote,canvas",
-    platforms: ["Kijiji", "eBay"],
-    sold: true
+    aiPrice: "$32–35",
+    platforms: [
+      { name: "Kijiji", sync: "❌" },
+      { name: "eBay", sync: "✅" }
+    ],
+    tags: ["Canvas"],
+    trust: { clarity: 89, conversion: 81, consistency: 88 },
+    statusTag: "SOLD",
+    selected: false
+  },
+  {
+    id: 4,
+    title: "AI-Secure Listing",
+    subtitle: "AI-Locked by system | Tone: Precise, guarded",
+    status: "AUTO-AI LOCKED",
+    image: "",
+    sku: "AIS-LOCK-004",
+    price: 89.00,
+    aiPrice: "$91–95",
+    platforms: [
+      { name: "Etsy", sync: "✅" }
+    ],
+    tags: ["AI", "Security"],
+    trust: { clarity: 88, conversion: 75, consistency: 99 },
+    statusTag: "AUTO-AI LOCKED",
+    selected: false
   }
 ];
 
-let hideSold = false;
-let wideView = false;
-
-//--- Render Listings Table ---
 function renderListings() {
   const tbody = document.getElementById('listing-table-body');
-  tbody.innerHTML = "";
-  listings.forEach((listing, idx) => {
-    if (hideSold && listing.sold) return;
-    tbody.innerHTML += `
-      <tr class="${listing.sold ? 'sold-row' : ''} group hover:bg-blue-50 transition cursor-pointer" data-idx="${idx}">
-        <td class="p-2"><img src="${listing.img}" alt="${listing.title}" class="w-12 h-12 rounded object-cover"></td>
-        <td class="py-2 px-3">
-          <span class="font-semibold ${listing.sold ? 'line-through' : ''}">${listing.title}</span>
-          ${listing.sold ? '<span class="sold-pill ml-2 px-2 py-1 text-xs rounded">SOLD</span>' : ''}
-        </td>
-        <td class="py-2 px-3 flex gap-2 items-center">
-          <button class="icon-btn relative group edit-btn" title="Edit">
-            <span data-feather="edit-3"></span>
-            <span class="absolute tooltip left-1/2 -translate-x-1/2 top-7 hidden group-hover:block">Edit</span>
-          </button>
-          <button class="icon-btn relative group" title="Sync">
-            <span data-feather="refresh-cw"></span>
-            <span class="absolute tooltip left-1/2 -translate-x-1/2 top-7 hidden group-hover:block">Sync</span>
-          </button>
-          <button class="icon-btn relative group" title="Clone">
-            <span data-feather="copy"></span>
-            <span class="absolute tooltip left-1/2 -translate-x-1/2 top-7 hidden group-hover:block">Clone</span>
-          </button>
-          <button class="icon-btn relative group" title="Delete">
-            <span data-feather="trash-2"></span>
-            <span class="absolute tooltip left-1/2 -translate-x-1/2 top-7 hidden group-hover:block">Delete</span>
-          </button>
-        </td>
-        <td class="py-2 px-3">${listing.sku}</td>
-        <td class="py-2 px-3">
-          <span class="${listing.sold ? 'line-through' : ''}">$${listing.price.toFixed(2)}</span>
-        </td>
-        <td class="py-2 px-3">${listing.platforms.map(p=>`<span class="inline-block bg-gray-100 text-xs rounded px-2 py-1 mr-1">${p}</span>`).join("")}</td>
-      </tr>
+  tbody.innerHTML = '';
+  listings.forEach(listing => {
+    const isSold = (listing.statusTag === "SOLD");
+    const isDraft = (listing.statusTag === "DRAFT");
+    const isLocked = (listing.statusTag === "AUTO-AI LOCKED");
+    const rowClasses = [
+      "group listing-row flex items-center transition",
+      isSold ? "bg-gray-100 text-gray-400 opacity-70" : "hover:bg-green-50",
+    ].join(' ');
+    // Image fallback: first image or placeholder
+    const imageHTML = listing.image
+      ? `<img src="${listing.image}" alt="Listing image for ${listing.title}" class="w-14 h-14 rounded object-cover shadow border border-gray-200 bg-gray-100" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"/>`
+      : `<span class="w-14 h-14 flex items-center justify-center rounded bg-gray-200 text-gray-500 text-xl font-bold select-none">🖼️</span>`;
+    // Title & subtitle
+    const titleHTML = `
+      <div class="flex flex-col">
+        <button class="text-left w-full font-bold text-gray-900 hover:underline focus:outline-none text-base" onclick="openModal(${listing.id})">${listing.title}</button>
+        <span class="text-xs mt-0.5 text-gray-500">${listing.subtitle || ""}</span>
+      </div>
     `;
+    // SKU
+    const skuHTML = `<span class="font-mono text-xs">${listing.sku}</span>`;
+    // Price + AI price
+    const priceHTML = isSold
+      ? `<span class="text-gray-400 line-through">$${listing.price.toFixed(2)}</span>
+         <span class="ml-1 text-xs text-green-900 font-semibold">${listing.aiPrice ? listing.aiPrice : ""}</span>`
+      : `<span class="text-black font-semibold">$${listing.price.toFixed(2)}</span>
+         <span class="ml-1 text-xs text-green-900 font-semibold">${listing.aiPrice ? listing.aiPrice : ""}</span>`;
+    // Platforms/badges
+    const platformTags = listing.platforms.map(p =>
+      `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium mr-1 ${platformStyles[p.name] || 'bg-gray-100 text-gray-700'} has-tooltip relative">
+        ${p.name}
+        <span class="ml-1 text-base">${p.sync}</span>
+        <span class="tooltip left-0 mt-1">${syncTooltip(p.sync, p.name)}</span>
+      </span>`
+    ).join('');
+    // Status tag
+    let statusHTML = "";
+    if(isSold)
+      statusHTML = `<span class="ml-1 px-2 py-0.5 rounded bg-red-500 text-white text-xs font-bold align-middle">SOLD</span>`;
+    else if(isDraft)
+      statusHTML = `<span class="ml-1 px-2 py-0.5 rounded bg-gray-500 text-white text-xs font-bold align-middle">DRAFT</span>`;
+    else if(isLocked)
+      statusHTML = `<span class="ml-1 px-2 py-0.5 rounded bg-yellow-300 text-yellow-900 text-xs font-bold align-middle">AUTO-AI LOCKED</span>`;
+    else
+      statusHTML = `<span class="ml-1 px-2 py-0.5 rounded bg-green-500 text-white text-xs font-bold align-middle">ACTIVE</span>`;
+    // Trust/clarity/consistency/conversion badges
+    const trustHTML = `
+      <span class="inline-flex items-center px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold text-xs mr-1">💬 Clarity: ${listing.trust.clarity}</span>
+      <span class="inline-flex items-center px-2 py-0.5 rounded bg-green-100 text-green-800 font-semibold text-xs mr-1">Conversion: ${listing.trust.conversion}</span>
+      <span class="inline-flex items-center px-2 py-0.5 rounded bg-violet-100 text-violet-800 font-semibold text-xs">Consistency: ${listing.trust.consistency}</span>
+    `;
+    // Actions (disabled if sold)
+    const actionsHTML = `
+      <div class="flex flex-row gap-1 listing-row-actions">
+        <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full transition focus:outline-none border border-transparent hover:bg-blue-100 text-blue-700 focus-visible:ring-2 focus-visible:ring-blue-400" aria-label="Edit" title="Edit" onclick="openModal(${listing.id})" ${isSold ? "disabled" : ""}>✏️</button>
+        <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full transition focus:outline-none border border-transparent hover:bg-green-100 text-green-700 focus-visible:ring-2 focus-visible:ring-green-400" aria-label="AI Relist" title="AI Relist" ${isSold ? "disabled" : ""}>🔁</button>
+        <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full transition focus:outline-none border border-transparent hover:bg-yellow-100 text-yellow-700 focus-visible:ring-2 focus-visible:ring-yellow-400" aria-label="Clone" title="Clone" ${isSold ? "disabled" : ""}>📄</button>
+        <button type="button" class="inline-flex items-center justify-center w-8 h-8 rounded-full transition focus:outline-none border border-transparent hover:bg-rose-100 text-rose-700 focus-visible:ring-2 focus-visible:ring-rose-400" aria-label="Delete" title="Delete" ${isSold ? "disabled" : ""}>🗑️</button>
+      </div>
+    `;
+    tbody.insertAdjacentHTML('beforeend', `
+      <tr class="${rowClasses}" data-id="${listing.id}" oncontextmenu="showAIContextMenu(event, ${listing.id})">
+        <td class="px-2 py-2 align-middle"><input type="checkbox" class="rowCheckbox w-5 h-5 rounded border-gray-300 accent-blue-600" data-idx="${listing.id}" ${listing.selected ? 'checked' : ''}/></td>
+        <td class="px-4 py-3 align-middle">${imageHTML}</td>
+        <td class="px-4 py-3 align-middle">${titleHTML}</td>
+        <td class="px-4 py-3 align-middle">${skuHTML}</td>
+        <td class="px-4 py-3 align-middle">${priceHTML}</td>
+        <td class="px-4 py-3 align-middle">${platformTags}</td>
+        <td class="px-4 py-3 align-middle">${statusHTML}</td>
+        <td class="px-4 py-3 align-middle">${trustHTML}</td>
+        <td class="px-4 py-3 align-middle">${actionsHTML}</td>
+      </tr>
+    `);
   });
-
-  feather.replace(); // Re-render icons
-
-  // Row click or edit icon triggers modal
-  document.querySelectorAll('#listing-table-body tr').forEach(row => {
-    const idx = row.dataset.idx;
-    row.onclick = (e) => {
-      if (e.target.closest('.edit-btn')) {
-        openListingModal(idx);
-      } else if (!e.target.closest('button')) {
-        openListingModal(idx);
-      }
-    };
-    row.querySelector('.edit-btn').onclick = (e) => { e.stopPropagation(); openListingModal(idx); };
+  attachCheckboxListeners();
+  updateBulkBar();
+}
+function syncTooltip(status, platform) {
+  if(status==="✅") return `${platform}: Connected and synced`;
+  if(status==="❌") return `${platform}: Sync failed (check credentials or listing format)`;
+  if(status==="⚠️") return `${platform}: Sync pending or partial issue (see details)`;
+  return "";
+}
+// Bulk select logic
+function attachCheckboxListeners() {
+  document.querySelectorAll('.rowCheckbox').forEach(checkbox => {
+    checkbox.onchange = function() {
+      const id = parseInt(this.dataset.idx);
+      const listing = listings.find(l => l.id === id);
+      listing.selected = this.checked;
+      updateBulkBar();
+      updateSelectAll();
+    }
   });
 }
-
-//--- Listing Modal Logic ---
-let currentEditIdx = null;
-function openListingModal(idx) {
-  currentEditIdx = Number(idx);
-  const l = listings[currentEditIdx];
-  document.getElementById('edit-title').value = l.title;
-  document.getElementById('edit-price').value = l.price;
-  document.getElementById('edit-tags').value = l.tags;
-  document.getElementById('edit-sold').checked = l.sold;
-
-  document.querySelectorAll('.edit-platform').forEach(cb => {
-    cb.checked = l.platforms.includes(cb.value);
-  });
-
-  // Animate modal in
-  showModal('listing-modal-bg','listing-modal');
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const count = listings.filter(l=>l.selected).length;
+  document.getElementById('bulkBarCount').textContent = `${count} selected`;
+  bar.classList.toggle('hidden', count === 0);
 }
-
-// Save changes
-document.getElementById('listing-edit-form').onsubmit = function(e) {
+function updateSelectAll() {
+  const all = listings.length, checked = listings.filter(l=>l.selected).length;
+  document.getElementById('selectAll').checked = (all === checked && all > 0);
+}
+document.getElementById('selectAll').onchange = function() {
+  const checked = this.checked;
+  listings.forEach(l => l.selected = checked);
+  renderListings();
+};
+document.getElementById('selectAllPagesBtn').onclick = function() {
+  listings.forEach(l => l.selected = true);
+  renderListings();
+};
+// Hide Sold toggle
+let soldHidden = false;
+document.getElementById('hideSoldBtn').addEventListener('click', function() {
+  soldHidden = !soldHidden;
+  renderListings();
+  this.classList.toggle('bg-gray-300', soldHidden);
+  this.classList.toggle('border-blue-400', soldHidden);
+  this.classList.toggle('text-blue-700', soldHidden);
+  this.textContent = soldHidden ? 'Show Sold' : 'Hide Sold';
+});
+// Wide View toggle (simulated)
+document.getElementById('wideViewBtn').onclick = function() {
+  document.body.classList.toggle('wide-view');
+};
+// Sidebar hamburger/collapse for mobile
+const sidebar = document.getElementById('sidebar');
+const sidebarOpenBtn = document.getElementById('sidebarOpenBtn');
+const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+function updateSidebar() {
+  if(window.innerWidth < 1024) {
+    sidebar.classList.add('sidebar-hidden');
+    sidebarOpenBtn.style.display = '';
+  } else {
+    sidebar.classList.remove('sidebar-hidden');
+    sidebarOpenBtn.style.display = 'none';
+  }
+}
+sidebarOpenBtn.onclick = () => {
+  sidebar.classList.remove('sidebar-hidden');
+  sidebar.classList.add('sidebar-visible');
+  sidebarCloseBtn.style.display = '';
+};
+sidebarCloseBtn.onclick = () => {
+  sidebar.classList.remove('sidebar-visible');
+  sidebar.classList.add('sidebar-hidden');
+  sidebarCloseBtn.style.display = 'none';
+};
+window.addEventListener('resize', updateSidebar);
+window.addEventListener('DOMContentLoaded', updateSidebar);
+// Modal logic
+let modalListing = null;
+function openModal(id) {
+  modalListing = listings.find(l => l.id === id);
+  if(!modalListing) return;
+  document.getElementById('modal').classList.remove('hidden');
+  document.getElementById('modalImage').src = modalListing.image || '';
+  document.getElementById('modalTitle').value = modalListing.title;
+  document.getElementById('modalSubtitle').value = modalListing.subtitle || '';
+  document.getElementById('modalDesc').value = modalListing.desc || '';
+  document.getElementById('modalPrice').value = modalListing.price;
+  document.getElementById('modalSKU').value = modalListing.sku;
+  Array.from(document.getElementById('modalPlatforms').options).forEach(opt => {
+    opt.selected = modalListing.platforms.some(p => p.name === opt.value);
+  });
+  document.getElementById('modalTags').value = (modalListing.tags || []).join(', ');
+  document.getElementById('modalStatus').value = modalListing.statusTag;
+  document.getElementById('modalTrust').textContent = `Clarity: ${modalListing.trust.clarity}`;
+  document.getElementById('modalTrust').nextElementSibling.textContent = `Conversion: ${modalListing.trust.conversion}`;
+}
+document.getElementById('modalCloseBtn').onclick = function() {
+  document.getElementById('modal').classList.add('hidden');
+};
+document.getElementById('modalForm').onsubmit = function(e) {
   e.preventDefault();
-  if (currentEditIdx === null) return;
-  const l = listings[currentEditIdx];
-  l.title = document.getElementById('edit-title').value;
-  l.price = parseFloat(document.getElementById('edit-price').value);
-  l.tags = document.getElementById('edit-tags').value;
-  l.sold = document.getElementById('edit-sold').checked;
-  l.platforms = Array.from(document.querySelectorAll('.edit-platform:checked')).map(cb=>cb.value);
-
-  renderListings();
-  closeModal('listing-modal-bg','listing-modal');
-  console.log("Simulate backend sync:", JSON.stringify(l));
-};
-document.getElementById('listing-modal-cancel').onclick = ()=>closeModal('listing-modal-bg','listing-modal');
-document.getElementById('listing-modal-close').onclick = ()=>closeModal('listing-modal-bg','listing-modal');
-
-// Sold toggle anim
-document.getElementById('edit-sold').addEventListener('change', function() {
-  document.getElementById('sold-toggle-bg').classList.toggle('bg-red-200', this.checked);
-  document.getElementById('sold-toggle-dot').classList.toggle('translate-x-4', this.checked);
-});
-
-//--- Bulk Edit Modal Logic ---
-function openBulkModal() {
-  // List checkboxes
-  const box = document.getElementById('bulk-listings');
-  box.innerHTML = listings.map((l, i) =>
-    `<label class="flex items-center gap-2"><input type="checkbox" class="bulk-listing-check" value="${i}">
-    <span class="${l.sold ? 'line-through text-gray-400' : ''}">${l.title}</span></label>`
-  ).join('');
-  document.getElementById('bulk-price').value = '';
-  document.getElementById('bulk-sold').checked = false;
-  document.querySelectorAll('.bulk-platform').forEach(cb=>cb.checked=false);
-  showModal('bulk-modal-bg', 'bulk-modal');
-}
-
-document.getElementById('bulk-edit-btn').onclick = openBulkModal;
-document.getElementById('bulk-modal-cancel').onclick = ()=>closeModal('bulk-modal-bg','bulk-modal');
-document.getElementById('bulk-modal-close').onclick = ()=>closeModal('bulk-modal-bg','bulk-modal');
-
-document.getElementById('bulk-edit-form').onsubmit = function(e) {
-  e.preventDefault();
-  const selected = Array.from(document.querySelectorAll('.bulk-listing-check:checked')).map(cb=>parseInt(cb.value));
-  if (!selected.length) return;
-  const price = document.getElementById('bulk-price').value;
-  const sold = document.getElementById('bulk-sold').checked;
-  const platforms = Array.from(document.querySelectorAll('.bulk-platform:checked')).map(cb=>cb.value);
-
-  selected.forEach(idx => {
-    if (price) listings[idx].price = parseFloat(price);
-    if (platforms.length) listings[idx].platforms = [...platforms];
-    listings[idx].sold = sold;
-  });
-
-  renderListings();
-  closeModal('bulk-modal-bg','bulk-modal');
-};
-
-// Bulk sold toggle anim
-document.getElementById('bulk-sold').addEventListener('change', function() {
-  document.getElementById('bulk-sold-toggle-bg').classList.toggle('bg-red-200', this.checked);
-  document.getElementById('bulk-sold-toggle-dot').classList.toggle('translate-x-4', this.checked);
-});
-
-//--- Customize Modal (placeholder) ---
-document.getElementById('customize-btn').onclick = ()=>showModal('customize-modal-bg','customize-modal');
-document.getElementById('customize-modal-cancel').onclick = ()=>closeModal('customize-modal-bg','customize-modal');
-document.getElementById('customize-modal-close').onclick = ()=>closeModal('customize-modal-bg','customize-modal');
-
-//--- Main Utility Modal Show/Hide ---
-function showModal(bgId, modalId) {
-  const bg = document.getElementById(bgId);
-  const modal = document.getElementById(modalId);
-  bg.classList.remove('opacity-0', 'pointer-events-none');
-  bg.classList.add('opacity-100');
-  setTimeout(()=>modal.classList.remove('opacity-0','scale-95'),10);
-  modal.classList.add('opacity-100','scale-100');
-}
-function closeModal(bgId, modalId) {
-  const bg = document.getElementById(bgId);
-  const modal = document.getElementById(modalId);
-  modal.classList.add('opacity-0','scale-95');
-  setTimeout(()=>{
-    bg.classList.add('opacity-0','pointer-events-none');
-    modal.classList.remove('opacity-100','scale-100');
-  }, 180);
-}
-['listing-modal-bg','bulk-modal-bg','customize-modal-bg'].forEach(id => {
-  document.getElementById(id).onclick = (e) => { if (e.target === document.getElementById(id)) closeModal(id, id.replace('-bg','')); }
-});
-
-//--- Hide Sold Logic ---
-document.getElementById('hide-sold-btn').onclick = function() {
-  hideSold = !hideSold;
-  this.classList.toggle('bg-blue-200', hideSold);
+  if(!modalListing) return;
+  modalListing.title = document.getElementById('modalTitle').value;
+  modalListing.subtitle = document.getElementById('modalSubtitle').value;
+  modalListing.desc = document.getElementById('modalDesc').value;
+  modalListing.price = parseFloat(document.getElementById('modalPrice').value) || 0;
+  modalListing.sku = document.getElementById('modalSKU').value;
+  const selPlatforms = Array.from(document.getElementById('modalPlatforms').selectedOptions).map(o=>({name:o.value,sync:"✅"}));
+  modalListing.platforms = selPlatforms;
+  modalListing.tags = document.getElementById('modalTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  modalListing.statusTag = document.getElementById('modalStatus').value;
+  document.getElementById('modal').classList.add('hidden');
   renderListings();
 };
-
-//--- Wide View Logic ---
-document.getElementById('wide-view-btn').onclick = function() {
-  wideView = !wideView;
-  document.getElementById('table-panel').classList.toggle('max-w-5xl', !wideView);
-  document.getElementById('table-panel').classList.toggle('max-w-full', wideView);
-};
-
-//--- Feather Icons ---
-feather.replace();
-
-//--- SALES PSYCHOLOGY MAP ---
-const markerData = [
-  { city: "Toronto", lat: 43.65107, lng: -79.347015, value: 12 },
-  { city: "Vancouver", lat: 49.2827, lng: -123.1207, value: 7 },
-  { city: "Calgary", lat: 51.0447, lng: -114.0719, value: 5 }
+// Simulated smart search autocomplete
+const autocompleteData = [
+  { type: "title", value: "Vintage Leather Jacket" },
+  { type: "sku", value: "VLJ-CA-001" },
+  { type: "title", value: "Retro Sneakers" },
+  { type: "tag", value: "Streetwear" },
+  { type: "title", value: "Canvas Tote Bag" },
+  { type: "tag", value: "Minimalist" }
 ];
-let map;
-function renderMap() {
-  map = L.map('sales-map', { zoomControl: false, dragging: false, tap: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, attributionControl: false })
-    .setView([50.5, -98], 3.2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom:2, maxZoom:8 }).addTo(map);
-  markerData.forEach(m => {
-    L.circleMarker([m.lat, m.lng], {
-      radius: 11 + m.value * 0.8,
-      fillColor: "#2563eb",
-      color: "#fff",
-      weight: 2,
-      fillOpacity: 0.9
-    }).addTo(map).bindTooltip(`${m.city}: ${m.value} sellers`, {permanent:false, direction:'top'});
-  });
-}
-
-//--- WORLD MARKET ANALYTICS BAR ---
-function renderAnalyticsBar() {
-  const canvas = document.getElementById('analytics-bar');
-  const ctx = canvas.getContext('2d');
-  const data = markerData.map(m=>m.value);
-  const labels = markerData.map(m=>m.city);
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // Simple bar chart
-  const max = Math.max(...data);
-  data.forEach((val,i) => {
-    const barH = Math.round((val/max)*70);
-    ctx.fillStyle = "#2563eb";
-    ctx.fillRect(40 + i*70, 100-barH, 38, barH);
-    ctx.fillStyle = "#1e293b";
-    ctx.font = "12px sans-serif";
-    ctx.fillText(labels[i], 40 + i*70, 105);
-    ctx.fillStyle = "#2563eb";
-    ctx.font = "bold 14px sans-serif";
-    ctx.fillText(val, 52 + i*70, 95-barH);
-  });
-}
-
-//--- INIT ---
-window.onload = function() {
-  renderListings();
-  setTimeout(() => {
-    renderMap();
-    renderAnalyticsBar();
-  }, 300);
+document.getElementById('smartSearch').oninput = function() {
+  const v = this.value.toLowerCase();
+  const box = document.getElementById('searchAutocomplete');
+  if(!v) {
+    box.classList.add('hidden');
+    return;
+  }
+  const hits = autocompleteData.filter(d => d.value.toLowerCase().includes(v));
+  if(hits.length == 0) {
+    box.classList.add('hidden');
+    return;
+  }
+  box.innerHTML = hits.map(h =>
+    `<div class="px-3 py-2 hover:bg-green-50 cursor-pointer" onclick="selectAutocomplete('${h.value}')">
+      <span class="font-semibold">${h.type.toUpperCase()}</span>: ${h.value}
+    </div>`
+  ).join('');
+  box.classList.remove('hidden');
 };
-
+function selectAutocomplete(val) {
+  document.getElementById('smartSearch').value = val;
+  document.getElementById('searchAutocomplete').classList.add('hidden');
+}
+document.addEventListener('click', function(e){
+  if(!document.getElementById('searchAutocomplete').contains(e.target) && e.target.id!=="smartSearch")
+    document.getElementById('searchAutocomplete').classList.add('hidden');
+});
+// Right-click AI context menu
+window.showAIContextMenu = function(event, id) {
+  event.preventDefault();
+  const menu = document.getElementById('aiContextMenu');
+  menu.style.left = event.pageX + "px";
+  menu.style.top = event.pageY + "px";
+  menu.classList.remove('hidden');
+  document.onclick = function(e) {
+    if(!menu.contains(e.target)) menu.classList.add('hidden');
+  }
+}
+// Analytics: Map + Chart
+function renderBarCharts() {
+  const data = {
+    labels: ['Toronto', 'Vancouver', 'Calgary', 'London (UK)', 'Montreal'],
+    datasets: [{
+      label: 'Conversion AI Score',
+      data: [92, 88, 80, 84, 76],
+      backgroundColor: [
+        'rgba(37, 99, 235, 0.85)',
+        'rgba(59, 130, 246, 0.75)',
+        'rgba(59, 130, 246, 0.60)',
+        'rgba(55, 65, 81, 0.42)',
+        'rgba(16, 185, 129, 0.44)'
+      ],
+      borderRadius: 8,
+      barPercentage: 0.7,
+      categoryPercentage: 0.65,
+    }]
+  };
+  const options = {
+    plugins: { legend: { display: false }, },
+    scales: {
+      x: { grid: { display: false }, title: { display: false } },
+      y: { beginAtZero: true, ticks: { stepSize: 10 }, grid: { color: 'rgba(100,116,139,0.08)' } }
+    }
+  };
+  // Desktop
+  const ctx = document.getElementById('market-bar-chart');
+  if (ctx && ctx.offsetParent !== null) new Chart(ctx, { type: 'bar', data, options });
+  // Mobile
+  const ctxMob = document.getElementById('market-bar-chart-mobile');
+  if (ctxMob && ctxMob.offsetParent !== null) new Chart(ctxMob, { type: 'bar', data, options });
+}
+window.addEventListener('DOMContentLoaded', renderBarCharts);
+// Canada sales psychology map
+function renderLeafletMaps() {
+  function createMap(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container || container.offsetParent === null) return;
+    const map = L.map(container, {
+      center: [56.1304, -106.3468],
+      zoom: 3.5,
+      zoomControl: false,
+      attributionControl: false,
+      dragging: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      boxZoom: false,
+      keyboard: false,
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      minZoom: 3,
+      maxZoom: 6,
+    }).addTo(map);
+    [
+      { name: 'Toronto', coords: [43.651070, -79.347015], tip: "Toronto: emotional resonance listings outperform 3:1" },
+      { name: 'Vancouver', coords: [49.282729, -123.120738], tip: "Vancouver: minimalist titles, $50–$80 range" },
+      { name: 'Calgary', coords: [51.044733, -114.071883], tip: "Calgary: best timing 7–9pm, collector focus" }
+    ].forEach(dot => {
+      const marker = L.circle(dot.coords, {
+        radius: 280000,
+        color: '#2563eb',
+        fillColor: '#2563eb',
+        fillOpacity: 0.55,
+        weight: 2,
+      }).addTo(map);
+      marker.bindTooltip(dot.tip, { permanent: false });
+    });
+  }
+  createMap('canada-map');
+  createMap('canada-map-mobile');
+}
+window.addEventListener('DOMContentLoaded', function() {
+  renderListings();
+  renderLeafletMaps();
+});
+window.addEventListener('resize', function() {
+  setTimeout(() => {
+    renderBarCharts();
+    renderLeafletMaps();
+    updateSidebar();
+  }, 400);
+});
 </script>
 </body>
 </html>
