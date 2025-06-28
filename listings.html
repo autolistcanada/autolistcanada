@@ -9,7 +9,7 @@
   <!-- Leaflet CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <!-- Icons (Heroicons for simplicity) -->
+  <!-- Heroicons/Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
   <style>
     body {
@@ -43,6 +43,9 @@
     .leaflet-container {
       border-radius: 1.2rem;
       box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07);
+    }
+    .ai-editor-modal-bg {
+      background: rgba(0,0,0,0.26);
     }
   </style>
 </head>
@@ -78,9 +81,13 @@
       <span class="mt-1 text-xs text-gray-400">🇨🇦</span>
     </div>
   </aside>
-
   <!-- MAIN CONTENT -->
   <main class="relative min-h-screen pl-64 z-10">
+    <!-- HEADER/BANNER -->
+    <div class="w-full py-6 bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center mb-2 shadow-sm">
+      <img src="autolist-logo.png" alt="AutoList Canada" class="h-10 mr-4">
+      <span class="text-2xl font-bold text-orange-700 tracking-wide">AutoList Canada — Listings Dashboard</span>
+    </div>
     <!-- TOP CONNECTION PANEL -->
     <section class="flex items-center justify-between px-10 pt-8 pb-2">
       <div class="flex gap-4 w-full max-w-4xl">
@@ -95,7 +102,46 @@
         <button id="sign-in-btn" class="hidden px-4 py-1 rounded bg-orange-500 text-white text-sm hover:bg-orange-600 shadow">Sign In</button>
       </div>
     </section>
-    
+    <!-- AI-ENHANCED LISTING EDITOR -->
+    <section class="px-10 py-6 bg-white/80 rounded-xl shadow-lg mx-6 mt-8 mb-6 max-w-2xl">
+      <h2 class="text-xl font-bold mb-4 text-orange-700 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Create/Edit Listing
+      </h2>
+      <form id="ai-listing-editor" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1">Title</label>
+          <div class="flex gap-2">
+            <input id="editor-title" class="w-full border p-2 rounded" placeholder="Product title">
+            <button type="button" id="editor-ai-title" class="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 text-xs flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              AI Suggest
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">Description</label>
+          <div class="flex gap-2">
+            <textarea id="editor-desc" class="w-full border p-2 rounded" rows="3" placeholder="Product description"></textarea>
+            <button type="button" id="editor-ai-desc" class="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 text-xs flex items-center gap-1 self-start">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              AI Enhance
+            </button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-1">Price (CAD)</label>
+          <input id="editor-price" type="number" min="0" step="0.01" class="border p-2 rounded w-32">
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">Preview</button>
+        </div>
+      </form>
+      <div id="editor-preview" class="mt-4 hidden bg-orange-50 p-3 rounded border border-orange-100">
+        <h3 class="font-semibold mb-1">Preview:</h3>
+        <div id="editor-preview-content" class="text-sm text-gray-700"></div>
+      </div>
+    </section>
     <!-- SEARCH + FILTER BAR -->
     <section class="flex flex-wrap gap-4 items-center px-10 py-4 bg-white bg-opacity-70 rounded-xl mx-6 mb-3 shadow-sm dropdown-shadow">
       <input type="text" id="search-bar" placeholder="Search your listings..." class="flex-1 px-4 py-2 rounded-lg border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-200 bg-[#fdf6f0]">
@@ -132,7 +178,6 @@
         </button>
       </div>
     </section>
-
     <!-- BULK ACTIONS BAR -->
     <section id="bulk-actions-bar" class="flex gap-3 items-center px-10 py-3 bg-orange-50 border-b border-orange-100 shadow-sm mx-6 rounded-t-xl hidden">
       <span class="font-semibold text-orange-700">Bulk Actions:</span>
@@ -142,7 +187,6 @@
       <span class="ml-auto text-sm text-gray-600" id="bulk-count"></span>
       <button class="ml-4 px-2 py-1 rounded text-gray-500 hover:text-rose-500 font-bold" id="bulk-cancel">&times; Cancel</button>
     </section>
-
     <!-- LISTINGS (TABLE + GRID) -->
     <section id="listings-section" class="px-10 pb-1">
       <!-- TABLE VIEW -->
@@ -170,7 +214,6 @@
         <!-- Cards injected by JS -->
       </div>
     </section>
-
     <!-- BUYER PSYCHOLOGY MAP -->
     <section class="px-10 mt-10">
       <h2 class="text-xl font-bold text-orange-700 mb-2">Buyer Psychology Map</h2>
@@ -183,7 +226,6 @@
         <span class="flex items-center gap-1"><span class="inline-block w-4 h-4 bg-green-100 rounded-full"></span> Budget 🌱</span>
       </div>
     </section>
-
     <!-- FOOTER -->
     <footer class="flex flex-col md:flex-row md:justify-between items-center gap-4 px-10 py-7 mt-12 mb-2 bg-white bg-opacity-80 rounded-xl shadow-sm mx-6">
       <div class="flex gap-4">
@@ -196,10 +238,9 @@
       </div>
     </footer>
   </main>
-
   <!-- MODALS -->
   <!-- AI Suggest Modal -->
-  <div id="ai-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+  <div id="ai-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center ai-editor-modal-bg">
     <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 relative">
       <button class="absolute top-2 right-3 text-2xl text-gray-400 hover:text-rose-500" onclick="closeAIModal()">&times;</button>
       <h3 class="text-lg font-bold mb-2 text-orange-600">AI-Suggested Listing</h3>
@@ -222,8 +263,6 @@
       </div>
     </div>
   </div>
-
-  <!-- SCRIPTS -->
   <script>
     // ------------- GLOBAL STATE -----------
     // Simulated data for platforms and listings
@@ -395,6 +434,35 @@
       updateUserSession();
     }
     updateUserSession();
+
+    // ------------- AI LISTING EDITOR: AI Buttons + Preview -----------
+    // AI Title suggestion logic
+    function aiSuggestTitle(text) {
+      if (!text) return "Amazing Canadian Find!";
+      return "Gently Used - " + text.split(' ').slice(0, 5).join(' ') + "...";
+    }
+    // AI Enhance description logic
+    function aiEnhanceDesc(desc) {
+      return desc + " 🚀 Ships from Canada. Fast, reliable, and authentic! 🇨🇦";
+    }
+    document.getElementById('editor-ai-title').onclick = function() {
+      document.getElementById('editor-title').value = aiSuggestTitle(document.getElementById('editor-desc').value);
+    }
+    document.getElementById('editor-ai-desc').onclick = function() {
+      document.getElementById('editor-desc').value = aiEnhanceDesc(document.getElementById('editor-desc').value);
+    }
+    document.getElementById('ai-listing-editor').onsubmit = function(e) {
+      e.preventDefault();
+      const title = document.getElementById('editor-title').value;
+      const desc = document.getElementById('editor-desc').value;
+      const price = document.getElementById('editor-price').value;
+      document.getElementById('editor-preview-content').innerHTML = `
+        <div><strong>Title:</strong> ${title}</div>
+        <div><strong>Description:</strong> ${desc}</div>
+        <div><strong>Price:</strong> $${parseFloat(price).toFixed(2)} CAD</div>
+      `;
+      document.getElementById('editor-preview').classList.remove('hidden');
+    };
 
     // ------------- SEARCH & FILTER LOGIC -----------
     function filterListings() {
@@ -785,7 +853,6 @@ Tone: ${listing.tone}`;
     window.editListing = editListing;
     window.editListingGrid = editListingGrid;
     window.toggleVisibility = toggleVisibility;
-    window.connectPlatform = connectPlatform;
 
   </script>
 </body>
