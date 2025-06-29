@@ -1,111 +1,465 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Tools - AutoList Canada</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>AutoList Canada – AI Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: url('unified-background.png') no-repeat center center fixed;
-      background-size: cover;
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    }
-    .wave-divider {
-      margin-top: -3rem;
-    }
-  </style>
   <script>
-    let usageCount = parseInt(localStorage.getItem("aiToolUsage")) || 0;
-    function runTool(id) {
-      if (usageCount >= 5) {
-        alert("You've reached your free limit. Please upgrade for full access.");
-        window.location.href = "/pricing.html";
-        return;
-      }
-      const input = document.getElementById(`${id}-input`).value;
-      const output = document.getElementById(`${id}-output`);
-      if (!input) {
-        output.innerText = "Please enter some content first.";
-        return;
-      }
-      usageCount++;
-      localStorage.setItem("aiToolUsage", usageCount);
-      output.innerText = `✅ Generated Output for '${id}': ${input} ➜ [Simulated AI Response]`;
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { orange: { 500: "#F97316" }, brand: "#F97316" }
+        }
+      },
+      darkMode: 'class'
     }
   </script>
+  <style>
+    html, body { height: 100%; }
+    body { font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;}
+    .wave-divider { position: relative; margin-top: -1px; z-index: 1; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(20px);} to { opacity:1; transform: none;} }
+    .animate-fadeIn { animation: fadeIn 0.5s;}
+    @keyframes typing {from{width:0}to{width:100%}}
+    .typing { white-space:pre-wrap; overflow:hidden; border-right: .15em solid #F97316; animation: typing 2s steps(30,end) 1;}
+    .bg-animated {
+      background: linear-gradient(120deg, #fff7ed 0%, #fff 40%, #f6e9e0 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 16s ease-in-out infinite;
+    }
+    @keyframes gradientMove {
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    .skip-link {position:absolute;left:-1000px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus {position:static;left:auto;width:auto;height:auto;display:block;background:#F97316;color:#fff;padding:4px 12px;border-radius:6px;z-index:999;}
+    .blob {position:fixed;z-index:0;pointer-events:none;opacity:.12;}
+    .blob1 {top:-180px;left:-120px;width:380px;height:380px;}
+    .blob2 {bottom:-140px;right:-140px;width:320px;height:320px;}
+    .dark .bg-animated {background: linear-gradient(120deg,#18181b 0%,#23232b 40%,#F9731622 100%);}
+    .dark .blob {filter:brightness(.7);}
+  </style>
 </head>
-<body class="text-gray-800">
-  <!-- Sidebar -->
-  <aside class="fixed top-0 left-0 w-48 h-full bg-[#004F4F] text-white p-4 text-sm z-50">
-    <img src="autolist-logo.png" alt="AutoList Logo" class="w-20 mx-auto mb-2">
-    <img src="autolist-title.png" alt="AutoList Canada" class="w-28 mx-auto mb-6">
-    <nav class="space-y-3">
-      <a href="index.html" class="block hover:underline">Home</a>
-      <a href="dashboard.html" class="block hover:underline">Dashboard</a>
-      <a href="ai-tools.html" class="block hover:underline font-semibold">AI Tools</a>
-      <a href="ai-tools-live.html" class="block hover:underline">AI Tools (Live)</a>
-      <a href="faq.html" class="block hover:underline">FAQ</a>
-      <a href="terms.html" class="block hover:underline">Terms of Service</a>
-      <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
-    </nav>
-  </aside>
+<body class="bg-animated text-gray-800 dark:text-gray-100">
 
-  <!-- Main Content -->
-  <main class="ml-52 px-6 pt-10">
-    <h1 class="text-2xl font-bold text-center mb-6">AutoList Canada – AI Tools (Demo)</h1>
+  <!-- Custom SVG Icons -->
+  <svg style="display:none">
+    <symbol id="icon-car" viewBox="0 0 24 24"><path fill="#F97316" d="M3 13l1-5a4 4 0 0 1 4-3h8a4 4 0 0 1 4 3l1 5v5a1 1 0 0 1-1 1h-1a2 2 0 1 1-4 0H8a2 2 0 1 1-4 0H3a1 1 0 0 1-1-1v-5z"/><circle cx="7.5" cy="18" r="1.5" fill="#fff"/><circle cx="16.5" cy="18" r="1.5" fill="#fff"/></symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24"><path fill="#F97316" d="M20 12l-8 8-8-8V4a2 2 0 0 1 2-2h6l8 8z"/><circle cx="7" cy="7" r="1.5" fill="#fff"/></symbol>
+    <symbol id="icon-price" viewBox="0 0 24 24"><circle fill="#F97316" cx="12" cy="12" r="10"/><text x="12" y="16" font-size="10" font-family="Arial" fill="#fff" text-anchor="middle">$</text></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="#F97316" d="M2 21l1.65-4.87A8 8 0 1 1 12 20c-1.61 0-3.11-.48-4.38-1.31L2 21z"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24"><path fill="#F97316" d="M12 17.75L6.16 21l1.12-6.54L2 9.5l6.57-.95L12 2.5l3.43 6.05 6.57.95-4.28 4.96 1.12 6.54z"/></symbol>
+    <symbol id="icon-fusion" viewBox="0 0 24 24"><circle fill="#F97316" cx="12" cy="12" r="10"/><path stroke="#fff" stroke-width="2" d="M8 12h8M12 8v8"/></symbol>
+    <symbol id="icon-clipboard" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="3" rx="1.5" fill="#F97316"/><rect x="5" y="5" width="14" height="17" rx="2" fill="#fff" stroke="#F97316" stroke-width="2"/></symbol>
+    <symbol id="icon-send" viewBox="0 0 24 24"><path fill="#F97316" d="M2 21L23 12 2 3v7l15 2-15 2z"/></symbol>
+    <symbol id="icon-scan" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#F97316" opacity=".2"/><rect x="7" y="7" width="10" height="10" rx="2" fill="#F97316"/></symbol>
+  </svg>
 
-    <!-- Tool Sections -->
-    <div class="space-y-10">
-      <!-- 20 Tools Generated Here -->
-      <script>
-        const tools = [
-          "Title Generator", "Description Generator", "Tags Generator", "Price Suggestion",
-          "Buyer Psychology Panel", "Crosslist + Sync Visualizer", "Smart Defaults Engine",
-          "Trust-First Description Composer", "AI Tag Disqualifier", "Tone Training Tool",
-          "AI Pattern Predictor", "Launch Timing Optimizer", "Copy Consistency Scanner",
-          "Mood-Based Description Converter", "Conversion Confidence Score", "Listing Logic Explainer",
-          "Buyer Emotion Forecast Tool", "Sales Plateau Analyzer", "Flow-Through Optimizer",
-          "Listing Fusion Composer"
-        ];
-        tools.forEach((tool, i) => {
-          const id = `tool${i + 1}`;
-          document.write(`
-            <div class='glass'>
-              <h2 class='text-lg font-semibold mb-2'>${i + 1}. ${tool}</h2>
-              <input type='text' id='${id}-input' placeholder='Paste your content here...' class='w-full border border-gray-300 rounded px-3 py-2 mb-2'>
-              <button onclick='runTool("${id}")' class='bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded'>Generate</button>
-              <div id='${id}-output' class='mt-2 text-sm italic text-gray-700'></div>
-            </div>
-            <svg class='wave-divider' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 150'><path fill='#f5b748' fill-opacity='1' d='M0,96L80,106.7C160,117,320,139,480,149.3C640,160,800,160,960,149.3C1120,139,1280,117,1360,106.7L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'></path></svg>
-          `);
-        });
-      </script>
-    </div>
+  <!-- Animated Background Blobs -->
+  <svg class="blob blob1" viewBox="0 0 400 400"><defs><radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop stop-color="#F97316" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="200" fill="url(#g1)"/></svg>
+  <svg class="blob blob2" viewBox="0 0 400 400"><defs><radialGradient id="g2" cx="50%" cy="50%" r="50%"><stop stop-color="#F97316" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="200" fill="url(#g2)"/></svg>
 
-    <!-- Footer divider -->
-    <footer class="text-center text-xs text-gray-600 mt-10 mb-6">
-      <div class="flex justify-center items-center gap-4 mb-2">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" width="30">
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Badge" width="30">
-        <img src="privacy-first-badge.png" alt="Privacy First Badge" width="30">
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Dark mode toggle -->
+  <button id="darkToggle" class="fixed top-7 right-8 z-50 bg-white/90 dark:bg-white/20 border border-orange-200 dark:border-orange-500 rounded-full p-2 shadow hover:scale-110 transition" title="Toggle dark mode">
+    <svg id="darkIconSun" class="h-6 w-6 text-orange-500 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+    <svg id="darkIconMoon" class="h-6 w-6 text-orange-500 hidden dark:inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+
+  <main id="main" class="max-w-7xl mx-auto pt-10 pb-20 px-4">
+    <header class="text-center mb-10 relative z-10">
+      <h1 class="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-2 tracking-tight">AutoList Canada <span class="text-orange-500">AI Tools</span></h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Boost your listings. 100% in-browser. <span class="hidden sm:inline">Save, share, and get real AI help!</span></p>
+      <div class="mt-4 flex justify-center gap-2">
+        <input id="openaiKey" type="password" placeholder="Paste your OpenAI API key for real AI" class="w-64 px-3 py-2 rounded border border-orange-200 focus:ring-2 focus:ring-orange-400 dark:bg-white/10 dark:text-white text-sm" autocomplete="off">
+        <button onclick="saveKey()" class="px-3 py-2 bg-orange-500 text-white rounded font-semibold hover:bg-orange-600">Save Key</button>
       </div>
-      <p>© 2025 AutoList Canada — All rights reserved.</p>
-      <div class="space-x-4 mt-1">
-        <a href="terms.html" class="hover:underline">Terms of Service</a>
-        <a href="privacy.html" class="hover:underline">Privacy Policy</a>
-      </div>
-    </footer>
+      <div id="aiKeyStatus" class="text-xs text-orange-500 mt-1"></div>
+    </header>
+
+    <!-- Tool cards go here -->
+    <div id="toolsContainer"></div>
+
+    <!-- Saved Listings -->
+    <section id="saved-listings" class="mt-12 max-w-2xl mx-auto">
+      <h2 class="text-xl font-bold text-orange-500 mb-4 flex items-center">
+        <svg class="w-5 h-5 mr-2"><use href="#icon-star"></use></svg>
+        Saved Listings
+      </h2>
+      <div id="savedListings" class="grid sm:grid-cols-2 gap-4"></div>
+    </section>
   </main>
+
+  <script>
+    // Tool definitions (same as previous, but with new icons)
+    const tools = [
+      {
+        id: "title-generator",
+        icon:"#icon-car",
+        title:"Title Generator",
+        explain:"Creates a catchy, effective listing title based on your vehicle's info.",
+        input:[
+          {type:"text",ph:"Enter vehicle details (e.g. 2018 Honda Civic LX)", key:"details"}
+        ],
+        getPrompt:(vals)=>`Generate a catchy, effective vehicle listing title for: ${vals[0]}`,
+        example:"2018 Honda Civic LX, low mileage, single owner"
+      },
+      {
+        id: "description-builder",
+        icon:"#icon-chat",
+        title:"Description Builder",
+        explain:"Expands your notes into a warm, buyer-friendly description.",
+        input:[
+          {type:"textarea",ph:"Notes or bullet points", key:"notes"},
+        ],
+        getPrompt:(vals)=>`Expand these notes into a warm, appealing used car listing description:\n${vals[0]}`,
+        example:"Low mileage, never smoked in, full service records."
+      },
+      {
+        id: "tags-generator",
+        icon:"#icon-tag",
+        title:"Tags Generator",
+        explain:"Suggests the most effective tags to maximize your reach.",
+        input:[
+          {type:"text",ph:"What are your listing highlights?", key:"highlights"}
+        ],
+        getPrompt:(vals)=>`Suggest 6-8 social media tags for a used car listing with these highlights: ${vals[0]}`,
+        example:"low mileage, single owner, fuel efficient"
+      },
+      {
+        id: "price-suggestion",
+        icon:"#icon-price",
+        title:"Price Suggestion",
+        explain:"Estimates a fair, competitive price based on your input.",
+        input:[
+          {type:"text",ph:"Enter vehicle info, mileage, condition", key:"info"}
+        ],
+        getPrompt:(vals)=>`Estimate a fair, competitive Canadian price for a used car with these details: ${vals[0]}`,
+        example:"2018 Honda Civic LX, 52,000 km, excellent condition"
+      },
+      {
+        id: "buyer-psychology",
+        icon:"#icon-scan",
+        title:"Buyer Psychology Panel",
+        explain:"Analyzes your text for buyer triggers and trust signals.",
+        input:[
+          {type:"textarea",ph:"Paste your listing description", key:"desc"}
+        ],
+        getPrompt:(vals)=>`Analyze this car listing description for buyer triggers and trust signals. List them:\n${vals[0]}`,
+        example:"Single owner, certified, full service records."
+      },
+      {
+        id: "trust-description",
+        icon:"#icon-chat",
+        title:"Trust-First Description Composer",
+        explain:"Rewrites your description to highlight honesty, transparency, and credibility.",
+        input:[
+          {type:"textarea",ph:"Paste your description", key:"desc"}
+        ],
+        getPrompt:(vals)=>`Rewrite this listing description to maximize trust, honesty, and transparency:\n${vals[0]}`,
+        example:"No accidents, all records. Honest seller."
+      },
+      {
+        id: "mood-converter",
+        icon:"#icon-chat",
+        title:"Mood-Based Converter",
+        explain:"Converts your listing into a chosen tone (e.g. energetic, calm, professional).",
+        input:[
+          {type:"textarea",ph:"Paste your description", key:"desc"},
+          {type:"text",ph:"Choose a mood (e.g. friendly)", key:"mood"}
+        ],
+        getPrompt:(vals)=>`Rewrite this description in a ${vals[1]} tone:\n${vals[0]}`,
+        example:"Friendly"
+      },
+      {
+        id: "copy-scanner",
+        icon:"#icon-scan",
+        title:"Copy Consistency Scanner",
+        explain:"Checks your listing for style consistency and brand tone alignment.",
+        input:[
+          {type:"textarea",ph:"Paste your description", key:"desc"}
+        ],
+        getPrompt:(vals)=>`Check this listing for style consistency and brand alignment. Give feedback:\n${vals[0]}`,
+        example:"Paste your whole listing text."
+      },
+      {
+        id: "tag-disqualifier",
+        icon:"#icon-tag",
+        title:"AI Tag Disqualifier",
+        explain:"Identifies tags that may cause disqualification or reduced visibility.",
+        input:[
+          {type:"text",ph:"Enter your tags, comma-separated", key:"tags"}
+        ],
+        getPrompt:(vals)=>`From this tag list, highlight any that could reduce reach or cause disqualification, and which are safe: ${vals[0]}`,
+        example:"#Honda, #2018, #FREE"
+      },
+      {
+        id: "listing-fusion",
+        icon:"#icon-fusion",
+        title:"Listing Fusion Composer",
+        explain:"Combines multiple listing elements into a single, polished output.",
+        input:[
+          {type:"text",ph:"Title", key:"title"},
+          {type:"textarea",ph:"Description", key:"desc"},
+          {type:"text",ph:"Tags (comma-separated)", key:"tags"},
+          {type:"text",ph:"Suggested Price", key:"price"}
+        ],
+        getPrompt:(vals)=>`Fuse these into a single, polished used car listing:\nTitle: ${vals[0]}\nDescription: ${vals[1]}\nTags: ${vals[2]}\nPrice: ${vals[3]}`,
+        example:"Combine title, desc, tags, price here."
+      }
+    ];
+
+    // Simulated fallback results
+    const simResults = [
+      `Sample Title: "Low Mileage 2018 Honda Civic LX – One Owner"`,
+      `This well-maintained 2018 Honda Civic LX is perfect for city or highway driving. Reliable, fuel efficient, and ready for its next adventure!`,
+      `Tags: #Honda #Civic #LowMileage #OneOwner #2018 #FuelEfficient`,
+      `Estimated Price: $18,900 (based on market data & input)`,
+      `Trust Signals: "One Owner", "Full Service Records", "No Accidents"<br>Buyer Triggers: "Low KM", "Certified", "Warranty Available"`,
+      `Honest Description: "We're proud to offer this Civic with full transparency. All records available. No hidden issues—just a great car!"`,
+      `Professional Tone: "Experience the reliability and style of this Honda Civic. Contact us for a test drive today!"`,
+      `Consistency Check: Style is warm, brand tone matches AutoList standards. No major inconsistencies found.`,
+      `Disqualified Tags: #FREE, #Giveaway<br>Safe Tags: #Honda, #2018, #LowMileage`,
+      `Listing:<br>Title: "Low Mileage 2018 Honda Civic LX – One Owner"<br>Description: This well-maintained 2018 Honda Civic LX is perfect for city or highway driving. Reliable and fuel efficient.<br>Tags: #Honda, #Civic, #LowMileage<br>Suggested Price: $18,900`
+    ];
+
+    // Render tools
+    function renderTools() {
+      let html = '<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">';
+      tools.forEach((tool, i) => {
+        html += `
+        <div id="${tool.id}" class="tool-card relative bg-white dark:bg-white/20 p-6 rounded-2xl shadow-lg transition-transform duration-150 hover:scale-[1.025] hover:shadow-2xl group focus-within:ring-2 focus-within:ring-orange-500" tabindex="0" aria-labelledby="${tool.id}-title">
+          <div class="flex items-center mb-2">
+            <svg class="h-6 w-6 mr-2"><use href="${tool.icon}"></use></svg>
+            <h3 id="${tool.id}-title" class="text-xl font-semibold text-orange-500 flex-1">${tool.title}</h3>
+          </div>
+          <button onclick="toggleExplain(this)" class="text-sm text-gray-500 mb-2 underline focus:outline-none">What does this do?</button>
+          <p class="explanation hidden mb-3">${tool.explain}</p>
+          <form onsubmit="event.preventDefault();generateAIResult(this,${i})" autocomplete="off">
+            ${tool.input.map((inp,i2)=>inp.type==="textarea"
+              ?`<textarea required class="w-full mb-2 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-400 dark:bg-white/10 dark:text-white" placeholder="${inp.ph}" data-key="${inp.key}" tabindex="0"></textarea>`
+              :`<input required type="${inp.type}" class="w-full mb-2 px-3 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-400 dark:bg-white/10 dark:text-white" placeholder="${inp.ph}" data-key="${inp.key}" tabindex="0">`
+            ).join('')}
+            <div class="flex gap-2">
+              <button type="submit" class="w-full py-2 rounded-lg font-medium text-white bg-orange-500 hover:bg-orange-600 shadow transition-all duration-150 hover:scale-105" aria-label="Generate">Generate</button>
+              <button type="button" class="copy-btn px-3 rounded-lg bg-orange-50 dark:bg-orange-900 text-orange-500 font-bold hover:bg-orange-200 dark:hover:bg-orange-800 transition flex items-center" title="Copy last result" aria-label="Copy last result" tabindex="0">
+                <svg class="h-5 w-5"><use href="#icon-clipboard"></use></svg>
+              </button>
+              <button type="button" class="save-btn px-3 rounded-lg bg-orange-50 dark:bg-orange-900 text-orange-500 font-bold hover:bg-orange-200 dark:hover:bg-orange-800 transition flex items-center" title="Save as Listing" aria-label="Save as Listing" tabindex="0">
+                <svg class="h-5 w-5"><use href="#icon-star"></use></svg>
+              </button>
+            </div>
+            <div class="sim-result mt-4 text-sm text-gray-700 dark:text-gray-300"></div>
+            <div class="feedback-panel mt-1"></div>
+          </form>
+          <div class="text-xs text-gray-400 mt-2">Ex: <span class="bg-orange-50 dark:bg-orange-900 px-2 py-1 rounded">${tool.example}</span></div>
+        </div>
+        `;
+      });
+      html += "</section>";
+      document.getElementById("toolsContainer").innerHTML = html;
+    }
+    renderTools();
+
+    // Toggle explanation
+    function toggleExplain(btn) {
+      const exp = btn.nextElementSibling;
+      if(exp.classList.contains('hidden')) {
+        exp.classList.remove('hidden');
+        btn.textContent = "Hide explanation";
+      } else {
+        exp.classList.add('hidden');
+        btn.textContent = "What does this do?";
+      }
+    }
+
+    // OpenAI API integration
+    function getAIKey() {
+      return localStorage.getItem("ai-openai-key") || "";
+    }
+    function saveKey() {
+      const key = document.getElementById("openaiKey").value;
+      if (key && key.startsWith("sk-")) {
+        localStorage.setItem("ai-openai-key", key);
+        document.getElementById("aiKeyStatus").textContent = "Saved! AI is now live.";
+      } else {
+        document.getElementById("aiKeyStatus").textContent = "Please enter a valid OpenAI API key.";
+      }
+      setTimeout(()=>document.getElementById("aiKeyStatus").textContent="", 4000);
+    }
+    document.getElementById("openaiKey").value = getAIKey();
+
+    async function callOpenAI(prompt) {
+      const apiKey = getAIKey();
+      if (!apiKey) throw new Error("No OpenAI API key.");
+      const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+        method:"POST",
+        headers: {
+          "Authorization":"Bearer "+apiKey,
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{role:"user", content: prompt}],
+          max_tokens: 260,
+          temperature: 0.7
+        })
+      });
+      const data = await resp.json();
+      return data.choices[0]?.message?.content?.trim() || "";
+    }
+
+    // Generate result, animated output, feedback, save/share
+    async function generateAIResult(form, toolIdx) {
+      const tool = tools[toolIdx];
+      const btn = form.querySelector('button[type="submit"]');
+      const resDiv = form.querySelector('.sim-result');
+      const inputs = Array.from(form.querySelectorAll('input,textarea'));
+      const vals = inputs.map(i=>i.value.trim());
+      const prompt = tool.getPrompt(vals);
+
+      resDiv.innerHTML = `<div class="flex items-center gap-2 animate-fadeIn">
+        <svg class="animate-spin h-5 w-5 text-orange-500" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="#F97316" stroke-width="4"/><path class="opacity-75" fill="#F97316" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+        <span class="text-orange-500">Thinking...</span>
+      </div>`;
+      btn.disabled = true;
+
+      let result = "";
+      let usedSim = false;
+      try {
+        if(getAIKey()) {
+          result = await callOpenAI(prompt);
+        } else {
+          usedSim = true;
+          result = simResults[toolIdx];
+        }
+      } catch (e) {
+        usedSim = true;
+        result = simResults[toolIdx] + "<br><em class='text-xs text-orange-400'>[Simulated: real AI unavailable]</em>";
+      }
+      resDiv.innerHTML = "";
+      await animatedTyping(resDiv, result);
+
+      btn.disabled = false;
+      showFeedbackPanel(form, toolIdx, result, usedSim);
+    }
+
+    // Typing animation
+    async function animatedTyping(div, text) {
+      div.innerHTML = '<div class="bg-orange-50 dark:bg-orange-900 border-l-4 border-orange-400 px-4 py-3 rounded mt-2 animate-fadeIn typing" tabindex="0"></div>';
+      const out = div.querySelector('.typing');
+      let i = 0;
+      while (i < text.length) {
+        out.innerHTML = text.slice(0, i+1);
+        await new Promise(r=>setTimeout(r,12+Math.random()*24));
+        i++;
+      }
+      out.classList.remove("typing");
+    }
+
+    // Feedback panel ("Was this helpful?")
+    function showFeedbackPanel(form, toolIdx, result, usedSim) {
+      const panel = form.querySelector('.feedback-panel');
+      const key = `ai-feedback-${tools[toolIdx].id}`;
+      if(localStorage.getItem(key)==="1") {
+        panel.innerHTML = `<div class="text-xs text-green-600 mt-2">Thanks for your feedback!</div>`;
+        return;
+      }
+      panel.innerHTML = `
+        <div class="mt-2 text-xs text-gray-400">
+          Was this helpful? 
+          <button onclick="setFeedback('${tools[toolIdx].id}',1,this)" class="ml-1 px-2 py-1 rounded bg-orange-100 dark:bg-orange-800 text-orange-600 dark:text-orange-200 font-bold hover:bg-orange-200 dark:hover:bg-orange-700">👍</button>
+        </div>
+        ${usedSim?'<div class="text-xs text-orange-400 mt-1">Tip: Enter an OpenAI key above for real AI output.</div>':''}
+      `;
+    }
+    function setFeedback(id, val, btn) {
+      localStorage.setItem(`ai-feedback-${id}`, String(val));
+      btn.parentNode.innerHTML = `<span class="text-green-600 ml-2">Thanks for your feedback!</span>`;
+    }
+
+    // Copy to clipboard
+    document.addEventListener('click',function(e){
+      if(e.target.closest('.copy-btn')) {
+        const btn = e.target.closest('.copy-btn');
+        const resultDiv = btn.closest('form').querySelector('.sim-result .bg-orange-50, .sim-result .dark\\:bg-orange-900');
+        if(resultDiv) {
+          navigator.clipboard.writeText(resultDiv.innerText);
+          btn.innerHTML = `<svg class="h-5 w-5"><use href="#icon-clipboard"></use></svg> Copied!`;
+          setTimeout(()=>btn.innerHTML=`<svg class="h-5 w-5"><use href="#icon-clipboard"></use></svg>`, 1200);
+        }
+      }
+      // Save as draft
+      if(e.target.closest('.save-btn')) {
+        const btn = e.target.closest('.save-btn');
+        const form = btn.closest('form');
+        const toolIdx = Array.from(document.querySelectorAll('.tool-card form')).indexOf(form);
+        const tool = tools[toolIdx];
+        const inputs = Array.from(form.querySelectorAll('input,textarea')).map(i=>i.value.trim());
+        const resDiv = form.querySelector('.sim-result .bg-orange-50, .sim-result .dark\\:bg-orange-900');
+        if(resDiv) {
+          saveListing(tool.title, inputs, resDiv.innerText);
+        }
+      }
+    });
+
+    // Save/share listing
+    function saveListing(tool, inputs, result) {
+      let arr = JSON.parse(localStorage.getItem("ai-saved-listings")||"[]");
+      arr.unshift({tool,inputs,result,ts:Date.now()});
+      arr = arr.slice(0,8);
+      localStorage.setItem("ai-saved-listings", JSON.stringify(arr));
+      renderSavedListings();
+    }
+    function renderSavedListings() {
+      const arr = JSON.parse(localStorage.getItem("ai-saved-listings")||"[]");
+      const div = document.getElementById("savedListings");
+      if(!arr.length) return div.innerHTML='<div class="text-gray-400">Nothing saved yet.</div>';
+      div.innerHTML = arr.map((l,i)=>`
+        <div class="bg-white dark:bg-white/10 rounded-xl p-4 shadow group relative">
+          <div class="text-xs text-gray-400 mb-1">${l.tool} · ${new Date(l.ts).toLocaleString()}</div>
+          <pre class="whitespace-pre-wrap text-sm">${l.result}</pre>
+          <div class="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
+            <button onclick="copyListing(${i})" class="p-1 rounded bg-orange-50 dark:bg-orange-800"><svg class="h-4 w-4"><use href="#icon-clipboard"></use></svg></button>
+            <button onclick="deleteListing(${i})" class="p-1 rounded bg-orange-50 dark:bg-orange-800"><svg class="h-4 w-4 text-red-500"><use href="#icon-tag"></use></svg>✖</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    function copyListing(i) {
+      const arr = JSON.parse(localStorage.getItem("ai-saved-listings")||"[]");
+      if(arr[i]) navigator.clipboard.writeText(arr[i].result);
+    }
+    function deleteListing(i) {
+      let arr = JSON.parse(localStorage.getItem("ai-saved-listings")||"[]");
+      arr.splice(i,1);
+      localStorage.setItem("ai-saved-listings", JSON.stringify(arr));
+      renderSavedListings();
+    }
+    renderSavedListings();
+
+    // Dark mode toggle
+    function setDarkMode(on){
+      if(on) document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+      localStorage.setItem('aiToolsDark',on?'1':'0');
+    }
+    document.getElementById('darkToggle').onclick = function(){
+      setDarkMode(!document.documentElement.classList.contains('dark'));
+    };
+    (function(){
+      if(localStorage.getItem('aiToolsDark')==='1') setDarkMode(true);
+    })();
+
+    // Accessibility: skip link
+    document.querySelector('.skip-link').addEventListener('focus', function() {
+      this.style.position = 'static';
+    });
+
+  </script>
 </body>
 </html>
