@@ -1,178 +1,489 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gradient-to-br from-slate-100 to-blue-50 min-h-screen">
+<html lang="en" class="bg-[#fcf8f5] min-h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>AutoList Canada Dashboard</title>
+  <meta charset="UTF-8">
+  <title>AutoList Canada Seller Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          borderRadius: { '2xl': '1.25rem' },
-          keyframes: {
-            'fade-in': { '0%': { opacity: 0, transform: 'scale(.95)' }, '100%': { opacity: 1, transform: 'scale(1)' }},
-            'float': { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' }},
-            'wiggle': { '0%,100%': { transform: 'rotate(-3deg)' }, '50%': { transform: 'rotate(3deg)' }},
-          },
-          animation: {
-            'fade-in': 'fade-in 0.8s ease',
-            'float': 'float 3s ease-in-out infinite',
-            'wiggle': 'wiggle 1s ease-in-out infinite',
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    .milestone-animate {
-      transition: width 0.8s cubic-bezier(.4,0,.2,1);
-    }
+    /* Same custom styles as before, plus a few new ones */
+    .region-pulse { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);} 70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);} 100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);} }
+    .glow-tile { box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09); transition: box-shadow .2s;}
+    .glow-tile.active { box-shadow: 0 8px 32px 8px rgba(34,197,94,0.18),0 2px 12px 0 rgba(255,153,51,0.12);}
+    .glow-tile:hover { box-shadow: 0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);}
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(6px); border-radius: 12px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 1px 6px 0 rgba(34,197,94,0.04);}
+    .modal-bg { background: rgba(0,0,0,0.19);}
+    .shimmer { background: linear-gradient(90deg, #f5e9d9 25%, #fff6ed 50%, #f5e9d9 75%); background-size: 200% 100%; animation: shimmer 2s linear infinite;}
+    @keyframes shimmer { 0% { background-position: -150% 0; } 100% { background-position: 350% 0; } }
+    .layered { position: relative; z-index: 1; transition: transform .15s, box-shadow .15s;}
+    .layered::before { content: ""; position: absolute; left: 15px; top: 15px; right: -15px; bottom: -15px; border-radius: 20px; background: #fff6ed; z-index: -1; filter: blur(4px); opacity: .4; transition: opacity .2s;}
+    .layered:hover { transform: translateY(-3px) scale(1.04);}
+    .layered:hover::before { opacity: .7;}
+    .pulse-border { position: relative; z-index: 1;}
+    .pulse-border::after { content: ""; position: absolute; inset: 0; border-radius: 15px; border: 2px solid #fdba74; opacity: .45; animation: border-pulse 1.8s infinite; z-index: -1; pointer-events: none;}
+    @keyframes border-pulse { 0% { opacity: .45; } 60% { opacity: .1;} 100% { opacity: .45;} }
+    .section-collapsed > .section-content { display: none; }
+    .section-collapsed > .section-header:after { content: "▼"; }
+    .section-header { cursor: pointer; user-select: none; }
+    .section-header:after { content: "▲"; float:right; font-size:1rem;}
+    .theme-dark { background: #1d232a !important; color: #f3e9d5 !important;}
+    .theme-dark .bg-white { background: #28303b !important; color: #f3e9d5 !important;}
   </style>
 </head>
-<body class="font-sans relative overflow-x-hidden">
+<body class="font-sans text-[#28323a] bg-[#fcf8f5] min-h-screen relative transition-colors" id="bodyRoot">
 
-  <!-- SVG Background Waves -->
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-    <svg viewBox="0 0 1440 320" class="w-full h-56 md:h-96">
-      <defs>
-        <linearGradient id="wave" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stop-color="#38bdf8"/>
-          <stop offset="95%" stop-color="#0ea5e9"/>
-        </linearGradient>
-      </defs>
-      <path fill="url(#wave)" fill-opacity="0.3" d="M0,160L80,154.7C160,149,320,139,480,154.7C640,171,800,213,960,213.3C1120,213,1280,171,1360,149.3L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z" />
-    </svg>
-  </div>
-
-  <div class="flex min-h-screen">
-    <!-- Sidebar (desktop) -->
-    <aside class="hidden md:flex flex-col w-64 bg-white/80 shadow-2xl rounded-tr-2xl rounded-br-2xl p-6 space-y-8 animate-fade-in">
-      <div class="flex items-center justify-center mb-8">
-        <!-- Replace with your real logo -->
-        <img src="logo.svg" alt="AutoList Canada" class="w-32 h-auto"/>
-        <span class="text-2xl font-extrabold text-blue-600 ml-2">AutoList</span>
-      </div>
-      <nav class="flex flex-col space-y-3">
-        <a href="#" class="flex items-center gap-2 font-medium text-slate-700 hover:text-blue-600 transition"><span>🏠</span> Dashboard</a>
-        <a href="#" class="flex items-center gap-2 font-medium text-slate-700 hover:text-blue-600 transition"><span>🚗</span> My Listings</a>
-        <a href="#" class="flex items-center gap-2 font-medium text-slate-700 hover:text-blue-600 transition"><span>⚙️</span> Settings</a>
-      </nav>
-    </aside>
-
-    <!-- Mobile Topbar -->
-    <header class="md:hidden flex items-center justify-between bg-white/90 shadow-xl p-4">
-      <div class="flex items-center gap-2">
-        <img src="logo.svg" alt="AutoList Canada" class="w-10 h-auto"/>
-        <span class="text-xl font-extrabold text-blue-600">AutoList</span>
-      </div>
-      <nav class="flex gap-4">
-        <a href="#" class="text-blue-600">🏠</a>
-        <a href="#" class="text-blue-600">🚗</a>
-        <a href="#" class="text-blue-600">⚙️</a>
-      </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col p-4 md:p-12 gap-8 relative z-10">
-
-      <!-- Welcome & Launch -->
-      <section class="flex flex-col md:flex-row md:items-center md:justify-between bg-white/90 rounded-2xl shadow-xl p-8 mb-2 animate-fade-in">
-        <div>
-          <h1 class="text-3xl font-bold text-slate-800 mb-2">Welcome back, <span id="user-name">User!</span></h1>
-          <span class="inline-flex items-center bg-sky-100 text-sky-700 font-semibold text-sm px-3 py-1 rounded-full animate-wiggle mt-2">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19V6M5 12l7-7 7 7"></path></svg>
-            Try Me!
-          </span>
-        </div>
-        <button class="mt-6 md:mt-0 bg-gradient-to-r from-blue-600 via-sky-400 to-teal-400 text-white font-bold rounded-full px-8 py-3 shadow-lg hover:scale-105 transition-transform duration-200 animate-float" id="launch-btn">
-          Launch
-        </button>
-      </section>
-
-      <!-- Stats Grid -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl shadow-xl flex flex-col items-center p-6 animate-fade-in">
-          <span class="text-4xl font-bold text-blue-600" id="listings"></span>
-          <span class="text-slate-500 font-semibold mt-2">Listings</span>
-        </div>
-        <div class="bg-white rounded-2xl shadow-xl flex flex-col items-center p-6 animate-fade-in delay-75">
-          <span class="text-4xl font-bold text-blue-600" id="views"></span>
-          <span class="text-slate-500 font-semibold mt-2">Views</span>
-        </div>
-        <div class="bg-white rounded-2xl shadow-xl flex flex-col items-center p-6 animate-fade-in delay-100" id="trust-tile">
-          <span class="inline-flex items-center gap-2">
-            <span class="text-4xl font-bold text-blue-600" id="trustScore"></span>
-            <span class="bg-gradient-to-r from-green-400 to-blue-400 text-white text-xs px-2 py-1 rounded-full animate-bounce shadow">Trust</span>
-          </span>
-          <span class="text-slate-500 font-semibold mt-2">Trust Score</span>
-        </div>
-      </section>
-
-      <!-- Milestone Bar -->
-      <section class="bg-white rounded-2xl shadow-xl p-8 flex flex-col mt-2 animate-fade-in delay-150">
-        <div class="flex items-center justify-between mb-2">
-          <span class="font-semibold text-slate-700">Milestone Progress</span>
-          <span class="font-bold text-blue-600" id="milestone-text"></span>
-        </div>
-        <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
-          <div id="milestone-bar" class="h-4 bg-gradient-to-r from-blue-400 to-teal-300 rounded-full milestone-animate" style="width:0%"></div>
-        </div>
-      </section>
-
-      <!-- Breakdown Button -->
-      <button class="mt-6 bg-gradient-to-r from-teal-400 via-blue-400 to-blue-600 text-white font-bold rounded-full px-8 py-3 shadow-lg hover:scale-105 transition-transform duration-200 animate-float" id="breakdown-btn">
-        Click for Breakdown
-      </button>
-    </main>
-  </div>
-
-  <!-- User stats and animations -->
-  <script>
-    // 4. User data object
-    const userData = {
-      name: "Alex",
-      listings: 12,
-      views: 2456,
-      inquiries: 38,
-      trustScore: 96,
-      milestone: 78, // percent
-    };
-
-    // Populate stats
-    document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById("user-name").textContent = userData.name;
-      document.getElementById("listings").textContent = userData.listings;
-      document.getElementById("views").textContent = userData.views;
-      document.getElementById("trustScore").textContent = userData.trustScore + "%";
-      document.getElementById("milestone-text").textContent = userData.milestone + "%";
-
-      // Animate milestone bar
-      setTimeout(() => {
-        document.getElementById("milestone-bar").style.width = userData.milestone + "%";
-      }, 250);
-    });
-
-    // Add JS animation for Trust tile on scroll (optional)
-    const trustTile = document.getElementById("trust-tile");
-    function handleScroll() {
-      const rect = trustTile.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        trustTile.classList.add("animate-fade-in");
-        window.removeEventListener('scroll', handleScroll);
-      }
+<script>
+window.userData = {
+  name: "Samantha",
+  listingsSynced: 42,
+  aiCreditsUsed: 17,
+  confidenceScore: "88%",
+  milestoneStats: {
+    revenueGoal: 3000,
+    revenueEarned: 2100,
+    crosslistedPercent: 66,
+    totalListings: 42,
+  },
+  toolsUsedToday: {
+    titleGen: true,
+    trustBuilder: false,
+    priceTool: true,
+    tagOptimizer: false,
+    photoEnhancer: false,
+    fusionComposer: true,
+    platformSync: false,
+    personaBuilder: true,
+    trendFinder: false,
+    salesPredictor: true,
+    aiNotes: false,
+    listingTimer: false,
+    inventoryHelper: false,
+    bulkLister: false
+  },
+  rhythmCalendar: {
+    Mon: { label: "Browsing", tip: "Suggest Calm tone" },
+    Tue: { label: "Best Time", tip: "Peak engagement!" },
+    Wed: { label: "Neutral", tip: "Try Cozy tags" },
+    Thu: { label: "Low Engagement", tip: "Draft, don't post" },
+    Fri: { label: "Impulse Peak", tip: "Bold/Impulse tone" },
+    Sat: { label: "Drafts Published", tip: "High Sat traffic" },
+    Sun: { label: "Relax", tip: "Prep for Monday" }
+  },
+  changeFeed: [
+    "2 prices updated",
+    "1 listing boosted",
+    "Viewed by Cozy buyers"
+  ],
+  listingSnapshot: [
+    {
+      title: "Vintage 90s Denim Jacket",
+      tone: ["Cozy", "Minimalist", "Eco"],
+      aiStatus: "Strong",
+      tags: ["Impulse Buyer", "Trust-Seeker"]
+    },
+    {
+      title: "Handmade Ceramic Mug",
+      tone: ["Luxury", "Handmade"],
+      aiStatus: "Okay",
+      tags: ["Researcher"]
+    },
+    {
+      title: "Retro Wool Sweater",
+      tone: ["Cozy", "Minimalist"],
+      aiStatus: "Needs Fix",
+      tags: ["Impulse Buyer"]
     }
-    window.addEventListener('scroll', handleScroll);
+  ],
+  motivationalQuotes: [
+    "You’re selling calm today — and buyers need calm.",
+    "Your trust score is rising — keep up your unique style.",
+    "Every listing is a story. Make it feel true.",
+    "Buyers respond to warmth. Stay human.",
+    "Your story is your superpower.",
+    "Listing confidence: contagious for buyers!",
+    "Science says: the right tone triples engagement.",
+    "Crosslisting = compounding reach. You're growing.",
+    "AI tools are your sidekick, not your boss!"
+  ]
+};
+</script>
 
-    // Optionally: Animate buttons on click
-    document.getElementById("launch-btn").addEventListener("click", function() {
-      this.classList.add("scale-95");
-      setTimeout(() => this.classList.remove("scale-95"), 150);
+<!-- Theme Switcher -->
+<div class="fixed right-6 top-6 z-50">
+  <button id="themeToggle" class="bg-orange-100 text-orange-600 rounded-full px-3 py-1 shadow text-xs font-bold hover:bg-orange-200 transition">Toggle Theme</button>
+</div>
+
+<!-- Motivational Quote -->
+<div class="fixed right-4 bottom-6 z-30 flex items-center gap-3">
+  <div id="motivation" class="bg-white/80 rounded-xl px-5 py-3 shadow flex items-center gap-2 text-sm text-[#34616a]">
+    <span id="motivationText"></span>
+    <button class="ml-2 text-xs text-neutral-400 hover:text-orange-400" onclick="document.getElementById('motivation').style.display='none'">✕</button>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="mx-auto max-w-[1600px] px-4 py-4 lg:py-8 flex flex-col lg:flex-row gap-10" id="dashboardRoot"></div>
+
+<script>
+// --- COMPONENT HELPERS ---
+const el = (tag, props={}, ...children) => {
+  const e = document.createElement(tag);
+  Object.entries(props).forEach(([k,v])=>{
+    if (k.startsWith('on') && typeof v==='function') e.addEventListener(k.slice(2).toLowerCase(),v);
+    else if(k==="class") e.className=v;
+    else if(k==="style") e.style.cssText=v;
+    else e[k]=v;
+  });
+  children.forEach(c=>e.appendChild(typeof c==="string"?document.createTextNode(c):c));
+  return e;
+};
+const pill = (txt, color) =>
+  el("span", {class: `px-2 py-0.5 rounded-full text-xs font-semibold ${color}`}, txt);
+
+// ---- SECTION RENDERERS ----
+function Section({title, icon, children, collapsible=false, open=true, id}) {
+  // Modular collapsible section
+  const section = el("section", {class:"bg-white rounded-2xl shadow mb-6", id});
+  if(collapsible){
+    const header = el("div", {class:"section-header px-6 py-4 flex items-center font-bold text-lg text-[#34616a] select-none"}, icon?el("span",{class:"mr-2"},icon):"", title);
+    header.onclick = ()=>section.classList.toggle("section-collapsed");
+    section.appendChild(header);
+  }
+  section.appendChild(el("div",{class:"section-content px-6 py-5"},children));
+  if(!open) section.classList.add("section-collapsed");
+  return section;
+}
+
+// --- SIDEBAR ---
+function Sidebar() {
+  return el("aside",{class:"w-full lg:w-64 flex-shrink-0 flex flex-col gap-6"},
+    SidebarLogoNav(),
+    Section({title:"Stats", icon:"📊", children:SidebarStats()}),
+    Section({title:"Rhythm Calendar", icon:"📅", collapsible:true, id:"sidebarRhythm", children:SidebarRhythm()}),
+    Section({title:"Daily Change Feed", icon:"🔄", collapsible:true, id:"sidebarFeed", children:SidebarFeed()})
+  );
+}
+function SidebarLogoNav() {
+  return el("div",{class:"bg-white p-6 rounded-2xl shadow flex flex-col items-center mb-3"},
+    el("img",{src:"https://autolistcanada.ca/brandmark.svg",alt:"AutoList Canada",class:"w-16 mb-3"}),
+    el("nav",{class:"w-full"},
+      el("ul",{class:"space-y-2 text-sm font-semibold text-[#34616a]"},
+        ...[
+          ["🏠","Home"],["📊","Dashboard"],["📋","Listings"],["🧰","AI Tools"],["❓","FAQ"],["📄","Terms"]
+        ].map(([ic,lab])=>
+          el("li",{},el("a",{href:"#",class:"flex items-center gap-2 hover:text-orange-500"},ic,lab)))
+      )
+    )
+  );
+}
+function SidebarStats() {
+  const ud=window.userData;
+  return el("div",{class:"flex flex-col gap-2"},
+    el("div",{class:"flex justify-between gap-2"},
+      ...[
+        ["Listings Synced", ud.listingsSynced,"text-orange-500"],
+        ["AI Credits", ud.aiCreditsUsed,"text-green-500"],
+        ["Confidence", ud.confidenceScore,"text-blue-500"]
+      ].map(([label,val,color])=>
+        el("div",{class:"flex flex-col items-center"},
+          el("span",{class:`${color} text-lg font-bold`},val),
+          el("span",{class:"text-xs text-[#4b5763]"},label)
+        )
+      )
+    )
+  );
+}
+function SidebarRhythm() {
+  const rc = window.userData.rhythmCalendar;
+  const dayOrder = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const colorMap = {
+    "Browsing":"bg-orange-100 text-orange-500",
+    "Best Time":"bg-green-100 text-green-600 font-semibold",
+    "Neutral":"bg-gray-100 text-gray-400",
+    "Low Engagement":"bg-orange-50 text-orange-400",
+    "Impulse Peak":"bg-orange-200 text-orange-700 font-bold",
+    "Drafts Published":"bg-blue-100 text-blue-500",
+    "Relax":"bg-green-50 text-green-500"
+  };
+  return el("div",{class:"grid grid-cols-7 gap-2 w-full"},
+    ...dayOrder.map(day=>
+      el("div",{
+        class:`flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group RhythmCalendar-day`,
+        onmouseenter:e=>showRhythmTip(day,rc[day]?.tip),
+        onmouseleave:e=>showRhythmTip(null,null)
+      },
+        el("span",{class:"font-bold text-[#ea7113] text-sm"},day),
+        el("span",{class:`text-xs ${(colorMap[rc[day]?.label]||"text-[#64748b]")}`},rc[day]?.label)
+      )
+    )
+  );
+}
+function showRhythmTip(day,tip){
+  let tipEl = document.getElementById("rhythmTip");
+  if(!tipEl) {
+    tipEl = document.createElement("div");
+    tipEl.id = "rhythmTip";
+    tipEl.className = "fixed left-1/2 bottom-8 -translate-x-1/2 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-50";
+    document.body.appendChild(tipEl);
+  }
+  if(day && tip) { tipEl.textContent = `Tip: ${tip}`; tipEl.style.display="block";}
+  else tipEl.style.display="none";
+}
+function SidebarFeed() {
+  return el("ul",{class:"text-xs text-[#64748b] space-y-1"},
+    ...window.userData.changeFeed.map(item=>el("li",{},item))
+  );
+}
+
+// --- MAIN SECTIONS ---
+function Main() {
+  return el("main",{class:"flex-1 flex flex-col gap-8"},
+    Section({title:`Welcome, ${window.userData.name} 🌿`, icon:"👋", children:GreetingStats(), id:"mainGreeting"}),
+    Section({title:"Buyer Psychology Map & Milestone", icon:"🗺️", collapsible:true, id:"mainMap", children:el("div",{class:"flex flex-col lg:flex-row gap-8"},BuyerMap(),MilestoneCard())}),
+    Section({title:"AI Tools", icon:"🧰", collapsible:true, id:"mainTools", children:ToolGrid()}),
+    Section({title:"Listings Snapshot", icon:"📋", collapsible:true, id:"mainListings", children:ListingSnapshot()})
+  );
+}
+function GreetingStats() {
+  const ud=window.userData;
+  return el("div",{class:"flex gap-8 text-center"},
+    ...[
+      ["Listings Synced", ud.listingsSynced,"text-orange-500"],
+      ["AI Credits Used", ud.aiCreditsUsed,"text-green-500"],
+      ["Confidence", ud.confidenceScore,"text-blue-500"]
+    ].map(([label,val,color])=>
+      el("div",{class:"flex flex-col items-center"},
+        el("span",{class:`${color} text-2xl font-bold`},val),
+        el("span",{class:"text-xs text-[#4b5763]"},label)
+      )
+    )
+  );
+}
+function BuyerMap() {
+  // Modular, with tooltips & click
+  return el("section",{class:"w-full lg:w-2/3 bg-white rounded-2xl shadow px-6 py-5 relative flex flex-col items-center justify-center"},
+    el("h2",{class:"text-xl font-semibold text-[#34616a] mb-1"},"Buyer Psychology Map"),
+    el("p",{class:"text-xs text-[#64748b] mb-3"},"Hover a region to see buyer tone, click to filter listings"),
+    el("div",{class:"relative w-full max-w-[420px] h-[250px] mx-auto"},
+      BuyerSVGMap()
+    )
+  );
+}
+function BuyerSVGMap() {
+  // Regions for demo
+  const regionToneMap = {
+    "BC": { tone: "Minimalist", color: "#38bdf8", buyers: "Cozy & Calm" },
+    "AB": { tone: "Eco", color: "#4ade80", buyers: "Budget Seekers" },
+    "ON": { tone: "Cozy", color: "#fdba74", buyers: "Impulse Buyers" },
+    "QC": { tone: "Luxury", color: "#a5b4fc", buyers: "Trust-Seekers" },
+    "ATL": { tone: "Handmade", color: "#bbf7d0", buyers: "Browsing & Research" }
+  };
+  const svg = el("svg",{viewBox:"0 0 400 220",class:"w-full h-[220px] cursor-pointer"});
+  [["BC",50,120,38],["AB",120,90,30],["ON",260,90,45],["QC",320,160,34],["ATL",350,40,22]].forEach(([region,cx,cy,r])=>{
+    const circ = el("circle",{
+      id:`region-${region}`,
+      cx,cy,r,
+      class:`transition ${region==="ON"?"region-pulse":""}`,
+      style:`fill:${regionToneMap[region].color}55;stroke:${regionToneMap[region].color};stroke-width:2;`,
+      onmouseenter: e=>showRegionTooltip(region,regionToneMap[region],e),
+      onmouseleave: ()=>showRegionTooltip(null),
+      onclick: ()=>alert(`Filtering listings for ${region} buyers!`)
     });
-    document.getElementById("breakdown-btn").addEventListener("click", function() {
-      this.classList.add("scale-95");
-      setTimeout(() => this.classList.remove("scale-95"), 150);
-    });
-  </script>
+    svg.appendChild(circ);
+  });
+  // City dots (visual)
+  [[60,110,5],[120,110,4],[235,75,6],[285,110,4],[320,130,3]].forEach(([cx,cy,r])=>
+    svg.appendChild(el("circle",{cx,cy,r,style:"fill:#fdba74;opacity:0.5;"}))
+  );
+  // Tooltip
+  const t = el("div",{id:"regionTooltip",class:"hidden absolute left-1/2 -translate-x-1/2 top-6 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-30"});
+  svg.regionTooltip = t;
+  setTimeout(()=>svg.parentElement.appendChild(t),20);
+  return svg;
+}
+function showRegionTooltip(region, data, evt){
+  const t = document.getElementById("regionTooltip");
+  if(region && data){
+    t.classList.remove("hidden");
+    t.innerHTML = `<strong>${region}</strong>: <span style="color:${data.color}" class="font-bold">${data.tone}</span> <br><span class="text-xs">Buyers: ${data.buyers}</span>`;
+    if(evt && evt.target) {
+      const svgRect = evt.target.getBoundingClientRect();
+      const parentRect = evt.target.ownerSVGElement.getBoundingClientRect();
+      t.style.left = (svgRect.left - parentRect.left + svgRect.width/2) + "px";
+    }
+  } else {
+    t.classList.add("hidden");
+  }
+}
+function MilestoneCard() {
+  const ud = window.userData;
+  const percent = Math.min(100, Math.round(ud.milestoneStats.revenueEarned/ud.milestoneStats.revenueGoal*100));
+  return el("section",{class:"w-full lg:w-1/3 bg-white rounded-2xl shadow px-6 py-5 flex flex-col items-center justify-center"},
+    el("h2",{class:"text-lg font-semibold text-[#34616a] mb-1"},"Monthly Milestones"),
+    el("div",{class:"w-full mt-2 flex flex-col gap-2"},
+      el("div",{class:"flex items-center justify-between mb-1"},
+        el("span",{class:"text-xs text-[#64748b]"},"Total Listings"),
+        el("span",{class:"text-xs text-orange-500"},ud.milestoneStats.totalListings)
+      ),
+      el("div",{class:"flex items-center justify-between mb-1"},
+        el("span",{class:"text-xs text-[#64748b]"},"% Crosslisted"),
+        el("span",{class:"text-xs text-green-500"},ud.milestoneStats.crosslistedPercent+"%")
+      ),
+      el("div",{class:"flex items-center justify-between mb-1"},
+        el("span",{class:"text-xs text-[#64748b]"},"Revenue Goal"),
+        el("span",{class:"text-xs text-blue-500"},`$${ud.milestoneStats.revenueEarned} / $${ud.milestoneStats.revenueGoal}`)
+      ),
+      el("div",{class:"my-4"},
+        el("div",{
+          class:"h-4 w-full bg-orange-100 rounded-full relative overflow-hidden transition-all cursor-pointer",
+          onclick:()=>openMilestoneModal()
+        },
+          el("div",{class:"h-4 bg-orange-400 rounded-full transition-all",style:`width:${percent}%`}),
+          el("div",{class:"absolute inset-0 flex items-center justify-center text-xs text-white font-semibold select-none"},"Click for breakdown")
+        )
+      )
+    )
+  );
+}
+function openMilestoneModal() {
+  const ud = window.userData;
+  let modal = document.getElementById('milestoneModal');
+  if(!modal){
+    modal = el("div",{id:"milestoneModal",class:"fixed inset-0 z-40 flex items-center justify-center modal-bg"},
+      el("div",{class:"bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-2xl relative"},
+        el("button",{class:"absolute top-3 right-4 text-lg text-neutral-400 hover:text-orange-400",onclick:closeMilestoneModal},"×"),
+        el("h2",{class:"text-xl font-semibold mb-3 text-orange-500"},"Milestone Breakdown"),
+        el("div",{class:"space-y-4 text-sm"},
+          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Total Listings: "),ud.milestoneStats.totalListings),
+          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Crosslisted: "),ud.milestoneStats.crosslistedPercent+"%"),
+          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Revenue: "),`$${ud.milestoneStats.revenueEarned}`),
+          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Revenue Goal: "),`$${ud.milestoneStats.revenueGoal}`)
+        ),
+        el("button",{class:"mt-6 w-full py-2 rounded-lg bg-orange-400 text-white font-medium shadow hover:bg-orange-500 transition",onclick:closeMilestoneModal},"Close")
+      )
+    );
+    document.body.appendChild(modal);
+  }
+  modal.classList.remove("hidden");
+}
+function closeMilestoneModal() {
+  document.getElementById('milestoneModal').classList.add('hidden');
+}
+
+// ---- AI TOOLS GRID ----
+function ToolGrid() {
+  // Many tools, all modular, status, icon, CTA, interactivity
+  const allTools = [
+    { key:"titleGen", icon:"📝", label:"Title Generator", desc:"Crafts clicky titles" },
+    { key:"priceTool", icon:"💲", label:"Price Tool", desc:"AI price optimizer" },
+    { key:"trustBuilder", icon:"🔐", label:"Trust Builder", desc:"Boosts buyer trust" },
+    { key:"tagOptimizer", icon:"🏷️", label:"Tag Optimizer", desc:"Optimizes tags" },
+    { key:"photoEnhancer", icon:"🖼️", label:"Photo Enhancer", desc:"Photo upgrades" },
+    { key:"fusionComposer", icon:"🧬", label:"Fusion Composer", desc:"Blend titles/tags" },
+    { key:"platformSync", icon:"🔗", label:"Platform Sync", desc:"Sync platforms" },
+    { key:"personaBuilder", icon:"🧑‍🎤", label:"Persona Builder", desc:"Buyer persona" },
+    { key:"trendFinder", icon:"🔮", label:"Trend Finder", desc:"Trends & timing" },
+    { key:"salesPredictor", icon:"📈", label:"Sales Predictor", desc:"Forecasts sales" },
+    { key:"aiNotes", icon:"💬", label:"AI Notes", desc:"Listing feedback" },
+    { key:"listingTimer", icon:"⏱️", label:"Listing Timer", desc:"Suggests best hour" },
+    { key:"inventoryHelper", icon:"📦", label:"Inventory Helper", desc:"Stock alerts" },
+    { key:"bulkLister", icon:"🗂️", label:"Bulk Lister", desc:"Upload in bulk" }
+  ];
+  const ud = window.userData;
+  return el("div",{class:"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"},
+    ...allTools.map(tool=>{
+      const used = ud.toolsUsedToday[tool.key];
+      return el("div",{
+        class:`glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group ${used?"active":""}`
+      },
+        el("div",{class:"bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"},tool.icon),
+        el("span",{class:"font-semibold text-[#ea7113]"},tool.label),
+        el("span",{class:"text-[10px] text-[#64748b] mt-1"},tool.desc),
+        el("span",{class:`mt-1 text-xs font-medium ${used?"text-green-600":"text-orange-400"}`},used?"Used Today":"Try Now"),
+        el("button",{
+          class:`mt-2 px-3 py-1 rounded ${used?"bg-green-500 hover:bg-green-600":"bg-orange-400 hover:bg-orange-500"} text-white text-xs font-medium shadow group-hover:scale-105 transition`,
+          onclick:()=>alert(`${tool.label} launched!`)
+        },"Launch")
+      );
+    })
+  );
+}
+
+// ---- LISTINGS SNAPSHOT ----
+function ListingSnapshot() {
+  const ud = window.userData;
+  const toneColor = {
+    Cozy: "bg-orange-100 text-orange-500",
+    Minimalist: "bg-blue-100 text-blue-500",
+    Eco: "bg-green-100 text-green-500",
+    Luxury: "bg-orange-100 text-orange-500",
+    Handmade: "bg-green-100 text-green-500"
+  };
+  const statusColor = {
+    "Strong": "bg-green-100 text-green-600",
+    "Okay": "bg-orange-100 text-orange-600",
+    "Needs Fix": "bg-red-100 text-red-600"
+  };
+  return el("div",{class:"grid grid-cols-1 md:grid-cols-3 gap-4"},
+    ...ud.listingSnapshot.map((listing,i)=>
+      el("div",{class:"bg-orange-50 rounded-xl p-4 flex flex-col gap-2 shadow relative group"},
+        el("div",{class:"flex items-center justify-between"},
+          el("span",{class:"font-semibold text-[#34616a]"},listing.title),
+          el("span",{
+            class:`ml-2 text-xs px-2 py-0.5 rounded-full ${statusColor[listing.aiStatus]||'bg-gray-100 text-gray-400'} font-bold cursor-pointer`,
+            title:`AI Review: ${listing.aiStatus}`
+          },listing.aiStatus)
+        ),
+        el("div",{class:"flex items-center gap-2 flex-wrap"},
+          ...(listing.tone||[]).map(t=>pill(t,toneColor[t]||'bg-orange-50 text-orange-400'))
+        ),
+        el("div",{class:"flex items-center gap-2 text-xs"},
+          ...(listing.tags||[]).map(tag => pill(tag,"bg-orange-200 text-orange-700"))
+        ),
+        el("div",{class:"flex gap-2 mt-2"},
+          el("button",{class:"px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow hover:bg-orange-500 transition",onclick:()=>alert(`AI Fix for "${listing.title}"!`)},"AI Fix"),
+          el("button",{class:"px-3 py-1 rounded bg-blue-400 text-white text-xs font-medium shadow hover:bg-blue-500 transition",onclick:()=>alert(`Boosted "${listing.title}"!`)},"Boost")
+        )
+      )
+    )
+  );
+}
+
+// ---- MOTIVATION QUOTE ----
+function startMotivationRotation() {
+  const quotes = window.userData.motivationalQuotes;
+  let idx = 0;
+  const elMot = document.getElementById("motivationText");
+  function nextQuote(){
+    elMot.textContent = quotes[idx++%quotes.length];
+  }
+  nextQuote();
+  setInterval(nextQuote, 6500);
+}
+
+// ---- THEME TOGGLE ----
+function setupThemeToggle() {
+  const btn = document.getElementById("themeToggle");
+  btn.onclick = ()=>{
+    const root = document.getElementById("bodyRoot");
+    root.classList.toggle("theme-dark");
+  };
+}
+
+// ---- INITIALIZE DASHBOARD ----
+function renderDashboard() {
+  const root = document.getElementById("dashboardRoot");
+  root.innerHTML = ""; // clear
+  root.appendChild(Sidebar());
+  root.appendChild(Main());
+}
+
+// ---- BOOTSTRAP ----
+renderDashboard();
+startMotivationRotation();
+setupThemeToggle();
+
+</script>
 </body>
 </html>
