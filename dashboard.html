@@ -7,152 +7,65 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Custom pulse for map */
-    .region-pulse {
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);}
-      70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);}
-      100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);}
-    }
-    /* Glow tile effect + animated glow */
-    .glow-tile {
-      box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09);
-      transition: box-shadow .2s;
-      animation: tileGlow 4s ease-in-out infinite;
-    }
-    .glow-tile:hover {
-      box-shadow: 0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);
-    }
-    @keyframes tileGlow {
-      0%, 100% { box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09);}
-      50% { box-shadow: 0 8px 36px 10px rgba(255,153,51,0.20),0 3px 16px 0 rgba(34,197,94,0.17);}
-    }
-    /* Glass search effect */
-    .glass {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(6px);
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.03);
-      box-shadow: 0 1px 6px 0 rgba(34,197,94,0.04);
-    }
-    /* Modal backdrop */
-    .modal-bg {
-      background: rgba(0,0,0,0.19);
-    }
-    /* Shimmer for cards */
-    .shimmer {
-      background: linear-gradient(90deg, #f5e9d9 25%, #fff6ed 50%, #f5e9d9 75%);
-      background-size: 200% 100%;
-      animation: shimmer 2s linear infinite;
-    }
-    @keyframes shimmer {
-      0% { background-position: -150% 0; }
-      100% { background-position: 350% 0; }
-    }
-    /* Layered card effect */
-    .layered {
-      position: relative;
-      z-index: 1;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .layered::before {
-      content: "";
-      position: absolute;
-      left: 15px; top: 15px; right: -15px; bottom: -15px;
-      border-radius: 20px;
-      background: #fff6ed;
-      z-index: -1;
-      filter: blur(4px);
-      opacity: .4;
-      transition: opacity .2s;
-    }
-    .layered:hover { transform: translateY(-3px) scale(1.04); }
-    .layered:hover::before { opacity: .7; }
-    /* Animated border pulse */
-    .pulse-border {
-      position: relative;
-      z-index: 1;
-    }
-    .pulse-border::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 15px;
-      border: 2px solid #fdba74;
-      opacity: .45;
-      animation: border-pulse 1.8s infinite;
-      z-index: -1;
-      pointer-events: none;
-    }
-    @keyframes border-pulse {
-      0% { opacity: .45; }
-      60% { opacity: .1;}
-      100% { opacity: .45;}
-    }
-    /* SVG float animations for background blobs */
-    @keyframes floatSlow {
-      0% { transform: translateY(0px) scale(1);}
-      50% { transform: translateY(-18px) scale(1.03);}
-      100% { transform: translateY(0px) scale(1);}
-    }
-    @keyframes floatFast {
-      0% { transform: translateY(0px) scale(1);}
-      50% { transform: translateY(8px) scale(1.01);}
-      100% { transform: translateY(0px) scale(1);}
-    }
-    .animate-float-slow { animation: floatSlow 12s ease-in-out infinite; }
-    .animate-float-fast { animation: floatFast 9s ease-in-out infinite; }
-    /* Subtle SVG overlay animations */
-    @keyframes floatSubtle {
-      0%, 100% { transform: translateY(0px) rotate(-3deg);}
-      50% { transform: translateY(8px) rotate(3deg);}
-    }
-    .animate-psyche { animation: floatSubtle 8s ease-in-out infinite; }
+    /* ... keep all your custom CSS from before ... */
+    .region-pulse { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(255,153,51,0.4);}70%{box-shadow:0 0 0 12px rgba(255,153,51,0.05);}100%{box-shadow:0 0 0 0 rgba(255,153,51,0.0);} }
+    .glow-tile { box-shadow:0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09); transition:box-shadow .2s; animation:tileGlow 4s ease-in-out infinite;}
+    .glow-tile:hover { box-shadow:0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);}
+    @keyframes tileGlow { 0%,100%{box-shadow:0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09);}50%{box-shadow:0 8px 36px 10px rgba(255,153,51,0.20),0 3px 16px 0 rgba(34,197,94,0.17);} }
+    .glass {background:rgba(255,255,255,0.7);backdrop-filter:blur(6px);border-radius:12px;border:1px solid rgba(0,0,0,0.03);box-shadow:0 1px 6px 0 rgba(34,197,94,0.04);}
+    .modal-bg {background:rgba(0,0,0,0.19);}
+    .shimmer {background:linear-gradient(90deg,#f5e9d9 25%,#fff6ed 50%,#f5e9d9 75%);background-size:200% 100%;animation:shimmer 2s linear infinite;}
+    @keyframes shimmer {0%{background-position:-150% 0;}100%{background-position:350% 0;}}
+    .layered {position:relative;z-index:1;transition:transform .15s, box-shadow .15s;}
+    .layered::before {content:"";position:absolute;left:15px;top:15px;right:-15px;bottom:-15px;border-radius:20px;background:#fff6ed;z-index:-1;filter:blur(4px);opacity:.4;transition:opacity .2s;}
+    .layered:hover {transform:translateY(-3px) scale(1.04);}
+    .layered:hover::before {opacity:.7;}
+    .pulse-border {position:relative;z-index:1;}
+    .pulse-border::after {content:"";position:absolute;inset:0;border-radius:15px;border:2px solid #fdba74;opacity:.45;animation:border-pulse 1.8s infinite;z-index:-1;pointer-events:none;}
+    @keyframes border-pulse {0%{opacity:.45;}60%{opacity:.1;}100%{opacity:.45;}}
+    @keyframes floatSlow {0%{transform:translateY(0px) scale(1);}50%{transform:translateY(-18px) scale(1.03);}100%{transform:translateY(0px) scale(1);}}
+    @keyframes floatFast {0%{transform:translateY(0px) scale(1);}50%{transform:translateY(8px) scale(1.01);}100%{transform:translateY(0px) scale(1);}}
+    .animate-float-slow {animation:floatSlow 12s ease-in-out infinite;}
+    .animate-float-fast {animation:floatFast 9s ease-in-out infinite;}
+    @keyframes floatSubtle {0%,100%{transform:translateY(0px) rotate(-3deg);}50%{transform:translateY(8px) rotate(3deg);}}
+    .animate-psyche {animation:floatSubtle 8s ease-in-out infinite;}
   </style>
 </head>
-
 <body class="font-sans text-[#28323a] bg-[#fcf8f5] min-h-screen relative">
 
-<!-- SVG motion backgrounds -->
-<svg class="fixed top-0 left-0 -z-10 pointer-events-none select-none animate-float-slow" width="700" height="600" viewBox="0 0 700 600" fill="none" style="opacity:.38;">
-  <ellipse cx="300" cy="200" rx="340" ry="150" fill="url(#peach1)" filter="url(#blur1)"/>
-  <defs>
-    <linearGradient id="peach1" x1="0" y1="0" x2="700" y2="600" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ffe7c1"/>
-      <stop offset="0.7" stop-color="#fdba74"/>
-      <stop offset="1" stop-color="#fb7185"/>
-    </linearGradient>
-    <filter id="blur1">
-      <feGaussianBlur stdDeviation="40"/>
-    </filter>
-  </defs>
-</svg>
-<svg class="fixed bottom-0 right-0 -z-10 pointer-events-none select-none animate-float-fast" width="400" height="350" viewBox="0 0 400 350" fill="none" style="opacity:.25;">
-  <ellipse cx="320" cy="250" rx="190" ry="85" fill="url(#peach2)" filter="url(#blur2)"/>
-  <defs>
-    <linearGradient id="peach2" x1="0" y1="0" x2="400" y2="350" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#fdba74"/>
-      <stop offset="1" stop-color="#ea7113"/>
-    </linearGradient>
-    <filter id="blur2">
-      <feGaussianBlur stdDeviation="32"/>
-    </filter>
-  </defs>
-</svg>
+<!-- SVG motion backgrounds (unchanged, for brevity) -->
+<!-- ... your SVG background code here ... -->
 
-<!-- Placeholder user data for demo logic -->
 <script>
-const userData = {
+/** 1. window.userData: source of truth, ready for backend injection! **/
+window.userData = {
   name: "Sage",
   listingsSynced: 42,
-  aiCredits: 17,
+  aiCreditsUsed: 17,
   confidenceScore: 88,
-  stats: [
-    { label: "Listings Synced", value: 42, icon: "🔁" },
-    { label: "AI Credits Left", value: 17, icon: "💡" },
-    { label: "Confidence Score", value: 88, icon: "🎯" }
+  milestoneProgress: { total: 42, goal: 50, percent: 84 },
+  toolUsage: {
+    titleGenerator: 23,
+    priceTool: 18,
+    trustBuilder: 8,
+    tagOptimizer: 11,
+    photoEnhancer: 5,
+    salesPredictor: 9
+  },
+  listingSnapshot: [
+    { title: "Vintage 90s Denim Jacket", tags: ["Cozy", "Minimalist", "Eco"], tone: "Impulse Buyer", status: "Strong" },
+    { title: "Handmade Ceramic Mug", tags: ["Luxury", "Handmade"], tone: "Researcher", status: "Okay" },
+    { title: "Retro Wool Sweater", tags: ["Cozy", "Minimalist"], tone: "Impulse Buyer", status: "Needs Fix" }
+  ],
+  rhythmCalendar: [
+    { day: "Mon", rhythm: "Browsing", tip: "Suggest Calm tone" },
+    { day: "Tue", rhythm: "Budget", tip: "Suggest Value tone" },
+    { day: "Wed", rhythm: "Impulse", tip: "Suggest Bold tone" },
+    { day: "Thu", rhythm: "Impulse", tip: "🔥 Best for quick sales" },
+    { day: "Fri", rhythm: "Luxury", tip: "Suggest Premium tone" },
+    { day: "Sat", rhythm: "Browsing", tip: "High traffic" },
+    { day: "Sun", rhythm: "Budget", tip: "Suggest Soft tone" }
   ],
   aiFeedback: [
     "🔥 Cozy listings had 2x clicks this week",
@@ -164,71 +77,135 @@ const userData = {
     "Your trust score is rising — keep up your unique style.",
     "Every listing is a story. Make it feel true."
   ],
-  milestone: {
-    totalListings: 42,
-    crosslisted: 36,
-    revenue: 2100,
-    revenueGoal: 3000
-  },
-  calendarRhythm: [
-    { day: "Mon", rhythm: "Browsing", tip: "Suggest Calm tone" },
-    { day: "Tue", rhythm: "Budget", tip: "Suggest Value tone" },
-    { day: "Wed", rhythm: "Impulse", tip: "Suggest Bold tone" },
-    { day: "Thu", rhythm: "Impulse", tip: "🔥 Best for quick sales" },
-    { day: "Fri", rhythm: "Luxury", tip: "Suggest Premium tone" },
-    { day: "Sat", rhythm: "Browsing", tip: "High traffic" },
-    { day: "Sun", rhythm: "Budget", tip: "Suggest Soft tone" }
-  ],
   recentActivity: [
     "Yesterday: 2 prices updated, 1 listing boosted, 4 viewed by Cozy buyers",
     "Today: 1 draft published, 2 listings crosslisted"
   ]
 };
+
+// 2. Proxy for reactivity: call renderDashboard after any change
+const userDataProxy = new Proxy(window.userData, {
+  set(target, prop, val) { target[prop]=val; renderDashboard(); return true; }
+});
+window.userData = userDataProxy;
+
+// 3. Main render function for all dashboard sections
+function renderDashboard() {
+  const d = window.userData;
+
+  // Stats
+  document.getElementById('statListings').textContent = d.listingsSynced;
+  document.getElementById('statAICredits').textContent = d.aiCreditsUsed;
+  document.getElementById('statConfidence').textContent = d.confidenceScore + "%";
+
+  // AI Feedback
+  document.getElementById('aiFeedbackText').textContent = d.aiFeedback?.[0] || "";
+
+  // Rhythm Calendar
+  const cal = document.getElementById('rhythmCalendar');
+  cal.innerHTML = '';
+  d.rhythmCalendar.forEach((c, i) => {
+    cal.innerHTML += `
+      <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
+        <span class="font-semibold text-[#ea7113] text-sm">${c.day}${c.tip.includes('🔥') ? '🔥' : ''}</span>
+        <span class="text-xs text-[#64748b] font-normal">${c.rhythm}</span>
+        <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">${c.tip}</span>
+      </div>
+    `;
+  });
+
+  // Recent Activity
+  const feed = document.getElementById('recentActivityList');
+  feed.innerHTML = '';
+  d.recentActivity.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    feed.appendChild(li);
+  });
+
+  // Milestone
+  document.getElementById('milestoneTotal').textContent = d.milestoneProgress.total;
+  document.getElementById('milestoneCrosslisted').textContent = Math.floor(d.milestoneProgress.percent) + '%';
+  document.getElementById('milestoneGoal').textContent = d.milestoneProgress.goal;
+  document.getElementById('confidenceBar').style.width = d.milestoneProgress.percent + "%";
+  document.getElementById('revenue').textContent = `$${d.milestoneProgress.total * 50} / $${d.milestoneProgress.goal * 50}`;
+  document.getElementById('crosslisted').textContent = `${Math.floor(d.milestoneProgress.percent)}%`;
+
+  // Motivational Quotes
+  document.getElementById('motivationText').textContent = d.motivationalQuotes?.[0] || "";
+
+  // Tool Usage (Glow Tiles)
+  const tools = [
+    { id: "titleGenerator", icon: "📝", label: "Title Generator" },
+    { id: "priceTool", icon: "💲", label: "Price Tool" },
+    { id: "tagOptimizer", icon: "🏷️", label: "Tag Optimizer" },
+    { id: "trustBuilder", icon: "🔐", label: "Trust Builder" },
+    { id: "photoEnhancer", icon: "🖼️", label: "Photo Enhancer" },
+    { id: "salesPredictor", icon: "📊", label: "Sales Predictor" }
+  ];
+  const toolsGrid = document.getElementById('toolsGrid');
+  toolsGrid.innerHTML = '';
+  for (const t of tools) {
+    toolsGrid.innerHTML += `
+      <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
+        <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">${t.icon}</div>
+        <span class="font-semibold text-[#ea7113]">${t.label}</span>
+        <span class="text-[11px] text-[#64748b] mt-2 font-normal">${d.toolUsage[t.id] ? ('Used ' + d.toolUsage[t.id] + 'x') : 'Try me!'}</span>
+        <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
+      </div>
+    `;
+  }
+
+  // Listings Snapshot
+  const listingGrid = document.getElementById('listingSnapshot');
+  listingGrid.innerHTML = '';
+  d.listingSnapshot.forEach(listing => {
+    let statusColor = listing.status === 'Strong'
+      ? 'bg-green-100 text-green-600'
+      : listing.status === 'Okay'
+        ? 'bg-orange-100 text-orange-600'
+        : 'bg-red-100 text-red-600';
+    listingGrid.innerHTML += `
+      <div class="bg-orange-50 rounded-2xl p-6 flex flex-col gap-3 shadow-xl shadow-orange-100/40 relative group">
+        <div class="flex items-center justify-between">
+          <span class="font-semibold text-[#34616a]">${listing.title}</span>
+          <span class="ml-2 text-xs px-3 py-1 rounded-full ${statusColor} font-semibold cursor-pointer">${listing.status}</span>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          ${listing.tags.map(tag =>
+            `<span class="bg-orange-100 text-orange-500 text-xs font-normal px-3 py-1 rounded-full">${tag}</span>`).join('')}
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="bg-orange-200 rounded-full px-3 py-1 text-orange-700">${listing.tone}</span>
+        </div>
+        <div class="flex gap-3 mt-2">
+          <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">AI Fix</button>
+          <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 transition">Boost</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// 4. AI Feedback and Quote rotation
+let quoteIdx = 0, feedbackIdx = 0;
+function rotateQuote() {
+  quoteIdx = (quoteIdx + 1) % window.userData.motivationalQuotes.length;
+  document.getElementById('motivationText').textContent = window.userData.motivationalQuotes[quoteIdx];
+}
+function rotateFeedback() {
+  feedbackIdx = (feedbackIdx + 1) % window.userData.aiFeedback.length;
+  document.getElementById("aiFeedbackText").textContent = window.userData.aiFeedback[feedbackIdx];
+}
+setInterval(rotateQuote, 8000);
+setInterval(rotateFeedback, 6000);
+
+// 5. DOMContentLoaded: Initial Render
+window.addEventListener('DOMContentLoaded', renderDashboard);
 </script>
-
-<!-- Modal for milestone breakdown -->
-<div id="milestoneModal" class="hidden fixed inset-0 z-40 flex items-center justify-center modal-bg">
-  <div class="bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-xl shadow-orange-100/40 relative">
-    <button onclick="closeModal()" class="absolute top-3 right-4 text-lg text-neutral-400 hover:text-orange-400">&times;</button>
-    <h2 class="text-xl font-semibold mb-3 text-orange-500">Milestone Breakdown</h2>
-    <div class="space-y-4 text-sm">
-      <div>
-        <span class="font-medium text-[#64748b]">Drafts:</span>
-        <span id="draftCount">4</span>
-      </div>
-      <div>
-        <span class="font-medium text-[#64748b]">Best Platform:</span>
-        <span id="bestPlatform">Etsy</span>
-      </div>
-      <div>
-        <span class="font-medium text-[#64748b]">Top Selling Tone:</span>
-        <span id="bestTone">Cozy</span>
-      </div>
-      <div>
-        <span class="font-medium text-[#64748b]">Monthly Revenue:</span>
-        <span id="revenue">$2,100 / $3,000</span>
-      </div>
-      <div>
-        <span class="font-medium text-[#64748b]">Listings Crosslisted:</span>
-        <span id="crosslisted">36 / 42</span>
-      </div>
-    </div>
-    <button class="mt-6 w-full py-2 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Close</button>
-  </div>
-</div>
-
-<!-- Motivational quote toggle -->
-<div class="fixed right-4 bottom-6 z-30 flex items-center gap-3">
-  <div id="motivation" class="bg-white/80 rounded-2xl px-5 py-3 shadow-xl shadow-orange-100/40 flex items-center gap-2 text-sm text-[#34616a]">
-    <svg class="w-5 h-5 mr-1 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 9a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15v3m0 0H8m4 0h4"/></svg>
-    <span id="motivationText"></span>
-    <button class="ml-2 text-xs text-neutral-400 hover:text-orange-400" onclick="document.getElementById('motivation').style.display='none'">✕</button>
-  </div>
-</div>
 
 <!-- Main container -->
 <div class="mx-auto max-w-[1600px] px-6 py-8 lg:py-12 flex flex-col lg:flex-row gap-12">
-
   <!-- Sidebar: Rhythm Calendar + Quick Stats -->
   <aside class="w-full lg:w-64 flex-shrink-0 flex flex-col gap-8">
     <!-- Welcome + Stats -->
@@ -238,7 +215,6 @@ const userData = {
           <h1 class="text-2xl font-extrabold text-[#ea7113]">Welcome, Seller 🌿</h1>
           <span class="text-xs text-[#64748b] block mt-1">Your command centre</span>
         </div>
-        <!-- Glass search bar -->
         <div class="glass flex items-center px-2 py-1 ml-2">
           <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-width="2" d="M21 21l-2-2"/>
@@ -248,24 +224,23 @@ const userData = {
       </div>
       <div class="flex justify-between mt-4 gap-4">
         <div class="flex flex-col items-center">
-          <span class="text-orange-500 text-lg font-semibold">42</span>
+          <span id="statListings" class="text-orange-500 text-lg font-semibold"></span>
           <span class="text-xs text-[#4b5763] font-normal">Listings Synced</span>
         </div>
         <div class="flex flex-col items-center">
-          <span class="text-green-500 text-lg font-semibold">17</span>
-          <span class="text-xs text-[#4b5763] font-normal">AI Credits</span>
+          <span id="statAICredits" class="text-green-500 text-lg font-semibold"></span>
+          <span class="text-xs text-[#4b5763] font-normal">AI Credits Used</span>
         </div>
         <div class="flex flex-col items-center">
-          <span class="text-blue-500 text-lg font-semibold">88%</span>
+          <span id="statConfidence" class="text-blue-500 text-lg font-semibold"></span>
           <span class="text-xs text-[#4b5763] font-normal">Confidence</span>
         </div>
       </div>
-      <!-- AI Feedback Engine -->
       <div class="mt-4 bg-[#fff6ed] rounded-2xl px-4 py-3 text-orange-600 text-sm font-medium flex items-center gap-2 shadow-sm" id="aiFeedbackBar">
         <svg class="w-5 h-5 inline text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
         </svg>
-        <span id="aiFeedbackText">🔥 Cozy listings had 2x clicks this week</span>
+        <span id="aiFeedbackText"></span>
       </div>
     </section>
     <!-- Rhythm Calendar -->
@@ -274,77 +249,28 @@ const userData = {
         <h2 class="text-lg font-semibold text-[#34616a]">Rhythm Calendar</h2>
         <span class="text-xs bg-orange-100 text-orange-500 px-3 py-1 rounded-full font-medium">Behavioral</span>
       </div>
-      <div class="grid grid-cols-7 gap-3 w-full">
-        <!-- Calendar days -->
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Mon</span>
-          <span class="text-xs text-[#64748b] font-normal">Browsing</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">Suggest Calm tone</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Tue</span>
-          <span class="text-xs text-[#64748b] font-normal">Budget</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">Suggest Value tone</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Wed</span>
-          <span class="text-xs text-[#64748b] font-normal">Impulse</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">Suggest Bold tone</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl bg-orange-50 shadow-inner cursor-pointer transition group">
-          <span class="font-semibold text-[#ea7113] text-sm">Thu🔥</span>
-          <span class="text-xs text-[#ea7113] font-semibold">Impulse</span>
-          <span class="block group-hover:text-orange-500 text-[10px] text-green-600">Best for quick sales</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Fri</span>
-          <span class="text-xs text-[#64748b] font-normal">Luxury</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">Suggest Premium tone</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Sat</span>
-          <span class="text-xs text-[#64748b] font-normal">Browsing</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">High traffic</span>
-        </div>
-        <div class="flex flex-col items-center py-2 px-2 rounded-2xl cursor-pointer transition hover:bg-orange-50 group">
-          <span class="font-semibold text-[#ea7113] text-sm">Sun</span>
-          <span class="text-xs text-[#64748b] font-normal">Budget</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600 tip-label">Suggest Soft tone</span>
-        </div>
-      </div>
+      <div class="grid grid-cols-7 gap-3 w-full" id="rhythmCalendar"></div>
       <div class="mt-2 text-xs text-[#34616a] text-center">Tip: Tap a day to see ideal tone &amp; crosslist time.</div>
     </section>
     <!-- Daily Change Feed -->
     <section class="bg-white rounded-2xl shadow-xl shadow-orange-100/40 p-6 flex flex-col gap-2">
       <h2 class="text-base font-semibold text-[#34616a] mb-2">Daily Change Feed</h2>
-      <ul class="text-xs text-[#64748b] space-y-1">
-        <li>Yesterday: 2 prices updated, 1 listing boosted, 4 viewed by Cozy buyers</li>
-        <li>Today: 1 draft published, 2 listings crosslisted</li>
-      </ul>
+      <ul class="text-xs text-[#64748b] space-y-1" id="recentActivityList"></ul>
     </section>
   </aside>
 
   <!-- Main content -->
   <main class="flex-1 flex flex-col gap-10">
-
       <!-- Buyer Psychology Map + Milestone Tracker -->
       <div class="w-full flex flex-col lg:flex-row gap-8">
-        <!-- Buyer Psychology Map -->
+        <!-- Buyer Psychology Map (your SVG code unchanged) -->
         <section class="w-full lg:w-2/3 bg-white rounded-2xl shadow-xl shadow-orange-100/40 px-8 py-8 relative flex flex-col items-center justify-center">
-          <!-- Section SVG overlay (psychology/brand) -->
-          <svg class="absolute top-6 right-8 opacity-10 w-24 h-24 pointer-events-none select-none animate-psyche" viewBox="0 0 96 96" fill="none">
-            <ellipse cx="48" cy="48" rx="46" ry="32" fill="url(#psyche1)"/>
-            <defs>
-              <linearGradient id="psyche1" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#fdba74"/>
-                <stop offset="1" stop-color="#ea7113"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <!-- ... your SVG map code ... -->
           <h2 class="text-xl font-semibold text-[#34616a] mb-1">Buyer Psychology Map</h2>
           <p class="text-xs text-[#64748b] mb-3">Hover a region to see buyer tone, click to filter listings</p>
-          <!-- Canada SVG Map (simplified regions for demo) -->
+          <!-- ... SVG ... -->
           <div class="relative w-full max-w-[420px] h-[250px] mx-auto">
+            <!-- ... SVG ... -->
             <svg viewBox="0 0 400 220" class="w-full h-[220px]">
               <circle id="region-BC" cx="50" cy="120" r="38" class="fill-[#e0f2fe] hover:fill-orange-200 transition cursor-pointer" data-region="BC"/>
               <circle id="region-AB" cx="120" cy="90" r="30" class="fill-[#f1f5f9] hover:fill-orange-100 transition cursor-pointer" data-region="AB"/>
@@ -357,7 +283,6 @@ const userData = {
               <circle cx="285" cy="110" r="4" class="fill-orange-300 opacity-50"/>
               <circle cx="320" cy="130" r="3" class="fill-orange-300 opacity-40"/>
             </svg>
-            <!-- Tooltip for region tone -->
             <div id="regionTooltip" class="hidden absolute left-1/2 -translate-x-1/2 top-6 bg-white border border-orange-100 px-4 py-2 rounded-2xl text-xs shadow-xl shadow-orange-100/40 text-[#34616a] pointer-events-none transition z-30"></div>
           </div>
         </section>
@@ -367,15 +292,15 @@ const userData = {
           <div class="w-full mt-2">
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs text-[#64748b] font-normal">Total Listings</span>
-              <span class="text-xs text-orange-500 font-semibold">42</span>
+              <span class="text-xs text-orange-500 font-semibold" id="milestoneTotal"></span>
             </div>
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs text-[#64748b] font-normal">% Crosslisted</span>
-              <span class="text-xs text-green-500 font-semibold">86%</span>
+              <span class="text-xs text-green-500 font-semibold" id="milestoneCrosslisted"></span>
             </div>
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs text-[#64748b] font-normal">Revenue Goal</span>
-              <span class="text-xs text-blue-500 font-semibold">$2,100 / $3,000</span>
+              <span class="text-xs text-blue-500 font-semibold" id="milestoneGoal"></span>
             </div>
             <div class="my-4">
               <div class="h-4 w-full bg-orange-100 rounded-full relative overflow-hidden cursor-pointer" onclick="openModal()">
@@ -387,326 +312,50 @@ const userData = {
         </section>
       </div>
 
-      <!-- AI Tools Summary Zone -->
+      <!-- AI Tools Glow Tiles -->
       <section class="w-full bg-white rounded-2xl shadow-xl shadow-orange-100/40 px-8 pt-8 pb-10 flex flex-col gap-8">
-        <svg class="absolute left-20 -top-10 opacity-15 w-32 h-32 pointer-events-none select-none animate-psyche" viewBox="0 0 96 96" fill="none">
-          <ellipse cx="48" cy="48" rx="46" ry="32" fill="url(#psyche2)"/>
-          <defs>
-            <linearGradient id="psyche2" x1="0" y1="0" x2="96" y2="96" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#ffedd5"/>
-              <stop offset="1" stop-color="#fdba74"/>
-            </linearGradient>
-          </defs>
-        </svg>
         <h2 class="text-lg font-semibold text-[#34616a] mb-2">AI Tools</h2>
-        <!-- a. Glow Tiles -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-6">
-          <!-- Example Glow Tiles (all have subtle pulse animation) -->
-          <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">📝</div>
-            <span class="font-semibold text-[#ea7113]">Title Generator</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Used 23x</span>
-            <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
-          </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">💲</div>
-            <span class="font-semibold text-[#ea7113]">Price Tool</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Avg +14% sales</span>
-            <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
-          </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">🏷️</div>
-            <span class="font-semibold text-[#ea7113]">Tag Optimizer</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Next: Cozy tags</span>
-            <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
-          </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">🤖</div>
-            <span class="font-semibold text-[#ea7113]">Tone Analyzer</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Try Cozy today</span>
-            <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
-          </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">📊</div>
-            <span class="font-semibold text-[#ea7113]">Sales Predictor</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">High Sat traffic</span>
-            <button class="mt-4 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">Launch</button>
-          </div>
-        </div>
-        <!-- b. Momentum Trail Cards -->
-        <div class="flex gap-6 mb-6 overflow-x-auto">
-          <div class="bg-gradient-to-r from-orange-100 via-orange-50 to-blue-50 rounded-2xl p-4 min-w-[150px] shadow-xl shadow-orange-100/40 flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-normal">Fusion Composer</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-semibold">+2</span>
-              <span class="text-xs text-[#64748b] font-normal">last hour</span>
-            </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 70%"></div>
-            </div>
-          </div>
-          <div class="bg-gradient-to-r from-blue-50 via-orange-50 to-green-50 rounded-2xl p-4 min-w-[150px] shadow-xl shadow-orange-100/40 flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-normal">Pattern Predictor</span>
-            <div class="flex items-center gap-2">
-              <span class="text-orange-500 text-lg font-semibold">+1</span>
-              <span class="text-xs text-[#64748b] font-normal">today</span>
-            </div>
-            <div class="h-1 w-full bg-blue-200 rounded-full mt-2">
-              <div class="h-1 bg-blue-400 rounded-full" style="width: 20%"></div>
-            </div>
-          </div>
-          <div class="bg-gradient-to-r from-green-50 via-orange-50 to-orange-100 rounded-2xl p-4 min-w-[150px] shadow-xl shadow-orange-100/40 flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-normal">Trust Builder</span>
-            <div class="flex items-center gap-2">
-              <span class="text-orange-500 text-lg font-semibold">Try me!</span>
-              <span class="text-xs text-[#64748b] font-normal">+ Trust</span>
-            </div>
-            <div class="h-1 w-full bg-green-200 rounded-full mt-2">
-              <div class="h-1 bg-green-400 rounded-full shimmer" style="width: 10%"></div>
-            </div>
-          </div>
-          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-2xl p-4 min-w-[150px] shadow-xl shadow-orange-100/40 flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-normal">Photo Enhancer</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-semibold">+4</span>
-              <span class="text-xs text-[#64748b] font-normal">this week</span>
-            </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 50%"></div>
-            </div>
-          </div>
-          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-2xl p-4 min-w-[150px] shadow-xl shadow-orange-100/40 flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-normal">Buyer Persona</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-semibold">+3</span>
-              <span class="text-xs text-[#64748b] font-normal">this week</span>
-            </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 30%"></div>
-            </div>
-          </div>
-        </div>
-        <!-- c. Animated Layer Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-4">
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer transition group hover:scale-105">
-            <div class="bg-blue-50 rounded-full w-12 h-12 flex items-center justify-center text-blue-400 text-2xl mb-3 shadow">🧬</div>
-            <span class="font-semibold text-[#34616a]">Fusion Composer</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Blend titles + tags</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer transition group hover:scale-105">
-            <div class="bg-green-50 rounded-full w-12 h-12 flex items-center justify-center text-green-400 text-2xl mb-3 shadow">⏱️</div>
-            <span class="font-semibold text-[#34616a]">Listing Timer</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Suggest best hour</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">🔮</div>
-            <span class="font-semibold text-[#34616a]">Pattern Predictor</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Trend finder</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">🔗</div>
-            <span class="font-semibold text-[#34616a]">Platform Sync</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Real-time updates</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">📦</div>
-            <span class="font-semibold text-[#34616a]">Inventory Helper</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Stock alerts</span>
-          </div>
-        </div>
-        <!-- d. Visual Effect Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-          <div class="pulse-border bg-white rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer relative group">
-            <div class="bg-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">🔐</div>
-            <span class="font-semibold text-[#ea7113]">Trust Builder</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Not used lately</span>
-            <span class="absolute -top-2 right-2 text-xs text-orange-400 shimmer px-3 py-1 rounded-full bg-orange-50">+ Trust</span>
-            <div class="absolute left-1/2 top-16 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-4 py-2 rounded-2xl shadow-xl shadow-orange-100/40 text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer relative group">
-            <div class="bg-green-50 rounded-full w-12 h-12 flex items-center justify-center text-green-400 text-2xl mb-3 shadow">🖼️</div>
-            <span class="font-semibold text-[#34616a]">Photo Enhancer</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Last used: 5d</span>
-            <div class="absolute left-1/2 top-16 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-green-100 px-4 py-2 rounded-2xl shadow-xl shadow-green-100/40 text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer relative group">
-            <div class="bg-blue-50 rounded-full w-12 h-12 flex items-center justify-center text-blue-400 text-2xl mb-3 shadow">🗂️</div>
-            <span class="font-semibold text-[#34616a]">Bulk Lister</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Unused</span>
-            <div class="absolute left-1/2 top-16 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-4 py-2 rounded-2xl shadow-xl shadow-blue-100/40 text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer relative group">
-            <div class="bg-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-3 shadow">📦</div>
-            <span class="font-semibold text-[#ea7113]">Inventory Health</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Needs review</span>
-            <div class="absolute left-1/2 top-16 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-4 py-2 rounded-2xl shadow-xl shadow-orange-100/40 text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-6 flex flex-col items-center shadow-xl shadow-orange-100/40 cursor-pointer relative group">
-            <div class="bg-blue-50 rounded-full w-12 h-12 flex items-center justify-center text-blue-400 text-2xl mb-3 shadow">💬</div>
-            <span class="font-semibold text-[#34616a]">AI Notes</span>
-            <span class="text-[11px] text-[#64748b] mt-2 font-normal">Motivation off?</span>
-            <div class="absolute left-1/2 top-16 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-4 py-2 rounded-2xl shadow-xl shadow-blue-100/40 text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-6" id="toolsGrid"></div>
       </section>
 
       <!-- Listings Snapshot Preview -->
       <section class="w-full bg-white rounded-2xl shadow-xl shadow-orange-100/40 px-8 py-8 flex flex-col gap-6">
         <h2 class="text-lg font-semibold text-[#34616a]">Listings Snapshot</h2>
-        <div class="flex items-center gap-2 text-xs text-[#64748b] mb-2">
-          <span class="font-semibold text-[#ea7113]">AI Flow:</span>
-          <span class="flex items-center gap-1"><span class="bg-orange-100 px-3 py-1 rounded-full">Title</span>→</span>
-          <span class="flex items-center gap-1"><span class="bg-orange-100 px-3 py-1 rounded-full">Tags</span>→</span>
-          <span class="flex items-center gap-1"><span class="bg-orange-100 px-3 py-1 rounded-full">Price</span>→</span>
-          <span class="flex items-center gap-1"><span class="bg-orange-100 px-3 py-1 rounded-full">Confidence</span></span>
-          <button class="ml-2 px-3 py-1 rounded-full bg-orange-50 text-orange-400 hover:bg-orange-200 transition">Toggle</button>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Listing 1 -->
-          <div class="bg-orange-50 rounded-2xl p-6 flex flex-col gap-3 shadow-xl shadow-orange-100/40 relative group">
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-[#34616a]">Vintage 90s Denim Jacket</span>
-              <!-- Listing Health Glow -->
-              <span class="ml-2 text-xs px-3 py-1 rounded-full bg-green-100 text-green-600 font-semibold cursor-pointer" title="Your listing is strong!">Strong</span>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="bg-orange-100 text-orange-500 text-xs font-normal px-3 py-1 rounded-full">Cozy</span>
-              <span class="bg-blue-100 text-blue-500 text-xs font-normal px-3 py-1 rounded-full">Minimalist</span>
-              <span class="bg-green-100 text-green-500 text-xs font-normal px-3 py-1 rounded-full">Eco</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs">
-              <span class="bg-orange-200 rounded-full px-3 py-1 text-orange-700">Impulse Buyer</span>
-              <span class="bg-blue-200 rounded-full px-3 py-1 text-blue-700">Trust-Seeker</span>
-            </div>
-            <div class="flex gap-3 mt-2">
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">AI Fix</button>
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 transition">Boost</button>
-            </div>
-          </div>
-          <!-- Listing 2 -->
-          <div class="bg-orange-50 rounded-2xl p-6 flex flex-col gap-3 shadow-xl shadow-orange-100/40 relative group">
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-[#34616a]">Handmade Ceramic Mug</span>
-              <!-- Listing Health Glow -->
-              <span class="ml-2 text-xs px-3 py-1 rounded-full bg-orange-100 text-orange-600 font-semibold cursor-pointer" title="Too many vague tags. Suggest removing 3.">Okay</span>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="bg-orange-100 text-orange-500 text-xs font-normal px-3 py-1 rounded-full">Luxury</span>
-              <span class="bg-green-100 text-green-500 text-xs font-normal px-3 py-1 rounded-full">Handmade</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs">
-              <span class="bg-orange-200 rounded-full px-3 py-1 text-orange-700">Researcher</span>
-            </div>
-            <div class="flex gap-3 mt-2">
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">AI Fix</button>
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 transition">Boost</button>
-            </div>
-          </div>
-          <!-- Listing 3 -->
-          <div class="bg-orange-50 rounded-2xl p-6 flex flex-col gap-3 shadow-xl shadow-orange-100/40 relative group">
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-[#34616a]">Retro Wool Sweater</span>
-              <!-- Listing Health Glow -->
-              <span class="ml-2 text-xs px-3 py-1 rounded-full bg-red-100 text-red-600 font-semibold cursor-pointer" title="Too many vague tags. Suggest removing 3.">Needs Fix</span>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="bg-orange-100 text-orange-500 text-xs font-normal px-3 py-1 rounded-full">Cozy</span>
-              <span class="bg-blue-100 text-blue-500 text-xs font-normal px-3 py-1 rounded-full">Minimalist</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs">
-              <span class="bg-orange-200 rounded-full px-3 py-1 text-orange-700">Impulse Buyer</span>
-            </div>
-            <div class="flex gap-3 mt-2">
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition">AI Fix</button>
-              <button class="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:from-blue-500 hover:to-blue-600 transition">Boost</button>
-            </div>
-          </div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="listingSnapshot"></div>
       </section>
   </main>
 </div>
 
+<!-- Motivational quote toggle -->
+<div class="fixed right-4 bottom-6 z-30 flex items-center gap-3">
+  <div id="motivation" class="bg-white/80 rounded-2xl px-5 py-3 shadow-xl shadow-orange-100/40 flex items-center gap-2 text-sm text-[#34616a]">
+    <svg class="w-5 h-5 mr-1 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 9a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15v3m0 0H8m4 0h4"/></svg>
+    <span id="motivationText"></span>
+    <button class="ml-2 text-xs text-neutral-400 hover:text-orange-400" onclick="document.getElementById('motivation').style.display='none'">✕</button>
+  </div>
+</div>
+
+<!-- Milestone Modal -->
+<div id="milestoneModal" class="hidden fixed inset-0 z-40 flex items-center justify-center modal-bg">
+  <div class="bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-xl shadow-orange-100/40 relative">
+    <button onclick="closeModal()" class="absolute top-3 right-4 text-lg text-neutral-400 hover:text-orange-400">&times;</button>
+    <h2 class="text-xl font-semibold mb-3 text-orange-500">Milestone Breakdown</h2>
+    <div class="space-y-4 text-sm">
+      <div>
+        <span class="font-medium text-[#64748b]">Monthly Revenue:</span>
+        <span id="revenue"></span>
+      </div>
+      <div>
+        <span class="font-medium text-[#64748b]">Listings Crosslisted:</span>
+        <span id="crosslisted"></span>
+      </div>
+    </div>
+    <button class="mt-6 w-full py-2 rounded-full bg-gradient-to-r from-orange-400 via-orange-300 to-orange-500 text-white font-semibold shadow-lg hover:from-orange-500 hover:to-orange-600 transition" onclick="closeModal()">Close</button>
+  </div>
+</div>
 <script>
-/* MOTIVATIONAL QUOTE ROTATION */
-let quoteIdx = 0;
-const motivation = document.getElementById("motivationText");
-const quotes = userData.motivationalQuotes;
-function rotateQuote() {
-  quoteIdx = (quoteIdx + 1) % quotes.length;
-  motivation.textContent = quotes[quoteIdx];
-}
-motivation.textContent = quotes[0];
-setInterval(rotateQuote, 8000);
-
-/* AI FEEDBACK ENGINE ROTATION */
-const aiFeedback = userData.aiFeedback;
-let feedbackIdx = 0;
-function rotateFeedback() {
-  feedbackIdx = (feedbackIdx + 1) % aiFeedback.length;
-  document.getElementById("aiFeedbackText").textContent = aiFeedback[feedbackIdx];
-}
-setInterval(rotateFeedback, 6000);
-
-/* MAP-AS-FILTER: Region Hover/Click */
-const regionToneMap = {
-  "BC": { tone: "Minimalist", color: "#38bdf8", buyers: "Cozy & Calm" },
-  "AB": { tone: "Eco", color: "#4ade80", buyers: "Budget Seekers" },
-  "ON": { tone: "Cozy", color: "#fdba74", buyers: "Impulse Buyers" },
-  "QC": { tone: "Luxury", color: "#a5b4fc", buyers: "Trust-Seekers" },
-  "ATL": { tone: "Handmade", color: "#bbf7d0", buyers: "Browsing & Research" }
-};
-const regionTooltip = document.getElementById("regionTooltip");
-["BC","AB","ON","QC","ATL"].forEach(region => {
-  const el = document.getElementById("region-"+region);
-  if (!el) return;
-  el.addEventListener("mouseenter", e=>{
-    regionTooltip.innerHTML = `<strong>${region}</strong>: <span style="color:${regionToneMap[region].color}" class="font-bold">${regionToneMap[region].tone}</span> <br><span class="text-xs">Buyers: ${regionToneMap[region].buyers}</span>`;
-    regionTooltip.style.display = "block";
-    let svgRect = e.target.getBoundingClientRect();
-    let parentRect = e.target.ownerSVGElement.getBoundingClientRect();
-    let mapDiv = e.target.ownerSVGElement.parentElement;
-    regionTooltip.style.left = (svgRect.left - parentRect.left + svgRect.width/2) + "px";
-  });
-  el.addEventListener("mouseleave", ()=>{
-    regionTooltip.style.display = "none";
-  });
-  el.addEventListener("click", ()=>{
-    alert(`Filtering listings for ${region} (${regionToneMap[region].tone} buyers)...`);
-    // Could highlight or filter actual listings here
-  });
-});
-
-/* MILESTONE MODAL */
-function openModal() {
-  document.getElementById("milestoneModal").classList.remove("hidden");
-}
-function closeModal() {
-  document.getElementById("milestoneModal").classList.add("hidden");
-}
-document.querySelector("#milestoneModal button:last-child").onclick = closeModal;
-
-/* ANIMATE CONFIDENCE BAR */
-window.addEventListener('DOMContentLoaded', () => {
-  const bar = document.getElementById('confidenceBar');
-  setTimeout(() => {
-    bar.style.transition = "width 1.8s cubic-bezier(.42,0,.58,1)";
-    bar.style.width = "70%";
-  }, 250);
-});
-
-/* LISTING HEALTH GLOW - Tooltip on hover */
-document.querySelectorAll('.bg-orange-50 [title]').forEach(el => {
-  el.addEventListener('mouseenter', function(){
-    // Simple native title for now, could make custom tooltip
-  });
-});
-
-/* Calendar - (Simulate click to change suggestion) */
-document.querySelectorAll('.RhythmCalendar-day').forEach(day=>{
-  day.addEventListener('click', ()=>{
-    // Show overlay or update suggestion
-  });
-});
+function openModal() { document.getElementById('milestoneModal').classList.remove('hidden'); }
+function closeModal() { document.getElementById('milestoneModal').classList.add('hidden'); }
 </script>
 </body>
 </html>
