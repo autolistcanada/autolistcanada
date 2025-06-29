@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Same custom styles as before, plus a few new ones */
     .region-pulse { animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);} 70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);} 100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);} }
     .glow-tile { box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09); transition: box-shadow .2s;}
@@ -480,10 +479,11 @@ function renderDashboard() {
 }
 
 // ---- BOOTSTRAP ----
-renderDashboard();
-startMotivationRotation();
-setupThemeToggle();
-
+document.addEventListener("DOMContentLoaded", function() {
+  renderDashboard();
+  startMotivationRotation();
+  setupThemeToggle();
+});
 </script>
 </body>
 </html>
