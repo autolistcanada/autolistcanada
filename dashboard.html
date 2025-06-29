@@ -4,485 +4,647 @@
   <meta charset="UTF-8">
   <title>AutoList Canada Seller Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .region-pulse { animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);} 70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);} 100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);} }
-    .glow-tile { box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09); transition: box-shadow .2s;}
-    .glow-tile.active { box-shadow: 0 8px 32px 8px rgba(34,197,94,0.18),0 2px 12px 0 rgba(255,153,51,0.12);}
-    .glow-tile:hover { box-shadow: 0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);}
-    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(6px); border-radius: 12px; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 1px 6px 0 rgba(34,197,94,0.04);}
-    .modal-bg { background: rgba(0,0,0,0.19);}
-    .shimmer { background: linear-gradient(90deg, #f5e9d9 25%, #fff6ed 50%, #f5e9d9 75%); background-size: 200% 100%; animation: shimmer 2s linear infinite;}
-    @keyframes shimmer { 0% { background-position: -150% 0; } 100% { background-position: 350% 0; } }
-    .layered { position: relative; z-index: 1; transition: transform .15s, box-shadow .15s;}
-    .layered::before { content: ""; position: absolute; left: 15px; top: 15px; right: -15px; bottom: -15px; border-radius: 20px; background: #fff6ed; z-index: -1; filter: blur(4px); opacity: .4; transition: opacity .2s;}
-    .layered:hover { transform: translateY(-3px) scale(1.04);}
-    .layered:hover::before { opacity: .7;}
-    .pulse-border { position: relative; z-index: 1;}
-    .pulse-border::after { content: ""; position: absolute; inset: 0; border-radius: 15px; border: 2px solid #fdba74; opacity: .45; animation: border-pulse 1.8s infinite; z-index: -1; pointer-events: none;}
-    @keyframes border-pulse { 0% { opacity: .45; } 60% { opacity: .1;} 100% { opacity: .45;} }
-    .section-collapsed > .section-content { display: none; }
-    .section-collapsed > .section-header:after { content: "▼"; }
-    .section-header { cursor: pointer; user-select: none; }
-    .section-header:after { content: "▲"; float:right; font-size:1rem;}
-    .theme-dark { background: #1d232a !important; color: #f3e9d5 !important;}
-    .theme-dark .bg-white { background: #28303b !important; color: #f3e9d5 !important;}
+    /* Custom pulse for map */
+    .region-pulse {
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);}
+      70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);}
+      100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);}
+    }
+    /* Glow tile effect */
+    .glow-tile {
+      box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09);
+      transition: box-shadow .2s;
+    }
+    .glow-tile:hover {
+      box-shadow: 0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);
+    }
+    /* Glass search effect */
+    .glass {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.03);
+      box-shadow: 0 1px 6px 0 rgba(34,197,94,0.04);
+    }
+    /* Modal backdrop */
+    .modal-bg {
+      background: rgba(0,0,0,0.19);
+    }
+    /* Shimmer for cards */
+    .shimmer {
+      background: linear-gradient(90deg, #f5e9d9 25%, #fff6ed 50%, #f5e9d9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -150% 0; }
+      100% { background-position: 350% 0; }
+    }
+    /* Layered card effect */
+    .layered {
+      position: relative;
+      z-index: 1;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .layered::before {
+      content: "";
+      position: absolute;
+      left: 15px; top: 15px; right: -15px; bottom: -15px;
+      border-radius: 20px;
+      background: #fff6ed;
+      z-index: -1;
+      filter: blur(4px);
+      opacity: .4;
+      transition: opacity .2s;
+    }
+    .layered:hover { transform: translateY(-3px) scale(1.04); }
+    .layered:hover::before { opacity: .7; }
+    /* Animated border pulse */
+    .pulse-border {
+      position: relative;
+      z-index: 1;
+    }
+    .pulse-border::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      border: 2px solid #fdba74;
+      opacity: .45;
+      animation: border-pulse 1.8s infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    @keyframes border-pulse {
+      0% { opacity: .45; }
+      60% { opacity: .1;}
+      100% { opacity: .45;}
+    }
   </style>
 </head>
-<body class="font-sans text-[#28323a] bg-[#fcf8f5] min-h-screen relative transition-colors" id="bodyRoot">
 
+<body class="font-sans text-[#28323a] bg-[#fcf8f5] min-h-screen relative">
+<!-- Placeholder user data for demo logic -->
 <script>
-window.userData = {
-  name: "Samantha",
+const userData = {
+  name: "Sage",
   listingsSynced: 42,
-  aiCreditsUsed: 17,
-  confidenceScore: "88%",
-  milestoneStats: {
-    revenueGoal: 3000,
-    revenueEarned: 2100,
-    crosslistedPercent: 66,
-    totalListings: 42,
-  },
-  toolsUsedToday: {
-    titleGen: true,
-    trustBuilder: false,
-    priceTool: true,
-    tagOptimizer: false,
-    photoEnhancer: false,
-    fusionComposer: true,
-    platformSync: false,
-    personaBuilder: true,
-    trendFinder: false,
-    salesPredictor: true,
-    aiNotes: false,
-    listingTimer: false,
-    inventoryHelper: false,
-    bulkLister: false
-  },
-  rhythmCalendar: {
-    Mon: { label: "Browsing", tip: "Suggest Calm tone" },
-    Tue: { label: "Best Time", tip: "Peak engagement!" },
-    Wed: { label: "Neutral", tip: "Try Cozy tags" },
-    Thu: { label: "Low Engagement", tip: "Draft, don't post" },
-    Fri: { label: "Impulse Peak", tip: "Bold/Impulse tone" },
-    Sat: { label: "Drafts Published", tip: "High Sat traffic" },
-    Sun: { label: "Relax", tip: "Prep for Monday" }
-  },
-  changeFeed: [
-    "2 prices updated",
-    "1 listing boosted",
-    "Viewed by Cozy buyers"
+  aiCredits: 17,
+  confidenceScore: 88,
+  stats: [
+    { label: "Listings Synced", value: 42, icon: "🔁" },
+    { label: "AI Credits Left", value: 17, icon: "💡" },
+    { label: "Confidence Score", value: 88, icon: "🎯" }
   ],
-  listingSnapshot: [
-    {
-      title: "Vintage 90s Denim Jacket",
-      tone: ["Cozy", "Minimalist", "Eco"],
-      aiStatus: "Strong",
-      tags: ["Impulse Buyer", "Trust-Seeker"]
-    },
-    {
-      title: "Handmade Ceramic Mug",
-      tone: ["Luxury", "Handmade"],
-      aiStatus: "Okay",
-      tags: ["Researcher"]
-    },
-    {
-      title: "Retro Wool Sweater",
-      tone: ["Cozy", "Minimalist"],
-      aiStatus: "Needs Fix",
-      tags: ["Impulse Buyer"]
-    }
+  aiFeedback: [
+    "🔥 Cozy listings had 2x clicks this week",
+    "✨ Luxury tone earned 3 new followers",
+    "🧊 Minimalist tags trended in ON region"
   ],
   motivationalQuotes: [
     "You’re selling calm today — and buyers need calm.",
     "Your trust score is rising — keep up your unique style.",
-    "Every listing is a story. Make it feel true.",
-    "Buyers respond to warmth. Stay human.",
-    "Your story is your superpower.",
-    "Listing confidence: contagious for buyers!",
-    "Science says: the right tone triples engagement.",
-    "Crosslisting = compounding reach. You're growing.",
-    "AI tools are your sidekick, not your boss!"
+    "Every listing is a story. Make it feel true."
+  ],
+  milestone: {
+    totalListings: 42,
+    crosslisted: 36,
+    revenue: 2100,
+    revenueGoal: 3000
+  },
+  calendarRhythm: [
+    { day: "Mon", rhythm: "Browsing", tip: "Suggest Calm tone" },
+    { day: "Tue", rhythm: "Budget", tip: "Suggest Value tone" },
+    { day: "Wed", rhythm: "Impulse", tip: "Suggest Bold tone" },
+    { day: "Thu", rhythm: "Impulse", tip: "🔥 Best for quick sales" },
+    { day: "Fri", rhythm: "Luxury", tip: "Suggest Premium tone" },
+    { day: "Sat", rhythm: "Browsing", tip: "High traffic" },
+    { day: "Sun", rhythm: "Budget", tip: "Suggest Soft tone" }
+  ],
+  recentActivity: [
+    "Yesterday: 2 prices updated, 1 listing boosted, 4 viewed by Cozy buyers",
+    "Today: 1 draft published, 2 listings crosslisted"
   ]
 };
 </script>
 
-<!-- Theme Switcher -->
-<div class="fixed right-6 top-6 z-50">
-  <button id="themeToggle" class="bg-orange-100 text-orange-600 rounded-full px-3 py-1 shadow text-xs font-bold hover:bg-orange-200 transition">Toggle Theme</button>
+<!-- Modal for milestone breakdown -->
+<div id="milestoneModal" class="hidden fixed inset-0 z-40 flex items-center justify-center modal-bg">
+  <div class="bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-2xl relative">
+    <button onclick="closeModal()" class="absolute top-3 right-4 text-lg text-neutral-400 hover:text-orange-400">&times;</button>
+    <h2 class="text-xl font-semibold mb-3 text-orange-500">Milestone Breakdown</h2>
+    <div class="space-y-4 text-sm">
+      <div>
+        <span class="font-medium text-[#64748b]">Drafts:</span>
+        <span id="draftCount">4</span>
+      </div>
+      <div>
+        <span class="font-medium text-[#64748b]">Best Platform:</span>
+        <span id="bestPlatform">Etsy</span>
+      </div>
+      <div>
+        <span class="font-medium text-[#64748b]">Top Selling Tone:</span>
+        <span id="bestTone">Cozy</span>
+      </div>
+      <div>
+        <span class="font-medium text-[#64748b]">Monthly Revenue:</span>
+        <span id="revenue">$2,100 / $3,000</span>
+      </div>
+      <div>
+        <span class="font-medium text-[#64748b]">Listings Crosslisted:</span>
+        <span id="crosslisted">36 / 42</span>
+      </div>
+    </div>
+    <button class="mt-6 w-full py-2 rounded-lg bg-orange-400 text-white font-medium shadow hover:bg-orange-500 transition">Close</button>
+  </div>
 </div>
 
-<!-- Motivational Quote -->
+<!-- Motivational quote toggle -->
 <div class="fixed right-4 bottom-6 z-30 flex items-center gap-3">
   <div id="motivation" class="bg-white/80 rounded-xl px-5 py-3 shadow flex items-center gap-2 text-sm text-[#34616a]">
+    <svg class="w-5 h-5 mr-1 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 9a6 6 0 11-12 0 6 6 0 0112 0z"/><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 15v3m0 0H8m4 0h4"/></svg>
     <span id="motivationText"></span>
     <button class="ml-2 text-xs text-neutral-400 hover:text-orange-400" onclick="document.getElementById('motivation').style.display='none'">✕</button>
   </div>
 </div>
 
-<!-- Main Container -->
-<div class="mx-auto max-w-[1600px] px-4 py-4 lg:py-8 flex flex-col lg:flex-row gap-10" id="dashboardRoot"></div>
+<!-- Main container -->
+<div class="mx-auto max-w-[1600px] px-4 py-4 lg:py-8 flex flex-col lg:flex-row gap-10">
+
+  <!-- Sidebar: Rhythm Calendar + Quick Stats -->
+  <aside class="w-full lg:w-64 flex-shrink-0 flex flex-col gap-6">
+    <!-- Welcome + Stats -->
+    <section class="bg-white rounded-2xl shadow p-6 mb-3 flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-extrabold text-[#ea7113]">Welcome, Seller 🌿</h1>
+          <span class="text-xs text-[#64748b] block mt-1">Your command centre</span>
+        </div>
+        <!-- Glass search bar -->
+        <div class="glass flex items-center px-2 py-1 ml-2">
+          <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-width="2" d="M21 21l-2-2"/>
+          </svg>
+          <input type="text" placeholder="Search listings..." class="ml-2 bg-transparent border-none outline-none text-sm w-24 focus:w-44 transition-all"/>
+        </div>
+      </div>
+      <div class="flex justify-between mt-4 gap-2">
+        <div class="flex flex-col items-center">
+          <span class="text-orange-500 text-lg font-bold">42</span>
+          <span class="text-xs text-[#4b5763]">Listings Synced</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-green-500 text-lg font-bold">17</span>
+          <span class="text-xs text-[#4b5763]">AI Credits</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-blue-500 text-lg font-bold">88%</span>
+          <span class="text-xs text-[#4b5763]">Confidence</span>
+        </div>
+      </div>
+      <!-- AI Feedback Engine -->
+      <div class="mt-4 bg-[#fff6ed] rounded-lg px-3 py-2 text-orange-600 text-sm font-medium flex items-center gap-2 shadow-sm" id="aiFeedbackBar">
+        <svg class="w-5 h-5 inline text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <span id="aiFeedbackText">🔥 Cozy listings had 2x clicks this week</span>
+      </div>
+    </section>
+    <!-- Rhythm Calendar -->
+    <section class="bg-white rounded-2xl shadow p-6 flex flex-col items-center mb-3">
+      <div class="flex items-center justify-between w-full mb-3">
+        <h2 class="text-lg font-semibold text-[#34616a]">Rhythm Calendar</h2>
+        <span class="text-xs bg-orange-100 text-orange-500 px-2 py-0.5 rounded font-medium">Behavioral</span>
+      </div>
+      <div class="grid grid-cols-7 gap-2 w-full">
+        <!-- Calendar days -->
+        <template id="calendarDayTemplate">
+          <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+            <span class="font-bold text-[#ea7113] text-sm day-label"></span>
+            <span class="text-xs text-[#64748b] rhythm-label"></span>
+            <span class="hidden group-hover:block text-[10px] text-green-600 tip-label"></span>
+          </div>
+        </template>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Mon</span>
+          <span class="text-xs text-[#64748b]">Browsing</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Calm tone</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Tue</span>
+          <span class="text-xs text-[#64748b]">Budget</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Value tone</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Wed</span>
+          <span class="text-xs text-[#64748b]">Impulse</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Bold tone</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg bg-orange-50 shadow-inner cursor-pointer transition group">
+          <span class="font-bold text-[#ea7113] text-sm">Thu🔥</span>
+          <span class="text-xs text-[#ea7113] font-bold">Impulse</span>
+          <span class="block group-hover:text-orange-500 text-[10px] text-green-600">Best for quick sales</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Fri</span>
+          <span class="text-xs text-[#64748b]">Luxury</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Premium tone</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Sat</span>
+          <span class="text-xs text-[#64748b]">Browsing</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">High traffic</span>
+        </div>
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <span class="font-bold text-[#ea7113] text-sm">Sun</span>
+          <span class="text-xs text-[#64748b]">Budget</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Soft tone</span>
+        </div>
+      </div>
+      <div class="mt-2 text-xs text-[#34616a] text-center">Tip: Tap a day to see ideal tone &amp; crosslist time.</div>
+    </section>
+    <!-- Daily Change Feed -->
+    <section class="bg-white rounded-2xl shadow p-5 flex flex-col gap-1">
+      <h2 class="text-base font-semibold text-[#34616a] mb-2">Daily Change Feed</h2>
+      <ul class="text-xs text-[#64748b] space-y-1">
+        <li>Yesterday: 2 prices updated, 1 listing boosted, 4 viewed by Cozy buyers</li>
+        <li>Today: 1 draft published, 2 listings crosslisted</li>
+      </ul>
+    </section>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-1 flex flex-col gap-8">
+
+      <!-- Buyer Psychology Map + Milestone Tracker -->
+      <div class="w-full flex flex-col lg:flex-row gap-8">
+        <!-- Buyer Psychology Map -->
+        <section class="w-full lg:w-2/3 bg-white rounded-2xl shadow px-6 py-5 relative flex flex-col items-center justify-center">
+          <h2 class="text-xl font-semibold text-[#34616a] mb-1">Buyer Psychology Map</h2>
+          <p class="text-xs text-[#64748b] mb-3">Hover a region to see buyer tone, click to filter listings</p>
+          <!-- Canada SVG Map (simplified regions for demo) -->
+          <div class="relative w-full max-w-[420px] h-[250px] mx-auto">
+            <!-- Regions: BC, AB, ON, QC, ATL -->
+            <svg viewBox="0 0 400 220" class="w-full h-[220px]">
+              <!-- BC -->
+              <circle id="region-BC" cx="50" cy="120" r="38" class="fill-[#e0f2fe] hover:fill-orange-200 transition cursor-pointer" data-region="BC"/>
+              <!-- AB -->
+              <circle id="region-AB" cx="120" cy="90" r="30" class="fill-[#f1f5f9] hover:fill-orange-100 transition cursor-pointer" data-region="AB"/>
+              <!-- ON (most active, pulse) -->
+              <circle id="region-ON" cx="260" cy="90" r="45" class="fill-[#ffedd5] region-pulse hover:fill-orange-300 cursor-pointer" data-region="ON"/>
+              <!-- QC -->
+              <circle id="region-QC" cx="320" cy="160" r="34" class="fill-[#ede9fe] hover:fill-orange-100 transition cursor-pointer" data-region="QC"/>
+              <!-- ATL -->
+              <circle id="region-ATL" cx="350" cy="40" r="22" class="fill-[#dcfce7] hover:fill-orange-100 transition cursor-pointer" data-region="ATL"/>
+              <!-- Dots for city clusters (visual effect only) -->
+              <circle cx="60" cy="110" r="5" class="fill-orange-300 opacity-60"/>
+              <circle cx="120" cy="110" r="4" class="fill-orange-300 opacity-60"/>
+              <circle cx="235" cy="75" r="6" class="fill-orange-300 opacity-70"/>
+              <circle cx="285" cy="110" r="4" class="fill-orange-300 opacity-50"/>
+              <circle cx="320" cy="130" r="3" class="fill-orange-300 opacity-40"/>
+            </svg>
+            <!-- Tooltip for region tone -->
+            <div id="regionTooltip" class="hidden absolute left-1/2 -translate-x-1/2 top-6 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-30"></div>
+          </div>
+        </section>
+        <!-- Milestone Tracker -->
+        <section class="w-full lg:w-1/3 bg-white rounded-2xl shadow px-6 py-5 flex flex-col items-center justify-center">
+          <h2 class="text-lg font-semibold text-[#34616a] mb-1">Monthly Milestones</h2>
+          <div class="w-full mt-2">
+            <!-- Progress bar -->
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs text-[#64748b]">Total Listings</span>
+              <span class="text-xs text-orange-500">42</span>
+            </div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs text-[#64748b]">% Crosslisted</span>
+              <span class="text-xs text-green-500">86%</span>
+            </div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs text-[#64748b]">Revenue Goal</span>
+              <span class="text-xs text-blue-500">$2,100 / $3,000</span>
+            </div>
+            <div class="my-4">
+              <div class="h-4 w-full bg-orange-100 rounded-full relative overflow-hidden cursor-pointer" onclick="openModal()">
+                <div class="h-4 bg-orange-400 rounded-full transition-all" style="width: 70%;"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-xs text-white font-semibold select-none">Click for breakdown</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- AI Tools Summary Zone -->
+      <section class="w-full bg-white rounded-2xl shadow px-7 pt-6 pb-8 flex flex-col gap-6">
+        <h2 class="text-lg font-semibold text-[#34616a] mb-2">AI Tools</h2>
+        <!-- a. Glow Tiles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+          <!-- Example Glow Tiles -->
+          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
+            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📝</div>
+            <span class="font-semibold text-[#ea7113]">Title Generator</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Used 23x</span>
+            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500">Launch</button>
+          </div>
+          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
+            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">💲</div>
+            <span class="font-semibold text-[#ea7113]">Price Tool</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Avg +14% sales</span>
+            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500">Launch</button>
+          </div>
+          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
+            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🏷️</div>
+            <span class="font-semibold text-[#ea7113]">Tag Optimizer</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Next: Cozy tags</span>
+            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500">Launch</button>
+          </div>
+          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
+            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🤖</div>
+            <span class="font-semibold text-[#ea7113]">Tone Analyzer</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Try Cozy today</span>
+            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500">Launch</button>
+          </div>
+          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
+            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📊</div>
+            <span class="font-semibold text-[#ea7113]">Sales Predictor</span>
+            <span class="text-[10px] text-[#64748b] mt-1">High Sat traffic</span>
+            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500">Launch</button>
+          </div>
+        </div>
+        <!-- b. Momentum Trail Cards -->
+        <div class="flex gap-4 mb-4 overflow-x-auto">
+          <div class="bg-gradient-to-r from-orange-100 via-orange-50 to-blue-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
+            <span class="text-xs text-[#64748b]">Fusion Composer</span>
+            <div class="flex items-center gap-2">
+              <span class="text-green-500 text-lg font-bold">+2</span>
+              <span class="text-xs text-[#64748b]">last hour</span>
+            </div>
+            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
+              <div class="h-1 bg-orange-400 rounded-full" style="width: 70%"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-blue-50 via-orange-50 to-green-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
+            <span class="text-xs text-[#64748b]">Pattern Predictor</span>
+            <div class="flex items-center gap-2">
+              <span class="text-orange-500 text-lg font-bold">+1</span>
+              <span class="text-xs text-[#64748b]">today</span>
+            </div>
+            <div class="h-1 w-full bg-blue-200 rounded-full mt-2">
+              <div class="h-1 bg-blue-400 rounded-full" style="width: 20%"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-green-50 via-orange-50 to-orange-100 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
+            <span class="text-xs text-[#64748b]">Trust Builder</span>
+            <div class="flex items-center gap-2">
+              <span class="text-orange-500 text-lg font-bold">Try me!</span>
+              <span class="text-xs text-[#64748b]">+ Trust</span>
+            </div>
+            <div class="h-1 w-full bg-green-200 rounded-full mt-2">
+              <div class="h-1 bg-green-400 rounded-full shimmer" style="width: 10%"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
+            <span class="text-xs text-[#64748b]">Photo Enhancer</span>
+            <div class="flex items-center gap-2">
+              <span class="text-green-500 text-lg font-bold">+4</span>
+              <span class="text-xs text-[#64748b]">this week</span>
+            </div>
+            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
+              <div class="h-1 bg-orange-400 rounded-full" style="width: 50%"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
+            <span class="text-xs text-[#64748b]">Buyer Persona</span>
+            <div class="flex items-center gap-2">
+              <span class="text-green-500 text-lg font-bold">+3</span>
+              <span class="text-xs text-[#64748b]">this week</span>
+            </div>
+            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
+              <div class="h-1 bg-orange-400 rounded-full" style="width: 30%"></div>
+            </div>
+          </div>
+        </div>
+        <!-- c. Animated Layer Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-2">
+          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
+            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">🧬</div>
+            <span class="font-semibold text-[#34616a]">Fusion Composer</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Blend titles + tags</span>
+          </div>
+          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
+            <div class="bg-green-50 rounded-full w-10 h-10 flex items-center justify-center text-green-400 text-2xl mb-2 shadow">⏱️</div>
+            <span class="font-semibold text-[#34616a]">Listing Timer</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Suggest best hour</span>
+          </div>
+          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
+            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔮</div>
+            <span class="font-semibold text-[#34616a]">Pattern Predictor</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Trend finder</span>
+          </div>
+          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
+            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔗</div>
+            <span class="font-semibold text-[#34616a]">Platform Sync</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Real-time updates</span>
+          </div>
+          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
+            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📦</div>
+            <span class="font-semibold text-[#34616a]">Inventory Helper</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Stock alerts</span>
+          </div>
+        </div>
+        <!-- d. Visual Effect Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
+            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔐</div>
+            <span class="font-semibold text-[#ea7113]">Trust Builder</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Not used lately</span>
+            <span class="absolute -top-2 right-2 text-xs text-orange-400 shimmer px-2 py-0.5 rounded bg-orange-50">+ Trust</span>
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-3 py-1 rounded shadow text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
+          </div>
+          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
+            <div class="bg-green-50 rounded-full w-10 h-10 flex items-center justify-center text-green-400 text-2xl mb-2 shadow">🖼️</div>
+            <span class="font-semibold text-[#34616a]">Photo Enhancer</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Last used: 5d</span>
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-green-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
+          </div>
+          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
+            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">🗂️</div>
+            <span class="font-semibold text-[#34616a]">Bulk Lister</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Unused</span>
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
+          </div>
+          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
+            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📦</div>
+            <span class="font-semibold text-[#ea7113]">Inventory Health</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Needs review</span>
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-3 py-1 rounded shadow text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
+          </div>
+          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
+            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">💬</div>
+            <span class="font-semibold text-[#34616a]">AI Notes</span>
+            <span class="text-[10px] text-[#64748b] mt-1">Motivation off?</span>
+            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Listings Snapshot Preview -->
+      <section class="w-full bg-white rounded-2xl shadow px-7 py-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-lg font-semibold text-[#34616a]">Listings Snapshot</h2>
+          <!-- Flow Preview Mini-Diagram -->
+          <div class="flex items-center gap-2 text-xs text-[#64748b]">
+            <span class="font-semibold text-[#ea7113]">AI Flow:</span>
+            <span class="flex items-center gap-1"><span class="bg-orange-100 px-2 py-0.5 rounded">Title</span>→</span>
+            <span class="flex items-center gap-1"><span class="bg-orange-100 px-2 py-0.5 rounded">Tags</span>→</span>
+            <span class="flex items-center gap-1"><span class="bg-orange-100 px-2 py-0.5 rounded">Price</span>→</span>
+            <span class="flex items-center gap-1"><span class="bg-orange-100 px-2 py-0.5 rounded">Confidence</span></span>
+            <button class="ml-2 px-2 py-0.5 rounded bg-orange-50 text-orange-400 hover:bg-orange-200 transition">Toggle</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Listing 1 -->
+          <div class="bg-orange-50 rounded-xl p-4 flex flex-col gap-2 shadow relative group">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-[#34616a]">Vintage 90s Denim Jacket</span>
+              <!-- Listing Health Glow -->
+              <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-600 font-bold cursor-pointer" title="Your listing is strong!">Strong</span>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-orange-100 text-orange-500 text-xs font-medium px-2 py-0.5 rounded">Cozy</span>
+              <span class="bg-blue-100 text-blue-500 text-xs font-medium px-2 py-0.5 rounded">Minimalist</span>
+              <span class="bg-green-100 text-green-500 text-xs font-medium px-2 py-0.5 rounded">Eco</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="bg-orange-200 rounded px-2 text-orange-700">Impulse Buyer</span>
+              <span class="bg-blue-200 rounded px-2 text-blue-700">Trust-Seeker</span>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow hover:bg-orange-500 transition">AI Fix</button>
+              <button class="px-3 py-1 rounded bg-blue-400 text-white text-xs font-medium shadow hover:bg-blue-500 transition">Boost</button>
+            </div>
+          </div>
+          <!-- Listing 2 -->
+          <div class="bg-orange-50 rounded-xl p-4 flex flex-col gap-2 shadow relative group">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-[#34616a]">Handmade Ceramic Mug</span>
+              <!-- Listing Health Glow -->
+              <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-600 font-bold cursor-pointer" title="Too many vague tags. Suggest removing 3.">Okay</span>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-orange-100 text-orange-500 text-xs font-medium px-2 py-0.5 rounded">Luxury</span>
+              <span class="bg-green-100 text-green-500 text-xs font-medium px-2 py-0.5 rounded">Handmade</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="bg-orange-200 rounded px-2 text-orange-700">Researcher</span>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow hover:bg-orange-500 transition">AI Fix</button>
+              <button class="px-3 py-1 rounded bg-blue-400 text-white text-xs font-medium shadow hover:bg-blue-500 transition">Boost</button>
+            </div>
+          </div>
+          <!-- Listing 3 -->
+          <div class="bg-orange-50 rounded-xl p-4 flex flex-col gap-2 shadow relative group">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-[#34616a]">Retro Wool Sweater</span>
+              <!-- Listing Health Glow -->
+              <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-600 font-bold cursor-pointer" title="Too many vague tags. Suggest removing 3.">Needs Fix</span>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="bg-orange-100 text-orange-500 text-xs font-medium px-2 py-0.5 rounded">Cozy</span>
+              <span class="bg-blue-100 text-blue-500 text-xs font-medium px-2 py-0.5 rounded">Minimalist</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="bg-orange-200 rounded px-2 text-orange-700">Impulse Buyer</span>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow hover:bg-orange-500 transition">AI Fix</button>
+              <button class="px-3 py-1 rounded bg-blue-400 text-white text-xs font-medium shadow hover:bg-blue-500 transition">Boost</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  </main>
+</div>
 
 <script>
-// --- COMPONENT HELPERS ---
-const el = (tag, props={}, ...children) => {
-  const e = document.createElement(tag);
-  Object.entries(props).forEach(([k,v])=>{
-    if (k.startsWith('on') && typeof v==='function') e.addEventListener(k.slice(2).toLowerCase(),v);
-    else if(k==="class") e.className=v;
-    else if(k==="style") e.style.cssText=v;
-    else e[k]=v;
-  });
-  children.forEach(c=>e.appendChild(typeof c==="string"?document.createTextNode(c):c));
-  return e;
+/* MOTIVATIONAL QUOTE ROTATION */
+let quoteIdx = 0;
+const motivation = document.getElementById("motivationText");
+const quotes = userData.motivationalQuotes;
+function rotateQuote() {
+  quoteIdx = (quoteIdx + 1) % quotes.length;
+  motivation.textContent = quotes[quoteIdx];
+}
+motivation.textContent = quotes[0];
+setInterval(rotateQuote, 8000);
+
+/* AI FEEDBACK ENGINE ROTATION */
+const aiFeedback = userData.aiFeedback;
+let feedbackIdx = 0;
+function rotateFeedback() {
+  feedbackIdx = (feedbackIdx + 1) % aiFeedback.length;
+  document.getElementById("aiFeedbackText").textContent = aiFeedback[feedbackIdx];
+}
+setInterval(rotateFeedback, 6000);
+
+/* MAP-AS-FILTER: Region Hover/Click */
+const regionToneMap = {
+  "BC": { tone: "Minimalist", color: "#38bdf8", buyers: "Cozy & Calm" },
+  "AB": { tone: "Eco", color: "#4ade80", buyers: "Budget Seekers" },
+  "ON": { tone: "Cozy", color: "#fdba74", buyers: "Impulse Buyers" },
+  "QC": { tone: "Luxury", color: "#a5b4fc", buyers: "Trust-Seekers" },
+  "ATL": { tone: "Handmade", color: "#bbf7d0", buyers: "Browsing & Research" }
 };
-const pill = (txt, color) =>
-  el("span", {class: `px-2 py-0.5 rounded-full text-xs font-semibold ${color}`}, txt);
-
-// ---- SECTION RENDERERS ----
-function Section({title, icon, children, collapsible=false, open=true, id}) {
-  // Modular collapsible section
-  const section = el("section", {class:"bg-white rounded-2xl shadow mb-6", id});
-  if(collapsible){
-    const header = el("div", {class:"section-header px-6 py-4 flex items-center font-bold text-lg text-[#34616a] select-none"}, icon?el("span",{class:"mr-2"},icon):"", title);
-    header.onclick = ()=>section.classList.toggle("section-collapsed");
-    section.appendChild(header);
-  }
-  section.appendChild(el("div",{class:"section-content px-6 py-5"},children));
-  if(!open) section.classList.add("section-collapsed");
-  return section;
-}
-
-// --- SIDEBAR ---
-function Sidebar() {
-  return el("aside",{class:"w-full lg:w-64 flex-shrink-0 flex flex-col gap-6"},
-    SidebarLogoNav(),
-    Section({title:"Stats", icon:"📊", children:SidebarStats()}),
-    Section({title:"Rhythm Calendar", icon:"📅", collapsible:true, id:"sidebarRhythm", children:SidebarRhythm()}),
-    Section({title:"Daily Change Feed", icon:"🔄", collapsible:true, id:"sidebarFeed", children:SidebarFeed()})
-  );
-}
-function SidebarLogoNav() {
-  return el("div",{class:"bg-white p-6 rounded-2xl shadow flex flex-col items-center mb-3"},
-    el("img",{src:"https://autolistcanada.ca/brandmark.svg",alt:"AutoList Canada",class:"w-16 mb-3"}),
-    el("nav",{class:"w-full"},
-      el("ul",{class:"space-y-2 text-sm font-semibold text-[#34616a]"},
-        ...[
-          ["🏠","Home"],["📊","Dashboard"],["📋","Listings"],["🧰","AI Tools"],["❓","FAQ"],["📄","Terms"]
-        ].map(([ic,lab])=>
-          el("li",{},el("a",{href:"#",class:"flex items-center gap-2 hover:text-orange-500"},ic,lab)))
-      )
-    )
-  );
-}
-function SidebarStats() {
-  const ud=window.userData;
-  return el("div",{class:"flex flex-col gap-2"},
-    el("div",{class:"flex justify-between gap-2"},
-      ...[
-        ["Listings Synced", ud.listingsSynced,"text-orange-500"],
-        ["AI Credits", ud.aiCreditsUsed,"text-green-500"],
-        ["Confidence", ud.confidenceScore,"text-blue-500"]
-      ].map(([label,val,color])=>
-        el("div",{class:"flex flex-col items-center"},
-          el("span",{class:`${color} text-lg font-bold`},val),
-          el("span",{class:"text-xs text-[#4b5763]"},label)
-        )
-      )
-    )
-  );
-}
-function SidebarRhythm() {
-  const rc = window.userData.rhythmCalendar;
-  const dayOrder = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  const colorMap = {
-    "Browsing":"bg-orange-100 text-orange-500",
-    "Best Time":"bg-green-100 text-green-600 font-semibold",
-    "Neutral":"bg-gray-100 text-gray-400",
-    "Low Engagement":"bg-orange-50 text-orange-400",
-    "Impulse Peak":"bg-orange-200 text-orange-700 font-bold",
-    "Drafts Published":"bg-blue-100 text-blue-500",
-    "Relax":"bg-green-50 text-green-500"
-  };
-  return el("div",{class:"grid grid-cols-7 gap-2 w-full"},
-    ...dayOrder.map(day=>
-      el("div",{
-        class:`flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group RhythmCalendar-day`,
-        onmouseenter:e=>showRhythmTip(day,rc[day]?.tip),
-        onmouseleave:e=>showRhythmTip(null,null)
-      },
-        el("span",{class:"font-bold text-[#ea7113] text-sm"},day),
-        el("span",{class:`text-xs ${(colorMap[rc[day]?.label]||"text-[#64748b]")}`},rc[day]?.label)
-      )
-    )
-  );
-}
-function showRhythmTip(day,tip){
-  let tipEl = document.getElementById("rhythmTip");
-  if(!tipEl) {
-    tipEl = document.createElement("div");
-    tipEl.id = "rhythmTip";
-    tipEl.className = "fixed left-1/2 bottom-8 -translate-x-1/2 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-50";
-    document.body.appendChild(tipEl);
-  }
-  if(day && tip) { tipEl.textContent = `Tip: ${tip}`; tipEl.style.display="block";}
-  else tipEl.style.display="none";
-}
-function SidebarFeed() {
-  return el("ul",{class:"text-xs text-[#64748b] space-y-1"},
-    ...window.userData.changeFeed.map(item=>el("li",{},item))
-  );
-}
-
-// --- MAIN SECTIONS ---
-function Main() {
-  return el("main",{class:"flex-1 flex flex-col gap-8"},
-    Section({title:`Welcome, ${window.userData.name} 🌿`, icon:"👋", children:GreetingStats(), id:"mainGreeting"}),
-    Section({title:"Buyer Psychology Map & Milestone", icon:"🗺️", collapsible:true, id:"mainMap", children:el("div",{class:"flex flex-col lg:flex-row gap-8"},BuyerMap(),MilestoneCard())}),
-    Section({title:"AI Tools", icon:"🧰", collapsible:true, id:"mainTools", children:ToolGrid()}),
-    Section({title:"Listings Snapshot", icon:"📋", collapsible:true, id:"mainListings", children:ListingSnapshot()})
-  );
-}
-function GreetingStats() {
-  const ud=window.userData;
-  return el("div",{class:"flex gap-8 text-center"},
-    ...[
-      ["Listings Synced", ud.listingsSynced,"text-orange-500"],
-      ["AI Credits Used", ud.aiCreditsUsed,"text-green-500"],
-      ["Confidence", ud.confidenceScore,"text-blue-500"]
-    ].map(([label,val,color])=>
-      el("div",{class:"flex flex-col items-center"},
-        el("span",{class:`${color} text-2xl font-bold`},val),
-        el("span",{class:"text-xs text-[#4b5763]"},label)
-      )
-    )
-  );
-}
-function BuyerMap() {
-  // Modular, with tooltips & click
-  return el("section",{class:"w-full lg:w-2/3 bg-white rounded-2xl shadow px-6 py-5 relative flex flex-col items-center justify-center"},
-    el("h2",{class:"text-xl font-semibold text-[#34616a] mb-1"},"Buyer Psychology Map"),
-    el("p",{class:"text-xs text-[#64748b] mb-3"},"Hover a region to see buyer tone, click to filter listings"),
-    el("div",{class:"relative w-full max-w-[420px] h-[250px] mx-auto"},
-      BuyerSVGMap()
-    )
-  );
-}
-function BuyerSVGMap() {
-  // Regions for demo
-  const regionToneMap = {
-    "BC": { tone: "Minimalist", color: "#38bdf8", buyers: "Cozy & Calm" },
-    "AB": { tone: "Eco", color: "#4ade80", buyers: "Budget Seekers" },
-    "ON": { tone: "Cozy", color: "#fdba74", buyers: "Impulse Buyers" },
-    "QC": { tone: "Luxury", color: "#a5b4fc", buyers: "Trust-Seekers" },
-    "ATL": { tone: "Handmade", color: "#bbf7d0", buyers: "Browsing & Research" }
-  };
-  const svg = el("svg",{viewBox:"0 0 400 220",class:"w-full h-[220px] cursor-pointer"});
-  [["BC",50,120,38],["AB",120,90,30],["ON",260,90,45],["QC",320,160,34],["ATL",350,40,22]].forEach(([region,cx,cy,r])=>{
-    const circ = el("circle",{
-      id:`region-${region}`,
-      cx,cy,r,
-      class:`transition ${region==="ON"?"region-pulse":""}`,
-      style:`fill:${regionToneMap[region].color}55;stroke:${regionToneMap[region].color};stroke-width:2;`,
-      onmouseenter: e=>showRegionTooltip(region,regionToneMap[region],e),
-      onmouseleave: ()=>showRegionTooltip(null),
-      onclick: ()=>alert(`Filtering listings for ${region} buyers!`)
-    });
-    svg.appendChild(circ);
+const regionTooltip = document.getElementById("regionTooltip");
+["BC","AB","ON","QC","ATL"].forEach(region => {
+  const el = document.getElementById("region-"+region);
+  if (!el) return;
+  el.addEventListener("mouseenter", e=>{
+    regionTooltip.innerHTML = `<strong>${region}</strong>: <span style="color:${regionToneMap[region].color}" class="font-bold">${regionToneMap[region].tone}</span> <br><span class="text-xs">Buyers: ${regionToneMap[region].buyers}</span>`;
+    regionTooltip.style.display = "block";
+    let svgRect = e.target.getBoundingClientRect();
+    let parentRect = e.target.ownerSVGElement.getBoundingClientRect();
+    let mapDiv = e.target.ownerSVGElement.parentElement;
+    regionTooltip.style.left = (svgRect.left - parentRect.left + svgRect.width/2) + "px";
   });
-  // City dots (visual)
-  [[60,110,5],[120,110,4],[235,75,6],[285,110,4],[320,130,3]].forEach(([cx,cy,r])=>
-    svg.appendChild(el("circle",{cx,cy,r,style:"fill:#fdba74;opacity:0.5;"}))
-  );
-  // Tooltip
-  const t = el("div",{id:"regionTooltip",class:"hidden absolute left-1/2 -translate-x-1/2 top-6 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-30"});
-  svg.regionTooltip = t;
-  setTimeout(()=>svg.parentElement.appendChild(t),20);
-  return svg;
-}
-function showRegionTooltip(region, data, evt){
-  const t = document.getElementById("regionTooltip");
-  if(region && data){
-    t.classList.remove("hidden");
-    t.innerHTML = `<strong>${region}</strong>: <span style="color:${data.color}" class="font-bold">${data.tone}</span> <br><span class="text-xs">Buyers: ${data.buyers}</span>`;
-    if(evt && evt.target) {
-      const svgRect = evt.target.getBoundingClientRect();
-      const parentRect = evt.target.ownerSVGElement.getBoundingClientRect();
-      t.style.left = (svgRect.left - parentRect.left + svgRect.width/2) + "px";
-    }
-  } else {
-    t.classList.add("hidden");
-  }
-}
-function MilestoneCard() {
-  const ud = window.userData;
-  const percent = Math.min(100, Math.round(ud.milestoneStats.revenueEarned/ud.milestoneStats.revenueGoal*100));
-  return el("section",{class:"w-full lg:w-1/3 bg-white rounded-2xl shadow px-6 py-5 flex flex-col items-center justify-center"},
-    el("h2",{class:"text-lg font-semibold text-[#34616a] mb-1"},"Monthly Milestones"),
-    el("div",{class:"w-full mt-2 flex flex-col gap-2"},
-      el("div",{class:"flex items-center justify-between mb-1"},
-        el("span",{class:"text-xs text-[#64748b]"},"Total Listings"),
-        el("span",{class:"text-xs text-orange-500"},ud.milestoneStats.totalListings)
-      ),
-      el("div",{class:"flex items-center justify-between mb-1"},
-        el("span",{class:"text-xs text-[#64748b]"},"% Crosslisted"),
-        el("span",{class:"text-xs text-green-500"},ud.milestoneStats.crosslistedPercent+"%")
-      ),
-      el("div",{class:"flex items-center justify-between mb-1"},
-        el("span",{class:"text-xs text-[#64748b]"},"Revenue Goal"),
-        el("span",{class:"text-xs text-blue-500"},`$${ud.milestoneStats.revenueEarned} / $${ud.milestoneStats.revenueGoal}`)
-      ),
-      el("div",{class:"my-4"},
-        el("div",{
-          class:"h-4 w-full bg-orange-100 rounded-full relative overflow-hidden transition-all cursor-pointer",
-          onclick:()=>openMilestoneModal()
-        },
-          el("div",{class:"h-4 bg-orange-400 rounded-full transition-all",style:`width:${percent}%`}),
-          el("div",{class:"absolute inset-0 flex items-center justify-center text-xs text-white font-semibold select-none"},"Click for breakdown")
-        )
-      )
-    )
-  );
-}
-function openMilestoneModal() {
-  const ud = window.userData;
-  let modal = document.getElementById('milestoneModal');
-  if(!modal){
-    modal = el("div",{id:"milestoneModal",class:"fixed inset-0 z-40 flex items-center justify-center modal-bg"},
-      el("div",{class:"bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-2xl relative"},
-        el("button",{class:"absolute top-3 right-4 text-lg text-neutral-400 hover:text-orange-400",onclick:closeMilestoneModal},"×"),
-        el("h2",{class:"text-xl font-semibold mb-3 text-orange-500"},"Milestone Breakdown"),
-        el("div",{class:"space-y-4 text-sm"},
-          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Total Listings: "),ud.milestoneStats.totalListings),
-          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Crosslisted: "),ud.milestoneStats.crosslistedPercent+"%"),
-          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Revenue: "),`$${ud.milestoneStats.revenueEarned}`),
-          el("div",{},el("span",{class:"font-medium text-[#64748b]"},"Revenue Goal: "),`$${ud.milestoneStats.revenueGoal}`)
-        ),
-        el("button",{class:"mt-6 w-full py-2 rounded-lg bg-orange-400 text-white font-medium shadow hover:bg-orange-500 transition",onclick:closeMilestoneModal},"Close")
-      )
-    );
-    document.body.appendChild(modal);
-  }
-  modal.classList.remove("hidden");
-}
-function closeMilestoneModal() {
-  document.getElementById('milestoneModal').classList.add('hidden');
-}
+  el.addEventListener("mouseleave", ()=>{
+    regionTooltip.style.display = "none";
+  });
+  el.addEventListener("click", ()=>{
+    alert(`Filtering listings for ${region} (${regionToneMap[region].tone} buyers)...`);
+    // Could highlight or filter actual listings here
+  });
+});
 
-// ---- AI TOOLS GRID ----
-function ToolGrid() {
-  // Many tools, all modular, status, icon, CTA, interactivity
-  const allTools = [
-    { key:"titleGen", icon:"📝", label:"Title Generator", desc:"Crafts clicky titles" },
-    { key:"priceTool", icon:"💲", label:"Price Tool", desc:"AI price optimizer" },
-    { key:"trustBuilder", icon:"🔐", label:"Trust Builder", desc:"Boosts buyer trust" },
-    { key:"tagOptimizer", icon:"🏷️", label:"Tag Optimizer", desc:"Optimizes tags" },
-    { key:"photoEnhancer", icon:"🖼️", label:"Photo Enhancer", desc:"Photo upgrades" },
-    { key:"fusionComposer", icon:"🧬", label:"Fusion Composer", desc:"Blend titles/tags" },
-    { key:"platformSync", icon:"🔗", label:"Platform Sync", desc:"Sync platforms" },
-    { key:"personaBuilder", icon:"🧑‍🎤", label:"Persona Builder", desc:"Buyer persona" },
-    { key:"trendFinder", icon:"🔮", label:"Trend Finder", desc:"Trends & timing" },
-    { key:"salesPredictor", icon:"📈", label:"Sales Predictor", desc:"Forecasts sales" },
-    { key:"aiNotes", icon:"💬", label:"AI Notes", desc:"Listing feedback" },
-    { key:"listingTimer", icon:"⏱️", label:"Listing Timer", desc:"Suggests best hour" },
-    { key:"inventoryHelper", icon:"📦", label:"Inventory Helper", desc:"Stock alerts" },
-    { key:"bulkLister", icon:"🗂️", label:"Bulk Lister", desc:"Upload in bulk" }
-  ];
-  const ud = window.userData;
-  return el("div",{class:"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"},
-    ...allTools.map(tool=>{
-      const used = ud.toolsUsedToday[tool.key];
-      return el("div",{
-        class:`glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group ${used?"active":""}`
-      },
-        el("div",{class:"bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"},tool.icon),
-        el("span",{class:"font-semibold text-[#ea7113]"},tool.label),
-        el("span",{class:"text-[10px] text-[#64748b] mt-1"},tool.desc),
-        el("span",{class:`mt-1 text-xs font-medium ${used?"text-green-600":"text-orange-400"}`},used?"Used Today":"Try Now"),
-        el("button",{
-          class:`mt-2 px-3 py-1 rounded ${used?"bg-green-500 hover:bg-green-600":"bg-orange-400 hover:bg-orange-500"} text-white text-xs font-medium shadow group-hover:scale-105 transition`,
-          onclick:()=>alert(`${tool.label} launched!`)
-        },"Launch")
-      );
-    })
-  );
+/* MILESTONE MODAL */
+function openModal() {
+  document.getElementById("milestoneModal").classList.remove("hidden");
 }
-
-// ---- LISTINGS SNAPSHOT ----
-function ListingSnapshot() {
-  const ud = window.userData;
-  const toneColor = {
-    Cozy: "bg-orange-100 text-orange-500",
-    Minimalist: "bg-blue-100 text-blue-500",
-    Eco: "bg-green-100 text-green-500",
-    Luxury: "bg-orange-100 text-orange-500",
-    Handmade: "bg-green-100 text-green-500"
-  };
-  const statusColor = {
-    "Strong": "bg-green-100 text-green-600",
-    "Okay": "bg-orange-100 text-orange-600",
-    "Needs Fix": "bg-red-100 text-red-600"
-  };
-  return el("div",{class:"grid grid-cols-1 md:grid-cols-3 gap-4"},
-    ...ud.listingSnapshot.map((listing,i)=>
-      el("div",{class:"bg-orange-50 rounded-xl p-4 flex flex-col gap-2 shadow relative group"},
-        el("div",{class:"flex items-center justify-between"},
-          el("span",{class:"font-semibold text-[#34616a]"},listing.title),
-          el("span",{
-            class:`ml-2 text-xs px-2 py-0.5 rounded-full ${statusColor[listing.aiStatus]||'bg-gray-100 text-gray-400'} font-bold cursor-pointer`,
-            title:`AI Review: ${listing.aiStatus}`
-          },listing.aiStatus)
-        ),
-        el("div",{class:"flex items-center gap-2 flex-wrap"},
-          ...(listing.tone||[]).map(t=>pill(t,toneColor[t]||'bg-orange-50 text-orange-400'))
-        ),
-        el("div",{class:"flex items-center gap-2 text-xs"},
-          ...(listing.tags||[]).map(tag => pill(tag,"bg-orange-200 text-orange-700"))
-        ),
-        el("div",{class:"flex gap-2 mt-2"},
-          el("button",{class:"px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow hover:bg-orange-500 transition",onclick:()=>alert(`AI Fix for "${listing.title}"!`)},"AI Fix"),
-          el("button",{class:"px-3 py-1 rounded bg-blue-400 text-white text-xs font-medium shadow hover:bg-blue-500 transition",onclick:()=>alert(`Boosted "${listing.title}"!`)},"Boost")
-        )
-      )
-    )
-  );
+function closeModal() {
+  document.getElementById("milestoneModal").classList.add("hidden");
 }
+document.querySelector("#milestoneModal button:last-child").onclick = closeModal;
 
-// ---- MOTIVATION QUOTE ----
-function startMotivationRotation() {
-  const quotes = window.userData.motivationalQuotes;
-  let idx = 0;
-  const elMot = document.getElementById("motivationText");
-  function nextQuote(){
-    elMot.textContent = quotes[idx++%quotes.length];
-  }
-  nextQuote();
-  setInterval(nextQuote, 6500);
-}
+/* LISTING HEALTH GLOW - Tooltip on hover */
+document.querySelectorAll('.bg-orange-50 [title]').forEach(el => {
+  el.addEventListener('mouseenter', function(){
+    // Simple native title for now, could make custom tooltip
+  });
+});
 
-// ---- THEME TOGGLE ----
-function setupThemeToggle() {
-  const btn = document.getElementById("themeToggle");
-  btn.onclick = ()=>{
-    const root = document.getElementById("bodyRoot");
-    root.classList.toggle("theme-dark");
-  };
-}
-
-// ---- INITIALIZE DASHBOARD ----
-function renderDashboard() {
-  const root = document.getElementById("dashboardRoot");
-  root.innerHTML = ""; // clear
-  root.appendChild(Sidebar());
-  root.appendChild(Main());
-}
-
-// ---- BOOTSTRAP ----
-document.addEventListener("DOMContentLoaded", function() {
-  renderDashboard();
-  startMotivationRotation();
-  setupThemeToggle();
+/* Calendar - (Simulate click to change suggestion) */
+document.querySelectorAll('.RhythmCalendar-day').forEach(day=>{
+  day.addEventListener('click', ()=>{
+    // Show overlay or update suggestion
+  });
 });
 </script>
 </body>
