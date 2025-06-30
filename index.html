@@ -6,7 +6,9 @@
   <title>AutoList Canada</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: url('unified-background.png') no-repeat center top;
@@ -46,22 +48,10 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       margin-top: -4rem;
     }
-    #sidebarOverlay {
-      background: rgba(0,0,0,0.4);
-      position: fixed;
-      z-index: 30;
-      inset: 0;
-      display: none;
-    }
-    #sidebarOverlay.active { display: block; }
-    .navlink {
-      display: block;
-    }
   </style>
 </head>
-<body class="relative bg-gray-100">
-
-  <!-- Hamburger Button for Mobile -->
+<body class="flex">
+ <!-- Hamburger Button for Mobile -->
   <button id="sidebarToggle"
     class="fixed top-4 left-4 z-50 md:hidden bg-white bg-opacity-80 rounded-full p-2 shadow-lg focus:outline-none"
     aria-label="Open sidebar">
@@ -85,103 +75,17 @@
       </svg>
     </button>
 
-    <!-- Logo & Title -->
-    <div class="flex flex-col items-center mt-8 mb-4" style="min-height: 22vh;">
-      <img src="autolist-logo.png" alt="AutoList Canada Logo"
-           class="w-16 h-16 mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.18)] select-none pointer-events-none" draggable="false" />
-      <img src="autolist-title.png" alt="AutoList Canada"
-           class="w-[150px] mb-1 select-none pointer-events-none" draggable="false" />
-    </div>
-
-    <!-- MAIN NAV -->
-    <nav class="flex flex-col gap-1 px-6">
-      <a href="index.html"
-        class="navlink relative px-4 py-2 rounded-md font-medium transition-all duration-200 group
-          text-white/90 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70
-          active:bg-cyan-600"
-        id="nav-home">
-        Home
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-300/70 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-      <a href="dashboard.html"
-        class="navlink relative px-4 py-2 rounded-md font-medium transition-all duration-200 group
-          text-white/90 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70
-          active:bg-cyan-600"
-        id="nav-dashboard">
-        Dashboard
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-300/70 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-      <a href="listings.html"
-        class="navlink relative px-4 py-2 rounded-md font-medium transition-all duration-200 group
-          text-white/90 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70
-          active:bg-cyan-600"
-        id="nav-listings">
-        Listings
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-300/70 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-      <a href="ai-tools.html"
-        class="navlink relative px-4 py-2 rounded-md font-medium transition-all duration-200 group
-          text-white/90 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70
-          active:bg-cyan-600"
-        id="nav-aitools">
-        AI Tools
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-300/70 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-    </nav>
-
-    <!-- HELPER LINKS -->
-    <div class="flex flex-col gap-1 px-6 mt-4">
-      <span class="uppercase text-xs tracking-widest text-white/50 mb-1 mt-3 select-none">Helper Links</span>
-      <a href="#how-it-works"
-        class="relative px-4 py-2 rounded-md text-white/80 font-normal transition-all duration-200 hover:bg-white/10 hover:text-white group">
-        How It Works
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-200/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-      <a href="faq.html"
-        class="relative px-4 py-2 rounded-md text-white/80 font-normal transition-all duration-200 hover:bg-white/10 hover:text-white group">
-        FAQ
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-200/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-      <a href="listings-import.html"
-        class="relative px-4 py-2 rounded-md text-white/80 font-normal transition-all duration-200 hover:bg-white/10 hover:text-white group">
-        Listings Import
-        <span class="absolute left-3 right-3 -bottom-1 h-0.5 rounded-full bg-cyan-200/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-      </a>
-    </div>
-
-    <!-- AI Chat Assistant -->
-    <div class="px-6 py-4">
-      <div class="mb-2 font-semibold text-white">AutoList AI Assistant</div>
-      <div class="flex flex-row gap-2">
-        <input id="aiInput" class="flex-1 rounded p-2 text-gray-800 bg-white/80" type="text" placeholder="Ask me anything..." />
-        <button id="aiAskBtn" class="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-2 rounded transition">Ask</button>
-      </div>
-      <div id="aiResponse" class="mt-2 text-sm text-cyan-100 min-h-[2em]"></div>
-    </div>
-
-    <!-- LEGAL + FOOTER -->
-    <footer class="px-6 pb-5 pt-8 flex flex-col gap-2">
-      <div class="flex gap-3 mb-2">
-        <a href="terms.html" class="text-xs text-white/60 hover:text-white transition-colors duration-200 underline underline-offset-4">Terms</a>
-        <a href="privacy.html" class="text-xs text-white/60 hover:text-white transition-colors duration-200 underline underline-offset-4">Privacy Policy</a>
-      </div>
-      <div class="text-[11px] text-white/50 font-light select-none text-left">
-        © 2025 AutoList Canada — Built with AI Intelligence
-      </div>
-    </footer>
-    <div class="pointer-events-none absolute inset-0 z-[-1] bg-gradient-to-br from-black/35 via-transparent to-cyan-300/10"></div>
-  </aside>
-
   <!-- Main Content -->
-  <main class="transition-all duration-300 md:ml-[260px] px-4 md:px-12 pt-16 space-y-40">
+  <main class="flex-1 px-12 pt-16 space-y-40">
     <!-- Hero Section -->
     <section class="text-center space-y-6 pt-20">
       <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">
-        AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
-      </p>
+<p class="text-lg text-gray-700 max-w-2xl mx-auto">
+  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
+</p>
+    
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
       <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
     </section>
@@ -268,72 +172,6 @@
       <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
     </footer>
   </main>
-
-  <!-- Responsive Sidebar & AI Chat Script -->
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarClose = document.getElementById('sidebarClose');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-    function openSidebar() {
-      sidebar.classList.remove('-translate-x-full');
-      sidebarOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeSidebar() {
-      sidebar.classList.add('-translate-x-full');
-      sidebarOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    sidebarToggle.addEventListener('click', e => {
-      e.stopPropagation();
-      openSidebar();
-    });
-    sidebarClose.addEventListener('click', e => {
-      e.stopPropagation();
-      closeSidebar();
-    });
-    sidebarOverlay.addEventListener('click', closeSidebar);
-
-    // Highlight active nav link
-    const navLinks = ['nav-home','nav-dashboard','nav-listings','nav-aitools'];
-    navLinks.forEach(id => {
-      const link = document.getElementById(id);
-      if (link && window.location.pathname.includes(link.getAttribute('href').replace('.html',''))) {
-        link.classList.add('bg-cyan-900','text-white');
-      }
-    });
-
-    // AI Chat Assistant
-    const AI_BACKEND_URL = 'http://localhost:5001/chat'; // Change to your deployed backend!
-    const aiInput = document.getElementById('aiInput');
-    const aiAskBtn = document.getElementById('aiAskBtn');
-    const aiResponse = document.getElementById('aiResponse');
-    aiAskBtn.addEventListener('click', async () => {
-      const q = aiInput.value.trim();
-      if (!q) return;
-      aiResponse.innerText = "Thinking...";
-      try {
-        const resp = await fetch(AI_BACKEND_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: q })
-        });
-        const data = await resp.json();
-        aiResponse.innerText = data.answer || data.error || "No response from AI.";
-      } catch (err) {
-        aiResponse.innerText = "Network or server error.";
-      }
-    });
-    aiInput.addEventListener('keydown', e => {
-      if (e.key === "Enter") aiAskBtn.click();
-    });
-
-    // Prevent sidebar from closing on click inside (mobile)
-    sidebar.addEventListener('click', (e) => e.stopPropagation());
-    sidebarToggle.addEventListener('click', (e) => e.stopPropagation());
-  </script>
 </body>
 </html>
+
