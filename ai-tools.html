@@ -12,13 +12,13 @@
     body {
       position: relative;
       z-index: 1;
-      background: linear-gradient(120deg, #f3f7f2 0%, #facc15 70%, #eef3ea 100%);
+      background: #f9f5f0;
     }
     body::before {
       content: "";
       position: fixed;
       z-index: 0;
-      top: -100px;
+      top: -120px;
       left: -200px;
       width: 140vw;
       height: 120vh;
@@ -26,12 +26,34 @@
       background: url('data:image/svg+xml;utf8,<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg"><ellipse cx="300" cy="200" rx="340" ry="160" fill="%23166534" fill-opacity="0.08"/><ellipse cx="1200" cy="600" rx="400" ry="180" fill="%23ea580c" fill-opacity="0.06"/><ellipse cx="850" cy="300" rx="260" ry="120" fill="%230d9488" fill-opacity="0.09"/><ellipse cx="1450" cy="110" rx="190" ry="80" fill="%237f1d1d" fill-opacity="0.07"/></svg>')
         no-repeat top left/cover;
       filter: blur(1.5px);
-      opacity: 0.8;
+      opacity: 0.82;
     }
+    .page-bg-accent {
+      position: fixed;
+      z-index: 1;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      opacity: 0.21;
+      transition: opacity 0.5s;
+      display: none;
+    }
+    .page-bg-accent.active { display: block; }
     main {
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
+
+    /* ========== TONE ACCENT BLOBS ========== */
+    .tone-accent-blob {
+      position: absolute;
+      top: -38px; right: -60px; z-index: 10;
+      width: 220px; height: 100px;
+      pointer-events: none;
+      opacity: 0.17;
+      transition: opacity 0.5s;
+      display: none;
+    }
+    .tone-accent-blob.active { display: block; }
 
     /* ========== SIDEBAR GLASS + BG IMAGE ========== */
     #sidebar {
@@ -42,7 +64,6 @@
       box-shadow: 0 16px 48px 0 rgba(8,145,178,0.11), 0 1.5px 12px 0 rgba(122,29,29,0.08);
     }
     .sidebar-animated-bg {
-      /* fallback animated brand gradient seen when image is missing */
       background: linear-gradient(135deg, #166534 0%, #0d9488 45%, #facc15 100%);
       background-size: 200% 200%;
       animation: gradientMove 7s ease-in-out infinite;
@@ -83,13 +104,23 @@
       filter: brightness(1.11);
     }
 
+    /* ========== TONE PRESET BUTTONS ========== */
+    .tone-btn { transition: all 0.17s; box-shadow: none; border-width: 2px; }
+    .tone-btn.tone-active[data-tone="cozy"] {
+      background: #facc15 !important; color: #7f1d1d !important; border-color: #eab308 !important; box-shadow: 0 0 0 3px #facc15aa;
+    }
+    .tone-btn.tone-active[data-tone="luxury"] {
+      background: #e9d5ff !important; color: #7c3aed !important; border-color: #c4b5fd !important; box-shadow: 0 0 0 3px #a78bfa99;
+    }
+    .tone-btn.tone-active[data-tone="minimal"] {
+      background: #d1fae5 !important; color: #0d9488 !important; border-color: #34d399 !important; box-shadow: 0 0 0 3px #5eead499;
+    }
+
     /* ========== GLASSMORPHISM CARDS ENHANCEMENT ========== */
     .glass, .glass-dark {
       border: 1px solid rgba(250,204,21,0.16);
       box-shadow: 0 4px 24px 0 rgba(22,101,52,0.08);
     }
-
-    /* ========== FADE, GLOW, MOMENTUM, ETC (as original) ========== */
     .fade-up {
       opacity: 0;
       transform: translateY(40px);
@@ -140,17 +171,43 @@
       .tools-section { grid-template-columns: 1fr; }
       .sidebar-expanded { width: 100% !important; }
     }
+    /* SIDEBAR LOGO/TITLE UPGRADE */
+    .sidebar-header-flex {
+      min-height: 172px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .sidebar-header-logo {
+      width: 6.5rem; height: 6.5rem;
+      max-width: 110px; max-height: 110px;
+    }
+    .sidebar-header-title {
+      width: 12rem; max-width: 95vw;
+      margin-bottom: 1.2rem;
+    }
+    @media (max-width: 640px) {
+      .sidebar-header-flex { min-height: 110px; }
+      .sidebar-header-logo { width: 4.5rem; height: 4.5rem; }
+      .sidebar-header-title { width: 8.5rem; margin-bottom: 1rem; }
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-[#fdf6ee] via-[#f3f7f2] to-[#eef3ea] dark:from-[#10151a] dark:to-[#1e2422] dark:text-white transition-all duration-300">
-<div class="flex min-h-screen">
+<body>
+<!-- BRAND BACKGROUND ACCENT SVGs -->
+<svg class="page-bg-accent page-bg-accent-cozy" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="200" cy="110" rx="170" ry="60" fill="#facc15" fill-opacity="0.26"/><ellipse cx="500" cy="220" rx="80" ry="40" fill="#ea580c" fill-opacity="0.19"/></svg>
+<svg class="page-bg-accent page-bg-accent-luxury" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="150" cy="120" rx="130" ry="62" fill="#e9d5ff" fill-opacity="0.23"/><ellipse cx="480" cy="70" rx="100" ry="40" fill="#7c3aed" fill-opacity="0.14"/></svg>
+<svg class="page-bg-accent page-bg-accent-minimal active" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="160" cy="100" rx="150" ry="60" fill="#d1fae5" fill-opacity="0.22"/><ellipse cx="480" cy="180" rx="90" ry="36" fill="#0d9488" fill-opacity="0.18"/></svg>
+<div class="flex min-h-screen relative z-10">
   <!-- ========== SIDEBAR ========== -->
   <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col justify-between"
     style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
     <div>
-      <div class="p-4 flex flex-col items-center">
-        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20 mb-2 drop-shadow-xl">
-        <img src="autolist-title.png" alt="AutoList Canada" class="w-36 mb-6">
+      <div class="p-4 sidebar-header-flex">
+        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="sidebar-header-logo drop-shadow-xl">
+        <img src="autolist-title.png" alt="AutoList Canada" class="sidebar-header-title">
         <nav class="flex flex-col gap-3 text-sm font-semibold text-white w-full">
           <a href="index.html" class="nav-link">Home</a>
           <a href="dashboard.html" class="nav-link">Dashboard</a>
@@ -177,28 +234,30 @@
   </aside>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12">
+  <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12 relative">
     <!-- ==== HERO HEADER ==== -->
-    <header class="mb-10 flex flex-col items-start">
+    <header class="mb-10 flex flex-col items-start relative">
+      <!-- TONE BLOBS -->
+      <svg class="tone-accent-blob tone-accent-blob-cozy" viewBox="0 0 220 100"><ellipse cx="110" cy="50" rx="100" ry="40" fill="#facc15" fill-opacity="0.52"/><ellipse cx="180" cy="80" rx="30" ry="15" fill="#ea580c" fill-opacity="0.34"/></svg>
+      <svg class="tone-accent-blob tone-accent-blob-luxury" viewBox="0 0 220 100"><ellipse cx="80" cy="40" rx="60" ry="28" fill="#e9d5ff" fill-opacity="0.58"/><ellipse cx="180" cy="30" rx="32" ry="16" fill="#7c3aed" fill-opacity="0.27"/></svg>
+      <svg class="tone-accent-blob tone-accent-blob-minimal active" viewBox="0 0 220 100"><ellipse cx="120" cy="40" rx="70" ry="28" fill="#d1fae5" fill-opacity="0.43"/><ellipse cx="50" cy="70" rx="28" ry="12" fill="#0d9488" fill-opacity="0.27"/></svg>
       <h1 class="text-4xl font-extrabold text-[#ea580c] mb-2 drop-shadow-lg">AutoList Canada – AI Tools</h1>
       <p class="text-gray-700 max-w-xl dark:text-gray-200">The most advanced AI toolkit for vintage sellers. Psychology, tone science, and GPT-powered. Unlock listing clarity, trust, and conversion.</p>
       <!-- Tone Preset Toggle -->
       <div class="mt-5 flex gap-3 items-center">
         <span class="text-sm font-semibold text-gray-500">Tone Preset:</span>
         <div class="flex gap-2">
-          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
-          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
-          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border ring-2 ring-cyan-400" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;">Minimal</button>
+          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="cozy" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
+          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="luxury" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
+          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="minimal" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;">Minimal</button>
         </div>
       </div>
     </header>
 
     <!-- ==== SECTION 1: STANDARD TOOLS ==== -->
-    <!-- Organic mustard/green divider -->
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="#facc15" opacity="0.13"/></svg>
     <section class="mb-12">
       <h2 class="text-2xl font-bold text-[#facc15] mb-4 flex items-center gap-2"><span class="text-lg">1.</span> Standard Tools</h2>
-      <!-- Grid Cards: Mustard + Forest Green glow -->
       <div class="grid md:grid-cols-2 gap-7 tools-section">
         <!-- Tool 1 -->
         <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,1)">
@@ -250,7 +309,6 @@
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,36 Q720,-16 1440,36 L1440,56 L0,56 Z" fill="#0d9488" opacity="0.07"/></svg>
     <section class="mb-12">
       <h2 class="text-2xl font-bold text-[#0d9488] mb-4 flex items-center gap-2"><span class="text-lg">2.</span> Science-Backed Tools</h2>
-      <!-- Glow Tiles: Teal + Orange -->
       <div class="grid md:grid-cols-2 gap-7">
         <!-- Tool 5 -->
         <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,5)">
@@ -324,7 +382,6 @@
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 Q720,70 1440,30 L1440,56 L0,56 Z" fill="#ea580c" opacity="0.08"/></svg>
     <section class="mb-12">
       <h2 class="text-2xl font-bold text-[#ea580c] mb-4 flex items-center gap-2"><span class="text-lg">3.</span> Advanced Strategy Tools</h2>
-      <!-- Momentum Trail Cards: Orange + Burgundy dots -->
       <div class="flex flex-col gap-10">
         <div class="flex flex-wrap gap-7 items-stretch">
           <!-- Tool 11 -->
@@ -394,9 +451,7 @@
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 Q720,9 1440,45 L1440,56 L0,56 Z" fill="#7f1d1d" opacity="0.09"/></svg>
     <section class="mb-14">
       <h2 class="text-2xl font-bold text-[#7f1d1d] mb-4 flex items-center gap-2"><span class="text-lg">4.</span> Intelligent AI Writers</h2>
-      <!-- Layered Block Layout: Burgundy + Teal accent -->
       <div class="relative">
-        <!-- Layered background SVG -->
         <svg class="absolute -top-12 left-0 w-full h-20 pointer-events-none" viewBox="0 0 1440 64" fill="none"><path d="M0,24 Q720,54 1440,24 L1440,64 L0,64 Z" fill="#7f1d1d" opacity="0.07"/></svg>
         <div class="relative z-10 grid md:grid-cols-2 gap-7">
           <!-- Tool 16 -->
@@ -495,14 +550,19 @@
     revealOnScroll();
   };
 
-  // Tone preset logic
+  // Tone preset logic + accent switching
   let currentTone = 'minimal';
   function setTone(tone) {
     currentTone = tone;
-    document.querySelectorAll('.tone-btn').forEach(btn => btn.classList.remove('ring-2', 'ring-cyan-400'));
-    if (tone==='cozy') document.querySelectorAll('.tone-btn')[0].classList.add('ring-2', 'ring-cyan-400');
-    else if (tone==='luxury') document.querySelectorAll('.tone-btn')[1].classList.add('ring-2', 'ring-cyan-400');
-    else document.querySelectorAll('.tone-btn')[2].classList.add('ring-2', 'ring-cyan-400');
+    document.querySelectorAll('.tone-btn').forEach(btn => {
+      btn.classList.toggle('tone-active', btn.dataset.tone === tone);
+    });
+    document.querySelectorAll('.tone-accent-blob').forEach(blob => {
+      blob.classList.toggle('active', blob.classList.contains('tone-accent-blob-' + tone));
+    });
+    document.querySelectorAll('.page-bg-accent').forEach(bg => {
+      bg.classList.toggle('active', bg.classList.contains('page-bg-accent-' + tone));
+    });
   }
   setTone('minimal');
 
