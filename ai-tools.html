@@ -7,105 +7,201 @@
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body { font-family: 'Inter', 'ui-rounded', 'system-ui', sans-serif; }
+    /* ========== EARTHY ORGANIC BACKGROUND ========== */
     body {
-      font-family: 'Inter', 'ui-rounded', 'system-ui', sans-serif;
       position: relative;
       z-index: 1;
-      background: #f0fdfc;
-      transition: background 0.5s;
+      background: #f9f5f0;
     }
-    body.tone-rooted { background: #f9f3e8; }
-    body.tone-vivid { background: #fff5f9; }
-    body.tone-elemental { background: #f0fdfc; }
-    body::before { display: none !important; }
+    body::before {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      top: -120px;
+      left: -200px;
+      width: 140vw;
+      height: 120vh;
+      pointer-events: none;
+      background: url('data:image/svg+xml;utf8,<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg"><ellipse cx="300" cy="200" rx="340" ry="160" fill="%23166534" fill-opacity="0.08"/><ellipse cx="1200" cy="600" rx="400" ry="180" fill="%23ea580c" fill-opacity="0.06"/><ellipse cx="850" cy="300" rx="260" ry="120" fill="%230d9488" fill-opacity="0.09"/><ellipse cx="1450" cy="110" rx="190" ry="80" fill="%237f1d1d" fill-opacity="0.07"/></svg>')
+        no-repeat top left/cover;
+      filter: blur(1.5px);
+      opacity: 0.82;
+    }
     .page-bg-accent {
       position: fixed;
       z-index: 1;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      opacity: 0;
+      left: 0; top: 0; width: 100vw; height: 100vh;
       pointer-events: none;
-      transition: opacity 0.7s;
-      display: block;
+      opacity: 0.21;
+      transition: opacity 0.5s;
+      display: none;
     }
-    .page-bg-accent.active { opacity: 1; }
+    .page-bg-accent.active { display: block; }
+    main {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ========== TONE ACCENT BLOBS ========== */
     .tone-accent-blob {
       position: absolute;
       top: -38px; right: -60px; z-index: 10;
       width: 220px; height: 100px;
       pointer-events: none;
-      opacity: 0;
+      opacity: 0.17;
       transition: opacity 0.5s;
+      display: none;
+    }
+    .tone-accent-blob.active { display: block; }
+
+    /* ========== SIDEBAR GLASS + BG IMAGE ========== */
+    #sidebar {
+      background-image: url('sidebar-background.png') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 16px 48px 0 rgba(8,145,178,0.11), 0 1.5px 12px 0 rgba(122,29,29,0.08);
+    }
+    .sidebar-animated-bg {
+      background: linear-gradient(135deg, #166534 0%, #0d9488 45%, #facc15 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 7s ease-in-out infinite;
+    }
+    @keyframes gradientMove {
+      0%,100% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+    }
+    .sidebar-shadow { box-shadow: 0 16px 48px 0 rgba(8,145,178,0.13), 0 1.5px 12px 0 rgba(22,101,52,0.09);}
+    
+    /* ========== NAV PILL BUTTONS ========== */
+    .nav-link {
+      border-radius: 9999px;
+      padding: 0.6rem 1.3rem !important;
+      margin-right: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(3px);
+      transition: all 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
+      box-shadow: 0 2px 10px 0 rgba(250,204,21,0.06);
+      color: #fef9c3;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      border-left: 0 solid transparent;
+    }
+    .nav-link:hover {
+      transform: scale(1.08) translateX(6px);
+      box-shadow: 0 2px 16px 0 #facc1588, 0 1.5px 12px 0 #0d948833;
+      background: linear-gradient(90deg,#facc15 15%,#ea580c 85%);
+      color: #7f1d1d !important;
+      filter: brightness(1.05);
+    }
+    .nav-active {
+      border-left: 6px solid #facc15 !important;
+      background: rgba(255,255,255,0.25);
+      color: #7f1d1d !important;
+      font-weight: bold;
+      box-shadow: 0 0 18px 3px #facc1577;
+      filter: brightness(1.11);
+    }
+
+    /* ========== TONE PRESET BUTTONS ========== */
+    .tone-btn { transition: all 0.17s; box-shadow: none; border-width: 2px; }
+    .tone-btn.tone-active[data-tone="cozy"] {
+      background: #facc15 !important; color: #7f1d1d !important; border-color: #eab308 !important; box-shadow: 0 0 0 3px #facc15aa;
+    }
+    .tone-btn.tone-active[data-tone="luxury"] {
+      background: #e9d5ff !important; color: #7c3aed !important; border-color: #c4b5fd !important; box-shadow: 0 0 0 3px #a78bfa99;
+    }
+    .tone-btn.tone-active[data-tone="minimal"] {
+      background: #d1fae5 !important; color: #0d9488 !important; border-color: #34d399 !important; box-shadow: 0 0 0 3px #5eead499;
+    }
+
+    /* ========== GLASSMORPHISM CARDS ENHANCEMENT ========== */
+    .glass, .glass-dark {
+      border: 1px solid rgba(250,204,21,0.16);
+      box-shadow: 0 4px 24px 0 rgba(22,101,52,0.08);
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .glow-tile {
+      box-shadow: 0 0 0 0 #facc1555;
+      transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .glow-tile:hover {
+      box-shadow: 0 0 32px 4px #facc1588, 0 2px 24px 0 #ea580c33;
+    }
+    .momentum-dot {
+      width: 12px; height: 12px;
+      border-radius: 9999px;
+      background: #0d9488;
+      margin: 0 10px;
+      box-shadow: 0 0 16px 0 #0d9488cc;
+      animation: trail-pulse 2s infinite;
+    }
+    @keyframes trail-pulse {
+      0%,100% {opacity: 1;}
+      50% {opacity: 0.3;}
+    }
+    .section-divider {
+      width: 100%;
+      height: 56px;
       display: block;
+      margin-top: -2px;
     }
-    .tone-accent-blob.active { opacity: 1; }
-    .tone-btn {
-      transition: all 0.17s;
-      box-shadow: none;
-      border-width: 2px;
+    .sim-result {
+      min-height: 2.2em;
+      transition: box-shadow 0.4s;
     }
-    .tone-btn.tone-active[data-tone="rooted"] {
-      background: #f9f3e8 !important;
-      color: #92400E !important;
-      border-color: #ca8a04 !important;
-      box-shadow: 0 0 0 3px #facc15aa;
+    .sim-result.animated {
+      box-shadow: 0 0 16px 0 #facc1580;
+      animation: fadeGrow 0.7s;
     }
-    .tone-btn.tone-active[data-tone="vivid"] {
-      background: #fff5f9 !important;
-      color: #b91c1c !important;
-      border-color: #d946ef !important;
-      box-shadow: 0 0 0 3px #f472b6bb;
+    @keyframes fadeGrow {
+      from { opacity: 0; transform: scale(0.96);}
+      to { opacity: 1; transform: scale(1);}
     }
-    .tone-btn.tone-active[data-tone="elemental"] {
-      background: #f0fdfc !important;
-      color: #0d9488 !important;
-      border-color: #22d3ee !important;
-      box-shadow: 0 0 0 3px #5eead488;
+    @media (max-width: 1024px) {
+      .tools-section { grid-template-columns: 1fr; }
+      .sidebar-expanded { width: 100% !important; }
     }
-    main { position: relative; z-index: 3; }
-    .glass, .glass-dark { border: 1px solid rgba(250,204,21,0.16); box-shadow: 0 4px 24px 0 rgba(22,101,52,0.08);}
-    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);}
-    .fade-up.visible { opacity: 1; transform: translateY(0);}
-    .glow-tile { box-shadow: 0 0 0 0 #facc1555; transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1);}
-    .glow-tile:hover { box-shadow: 0 0 32px 4px #facc1588, 0 2px 24px 0 #ea580c33;}
-    .momentum-dot { width: 12px; height: 12px; border-radius: 9999px; background: #0d9488; margin: 0 10px; box-shadow: 0 0 16px 0 #0d9488cc; animation: trail-pulse 2s infinite;}
-    @keyframes trail-pulse { 0%,100% {opacity: 1;} 50% {opacity: 0.3;}}
-    .section-divider { width: 100%; height: 56px; display: block; margin-top: -2px;}
-    .sim-result { min-height: 2.2em; transition: box-shadow 0.4s;}
-    .sim-result.animated { box-shadow: 0 0 16px 0 #facc1580; animation: fadeGrow 0.7s;}
-    @keyframes fadeGrow { from { opacity: 0; transform: scale(0.96);} to { opacity: 1; transform: scale(1);}}
-    @media (max-width: 1024px) { .tools-section { grid-template-columns: 1fr; } .sidebar-expanded { width: 100% !important; } }
-    .sidebar-header-flex { min-height: 172px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;}
-    .sidebar-header-logo { width: 6.5rem; height: 6.5rem; max-width: 110px; max-height: 110px;}
-    .sidebar-header-title { width: 12rem; max-width: 95vw; margin-bottom: 1.2rem;}
-    @media (max-width: 640px) { .sidebar-header-flex { min-height: 110px; } .sidebar-header-logo { width: 4.5rem; height: 4.5rem; } .sidebar-header-title { width: 8.5rem; margin-bottom: 1rem; } }
+    /* SIDEBAR LOGO/TITLE UPGRADE */
+    .sidebar-header-flex {
+      min-height: 172px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .sidebar-header-logo {
+      width: 6.5rem; height: 6.5rem;
+      max-width: 110px; max-height: 110px;
+    }
+    .sidebar-header-title {
+      width: 12rem; max-width: 95vw;
+      margin-bottom: 1.2rem;
+    }
+    @media (max-width: 640px) {
+      .sidebar-header-flex { min-height: 110px; }
+      .sidebar-header-logo { width: 4.5rem; height: 4.5rem; }
+      .sidebar-header-title { width: 8.5rem; margin-bottom: 1rem; }
+    }
   </style>
 </head>
-<body class="tone-elemental">
-<!-- BACKGROUND SVGs -->
-<svg class="page-bg-accent page-bg-accent-rooted" viewBox="0 0 1600 900">
-  <ellipse cx="400" cy="260" rx="500" ry="190" fill="#f9f3e8" fill-opacity="1"/>
-  <ellipse cx="1200" cy="700" rx="370" ry="150" fill="#166534" fill-opacity="0.09"/>
-  <ellipse cx="900" cy="400" rx="300" ry="120" fill="#ea580c" fill-opacity="0.08"/>
-  <ellipse cx="300" cy="700" rx="170" ry="70" fill="#ca8a04" fill-opacity="0.11"/>
-  <ellipse cx="1300" cy="260" rx="210" ry="80" fill="#b45309" fill-opacity="0.07"/>
-</svg>
-<svg class="page-bg-accent page-bg-accent-vivid" viewBox="0 0 1600 900">
-  <ellipse cx="400" cy="350" rx="280" ry="140" fill="#fff5f9" fill-opacity="0.95"/>
-  <ellipse cx="1200" cy="200" rx="220" ry="90" fill="#b91c1c" fill-opacity="0.14"/>
-  <ellipse cx="900" cy="650" rx="300" ry="110" fill="#d946ef" fill-opacity="0.13"/>
-  <ellipse cx="1300" cy="750" rx="180" ry="75" fill="#fde047" fill-opacity="0.13"/>
-  <ellipse cx="600" cy="700" rx="170" ry="80" fill="#7c3aed" fill-opacity="0.11"/>
-</svg>
-<svg class="page-bg-accent page-bg-accent-elemental active" viewBox="0 0 1600 900">
-  <ellipse cx="500" cy="300" rx="420" ry="170" fill="#f0fdfc" fill-opacity="1"/>
-  <ellipse cx="1150" cy="650" rx="370" ry="130" fill="#0d9488" fill-opacity="0.10"/>
-  <ellipse cx="800" cy="450" rx="260" ry="120" fill="#38bdf8" fill-opacity="0.09"/>
-  <ellipse cx="300" cy="700" rx="210" ry="90" fill="#22d3ee" fill-opacity="0.11"/>
-  <ellipse cx="1300" cy="240" rx="190" ry="60" fill="#166534" fill-opacity="0.07"/>
-</svg>
+<body>
+<!-- BRAND BACKGROUND ACCENT SVGs -->
+<svg class="page-bg-accent page-bg-accent-cozy" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="200" cy="110" rx="170" ry="60" fill="#facc15" fill-opacity="0.26"/><ellipse cx="500" cy="220" rx="80" ry="40" fill="#ea580c" fill-opacity="0.19"/></svg>
+<svg class="page-bg-accent page-bg-accent-luxury" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="150" cy="120" rx="130" ry="62" fill="#e9d5ff" fill-opacity="0.23"/><ellipse cx="480" cy="70" rx="100" ry="40" fill="#7c3aed" fill-opacity="0.14"/></svg>
+<svg class="page-bg-accent page-bg-accent-minimal active" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="160" cy="100" rx="150" ry="60" fill="#d1fae5" fill-opacity="0.22"/><ellipse cx="480" cy="180" rx="90" ry="36" fill="#0d9488" fill-opacity="0.18"/></svg>
 <div class="flex min-h-screen relative z-10">
-  <!-- SIDEBAR -->
+  <!-- ========== SIDEBAR ========== -->
   <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col justify-between"
     style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
     <div>
@@ -122,6 +218,7 @@
         </nav>
       </div>
     </div>
+    <!-- AI Tip & Einstein Quote -->
     <div class="w-full p-4 pb-8">
       <div class="bg-white/90 rounded-3xl shadow-xl px-4 py-4 flex items-start gap-3 glass dark:glass-dark">
         <div class="flex-shrink-0 mt-1">
@@ -135,37 +232,28 @@
       <div id="einstein-quote" class="text-xs text-center mt-4 text-teal-900 italic dark:text-teal-200"></div>
     </div>
   </aside>
-  <!-- MAIN CONTENT -->
+
+  <!-- ========== MAIN CONTENT ========== -->
   <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12 relative">
-    <!-- HERO HEADER -->
+    <!-- ==== HERO HEADER ==== -->
     <header class="mb-10 flex flex-col items-start relative">
       <!-- TONE BLOBS -->
-      <svg class="tone-accent-blob tone-accent-blob-rooted" viewBox="0 0 220 100">
-        <ellipse cx="110" cy="50" rx="100" ry="40" fill="#f9f3e8" fill-opacity="0.52"/>
-        <ellipse cx="180" cy="80" rx="30" ry="15" fill="#ca8a04" fill-opacity="0.34"/>
-        <ellipse cx="60" cy="25" rx="27" ry="13" fill="#166534" fill-opacity="0.21"/>
-      </svg>
-      <svg class="tone-accent-blob tone-accent-blob-vivid" viewBox="0 0 220 100">
-        <ellipse cx="80" cy="40" rx="60" ry="28" fill="#fff5f9" fill-opacity="0.63"/>
-        <ellipse cx="180" cy="30" rx="32" ry="16" fill="#d946ef" fill-opacity="0.29"/>
-        <ellipse cx="70" cy="80" rx="23" ry="9" fill="#b91c1c" fill-opacity="0.19"/>
-      </svg>
-      <svg class="tone-accent-blob tone-accent-blob-elemental active" viewBox="0 0 220 100">
-        <ellipse cx="120" cy="40" rx="70" ry="28" fill="#f0fdfc" fill-opacity="0.47"/>
-        <ellipse cx="50" cy="70" rx="28" ry="12" fill="#22d3ee" fill-opacity="0.26"/>
-        <ellipse cx="170" cy="80" rx="13" ry="6" fill="#0d9488" fill-opacity="0.22"/>
-      </svg>
+      <svg class="tone-accent-blob tone-accent-blob-cozy" viewBox="0 0 220 100"><ellipse cx="110" cy="50" rx="100" ry="40" fill="#facc15" fill-opacity="0.52"/><ellipse cx="180" cy="80" rx="30" ry="15" fill="#ea580c" fill-opacity="0.34"/></svg>
+      <svg class="tone-accent-blob tone-accent-blob-luxury" viewBox="0 0 220 100"><ellipse cx="80" cy="40" rx="60" ry="28" fill="#e9d5ff" fill-opacity="0.58"/><ellipse cx="180" cy="30" rx="32" ry="16" fill="#7c3aed" fill-opacity="0.27"/></svg>
+      <svg class="tone-accent-blob tone-accent-blob-minimal active" viewBox="0 0 220 100"><ellipse cx="120" cy="40" rx="70" ry="28" fill="#d1fae5" fill-opacity="0.43"/><ellipse cx="50" cy="70" rx="28" ry="12" fill="#0d9488" fill-opacity="0.27"/></svg>
       <h1 class="text-4xl font-extrabold text-[#ea580c] mb-2 drop-shadow-lg">AutoList Canada – AI Tools</h1>
       <p class="text-gray-700 max-w-xl dark:text-gray-200">The most advanced AI toolkit for vintage sellers. Psychology, tone science, and GPT-powered. Unlock listing clarity, trust, and conversion.</p>
+      <!-- Tone Preset Toggle -->
       <div class="mt-5 flex gap-3 items-center">
         <span class="text-sm font-semibold text-gray-500">Tone Preset:</span>
         <div class="flex gap-2">
-          <button type="button" onclick="setTone('rooted')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="rooted" style="background-color: #f9f3e8; color: #92400E; border-color: #ca8a04;">Rooted</button>
-          <button type="button" onclick="setTone('vivid')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="vivid" style="background-color: #fff5f9; color: #b91c1c; border-color: #d946ef;">Vivid</button>
-          <button type="button" onclick="setTone('elemental')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="elemental" style="background-color: #f0fdfc; color: #0d9488; border-color: #22d3ee;">Elemental</button>
+          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="cozy" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
+          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="luxury" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
+          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="minimal" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;">Minimal</button>
         </div>
       </div>
     </header>
+
     <!-- ==== SECTION 1: STANDARD TOOLS ==== -->
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="#facc15" opacity="0.13"/></svg>
     <section class="mb-12">
@@ -424,12 +512,16 @@
         </div>
       </div>
     </section>
+
+    <!-- ==== FOOTER ==== -->
     <footer class="mt-10 text-center text-gray-400 text-sm">
       &copy; 2025 AutoList Canada — AI Tools. <span class="italic">Clarity. Trust. Conversion.</span>
     </footer>
   </main>
 </div>
+<!-- ==== JS: ANIMATION, EINSTEIN, TONE, AI HANDLER ==== -->
 <script>
+  // Animate fade-up elements on scroll
   function revealOnScroll() {
     document.querySelectorAll('.fade-up').forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -439,6 +531,7 @@
   document.addEventListener('scroll', revealOnScroll);
   window.addEventListener('DOMContentLoaded', revealOnScroll);
 
+  // Einstein Rotating Quote
   const einsteinQuotes = [
     "Imagination is more important than knowledge.",
     "The true sign of intelligence is not knowledge but imagination.",
@@ -457,7 +550,8 @@
     revealOnScroll();
   };
 
-  let currentTone = 'elemental';
+  // Tone preset logic + accent switching
+  let currentTone = 'minimal';
   function setTone(tone) {
     currentTone = tone;
     document.querySelectorAll('.tone-btn').forEach(btn => {
@@ -469,11 +563,10 @@
     document.querySelectorAll('.page-bg-accent').forEach(bg => {
       bg.classList.toggle('active', bg.classList.contains('page-bg-accent-' + tone));
     });
-    document.body.classList.remove('tone-rooted', 'tone-vivid', 'tone-elemental');
-    document.body.classList.add('tone-' + tone);
   }
-  setTone('elemental');
+  setTone('minimal');
 
+  // AI Tool Handler
   async function generateAIResult(form, idx) {
     const input = form.input.value.trim();
     const resultDiv = form.querySelector('.sim-result');
