@@ -193,9 +193,109 @@
       .sidebar-header-logo { width: 4.5rem; height: 4.5rem; }
       .sidebar-header-title { width: 8.5rem; margin-bottom: 1rem; }
     }
+
+    /* ================== THEME ART BACKGROUNDS ================== */
+    .theme-bg {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      transition: background 0.6s, opacity 0.6s;
+      opacity: 1;
+      background: #fafaf9;
+      overflow: hidden;
+    }
+    /* ====== CREATIVE SPARK ====== */
+    body[data-theme="creative"] .theme-bg {
+      background: linear-gradient(120deg, #FF66B2 0%, #FF7043 55%, #40C4FF 80%, #FFEB3B 100%);
+    }
+    body[data-theme="creative"] .theme-bg::before,
+    body[data-theme="creative"] .theme-bg::after {
+      content: '';
+      position: absolute;
+      width: 120vw; height: 100vh;
+      left: -10vw; top: -6vh;
+      pointer-events: none;
+    }
+    body[data-theme="creative"] .theme-bg::before {
+      background: linear-gradient(105deg, transparent 60%, #FFEB3B55 100%);
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 20% 100%);
+      opacity: 0.22;
+      animation: creative-shimmer 8s linear infinite;
+    }
+    body[data-theme="creative"] .theme-bg::after {
+      background: linear-gradient(145deg, #40C4FF33 30%, transparent 80%);
+      clip-path: polygon(0 0, 70% 0, 100% 100%, 0 100%);
+      opacity: 0.20;
+    }
+    @keyframes creative-shimmer {
+      0% { filter: brightness(1) blur(0.5px);}
+      50% { filter: brightness(1.08) blur(1px);}
+      100% { filter: brightness(1) blur(0.5px);}
+    }
+    /* ====== ROOTED ====== */
+    body[data-theme="rooted"] .theme-bg {
+      background: linear-gradient(135deg, #A3B18A 15%, #D2691E 60%, #F4A259 100%);
+    }
+    body[data-theme="rooted"] .theme-bg::before,
+    body[data-theme="rooted"] .theme-bg::after {
+      content: '';
+      position: absolute;
+      width: 110vw; height: 100vh;
+      left: -5vw; top: 0;
+      pointer-events: none;
+    }
+    body[data-theme="rooted"] .theme-bg::before {
+      background: url('data:image/svg+xml;utf8,<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg"><path d="M0,700 C400,650 1200,850 1600,700 L1600,900 L0,900Z" fill="%237B2D26" fill-opacity="0.19"/><path d="M0,800 C450,740 1150,1000 1600,800 L1600,900 L0,900Z" fill="%2335635A" fill-opacity="0.18"/><ellipse cx="900" cy="150" rx="380" ry="50" fill="%23F4A259" fill-opacity="0.11"/><ellipse cx="400" cy="400" rx="200" ry="60" fill="%23A3B18A" fill-opacity="0.17"/></svg>');
+      background-size: cover;
+      background-repeat: no-repeat;
+      opacity: 0.97;
+      filter: blur(0.7px);
+    }
+    body[data-theme="rooted"] .theme-bg::after {
+      background: repeating-linear-gradient(120deg, #A3B18A11 0 8px, transparent 10px 32px), 
+                  repeating-linear-gradient(-70deg, #D2691E15 0 6px, transparent 10px 40px);
+      opacity: 0.16;
+    }
+    /* ====== HYPERCLARITY ====== */
+    body[data-theme="clarity"] .theme-bg {
+      background: linear-gradient(120deg, #EDEDED 0%, #F8F8F8 100%);
+    }
+    body[data-theme="clarity"] .theme-bg::before {
+      content: '';
+      position: absolute;
+      width: 100vw; height: 100vh; left: 0; top: 0;
+      pointer-events: none;
+      background: 
+        linear-gradient(135deg, #ADE8F433 0 35%, transparent 65% 100%),
+        linear-gradient(90deg, #00BFA688 60%, transparent 100%);
+      opacity: 0.19;
+    }
+    body[data-theme="clarity"] .theme-bg::after {
+      content: '';
+      position: absolute;
+      width: 100vw; height: 100vh; left: 0; top: 0;
+      pointer-events: none;
+      background: 
+        repeating-linear-gradient(0deg, #b6e3f822 0 1px, transparent 3px 30px),
+        repeating-linear-gradient(90deg, #b6e3f822 0 1px, transparent 3px 30px),
+        radial-gradient(circle at 80% 40%, #ADE8F4 0 7px, transparent 14px 100%);
+      opacity: 0.16;
+    }
+    @media (max-width: 900px) {
+      .theme-bg, 
+      .theme-bg::before, 
+      .theme-bg::after {
+        width: 100vw !important;
+        left: 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
+<div class="theme-bg" aria-hidden="true"></div>
 <!-- BRAND BACKGROUND ACCENT SVGs -->
 <svg class="page-bg-accent page-bg-accent-cozy" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="200" cy="110" rx="170" ry="60" fill="#facc15" fill-opacity="0.26"/><ellipse cx="500" cy="220" rx="80" ry="40" fill="#ea580c" fill-opacity="0.19"/></svg>
 <svg class="page-bg-accent page-bg-accent-luxury" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="150" cy="120" rx="130" ry="62" fill="#e9d5ff" fill-opacity="0.23"/><ellipse cx="480" cy="70" rx="100" ry="40" fill="#7c3aed" fill-opacity="0.14"/></svg>
@@ -232,7 +332,6 @@
       <div id="einstein-quote" class="text-xs text-center mt-4 text-teal-900 italic dark:text-teal-200"></div>
     </div>
   </aside>
-
   <!-- ========== MAIN CONTENT ========== -->
   <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12 relative">
     <!-- ==== HERO HEADER ==== -->
@@ -253,7 +352,6 @@
         </div>
       </div>
     </header>
-
     <!-- ==== SECTION 1: STANDARD TOOLS ==== -->
     <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="#facc15" opacity="0.13"/></svg>
     <section class="mb-12">
@@ -512,7 +610,6 @@
         </div>
       </div>
     </section>
-
     <!-- ==== FOOTER ==== -->
     <footer class="mt-10 text-center text-gray-400 text-sm">
       &copy; 2025 AutoList Canada — AI Tools. <span class="italic">Clarity. Trust. Conversion.</span>
