@@ -51,22 +51,61 @@
   </style>
 </head>
 <body class="flex">
-  <!-- Sidebar -->
-  <aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
-    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
-    <nav class="flex flex-col gap-5 text-sm mt-6">
-      <a href="index.html" class="btn-link">Home</a>
-      <a href="dashboard.html" class="btn-link">Dashboard</a>
-      <a href="listings.html" class="btn-link">Listings</a>
-      <a href="ai-tools.html" class="btn-link">AI Tools</a>
-      <a href="how-it-works.html" class="btn-link">How It Works</a>
-      <a href="faq.html" class="btn-link">FAQ</a>
-      <a href="#" class="btn-link">Listings Import</a>
-      <a href="terms.html" class="btn-link text-xs text-gray-600">Terms of Service</a>
-      <a href="privacy.html" class="btn-link text-xs text-gray-600">Privacy Policy</a>
-    </nav>
+ <!-- BRAND BACKGROUND ACCENT SVGs -->
+<svg class="page-bg-accent page-bg-accent-cozy" style="z-index:1" viewBox="0 0 600 280">
+  <ellipse cx="200" cy="110" rx="170" ry="60" fill="#facc15" fill-opacity="0.26"/>
+  <ellipse cx="500" cy="220" rx="80" ry="40" fill="#ea580c" fill-opacity="0.19"/>
+</svg>
+
+<svg class="page-bg-accent page-bg-accent-luxury" style="z-index:1" viewBox="0 0 600 280">
+  <ellipse cx="150" cy="120" rx="130" ry="62" fill="#e9d5ff" fill-opacity="0.23"/>
+  <ellipse cx="480" cy="70" rx="100" ry="40" fill="#7c3aed" fill-opacity="0.14"/>
+</svg>
+
+<svg class="page-bg-accent page-bg-accent-minimal active" style="z-index:1" viewBox="0 0 600 280">
+  <ellipse cx="160" cy="100" rx="150" ry="60" fill="#d1fae5" fill-opacity="0.22"/>
+  <ellipse cx="480" cy="180" rx="90" ry="36" fill="#0d9488" fill-opacity="0.18"/>
+</svg>
+
+<!-- MAIN FLEX WRAPPER -->
+<div class="flex min-h-screen relative z-10">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col justify-between"
+    style="background-image: url('sidebar-background.png'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    
+    <div>
+      <div class="p-6 flex flex-col items-center justify-center gap-2">
+        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-16 h-16 drop-shadow-xl">
+        <img src="autolist-title.png" alt="AutoList Canada" class="w-40 mt-2 mb-4">
+
+        <nav class="flex flex-col gap-3 text-sm font-semibold text-white w-full px-4">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="listings.html" class="nav-link">Listings</a>
+          <a href="ai-tools.html" class="nav-link nav-active">AI Tools</a>
+          <a href="faq.html" class="nav-link">FAQ</a>
+          <a href="terms.html" class="nav-link">Terms</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="p-4 text-white text-xs text-center opacity-80">
+      &copy; 2025 AutoList Canada
+    </div>
   </aside>
+
+  <!-- ⚡ Sidebar Nav Classes -->
+  <style>
+    .nav-link {
+      @apply py-2 px-3 rounded transition-all duration-200 hover:bg-white hover:text-teal-800;
+    }
+    .nav-active {
+      @apply bg-white text-teal-800 shadow;
+    }
+  </style>
+
+</div>
 
   <!-- Main Content -->
   <main class="flex-1 px-12 pt-16 space-y-40">
