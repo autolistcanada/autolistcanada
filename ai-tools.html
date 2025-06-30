@@ -8,8 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Inter', 'ui-rounded', 'system-ui', sans-serif; }
+    /* Sidebar gradient + shadow */
     .sidebar-animated-bg {
-      background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 40%, #f472b6 80%, #facc15 100%);
+      background: linear-gradient(135deg, #166534 0%, #0d9488 45%, #facc15 100%);
       background-size: 200% 200%;
       animation: gradientMove 7s ease-in-out infinite;
     }
@@ -17,9 +18,7 @@
       0%,100% {background-position: 0% 50%;}
       50% {background-position: 100% 50%;}
     }
-    .sidebar-collapsed { width: 4.5rem !important; transition: width 0.6s cubic-bezier(.4,0,.2,1);}
-    .sidebar-expanded { width: 20rem !important; transition: width 0.6s cubic-bezier(.4,0,.2,1);}
-    .sidebar-shadow { box-shadow: 0 16px 48px 0 rgba(8,145,178,0.12), 0 1.5px 12px 0 rgba(124,58,237,0.06);}
+    .sidebar-shadow { box-shadow: 0 16px 48px 0 rgba(8,145,178,0.13), 0 1.5px 12px 0 rgba(22,101,52,0.09);}
     .nav-link { transition: all 0.22s cubic-bezier(.4,0,.2,1);}
     .nav-link:hover {
       transform: scale(1.08) translateX(4px);
@@ -27,132 +26,417 @@
       background: linear-gradient(90deg,#38bdf8 20%,#a78bfa 80%);
       color: #fff !important;
     }
-    .einstein-blink { animation: einsteinBlink 2s infinite steps(1,start);}
-    @keyframes einsteinBlink {
-      0%,98%,100% {filter:brightness(1);}
-      99% {filter:brightness(3);}
+    .nav-active {
+      background: #166534;
+      color: #fff !important;
+      font-weight: bold;
+      border-left: 4px solid #facc15;
+      padding-left: 0.75rem !important;
     }
-    .sparkle {
-      position: absolute;
-      pointer-events: none;
-      color: #facc15;
-      opacity: 0.8;
+    /* Glassmorphism for cards */
+    .glass {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 32px 0 rgba(22,101,52,0.05);
+    }
+    .glass-dark {
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(8px);
+    }
+    /* Simple fade/slide-in animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Glow effect */
+    .glow-tile {
+      box-shadow: 0 0 0 0 #facc1555;
+      transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .glow-tile:hover {
+      box-shadow: 0 0 32px 4px #facc1588, 0 2px 24px 0 #ea580c33;
+    }
+    /* Momentum dot trail */
+    .momentum-dot {
+      width: 12px; height: 12px;
+      border-radius: 9999px;
+      background: #0d9488;
+      margin: 0 10px;
+      box-shadow: 0 0 16px 0 #0d9488cc;
+      animation: trail-pulse 2s infinite;
+    }
+    @keyframes trail-pulse {
+      0%,100% {opacity: 1;}
+      50% {opacity: 0.3;}
+    }
+    /* Section SVG divider styling */
+    .section-divider {
+      width: 100%;
+      height: 56px;
+      display: block;
+      margin-top: -2px;
+    }
+    /* Output area animation */
+    .sim-result {
+      min-height: 2.2em;
+      transition: box-shadow 0.4s;
+    }
+    .sim-result.animated {
+      box-shadow: 0 0 16px 0 #facc1580;
+      animation: fadeGrow 0.7s;
+    }
+    @keyframes fadeGrow {
+      from { opacity: 0; transform: scale(0.96);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    /* Responsive tweaks */
+    @media (max-width: 1024px) {
+      .tools-section { grid-template-columns: 1fr; }
+      .sidebar-expanded { width: 100% !important; }
     }
   </style>
 </head>
-<body>
-<div class="flex">
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col">
-    <div class="p-4 flex flex-col items-center">
-      <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20 mb-2">
-      <img src="autolist-title.png" alt="AutoList Canada" class="w-36 mb-6">
-      <nav class="flex flex-col gap-3 text-sm font-semibold text-white w-full">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
-        <a href="listings.html" class="nav-link">Listings</a>
-        <a href="ai-tools.html" class="nav-link bg-orange-500 text-white">AI Tools</a>
-        <a href="terms.html" class="nav-link">Terms & Privacy</a>
-        <a href="pricing.html" class="nav-link">Pricing</a>
-      </nav>
-      <!-- AI Tip of the Day (Sidebar Bot) -->
-      <div class="mt-auto w-full p-4 pb-8">
-        <div class="bg-white/90 rounded-3xl shadow-xl px-4 py-4 flex items-start gap-3">
-          <div class="flex-shrink-0 mt-1">
-            <span class="inline-block w-9 h-9 rounded-full bg-cyan-600 text-white flex items-center justify-center text-xl">🤖</span>
-          </div>
-          <div>
-            <div class="text-xs font-bold text-cyan-700 mb-1">AI Tip of the Day</div>
-            <div class="text-xs text-gray-700">“Short, specific titles boost clicks. Try adding a unique feature!”</div>
-          </div>
-        </div>
-        <!-- Einstein Rotating Quote -->
-        <div id="einstein-quote" class="text-xs text-center mt-4 text-purple-700 italic"></div>
+<body class="bg-gradient-to-br from-[#fdf6ee] via-[#f3f7f2] to-[#eef3ea] dark:from-[#10151a] dark:to-[#1e2422] dark:text-white transition-all duration-300">
+<div class="flex min-h-screen">
+  <!-- ========== SIDEBAR ========== -->
+  <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col justify-between">
+    <div>
+      <div class="p-4 flex flex-col items-center">
+        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-20 h-20 mb-2 drop-shadow-xl">
+        <img src="autolist-title.png" alt="AutoList Canada" class="w-36 mb-6">
+        <nav class="flex flex-col gap-3 text-sm font-semibold text-white w-full">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="listings.html" class="nav-link">Listings</a>
+          <a href="ai-tools.html" class="nav-link nav-active">AI Tools</a>
+          <a href="faq.html" class="nav-link">FAQ</a>
+          <a href="terms.html" class="nav-link">Terms</a>
+        </nav>
       </div>
+    </div>
+    <!-- AI Tip & Einstein Quote -->
+    <div class="w-full p-4 pb-8">
+      <div class="bg-white/90 rounded-3xl shadow-xl px-4 py-4 flex items-start gap-3 glass dark:glass-dark">
+        <div class="flex-shrink-0 mt-1">
+          <span class="inline-block w-9 h-9 rounded-full bg-teal-600 text-white flex items-center justify-center text-xl">🤖</span>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-teal-700 mb-1">AI Tip of the Day</div>
+          <div class="text-xs text-gray-800 dark:text-gray-100">“Short, specific titles boost clicks. Try adding a unique feature!”</div>
+        </div>
+      </div>
+      <div id="einstein-quote" class="text-xs text-center mt-4 text-teal-900 italic dark:text-teal-200"></div>
     </div>
   </aside>
 
-  <!-- Main Content -->
-  <main id="main" class="flex-1 bg-gray-100 py-10 px-6 md:px-12">
-    <header class="mb-10">
-      <h1 class="text-4xl font-bold text-orange-500 mb-2">AutoList Canada – AI Tools</h1>
-      <p class="text-gray-600 max-w-xl">Our full toolkit for sellers. Powered by psychology, tone theory, and GPT automation. 100% browser-based. No install needed.</p>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12">
+    <!-- ==== HERO HEADER ==== -->
+    <header class="mb-10 flex flex-col items-start">
+      <h1 class="text-4xl font-extrabold text-[#ea580c] mb-2 drop-shadow-lg">AutoList Canada – AI Tools</h1>
+      <p class="text-gray-700 max-w-xl dark:text-gray-200">The most advanced AI toolkit for vintage sellers. Psychology, tone science, and GPT-powered. Unlock listing clarity, trust, and conversion.</p>
+      <!-- Tone Preset Toggle -->
+      <div class="mt-5 flex gap-3 items-center">
+        <span class="text-sm font-semibold text-gray-500">Tone Preset:</span>
+        <div class="flex gap-2">
+          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
+          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
+          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border ring-2 ring-cyan-400" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;">Minimal</button>
+        </div>
+      </div>
     </header>
 
-    <!-- Tone Preset Toggle -->
-    <div class="mb-6 flex gap-3 items-center">
-      <span class="text-sm font-semibold text-gray-500">Tone Preset:</span>
-      <div class="flex gap-2">
-        <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
-        <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
-        <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border ring-2 ring-cyan-400" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;">Minimal</button>
+    <!-- ==== SECTION 1: STANDARD TOOLS ==== -->
+    <!-- Organic mustard/green divider -->
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="#facc15" opacity="0.13"/></svg>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-[#facc15] mb-4 flex items-center gap-2"><span class="text-lg">1.</span> Standard Tools</h2>
+      <!-- Grid Cards: Mustard + Forest Green glow -->
+      <div class="grid md:grid-cols-2 gap-7 tools-section">
+        <!-- Tool 1 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,1)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">1</span>
+            <h3 class="font-bold text-lg">Title Generator</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Get a catchy, customer-friendly title for your listing.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Enter product keywords..."></textarea>
+          <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition">Generate</button>
+          <div class="sim-result mt-3 text-[#166534]"></div>
+        </form>
+        <!-- Tool 2 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#166534] fade-up" onsubmit="event.preventDefault();generateAIResult(this,2)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#166534] text-white font-black px-3 py-1 text-xs rounded-full">2</span>
+            <h3 class="font-bold text-lg">Description Builder</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Crafts a friendly, 3-sentence description for your listing.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#166534] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your product..."></textarea>
+          <button class="bg-[#166534] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#14532d] transition">Generate</button>
+          <div class="sim-result mt-3 text-[#166534]"></div>
+        </form>
+        <!-- Tool 3 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,3)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">3</span>
+            <h3 class="font-bold text-lg">Tag Generator</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Get 5 smart hashtags to boost your reach.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Enter keywords or product type..."></textarea>
+          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Generate</button>
+          <div class="sim-result mt-3 text-[#ea580c]"></div>
+        </form>
+        <!-- Tool 4 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,4)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">4</span>
+            <h3 class="font-bold text-lg">Price Suggestion</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Suggests a competitive price in CAD.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Product type & details..."></textarea>
+          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition">Generate</button>
+          <div class="sim-result mt-3 text-[#0d9488]"></div>
+        </form>
       </div>
-    </div>
+    </section>
 
-    <!-- 20 AI Tools Section (each with title, input, and orange button) -->
-    <div class="space-y-10">
-      <!-- Tool 1 - Title Generator -->
-      <section class="bg-white rounded-lg shadow p-6 max-w-xl w-full">
-        <h2 class="text-xl font-bold mb-1">1. Title Generator <span class="ml-2 px-2 py-0.5 rounded-full text-white bg-cyan-600 text-xs align-middle">AI Trusted</span></h2>
-        <p class="text-gray-500 mb-3">Get a catchy, customer-friendly title for your listing.</p>
-        <div class="flex items-center gap-2 relative">
-          <input type="text" id="title-input" placeholder="Enter product keywords..." class="w-full px-4 py-2 mb-3 rounded border border-gray-300 focus:ring-2 focus:ring-orange-400" />
+    <!-- ==== SECTION 2: SCIENCE-BACKED TOOLS ==== -->
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,36 Q720,-16 1440,36 L1440,56 L0,56 Z" fill="#0d9488" opacity="0.07"/></svg>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-[#0d9488] mb-4 flex items-center gap-2"><span class="text-lg">2.</span> Science-Backed Tools</h2>
+      <!-- Glow Tiles: Teal + Orange -->
+      <div class="grid md:grid-cols-2 gap-7">
+        <!-- Tool 5 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,5)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">5</span>
+            <h3 class="font-bold text-lg">Buyer Psychology Panel</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">See what psychological triggers your listing activates.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing description..."></textarea>
+          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition">Analyze</button>
+          <div class="sim-result mt-3 text-[#0d9488]"></div>
+        </form>
+        <!-- Tool 6 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,6)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">6</span>
+            <h3 class="font-bold text-lg">Crosslist + Sync Visualizer</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">See where and how your listing can sync across platforms.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing or keywords..."></textarea>
+          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Visualize</button>
+          <div class="sim-result mt-3 text-[#ea580c]"></div>
+        </form>
+        <!-- Tool 7 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#7f1d1d] fade-up" onsubmit="event.preventDefault();generateAIResult(this,7)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">7</span>
+            <h3 class="font-bold text-lg">Smart Defaults Engine</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Detects and suggests the best default fields for your item.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Enter product info..."></textarea>
+          <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ea580c] transition">Suggest</button>
+          <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+        </form>
+        <!-- Tool 8 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,8)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">8</span>
+            <h3 class="font-bold text-lg">Trust-First Description Composer</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Writes a description focused on trust and transparency.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your item..."></textarea>
+          <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition">Compose</button>
+          <div class="sim-result mt-3 text-[#facc15]"></div>
+        </form>
+        <!-- Tool 9 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,9)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">9</span>
+            <h3 class="font-bold text-lg">AI Tag Disqualifier</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Checks which tags or keywords may be hurting your reach.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your tags..."></textarea>
+          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition">Check</button>
+          <div class="sim-result mt-3 text-[#0d9488]"></div>
+        </form>
+        <!-- Tool 10 -->
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,10)">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">10</span>
+            <h3 class="font-bold text-lg">Tone Training Tool</h3>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-3">Preview your listing in different buyer-focused tones.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
+          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Preview</button>
+          <div class="sim-result mt-3 text-[#ea580c]"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==== SECTION 3: ADVANCED STRATEGY TOOLS ==== -->
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 Q720,70 1440,30 L1440,56 L0,56 Z" fill="#ea580c" opacity="0.08"/></svg>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-[#ea580c] mb-4 flex items-center gap-2"><span class="text-lg">3.</span> Advanced Strategy Tools</h2>
+      <!-- Momentum Trail Cards: Orange + Burgundy dots -->
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-wrap gap-7 items-stretch">
+          <!-- Tool 11 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,11)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">11</span>
+              <h3 class="font-bold text-lg">AI Pattern Predictor</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Predicts buyer and sales trends for your item.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your listing or market..."></textarea>
+            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Predict</button>
+            <div class="sim-result mt-3 text-[#ea580c]"></div>
+          </form>
+          <div class="momentum-dot" style="background:#ea580c"></div>
+          <!-- Tool 12 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#7f1d1d] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,12)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">12</span>
+              <h3 class="font-bold text-lg">Launch Timing Optimizer</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Find the best time to launch your listing for maximum impact.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your item and audience..."></textarea>
+            <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ea580c] transition">Optimize</button>
+            <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+          </form>
+          <div class="momentum-dot" style="background:#7f1d1d"></div>
+          <!-- Tool 13 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#facc15] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,13)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">13</span>
+              <h3 class="font-bold text-lg">Copy Consistency Scanner</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Finds inconsistencies in your listing copy and suggests fixes.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition">Scan</button>
+            <div class="sim-result mt-3 text-[#facc15]"></div>
+          </form>
         </div>
-        <button onclick="generateAI('title')" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition" id="btn-title">Generate</button>
-        <div id="title-result" class="mt-4 min-h-6 text-cyan-700"></div>
-        <div id="title-trust" class="mt-2 text-xs text-green-500 flex items-center gap-2"><span>✔️</span>AI-reviewed for clarity & trust</div>
-        <button onclick="openModal()" class="mt-2 text-xs text-cyan-600 underline hover:text-cyan-800">Why does this title work?</button>
-      </section>
-      <!-- Tool 2 - Description Builder -->
-      <section class="bg-white rounded-lg shadow p-6 max-w-xl w-full">
-        <h2 class="text-xl font-bold mb-1">2. Description Builder</h2>
-        <p class="text-gray-500 mb-3">Crafts a friendly, 3-sentence description for your listing.</p>
-        <input type="text" id="desc-input" placeholder="Describe your product..." class="w-full px-4 py-2 mb-3 rounded border border-gray-300 focus:ring-2 focus:ring-orange-400" />
-        <button onclick="generateAI('desc')" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition" id="btn-desc">Generate</button>
-        <div id="desc-result" class="mt-4 min-h-6 text-cyan-700"></div>
-      </section>
-      <!-- Tool 3 - Tag Generator -->
-      <section class="bg-white rounded-lg shadow p-6 max-w-xl w-full">
-        <h2 class="text-xl font-bold mb-1">3. Tag Generator</h2>
-        <p class="text-gray-500 mb-3">Get 5 smart hashtags to boost your reach.</p>
-        <input type="text" id="tags-input" placeholder="Enter keywords or product type..." class="w-full px-4 py-2 mb-3 rounded border border-gray-300 focus:ring-2 focus:ring-orange-400" />
-        <button onclick="generateAI('tags')" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition" id="btn-tags">Generate</button>
-        <div id="tags-result" class="mt-4 min-h-6 text-cyan-700"></div>
-      </section>
-      <!-- Tool 4 - Price Suggestion -->
-      <section class="bg-white rounded-lg shadow p-6 max-w-xl w-full">
-        <h2 class="text-xl font-bold mb-1">4. Price Suggestion</h2>
-        <p class="text-gray-500 mb-3">Suggests a competitive price in CAD.</p>
-        <input type="text" id="price-input" placeholder="Product type & details..." class="w-full px-4 py-2 mb-3 rounded border border-gray-300 focus:ring-2 focus:ring-orange-400" />
-        <button onclick="generateAI('price')" class="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition" id="btn-price">Generate</button>
-        <div id="price-result" class="mt-4 min-h-6 text-cyan-700"></div>
-      </section>
-      <!-- ...repeat for tools 5–20 using your current upgraded structure... -->
-      <!-- Tool 5–20: You can duplicate the above section and update titles, ids, and instructions as needed. 
-           Make sure to keep the layout, classes, and button logic consistent for each tool. -->
-    </div>
-
-    <!-- Modal for Title Analysis -->
-    <div id="titleModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
-      <div class="bg-white rounded-xl shadow-2xl w-11/12 max-w-md p-6 relative fade-in">
-        <button onclick="closeModal()" class="absolute right-4 top-3 text-gray-400 hover:text-cyan-500 text-xl">&times;</button>
-        <h3 class="text-lg font-bold text-cyan-800 mb-2">Why This Title Works</h3>
-        <ul class="text-gray-700 text-sm space-y-2">
-          <li><span class="font-semibold text-cyan-600">Structure:</span> Puts the most attractive features first.</li>
-          <li><span class="font-semibold text-cyan-600">Tone:</span> Friendly and confident, not pushy.</li>
-          <li><span class="font-semibold text-cyan-600">Clarity:</span> Easy to read at a glance; no jargon.</li>
-          <li><span class="font-semibold text-cyan-600">Buyer Focus:</span> Highlights what matters (low KM, great price).</li>
-        </ul>
-        <div class="mt-4 text-xs text-cyan-400">Want more tips? Tune your tone for different buyers!</div>
+        <div class="flex flex-wrap gap-7 items-stretch">
+          <!-- Tool 14 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#0d9488] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,14)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">14</span>
+              <h3 class="font-bold text-lg">Mood-Based Description Converter</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Changes your listing description to match a chosen buyer mood.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
+            <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition">Convert</button>
+            <div class="sim-result mt-3 text-[#0d9488]"></div>
+          </form>
+          <div class="momentum-dot" style="background:#0d9488"></div>
+          <!-- Tool 15 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,15)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">15</span>
+              <h3 class="font-bold text-lg">Conversion Confidence Score</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Rates how likely your listing is to convert a buyer.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Score</button>
+            <div class="sim-result mt-3 text-[#ea580c]"></div>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
 
+    <!-- ==== SECTION 4: INTELLIGENT AI WRITERS ==== -->
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 Q720,9 1440,45 L1440,56 L0,56 Z" fill="#7f1d1d" opacity="0.09"/></svg>
+    <section class="mb-14">
+      <h2 class="text-2xl font-bold text-[#7f1d1d] mb-4 flex items-center gap-2"><span class="text-lg">4.</span> Intelligent AI Writers</h2>
+      <!-- Layered Block Layout: Burgundy + Teal accent -->
+      <div class="relative">
+        <!-- Layered background SVG -->
+        <svg class="absolute -top-12 left-0 w-full h-20 pointer-events-none" viewBox="0 0 1440 64" fill="none"><path d="M0,24 Q720,54 1440,24 L1440,64 L0,64 Z" fill="#7f1d1d" opacity="0.07"/></svg>
+        <div class="relative z-10 grid md:grid-cols-2 gap-7">
+          <!-- Tool 16 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#7f1d1d] fade-up" onsubmit="event.preventDefault();generateAIResult(this,16)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">16</span>
+              <h3 class="font-bold text-lg">Listing Logic Explainer</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Explains the logic behind a successful listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing or draft..."></textarea>
+            <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#c2410c] transition">Explain</button>
+            <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+          </form>
+          <!-- Tool 17 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,17)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">17</span>
+              <h3 class="font-bold text-lg">Buyer Emotion Forecast</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Predicts the emotions your listing may trigger in buyers.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition">Forecast</button>
+            <div class="sim-result mt-3 text-[#0d9488]"></div>
+          </form>
+          <!-- Tool 18 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,18)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">18</span>
+              <h3 class="font-bold text-lg">Sales Plateau Analyzer</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Diagnoses why listings may have stopped selling.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your listing or plateau..."></textarea>
+            <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition">Analyze</button>
+            <div class="sim-result mt-3 text-[#facc15]"></div>
+          </form>
+          <!-- Tool 19 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#166534] fade-up" onsubmit="event.preventDefault();generateAIResult(this,19)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#166534] text-white font-black px-3 py-1 text-xs rounded-full">19</span>
+              <h3 class="font-bold text-lg">Flow-Through Optimizer</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Suggests edits to keep buyers moving through your listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#166534] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
+            <button class="bg-[#166534] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#0d9488] transition">Optimize</button>
+            <div class="sim-result mt-3 text-[#166534]"></div>
+          </form>
+          <!-- Tool 20 -->
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#ea580c] fade-up md:col-span-2" onsubmit="event.preventDefault();generateAIResult(this,20)">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">20</span>
+              <h3 class="font-bold text-lg">Listing Fusion Composer</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 mb-3">Combines multiple listings or drafts into one optimized super-listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste drafts or product blurbs..."></textarea>
+            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition">Fuse</button>
+            <div class="sim-result mt-3 text-[#ea580c]"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==== FOOTER ==== -->
     <footer class="mt-10 text-center text-gray-400 text-sm">
-      &copy; 2025 AutoList Canada &mdash; AI Tools Demo
+      &copy; 2025 AutoList Canada — AI Tools. <span class="italic">Clarity. Trust. Conversion.</span>
     </footer>
   </main>
 </div>
+<!-- ==== JS: ANIMATION, EINSTEIN, TONE, AI HANDLER ==== -->
 <script>
+  // Animate fade-up elements on scroll
+  function revealOnScroll() {
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 40) el.classList.add('visible');
+    });
+  }
+  document.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('DOMContentLoaded', revealOnScroll);
+
   // Einstein Rotating Quote
   const einsteinQuotes = [
     "Imagination is more important than knowledge.",
@@ -166,6 +450,12 @@
     document.getElementById('einstein-quote').textContent = 'Einstein says: “'+einsteinQuotes[quoteIdx]+'”';
     quoteIdx = (quoteIdx + 1) % einsteinQuotes.length;
   }
+  window.onload = function() {
+    showQuote();
+    setInterval(showQuote, 7000);
+    revealOnScroll();
+  };
+
   // Tone preset logic
   let currentTone = 'minimal';
   function setTone(tone) {
@@ -176,52 +466,28 @@
     else document.querySelectorAll('.tone-btn')[2].classList.add('ring-2', 'ring-cyan-400');
   }
   setTone('minimal');
-  // Modal Logic
-  function openModal() { document.getElementById('titleModal').classList.remove('hidden'); }
-  function closeModal() { document.getElementById('titleModal').classList.add('hidden'); }
-  // AI Result Animation
-  function animateResult(resultId) {
-    const el = document.getElementById(resultId);
-    el.classList.remove('glow-animate', 'fade-in');
-    void el.offsetWidth;
-    el.classList.add('glow-animate', 'fade-in');
-  }
-  // Loading Animation
-  function showLoading(resultId) {
-    document.getElementById(resultId).innerHTML =
-      '<span class="dot-flashing"><div></div><div></div><div></div></span> <span class="ml-2 text-gray-400">Thinking...</span>';
-  }
-  // Live AI Integration
-  async function generateAI(tool) {
-    let resultId = tool+'-result';
-    let inputId = tool+'-input';
-    let btnId = 'btn-'+tool;
-    let input = document.getElementById(inputId).value;
-    let btn = document.getElementById(btnId);
-    showLoading(resultId);
-    btn.disabled = true;
-    btn.classList.add('opacity-60','cursor-not-allowed');
+
+  // AI Tool Handler
+  async function generateAIResult(form, idx) {
+    const input = form.input.value.trim();
+    const resultDiv = form.querySelector('.sim-result');
+    if (!input) return;
+    resultDiv.innerHTML = '<span class="text-gray-400 animate-pulse">⏳ Thinking...</span>';
     try {
       const res = await fetch('/api/ai-tool', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ tool, input, tone: currentTone })
+        body: JSON.stringify({ tool: idx, input, tone: currentTone })
       });
       if (!res.ok) throw new Error('AI backend error');
       const data = await res.json();
-      document.getElementById(resultId).textContent = data.result || 'AI did not return a result.';
-      animateResult(resultId);
+      resultDiv.textContent = data.result || 'AI did not return a result.';
+      resultDiv.classList.add('animated');
+      setTimeout(()=>resultDiv.classList.remove('animated'), 1000);
     } catch (e) {
-      document.getElementById(resultId).innerHTML = '<span class="text-red-500">⚠️ Error: AI service unavailable.</span>';
+      resultDiv.innerHTML = '<span class="text-red-500">⚠️ Error: AI service unavailable.</span>';
     }
-    btn.disabled = false;
-    btn.classList.remove('opacity-60','cursor-not-allowed');
   }
-  // On load: Einstein quote
-  window.onload = function() {
-    showQuote();
-    setInterval(showQuote, 7000);
-  };
 </script>
 </body>
 </html>
