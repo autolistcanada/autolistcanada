@@ -4,428 +4,230 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoList Canada</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html {
-      scroll-behavior: smooth;
+    /* Sidebar custom hover/active animations */
+    .sidebar-link {
+      @apply flex items-center w-full px-4 py-2 rounded-lg transition-all duration-200 font-semibold text-indigo-50 hover:bg-indigo-400/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 active:scale-95 select-none;
+      box-shadow: 0 2px 10px 0 rgb(30 58 138 / 0.08);
+      position: relative;
+      outline: none;
     }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('unified-background.png') no-repeat center top;
-      background-size: cover;
-      background-attachment: fixed;
-      color: #1f2937;
+    .sidebar-link[aria-current="page"],
+    .sidebar-link.active {
+      @apply bg-indigo-500/30 text-white border-l-4 border-indigo-400 shadow-lg;
     }
-    .btn-link {
-      color: #e05a13;
-      font-weight: 600;
-      transition: all 0.2s;
-      padding: 0.5rem;
+    .sidebar-link::after {
+      content: '';
+      @apply block w-0 h-1 rounded bg-indigo-300 absolute left-4 bottom-1 transition-all duration-300;
     }
-    .btn-link:hover {
-      text-decoration: underline;
-      transform: scale(1.05);
+    .sidebar-link:hover::after,
+    .sidebar-link:focus::after,
+    .sidebar-link.active::after {
+      @apply w-2/3 bg-indigo-400;
     }
-    .cta-button {
-      background-color: #e05a13;
-      color: white;
-      font-weight: 600;
-      padding: 0.75rem 2rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: all 0.3s;
-    }
-    .cta-button:hover {
-      background-color: #cf4e0e;
-      transform: translateY(-2px);
-    }
-    .glass-section {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: 2rem;
-      padding: 3rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      margin-top: -4rem;
+    /* Responsive sidebar collapse/shrink */
+    @media (max-width: 768px) {
+      aside#mainSidebar {
+        width: 4.5rem !important;
+        min-width: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      aside#mainSidebar .sidebar-text {
+        display: none !important;
+      }
+      aside#mainSidebar .sidebar-logo, 
+      aside#mainSidebar .sidebar-title {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
   </style>
 </head>
-<body class="flex">
-<!-- Sidebar Overlay and Toggle (Mobile) -->
-<button id="sidebarToggle"
-  aria-label="Open sidebar"
-  class="md:hidden fixed top-4 left-4 z-50 p-3 rounded-full bg-orange-400 shadow-lg transition hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300">
-  <!-- Animated Hamburger/X Icon SVGs -->
-  <span id="hamburgerIcon" class="block">
-    <svg class="w-7 h-7 text-white transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-      <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
-    </svg>
-  </span>
-  <span id="closeIcon" class="hidden">
-    <svg class="w-7 h-7 text-white transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-      <path stroke-linecap="round" d="M6 6l12 12M6 18L18 6"/>
-    </svg>
-  </span>
-</button>
-<div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-40 hidden md:hidden transition-opacity duration-300"></div>
+<body class="bg-gradient-to-br from-indigo-100 to-blue-50 min-h-screen flex">
 
-<!-- Sidebar -->
-<aside id="sidebar"
-  class="fixed left-0 top-0 h-screen w-72 bg-cover bg-center flex flex-col justify-between z-50 shadow-xl transition-transform duration-300 -translate-x-full md:translate-x-0 md:static"
-  style="background-image: url('sidebar-background.png');"
-  role="navigation"
-  aria-label="Sidebar"
-  tabindex="0"
->
-  <!-- SVG Maple Leaf & Abstract Accents (top right, bottom left) -->
-  <svg class="absolute top-4 right-4 w-12 h-12 opacity-20 pointer-events-none select-none" viewBox="0 0 50 50">
-    <path d="M25 2 L35 25 L48 20 L35 32 L40 48 L25 38 L10 48 L15 32 L2 20 L15 25 Z" fill="#d97706"/>
-  </svg>
-  <svg class="absolute bottom-8 left-2 w-16 h-16 opacity-10 pointer-events-none select-none" viewBox="0 0 100 100">
-    <ellipse cx="50" cy="50" rx="45" ry="25" fill="#dc2626"/>
-  </svg>
-
-  <!-- Top Section: Branding + Progress -->
-  <div class="flex flex-col items-center pt-8 px-6 relative z-10">
-    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-24 h-24 mb-3 drop-shadow-lg transition-transform duration-300 hover:scale-105 focus:scale-105" />
-    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-48 mb-3 transition-all duration-300 hover:-translate-y-1" />
-
-    <!-- Progress/Status Bar -->
-    <div class="w-10/12 mb-3">
-      <div class="text-xs text-orange-200 mb-1 flex justify-between">
-        <span>Onboarding</span>
-        <span>80%</span>
+  <!-- SIDEBAR -->
+  <aside
+    id="mainSidebar"
+    class="fixed inset-y-0 left-0 z-40 w-72 max-w-full bg-gradient-to-b from-blue-950/95 to-indigo-900/80 shadow-xl flex flex-col justify-between rounded-r-3xl overflow-hidden min-h-screen transition-all duration-300
+      md:w-64 sm:w-20 sm:min-w-0"
+    style="background-image: url('sidebar-background.png'); background-size: cover; background-repeat: no-repeat; background-position: center;"
+    aria-label="Sidebar Navigation"
+  >
+    <!-- Brand section -->
+    <div class="flex flex-col items-center pt-10 pb-6">
+      <div class="sidebar-logo w-20 h-20 bg-white/40 rounded-full flex items-center justify-center shadow-lg mb-3">
+        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-14 h-14 object-contain" />
       </div>
-      <div class="w-full h-2 bg-white/20 rounded-full overflow-hidden shadow-inner">
-        <div class="h-full bg-gradient-to-r from-orange-400 to-rose-400 rounded-full transition-all" style="width: 80%"></div>
-      </div>
+      <img src="autolist-title.png" alt="AutoList Canada" class="sidebar-title w-36 mx-auto mb-2 drop-shadow-lg" />
     </div>
 
-    <!-- Profile/Quick Info -->
-    <div class="flex items-center gap-3 mb-2 mt-2">
-      <img src="https://api.dicebear.com/7.x/miniavs/svg?seed=vintagecollect-5" alt="User Avatar" class="w-9 h-9 rounded-full border-2 border-orange-300 shadow" />
-      <span class="text-white/90 font-semibold text-base">Hi, vintagecollect-5!</span>
+    <!-- Navigation -->
+    <nav class="flex-1 flex flex-col justify-between px-6">
+      <div>
+        <!-- Top Nav Section -->
+        <section aria-label="Main Navigation" class="mb-6">
+          <ul class="space-y-2">
+            <li>
+              <a href="#home" class="sidebar-link group" aria-current="page">
+                <span class="icon-home mr-3">
+                  <!-- Home SVG -->
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 11L12 4l9 7v7a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3"/>
+                  </svg>
+                </span>
+                <span class="sidebar-text">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#dashboard" class="sidebar-link group">
+                <span class="icon-dashboard mr-3">
+                  <!-- Dashboard SVG -->
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+                </span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#listings" class="sidebar-link group">
+                <span class="icon-listings mr-3">
+                  <!-- Listings SVG -->
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><rect width="18" height="16" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                </span>
+                <span class="sidebar-text">Listings</span>
+              </a>
+            </li>
+            <li>
+              <a href="#ai-tools" class="sidebar-link group">
+                <span class="icon-ai mr-3">
+                  <!-- AI Tools SVG -->
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-7.364l-1.414 1.414M6.05 17.95l-1.414-1.414m12.728 0l1.414-1.414M6.05 6.05L4.636 7.464"/></svg>
+                </span>
+                <span class="sidebar-text">AI Tools</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Help Links Section -->
+        <section aria-label="Help Links" class="mb-6">
+          <div class="sidebar-text text-xs uppercase tracking-widest text-indigo-100/60 pl-2 mb-2">Help</div>
+          <ul class="space-y-2">
+            <li>
+              <a href="#how-it-works" class="sidebar-link group">
+                <span class="icon-info mr-3">
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                </span>
+                <span class="sidebar-text">How It Works</span>
+              </a>
+            </li>
+            <li>
+              <a href="#faq" class="sidebar-link group">
+                <span class="icon-faq mr-3">
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 10h.01M12 14h.01M16 10h.01"/><circle cx="12" cy="12" r="10"/></svg>
+                </span>
+                <span class="sidebar-text">FAQ</span>
+              </a>
+            </li>
+            <li>
+              <a href="#import" class="sidebar-link group">
+                <span class="icon-import mr-3">
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                </span>
+                <span class="sidebar-text">Listings Import</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Legal Links Section -->
+        <section aria-label="Legal" class="mb-2">
+          <div class="sidebar-text text-xs uppercase tracking-widest text-indigo-100/60 pl-2 mb-2">Legal</div>
+          <ul class="space-y-2">
+            <li>
+              <a href="#terms" class="sidebar-link group">
+                <span class="icon-terms mr-3">
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h6M9 13h6"/></svg>
+                </span>
+                <span class="sidebar-text">Terms</span>
+              </a>
+            </li>
+            <li>
+              <a href="#privacy" class="sidebar-link group">
+                <span class="icon-privacy mr-3">
+                  <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M12 12v9"/></svg>
+                </span>
+                <span class="sidebar-text">Privacy Policy</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </nav>
+
+    <!-- Status/Credit -->
+    <div class="relative px-6 pb-4 pt-2">
+      <div class="absolute right-6 bottom-4 flex items-center space-x-2 text-xs text-indigo-100/70 select-none">
+        <span class="animate-pulse">© 2025 AutoList Canada — Built with AI Intelligence</span>
+      </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- Navigation Links -->
-  <nav class="flex-1 flex flex-col items-center gap-1 px-5 mt-2 relative z-10" aria-label="Main navigation">
-    <!-- Example link with animated icon and tooltip -->
-    <a href="index.html" class="sidebar-link nav-active group" aria-current="page" tabindex="0">
-      <span class="mr-2 flex-shrink-0 transition-transform group-hover:scale-110 animate-pulse">
-        <!-- Home icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 11L12 4l9 7v7a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3"/>
-        </svg>
-      </span>
-      Home
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Go to Home</span>
-    </a>
-    <a href="dashboard.html" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-bounce">
-        <!-- Dashboard icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="3" width="7" height="7" rx="2"/>
-          <rect x="14" y="3" width="7" height="7" rx="2"/>
-          <rect x="14" y="14" width="7" height="7" rx="2"/>
-          <rect x="3" y="14" width="7" height="7" rx="2"/>
-        </svg>
-      </span>
-      Dashboard
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Your dashboard</span>
-    </a>
-    <a href="listings.html" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-spin">
-        <!-- Listings icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <path d="M4 9h16"/>
-        </svg>
-      </span>
-      Listings
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">All listings</span>
-    </a>
-    <a href="ai-tools.html" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-pulse">
-        <!-- AI Tools icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
-      </span>
-      AI Tools
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">AI tools</span>
-    </a>
-    <a href="how-it-works.html" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-wiggle">
-        <!-- How It Works icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M12 20v-6m0 0l-4 4m4-4l4 4"/>
-        </svg>
-      </span>
-      How It Works
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">How it works</span>
-    </a>
-    <a href="faq.html" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-bounce">
-        <!-- FAQ icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M9 9h.01M15 9h.01M12 17h.01"/>
-        </svg>
-      </span>
-      FAQ
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Frequently asked</span>
-    </a>
-    <a href="#" class="sidebar-link group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-pulse">
-        <!-- Import icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M12 3v18m9-9H3"/>
-        </svg>
-      </span>
-      Listings Import
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Import listings</span>
-    </a>
-    <a href="terms.html" class="sidebar-link text-sm text-gray-400 group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-pulse">
-        <!-- Terms icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <path d="M8 4v16"/>
-        </svg>
-      </span>
-      Terms of Service
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Terms & conditions</span>
-    </a>
-    <a href="privacy.html" class="sidebar-link text-xs text-gray-400 group" tabindex="0">
-      <span class="mr-2 flex-shrink-0 group-hover:animate-pulse">
-        <!-- Privacy icon -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <path d="M12 8v8"/>
-        </svg>
-      </span>
-      Privacy Policy
-      <span class="sidebar-tooltip group-hover:opacity-100 group-focus:opacity-100">Privacy details</span>
-    </a>
-  </nav>
-
-  <!-- Mini Dashboard Widget -->
-  <div class="mx-5 mb-3 mt-2 p-3 rounded-xl bg-white/20 backdrop-blur shadow text-white/90 text-sm flex items-center gap-2 z-10">
-    <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a5 5 0 0 0-10 0v2a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"/>
-    </svg>
-    <span>3 new leads today!</span>
-  </div>
-
-  <!-- Theme Toggle Button -->
-  <button id="themeToggle" aria-label="Toggle theme" class="mx-auto mb-2 flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-3 py-1 text-xs font-medium shadow hover:bg-white/20 hover:scale-105 transition focus:ring-2 focus:ring-orange-300 focus:outline-none">
-    <svg id="themeIcon" class="w-5 h-5 text-orange-400 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <!-- Sun Icon (default) -->
-      <circle cx="12" cy="12" r="5" />
-      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42"/>
-    </svg>
-    Theme
-  </button>
-
-  <!-- Copyright -->
-  <footer class="text-xs text-gray-200 text-center pb-5 pt-1 px-4 select-none tracking-wide z-10">
-    © 2025 AutoList Canada<br />Built with 🇨🇦 intelligence
-  </footer>
-</aside>
-
-<!-- Tailwind Custom Classes and Animations -->
-<style>
-  .sidebar-link {
-    @apply w-full py-3 rounded-lg text-base font-medium tracking-wide transition-all duration-300
-      text-white/90 hover:text-white hover:bg-white/10 hover:backdrop-blur-md
-      focus:outline-none focus:ring-2 focus:ring-orange-300 focus:bg-white/20
-      relative flex items-center px-6;
-  }
-  .sidebar-link.nav-active {
-    @apply bg-gradient-to-r from-orange-400 to-rose-400 text-white shadow-lg
-      border-l-4 border-orange-300 font-bold;
-    box-shadow: 0 0 12px 2px rgba(255, 156, 57, 0.23), 0 1.5px 0 #fff;
-    animation: navGlow 2.5s ease-in-out infinite alternate;
-  }
-  @keyframes navGlow {
-    from {
-      box-shadow: 0 0 8px 2px rgba(255, 156, 57, 0.16), 0 1.5px 0 #fff;
-    }
-    to {
-      box-shadow: 0 0 18px 4px rgba(255, 156, 57, 0.33), 0 1.5px 0 #fff;
-    }
-  }
-  .sidebar-tooltip {
-    @apply absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 pointer-events-none bg-black/80 text-white rounded px-2 py-1 text-xs whitespace-nowrap shadow transition-opacity duration-200 z-20;
-  }
-  /* Microinteraction for 'How It Works' (wiggle) */
-  @keyframes wiggle {
-    0%, 100% { transform: rotate(-3deg);}
-    50% { transform: rotate(7deg);}
-  }
-  .group-hover\:animate-wiggle:hover svg {
-    animation: wiggle 0.4s;
-  }
-</style>
-
-<!-- Sidebar Interactivity JS (Toggle, Theme) -->
-<script>
-  // Mobile sidebar toggle
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  const toggle = document.getElementById('sidebarToggle');
-  const hamburger = document.getElementById('hamburgerIcon');
-  const closeX = document.getElementById('closeIcon');
-  toggle.addEventListener('click', () => {
-    const open = sidebar.classList.contains('translate-x-0');
-    sidebar.classList.toggle('-translate-x-full', open);
-    sidebar.classList.toggle('translate-x-0', !open);
-    overlay.classList.toggle('hidden', open);
-    hamburger.classList.toggle('hidden', !open);
-    closeX.classList.toggle('hidden', open);
-    document.body.style.overflow = open ? '' : 'hidden';
-  });
-  overlay.addEventListener('click', () => {
-    sidebar.classList.add('-translate-x-full');
-    sidebar.classList.remove('translate-x-0');
-    overlay.classList.add('hidden');
-    hamburger.classList.remove('hidden');
-    closeX.classList.add('hidden');
-    document.body.style.overflow = '';
-  });
-
-  // Keyboard accessibility: ESC to close
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      sidebar.classList.add('-translate-x-full');
-      sidebar.classList.remove('translate-x-0');
-      overlay.classList.add('hidden');
-      hamburger.classList.remove('hidden');
-      closeX.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // Theme toggle (light/dark/organic)
-  const themeBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  let themeIndex = 0; // 0: light, 1: dark, 2: organic
-  themeBtn.addEventListener('click', () => {
-    themeIndex = (themeIndex + 1) % 3;
-    document.documentElement.classList.remove('dark', 'organic');
-    if (themeIndex === 1) {
-      document.documentElement.classList.add('dark');
-      themeIcon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 1 0 9.79 9.79z"/>`; // Moon
-    } else if (themeIndex === 2) {
-      document.documentElement.classList.add('organic');
-      themeIcon.innerHTML = `<path d="M12 21c-4.418 0-8-4.03-8-9 0-3.867 2.239-7 5-7 2.761 0 5 3.133 5 7 0 4.97-3.582 9-8 9z" />`; // Leaf
-    } else {
-      themeIcon.innerHTML = `<circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42"/>`; // Sun
-    }
-  });
-
-  // High-contrast mode (optional: add button if you want)
-  // document.documentElement.classList.toggle('contrast') as needed
-</script>
-
-  <!-- Main Content -->
-  <main class="flex-1 px-12 pt-16 space-y-40">
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 pl-72 py-10 px-8 transition-all duration-300
+    md:pl-64 sm:pl-20">
     <!-- Hero Section -->
-    <section class="text-center space-y-6 pt-20">
-      <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
-<p class="text-lg text-gray-700 max-w-2xl mx-auto">
-  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
-</p>
-    
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
-      <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
+    <section id="home" class="max-w-3xl mx-auto text-center mb-16">
+      <h1 class="text-4xl font-extrabold text-indigo-900 mb-4">AutoList Canada: Seller Intelligence, Not Just Software</h1>
+      <p class="text-lg text-indigo-800 mb-6">Welcome! This is the universal sidebar demo. All content here is for demonstration.</p>
+      <a href="#ai-tools" class="inline-block px-6 py-3 rounded-xl bg-indigo-600 text-white font-bold shadow-lg transition hover:bg-indigo-700 hover:scale-105">Try AI Tools</a>
     </section>
-
-    <!-- How It Works -->
-    <section id="how-it-works">
-      <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">How It Works</h2>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">AutoList Canada was designed to reduce decision fatigue, not just listing time.</p>
-        <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg text-left max-w-3xl mx-auto">
-          <li>Shift tone or voice based on audience psychology</li>
-          <li>Auto-tag using relevance scoring, not just popularity</li>
-          <li>Refine titles with AI language compression to improve clarity and match search patterns</li>
-          <li>Generate descriptions optimized for readability, trust, and resonance</li>
-        </ul>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">When you're ready, crosslist and sync your products to supported platforms — no copy-paste, no burnout. All your edits, delists, and updates stay in sync — whether you’re selling one item or 500.</p>
-      </div>
+    <!-- Example Sections for Demo -->
+    <section id="dashboard" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">Dashboard</h2>
+      <p class="text-gray-700">Your overview, stats, and insights appear here.</p>
     </section>
-
-    <!-- Why AutoList Canada Exists -->
-    <section>
-      <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Why AutoList Canada Exists</h2>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">AutoList Canada was created to bring clarity back to the selling process.</p>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Too many tools are built for speed, scale, or surface-level convenience — but not for the people doing the work. We believe sellers deserve more than automation. They deserve alignment.</p>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">That’s why we built a system that supports cognitive flow, creative momentum, and intentional growth — not just output.</p>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Our foundation is neuroscience, our structure is strategy, and our purpose is to help you build a business that’s sustainable, thoughtful, and truly aligned with your values.</p>
-      </div>
+    <section id="listings" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">Listings</h2>
+      <p class="text-gray-700">Manage all your vehicle or product listings in one place.</p>
     </section>
-
-    <!-- Explore AI Tools -->
-    <section id="ai-tools">
-      <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Explore AI Tools</h2>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">These aren’t just writing tools — they’re business intelligence systems for sellers who want to grow with precision.</p>
-        <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg max-w-3xl mx-auto">
-          <li><strong>Cognitive Title Optimizer</strong> – structures titles to boost clarity, buyer focus, and intent-matching — no filler, no fluff</li>
-          <li><strong>Strategic Tag Builder</strong> – suggests tags based on relevance, uniqueness, and Canadian search flow</li>
-          <li><strong>Trust-First Description Composer</strong> – creates pacing and structure that support buyer trust and reading flow</li>
-          <li><strong>Buyer Psychology Panel</strong> – shows you what’s performing, when buyer interest peaks, and how to optimize timing and phrasing</li>
-          <li><strong>Crosslist + Sync Control</strong> – manage multiple platforms in one view — including smart delisting, update tracking, and inventory sync</li>
-          <li><strong>Smart Defaults Engine</strong> – saves time by applying your patterns automatically — no need to redo what already works</li>
-        </ul>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">These tools weren’t built to replace you — they were built to think with you.</p>
-      </div>
+    <section id="ai-tools" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">AI Tools</h2>
+      <p class="text-gray-700">Explore intelligent automations to help you sell smarter.</p>
     </section>
-
-    <!-- FAQ Section -->
-    <section id="faq">
-      <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Frequently Asked Questions</h2>
-        <div class="mt-4 space-y-6 text-lg">
-          <div>
-            <h3 class="font-semibold">Do I need to connect marketplace accounts to use AutoList Canada?</h3>
-            <p class="text-gray-600">No. All tools are available without connecting your platforms. AutoList Canada is designed to respect your workflow and data privacy — no integrations required unless you choose them.</p>
-          </div>
-          <div>
-            <h3 class="font-semibold">Is this only for large shops or full-time sellers?</h3>
-            <p class="text-gray-600">Not at all. AutoList Canada supports solo resellers, part-time sellers, and multi-channel teams. Whether you’re scaling or just getting started, the tools adapt to your needs.</p>
-          </div>
-          <div>
-            <h3 class="font-semibold">How is AutoList Canada different from other crosslisting software?</h3>
-            <p class="text-gray-600">We combine behavioral science, market-specific logic, and clarity-first design to support intentional growth. This isn’t just about crossposting — it’s about building smarter workflows and sustainable momentum.</p>
-          </div>
-          <div>
-            <h3 class="font-semibold">Will AutoList Canada change or post my listings automatically?</h3>
-            <p class="text-gray-600">Never without permission. You’re in full control of when, how, and where your content is synced. Every action is optional, transparent, and fully editable.</p>
-          </div>
-        </div>
-      </div>
+    <section id="how-it-works" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">How It Works</h2>
+      <p class="text-gray-700">Step-by-step guides and onboarding information.</p>
     </section>
-
-    <!-- Footer -->
-    <footer class="text-center mt-20 space-y-4">
-      <div class="flex justify-center gap-6">
-        <img src="canadian-owned-badge.png" alt="Canadian Owned Badge" class="w-16">
-        <img src="ai-powered-tools-badge.png" alt="AI Powered Tools Badge" class="w-16">
-        <img src="privacy-first-badge.png" alt="Privacy First Badge" class="w-16">
-      </div>
-      <nav class="text-sm mt-2 space-x-6">
-        <a href="terms.html" class="text-gray-500 hover:text-orange-500 font-medium">Terms of Service</a>
-        <a href="privacy.html" class="text-gray-500 hover:text-orange-500 font-medium">Privacy Policy</a>
-      </nav>
-      <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
-    </footer>
+    <section id="faq" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">FAQ</h2>
+      <p class="text-gray-700">Frequently asked questions go here.</p>
+    </section>
+    <section id="import" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">Listings Import</h2>
+      <p class="text-gray-700">Import your inventory from other platforms.</p>
+    </section>
+    <section id="terms" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">Terms of Service</h2>
+      <p class="text-gray-700">Legal terms and policies for using AutoList Canada.</p>
+    </section>
+    <section id="privacy" class="max-w-2xl mx-auto mb-16">
+      <h2 class="text-2xl font-bold text-indigo-700 mb-3">Privacy Policy</h2>
+      <p class="text-gray-700">How we protect your data and privacy.</p>
+    </section>
+    <!-- End Demo Content -->
   </main>
 </body>
 </html>
