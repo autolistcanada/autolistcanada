@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AutoList Canada – Multi-Theme Advanced Demo</title>
+  <title>AutoList Canada</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: url('unified-background.png') no-repeat center top;
@@ -14,44 +16,15 @@
       background-attachment: fixed;
       color: #1f2937;
     }
-    .btn-link.active::after {
-      content: '';
-      position: absolute;
-      left: -15px;
-      top: 50%;
-      width: 8px;
-      height: 8px;
-      background: #e05a13;
-      border-radius: 50%;
-      transform: translateY(-50%) scale(1.1);
-      animation: pulse 1s infinite alternate;
+    .btn-link {
+      color: #e05a13;
+      font-weight: 600;
+      transition: all 0.2s;
+      padding: 0.5rem;
     }
-    @keyframes pulse {
-      to { box-shadow: 0 0 10px 2px #e05a13; }
-    }
-    .sidebar-tooltip {
-      font-size: 13px;
-      pointer-events: none;
-    }
-    #sidebar::-webkit-scrollbar { width: 8px; background: transparent; }
-    #sidebar::-webkit-scrollbar-thumb { background: rgba(230,90,19,0.18); border-radius: 5px; }
-    @media (max-width: 768px) {
-      #sidebar {
-        min-width: 0 !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-    }
-    .glass-section {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: 2rem;
-      padding: 3rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      margin-top: -4rem;
+    .btn-link:hover {
+      text-decoration: underline;
+      transform: scale(1.05);
     }
     .cta-button {
       background-color: #e05a13;
@@ -66,158 +39,48 @@
       background-color: #cf4e0e;
       transform: translateY(-2px);
     }
+    .glass-section {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin-top: -4rem;
+    }
   </style>
 </head>
 <body class="flex">
+<!-- Sidebar -->
+<aside class="w-1/5 min-h-screen text-center p-6 flex flex-col items-center justify-start space-y-6" style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
+  <aside class="w-60 min-h-screen px-4 py-6 text-white fixed z-50 bg-cover bg-left flex flex-col items-center justify-start"
+  style="background-image: url('sidebar-background.png');">
+  
+  <!-- Logo Centered -->
+  <div class="mb-2">
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-16 h-16 mx-auto" />
+  </div>
 
-  <!-- SIDEBAR TOGGLE (mobile) -->
-  <button id="sidebarToggle"
-    class="fixed top-4 left-4 z-50 md:hidden bg-white bg-opacity-80 rounded-full p-2 shadow-lg focus:outline-none"
-    aria-label="Open sidebar">
-    <svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/>
-    </svg>
-  </button>
-  <div id="sidebarOverlay"
-    style="display:none; position:fixed; z-index:39; inset:0; background:rgba(0,0,0,0.38);"></div>
+  <!-- Title Text -->
+  <h1 class="text-xl font-semibold text-center mb-6 drop-shadow-sm tracking-wide">
+    AutoList Canada
+  </h1>
 
-  <!-- === SIDEBAR START === -->
-  <aside
-    id="sidebar"
-    data-theme="clarity"
-    class="
-      fixed md:static left-0 top-0 h-screen w-4/5 max-w-xs md:w-1/5 z-40 flex flex-col items-center
-      bg-cover bg-center bg-no-repeat overflow-y-auto shadow-2xl transition-transform duration-300
-      md:translate-x-0 -translate-x-full p-0
-      [data-theme='clarity']:bg-white/70 [data-theme='clarity']:backdrop-blur-md
-      [data-theme='spark']:bg-gradient-to-br [data-theme='spark']:from-orange-50 [data-theme='spark']:via-yellow-50 [data-theme='spark']:to-pink-50
-      [data-theme='rooted']:bg-gradient-to-br [data-theme='rooted']:from-green-50 [data-theme='rooted']:via-stone-100 [data-theme='rooted']:to-amber-50
-    "
-    style="background-image: url('sidebar-background.png');"
-    aria-label="Sidebar Navigation"
-    role="navigation"
-  >
-    <!-- Theme Switcher -->
-    <div class="flex gap-2 mt-7 mb-2 w-11/12 justify-center">
-      <button onclick="setTheme('clarity')" id="theme-btn-clarity"
-        class="px-3 py-1 rounded font-bold transition ring-2 focus:outline-none
-        [data-active='true']:bg-white/90 [data-active='true']:ring-orange-400
-        bg-white/70 text-gray-700 hover:bg-orange-100"
-        data-active="true">Cognitive Clarity</button>
-      <button onclick="setTheme('spark')" id="theme-btn-spark"
-        class="px-3 py-1 rounded font-bold transition ring-2 focus:outline-none
-        bg-gradient-to-r from-orange-200 to-pink-200 text-orange-700 hover:bg-orange-300 ring-pink-200"
-        data-active="false">Creative Spark</button>
-      <button onclick="setTheme('rooted')" id="theme-btn-rooted"
-        class="px-3 py-1 rounded font-bold transition ring-2 focus:outline-none
-        bg-gradient-to-r from-green-100 to-stone-200 text-green-800 hover:bg-green-200 ring-green-200"
-        data-active="false">Rooted</button>
-    </div>
+  <!-- Navigation Links -->
+  <nav class="flex flex-col space-y-3 w-full">
+    <a href="index.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">🏠 Home</a>
+    <a href="dashboard.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">📊 Dashboard</a>
+    <a href="listings.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">📋 Listings</a>
+    <a href="ai-tools.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">🧠 AI Tools</a>
+    <a href="import.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">⤵ Listings Import</a>
+    <a href="how-it-works.html" class="px-4 py-2 rounded-md hover:bg-white/10 transition font-medium tracking-tight">✨ How It Works</a>
+  </nav>
 
-    <!-- Announcement -->
-    <div class="w-11/12 mx-auto mb-2 rounded-xl py-2 px-3 flex items-center justify-center shadow font-semibold text-xs tracking-wide
-      [data-theme='clarity']:bg-orange-100/80 [data-theme='clarity']:text-orange-800
-      [data-theme='spark']:bg-pink-100/80 [data-theme='spark']:text-pink-800
-      [data-theme='rooted']:bg-green-100/80 [data-theme='rooted']:text-green-800
-    ">
-      🚀 New: Try the AI Tag Builder!
-    </div>
-
-    <!-- Quick Jump -->
-    <div class="w-11/12 mx-auto mb-4">
-      <input
-        type="text"
-        id="sidebar-search"
-        placeholder="Quick Jump…"
-        class="w-full py-2 px-4 rounded-2xl font-semibold shadow-inner outline-none transition
-          [data-theme='clarity']:bg-white/90 [data-theme='clarity']:text-gray-900 [data-theme='clarity']:placeholder-gray-500 [data-theme='clarity']:focus:ring-orange-400
-          [data-theme='spark']:bg-pink-50 [data-theme='spark']:text-orange-900 [data-theme='spark']:placeholder-pink-400 [data-theme='spark']:focus:ring-pink-400
-          [data-theme='rooted']:bg-stone-50 [data-theme='rooted']:text-green-900 [data-theme='rooted']:placeholder-green-400 [data-theme='rooted']:focus:ring-green-400
-        "
-        aria-label="Sidebar quick search"
-        autocomplete="off"
-      >
-    </div>
-
-    <!-- Logo & Title -->
-    <div class="flex items-center gap-3 w-11/12 mx-auto mb-5 select-none justify-center">
-      <img src="autolist-logo.png" alt="AutoList Canada Logo"
-        class="w-12 h-12 rounded-full drop-shadow-md bg-white/80 p-1" draggable="false">
-      <img src="autolist-title.png" alt="AutoList Canada Title"
-        class="w-36 md:w-44 max-w-full" draggable="false">
-    </div>
-
-    <!-- Navigation -->
-    <nav id="sidebar-nav" class="flex flex-col gap-1 text-base relative w-11/12 mx-auto font-semibold">
-      <span
-        id="active-indicator"
-        class="absolute left-0 w-1 rounded transition-all duration-300
-          [data-theme='clarity']:bg-orange-500
-          [data-theme='spark']:bg-pink-400
-          [data-theme='rooted']:bg-green-700
-        "
-        style="top: 0; height: 44px;"
-        aria-hidden="true"
-      ></span>
-      <a href="index.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative
-          [data-theme='clarity']:text-gray-900 [data-theme='clarity']:hover:bg-orange-50/80 [data-theme='clarity']:focus:ring-orange-400
-          [data-theme='spark']:text-orange-700 [data-theme='spark']:hover:bg-orange-100/70 [data-theme='spark']:focus:ring-pink-400
-          [data-theme='rooted']:text-green-900 [data-theme='rooted']:hover:bg-green-100/80 [data-theme='rooted']:focus:ring-green-400
-        "
-        data-tooltip="Go to homepage">Home</a>
-      <a href="dashboard.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Your overview">Dashboard</a>
-      <a href="listings.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Manage your listings">Listings</a>
-      <a href="ai-tools.html"
-        class="btn-link flex items-center py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Explore our advanced AI tools">
-        AI Tools
-        <span class="ml-2 px-2 py-0.5 rounded text-xs
-          [data-theme='clarity']:bg-orange-200 [data-theme='clarity']:text-orange-800
-          [data-theme='spark']:bg-pink-200 [data-theme='spark']:text-pink-800
-          [data-theme='rooted']:bg-green-200 [data-theme='rooted']:text-green-800
-        ">NEW</span>
-      </a>
-      <a href="how-it-works.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Learn how it works">How It Works</a>
-      <a href="faq.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Frequently Asked Questions">FAQ</a>
-      <a href="#" class="btn-link py-2 px-3 rounded-lg transition-all duration-200 relative"
-        data-tooltip="Bulk import your listings">Listings Import</a>
-      <a href="terms.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 text-gray-600 relative"
-        data-tooltip="Terms of Service">Terms of Service</a>
-      <a href="privacy.html"
-        class="btn-link py-2 px-3 rounded-lg transition-all duration-200 text-xs text-gray-600 relative"
-        data-tooltip="Privacy Policy">Privacy Policy</a>
-    </nav>
-
-    <!-- User Avatar & Quick Actions -->
-    <div class="mt-auto mb-6 flex flex-col items-center w-full relative">
-      <img src="user-avatar.png" alt="User Avatar"
-        class="w-12 h-12 rounded-full mb-1 border-2 border-orange-200 cursor-pointer shadow-lg"
-        onclick="toggleUserMenu()" aria-label="User menu">
-      <button onclick="toggleUserMenu()" class="text-xs font-semibold hover:underline focus:underline
-        [data-theme='clarity']:text-gray-700 [data-theme='clarity']:hover:text-orange-700
-        [data-theme='spark']:text-orange-700 [data-theme='spark']:hover:text-pink-600
-        [data-theme='rooted']:text-green-800 [data-theme='rooted']:hover:text-green-700
-      ">Account ▼</button>
-      <div id="user-menu"
-        class="hidden absolute bottom-14 left-1/2 -translate-x-1/2 bg-white rounded shadow-lg p-2 z-50 min-w-[130px]"
-        aria-label="User quick menu">
-        <a href="profile.html" class="block px-2 py-1 hover:bg-orange-50 rounded text-gray-900">Profile</a>
-        <a href="settings.html" class="block px-2 py-1 hover:bg-orange-50 rounded text-gray-900">Settings</a>
-        <a href="logout.html" class="block px-2 py-1 text-red-500 hover:bg-orange-100 rounded">Logout</a>
-      </div>
-    </div>
-  </aside>
-  <!-- === SIDEBAR END === -->
+  <!-- Optional Enhancement: Smart Tip Box -->
+  <div class="mt-8 text-xs text-center italic bg-white/5 px-3 py-2 rounded shadow-sm max-w-[180px]">
+    Tip: Use the AI Tag Builder to auto-optimize your Etsy listings 🌿
+  </div>
+</aside>
 
   <!-- Main Content -->
   <main class="flex-1 px-12 pt-16 space-y-40">
@@ -226,12 +89,14 @@
       <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">
-        AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
-      </p>
+<p class="text-lg text-gray-700 max-w-2xl mx-auto">
+  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
+</p>
+    
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
       <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
     </section>
+
     <!-- How It Works -->
     <section id="how-it-works">
       <div class="glass-section">
@@ -246,6 +111,7 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">When you're ready, crosslist and sync your products to supported platforms — no copy-paste, no burnout. All your edits, delists, and updates stay in sync — whether you’re selling one item or 500.</p>
       </div>
     </section>
+
     <!-- Why AutoList Canada Exists -->
     <section>
       <div class="glass-section">
@@ -256,10 +122,12 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Our foundation is neuroscience, our structure is strategy, and our purpose is to help you build a business that’s sustainable, thoughtful, and truly aligned with your values.</p>
       </div>
     </section>
+
     <!-- Explore AI Tools -->
     <section id="ai-tools">
       <div class="glass-section">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Explore AI Tools</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">These aren’t just writing tools — they’re business intelligence systems for sellers who want to grow with precision.</p>
         <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg max-w-3xl mx-auto">
           <li><strong>Cognitive Title Optimizer</strong> – structures titles to boost clarity, buyer focus, and intent-matching — no filler, no fluff</li>
           <li><strong>Strategic Tag Builder</strong> – suggests tags based on relevance, uniqueness, and Canadian search flow</li>
@@ -271,6 +139,7 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">These tools weren’t built to replace you — they were built to think with you.</p>
       </div>
     </section>
+
     <!-- FAQ Section -->
     <section id="faq">
       <div class="glass-section">
@@ -295,6 +164,7 @@
         </div>
       </div>
     </section>
+
     <!-- Footer -->
     <footer class="text-center mt-20 space-y-4">
       <div class="flex justify-center gap-6">
@@ -309,102 +179,5 @@
       <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
     </footer>
   </main>
-
-  <script>
-    // Sidebar open/close for mobile
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    function openSidebar() {
-      sidebar.classList.add('show');
-      sidebar.style.transform = 'translateX(0)';
-      sidebarOverlay.style.display = 'block';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('show');
-      sidebar.style.transform = 'translateX(-100%)';
-      sidebarOverlay.style.display = 'none';
-    }
-    sidebarToggle.addEventListener('click', openSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-    window.addEventListener('resize', () => {
-      if(window.innerWidth >= 768) {
-        sidebar.style.transform = 'translateX(0)';
-        sidebarOverlay.style.display = 'none';
-      } else if (!sidebar.classList.contains('show')) {
-        sidebar.style.transform = 'translateX(-100%)';
-      }
-    });
-    // Theme switching
-    function setTheme(theme) {
-      sidebar.setAttribute('data-theme', theme);
-      // Update toggle button styling
-      ['clarity','spark','rooted'].forEach(t=>{
-        document.getElementById('theme-btn-'+t).setAttribute('data-active', String(t===theme));
-      });
-    }
-    // Nav active indicator
-    const links = document.querySelectorAll('#sidebar-nav a');
-    const indicator = document.getElementById('active-indicator');
-    function updateIndicator() {
-      let activeLink = Array.from(links).find(link => window.location.pathname.endsWith(link.getAttribute('href')));
-      if (!activeLink) activeLink = links[0];
-      indicator.style.top = (activeLink.offsetTop - activeLink.parentNode.offsetTop) + 'px';
-      indicator.style.height = activeLink.offsetHeight + 'px';
-      links.forEach(link => link.classList.remove('active'));
-      activeLink.classList.add('active');
-    }
-    updateIndicator();
-    links.forEach(link => {
-      link.addEventListener('mouseenter', function() {
-        indicator.style.top = (link.offsetTop - link.parentNode.offsetTop) + 'px';
-        indicator.style.height = link.offsetHeight + 'px';
-      });
-      link.addEventListener('mouseleave', updateIndicator);
-    });
-    // Tooltips
-    links.forEach(link => {
-      link.addEventListener('mouseenter', function() {
-        if (link.dataset.tooltip) {
-          let tip = document.createElement('div');
-          tip.className = 'sidebar-tooltip';
-          tip.innerText = link.dataset.tooltip;
-          tip.style.position = 'fixed';
-          tip.style.left = (link.getBoundingClientRect().right + 10) + 'px';
-          tip.style.top = (link.getBoundingClientRect().top) + 'px';
-          tip.style.background = '#fff8e1';
-          tip.style.color = '#e05a13';
-          tip.style.padding = '4px 8px';
-          tip.style.borderRadius = '6px';
-          tip.style.boxShadow = '0 2px 6px rgba(0,0,0,0.07)';
-          tip.style.zIndex = 100;
-          document.body.appendChild(tip);
-          link._tip = tip;
-        }
-      });
-      link.addEventListener('mouseleave', function() {
-        if (link._tip) {
-          document.body.removeChild(link._tip);
-          link._tip = null;
-        }
-      });
-    });
-    // Quick Jump Search
-    document.getElementById('sidebar-search').oninput = function(e) {
-      const term = e.target.value.toLowerCase();
-      links.forEach(link => {
-        link.style.display = link.textContent.toLowerCase().includes(term) ? '' : 'none';
-      });
-    };
-    // User avatar dropdown
-    function toggleUserMenu() {
-      document.getElementById('user-menu').classList.toggle('hidden');
-    }
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('.mt-auto')) {
-        document.getElementById('user-menu').classList.add('hidden');
-      }
-    });
-  </script>
 </body>
 </html>
