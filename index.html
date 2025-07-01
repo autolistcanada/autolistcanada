@@ -6,9 +6,7 @@
   <title>AutoList Canada</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: url('unified-background.png') no-repeat center top;
@@ -21,6 +19,7 @@
       font-weight: 600;
       transition: all 0.2s;
       padding: 0.5rem;
+      position: relative;
     }
     .btn-link:hover {
       text-decoration: underline;
@@ -48,10 +47,46 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       margin-top: -4rem;
     }
+    /* Sidebar enhancements */
+    .btn-link.active::after {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      background: #e05a13;
+      border-radius: 50%;
+      transform: translateY(-50%) scale(1.1);
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      to { box-shadow: 0 0 10px 2px #e05a13; }
+    }
+    .sidebar-tooltip {
+      font-size: 13px;
+      pointer-events: none;
+    }
+    #sidebar.dark {
+      background: #1a1a1a !important;
+      color: #fff;
+    }
+    #sidebar.dark .btn-link { color: #ffb873 !important; }
+    #sidebar.dark .btn-link:hover { color: #fff !important; }
+    #sidebar.dark .bg-orange-100 { background-color: #2d2d2d !important; color: #ffb873 !important; }
+    #sidebar.dark input, #sidebar.dark #sidebar-search { background: #333 !important; color: #ffb873 !important; }
+    #sidebar.party {
+      animation: party-bg 0.5s alternate infinite;
+    }
+    @keyframes party-bg {
+      0% { filter: hue-rotate(0deg) brightness(1.1); }
+      100% { filter: hue-rotate(80deg) brightness(1.5); }
+    }
   </style>
 </head>
 <body class="flex">
- <!-- Hamburger Button for Mobile -->
+
+  <!-- === SIDEBAR START === -->
   <button id="sidebarToggle"
     class="fixed top-4 left-4 z-50 md:hidden bg-white bg-opacity-80 rounded-full p-2 shadow-lg focus:outline-none"
     aria-label="Open sidebar">
@@ -59,21 +94,95 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/>
     </svg>
   </button>
-  <div id="sidebarOverlay"></div>
+  <div id="sidebarOverlay"
+    style="display:none; position:fixed; z-index:39; inset:0; background:rgba(0,0,0,0.38);"></div>
 
-  <!-- Sidebar -->
-  <aside id="sidebar"
-    class="fixed left-0 top-0 h-screen w-[260px] min-w-[250px] max-w-[280px] z-40 flex flex-col justify-between bg-cover bg-center shadow-2xl transition-transform duration-300 bg-white/70
-      -translate-x-full md:translate-x-0 md:block"
-    style="background-image: url('sidebar-background.png');">
-    <!-- Close Button (mobile only) -->
-    <button id="sidebarClose"
-      class="md:hidden absolute top-4 right-4 bg-white bg-opacity-70 rounded-full p-1"
-      aria-label="Close sidebar">
-      <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
+  <aside
+    id="sidebar"
+    class="fixed md:static left-0 top-0 h-screen w-4/5 max-w-xs md:w-1/5 z-40 flex flex-col items-center justify-start space-y-6 text-center p-6 bg-white/70 shadow-2xl transform -translate-x-full md:translate-x-0 transition-transform duration-300"
+    style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;"
+    aria-label="Sidebar Navigation"
+    role="navigation"
+  >
+    <!-- Announcement/Alert slot -->
+    <div id="sidebar-alert" class="bg-orange-100 text-orange-800 p-2 rounded mb-2 text-xs w-full flex items-center justify-center">
+      🚀 New: Try the AI Tag Builder!
+    </div>
+    <!-- Quick Jump Search -->
+    <input
+      type="text"
+      id="sidebar-search"
+      placeholder="Quick Jump…"
+      class="mb-2 p-2 rounded w-full text-sm focus:outline-none focus:ring focus:border-orange-300"
+      aria-label="Sidebar quick search"
+    >
+    <!-- Logo & Title (Non-Negotiable) -->
+    <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 mx-auto">
+    <img src="autolist-title.png" alt="AutoList Canada Title" class="w-56 mx-auto">
+    <!-- Theme Switcher Button -->
+    <button
+      id="theme-toggle"
+      class="my-2 text-xs bg-orange-200 text-orange-900 px-3 py-1 rounded hover:bg-orange-300 transition"
+      aria-label="Switch sidebar theme"
+    >
+      Switch Theme
     </button>
+    <!-- Navigation Links with active indicator, tooltips, collapsible Tools section -->
+    <nav id="sidebar-nav" class="flex flex-col gap-1 text-sm mt-2 relative w-full">
+      <span
+        id="active-indicator"
+        class="absolute left-0 w-1 h-8 bg-orange-500 rounded transition-all duration-300"
+        style="top: 0;"
+        aria-hidden="true"
+      ></span>
+      <div>
+        <button
+          onclick="toggleSection('tools')"
+          class="flex items-center gap-2 w-full px-2 py-2 text-left font-semibold"
+          aria-expanded="true"
+          aria-controls="tools"
+        >
+          🧰 Tools
+          <span id="tools-arrow">▼</span>
+        </button>
+        <div id="tools" class="sidebar-links flex flex-col gap-1 pl-3">
+          <a href="ai-tools.html" class="btn-link flex items-center" data-tooltip="Explore our advanced AI tools">
+            AI Tools
+            <span class="ml-2 bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-xs">NEW</span>
+          </a>
+          <a href="#" class="btn-link" data-tooltip="Bulk import your listings">Listings Import</a>
+        </div>
+      </div>
+      <a href="index.html" class="btn-link" data-tooltip="Go to homepage">Home</a>
+      <a href="dashboard.html" class="btn-link" data-tooltip="Your overview">Dashboard</a>
+      <a href="listings.html" class="btn-link" data-tooltip="Manage your listings">Listings</a>
+      <a href="how-it-works.html" class="btn-link" data-tooltip="Learn how it works">How It Works</a>
+      <a href="faq.html" class="btn-link" data-tooltip="Frequently Asked Questions">FAQ</a>
+      <a href="terms.html" class="btn-link text-gray-600" data-tooltip="Terms of Service">Terms of Service</a>
+      <a href="privacy.html" class="btn-link text-xs text-gray-600" data-tooltip="Privacy Policy">Privacy Policy</a>
+    </nav>
+    <!-- User Avatar & Quick Actions -->
+    <div class="mt-auto flex flex-col items-center w-full relative">
+      <img
+        src="user-avatar.png"
+        alt="User Avatar"
+        class="w-12 h-12 rounded-full mb-1 border-2 border-orange-200 cursor-pointer"
+        onclick="toggleUserMenu()"
+        aria-label="User menu"
+      >
+      <button onclick="toggleUserMenu()" class="text-xs text-gray-700">Account ▼</button>
+      <div
+        id="user-menu"
+        class="hidden absolute bottom-14 left-1/2 -translate-x-1/2 bg-white rounded shadow-lg p-2 z-50 min-w-[130px]"
+        aria-label="User quick menu"
+      >
+        <a href="profile.html" class="block px-2 py-1 hover:bg-orange-50 rounded">Profile</a>
+        <a href="settings.html" class="block px-2 py-1 hover:bg-orange-50 rounded">Settings</a>
+        <a href="logout.html" class="block px-2 py-1 text-red-500 hover:bg-orange-100 rounded">Logout</a>
+      </div>
+    </div>
+  </aside>
+  <!-- === SIDEBAR END === -->
 
   <!-- Main Content -->
   <main class="flex-1 px-12 pt-16 space-y-40">
@@ -82,14 +191,12 @@
       <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
-<p class="text-lg text-gray-700 max-w-2xl mx-auto">
-  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
-</p>
-    
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+        AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
+      </p>
       <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
       <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
     </section>
-
     <!-- How It Works -->
     <section id="how-it-works">
       <div class="glass-section">
@@ -104,7 +211,6 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">When you're ready, crosslist and sync your products to supported platforms — no copy-paste, no burnout. All your edits, delists, and updates stay in sync — whether you’re selling one item or 500.</p>
       </div>
     </section>
-
     <!-- Why AutoList Canada Exists -->
     <section>
       <div class="glass-section">
@@ -115,7 +221,6 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Our foundation is neuroscience, our structure is strategy, and our purpose is to help you build a business that’s sustainable, thoughtful, and truly aligned with your values.</p>
       </div>
     </section>
-
     <!-- Explore AI Tools -->
     <section id="ai-tools">
       <div class="glass-section">
@@ -132,7 +237,6 @@
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg mt-6">These tools weren’t built to replace you — they were built to think with you.</p>
       </div>
     </section>
-
     <!-- FAQ Section -->
     <section id="faq">
       <div class="glass-section">
@@ -157,7 +261,6 @@
         </div>
       </div>
     </section>
-
     <!-- Footer -->
     <footer class="text-center mt-20 space-y-4">
       <div class="flex justify-center gap-6">
@@ -172,6 +275,138 @@
       <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
     </footer>
   </main>
+
+  <!-- Sidebar Scripts (at end of body for performance) -->
+  <script>
+    // Sidebar open/close for mobile
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    function openSidebar() {
+      sidebar.classList.add('show');
+      sidebar.style.transform = 'translateX(0)';
+      sidebarOverlay.style.display = 'block';
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('show');
+      sidebar.style.transform = 'translateX(-100%)';
+      sidebarOverlay.style.display = 'none';
+    }
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= 768) {
+        sidebar.style.transform = 'translateX(0)';
+        sidebarOverlay.style.display = 'none';
+      } else if (!sidebar.classList.contains('show')) {
+        sidebar.style.transform = 'translateX(-100%)';
+      }
+    });
+    // Collapsible Tools section
+    function toggleSection(id) {
+      const sec = document.getElementById(id);
+      const arrow = document.getElementById(id + '-arrow');
+      if (sec.style.display === 'none') {
+        sec.style.display = 'block';
+        arrow.textContent = '▼';
+      } else {
+        sec.style.display = 'none';
+        arrow.textContent = '▶';
+      }
+    }
+    document.getElementById('tools').style.display = 'block';
+    // Animated active link indicator
+    const links = document.querySelectorAll('#sidebar-nav a');
+    const indicator = document.getElementById('active-indicator');
+    function updateIndicator() {
+      let activeLink = Array.from(links).find(link => window.location.pathname.endsWith(link.getAttribute('href')));
+      if (!activeLink) activeLink = links[0];
+      indicator.style.top = (activeLink.offsetTop - activeLink.parentNode.offsetTop) + 'px';
+      indicator.style.height = activeLink.offsetHeight + 'px';
+      links.forEach(link => link.classList.remove('active'));
+      activeLink.classList.add('active');
+    }
+    updateIndicator();
+    links.forEach(link => {
+      link.addEventListener('mouseenter', function() {
+        indicator.style.top = (link.offsetTop - link.parentNode.offsetTop) + 'px';
+        indicator.style.height = link.offsetHeight + 'px';
+      });
+      link.addEventListener('mouseleave', updateIndicator);
+    });
+    // Keyboard navigation (Alt+S, arrows)
+    document.addEventListener('keydown', (e) => {
+      if (e.altKey && e.key.toLowerCase() === 's') openSidebar();
+      if (document.activeElement.classList.contains('btn-link')) {
+        let idx = Array.from(links).indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') {
+          links[(idx + 1) % links.length].focus();
+          e.preventDefault();
+        }
+        if (e.key === 'ArrowUp') {
+          links[(idx - 1 + links.length) % links.length].focus();
+          e.preventDefault();
+        }
+      }
+    });
+    links.forEach(link => link.tabIndex = 0);
+    // Tooltips
+    links.forEach(link => {
+      link.addEventListener('mouseenter', function() {
+        if (link.dataset.tooltip) {
+          let tip = document.createElement('div');
+          tip.className = 'sidebar-tooltip';
+          tip.innerText = link.dataset.tooltip;
+          tip.style.position = 'fixed';
+          tip.style.left = (link.getBoundingClientRect().right + 10) + 'px';
+          tip.style.top = (link.getBoundingClientRect().top) + 'px';
+          tip.style.background = '#fff8e1';
+          tip.style.color = '#e05a13';
+          tip.style.padding = '4px 8px';
+          tip.style.borderRadius = '6px';
+          tip.style.boxShadow = '0 2px 6px rgba(0,0,0,0.07)';
+          tip.style.zIndex = 100;
+          document.body.appendChild(tip);
+          link._tip = tip;
+        }
+      });
+      link.addEventListener('mouseleave', function() {
+        if (link._tip) {
+          document.body.removeChild(link._tip);
+          link._tip = null;
+        }
+      });
+    });
+    // Quick Jump Search
+    document.getElementById('sidebar-search').oninput = function(e) {
+      const term = e.target.value.toLowerCase();
+      links.forEach(link => {
+        link.style.display = link.textContent.toLowerCase().includes(term) ? '' : 'none';
+      });
+    };
+    // User avatar dropdown
+    function toggleUserMenu() {
+      document.getElementById('user-menu').classList.toggle('hidden');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.mt-auto')) {
+        document.getElementById('user-menu').classList.add('hidden');
+      }
+    });
+    // Theme switcher
+    document.getElementById('theme-toggle').onclick = () => {
+      sidebar.classList.toggle('dark');
+    };
+    // Easter egg: Click logo 3x for party mode
+    let logoClicks = 0;
+    document.querySelector('img[alt="AutoList Canada Logo"]').addEventListener('click', () => {
+      logoClicks++;
+      if (logoClicks === 3) {
+        sidebar.classList.toggle('party');
+        setTimeout(() => { sidebar.classList.remove('party'); }, 2000);
+        logoClicks = 0;
+      }
+    });
+  </script>
 </body>
 </html>
-
