@@ -2,43 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1">
-  <title>Privacy Policy | AutoList Canada</title>
-  <link rel="icon" type="image/png" href="logo.png">
+  <title>AutoList Canada - Privacy Policy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="logo.png" type="image/png">
   <meta name="theme-color" content="#205c40">
   <meta name="description" content="AutoList Canada Privacy Policy - Seller-first, science-backed privacy and data protection.">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Inter:wght@400;500;700&display=swap');
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Inter', 'Montserrat', Arial, sans-serif;
-      background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%, #3b5b47 100%);
-      background-size: 250% 250%;
-      animation: earthBackgroundMove 24s linear infinite alternate;
-      color: #2d3a33;
+      background: url('dashboard-background.png'), linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%);
+      background-size: cover, 250% 250%;
+      background-repeat: no-repeat, repeat;
+      background-blend-mode: multiply;
       min-height: 100vh;
+      color: #2d3a33;
       box-sizing: border-box;
+      overflow-x: hidden;
     }
-    @keyframes earthBackgroundMove {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
+    @media (max-width: 700px) {
+      html, body { background-size: auto, 250% 250%; }
     }
-
-    /* SIDEBAR (copied from dashboard/listings) */
+    /* Sidebar */
     #sidebar {
       position: fixed;
       top: 0; left: 0;
       width: 260px; height: 100vh;
       display: flex; flex-direction: column; align-items: center;
       z-index: 1000;
-      background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%, #3b5b47 100%);
-      background-size: 250% 250%;
-      animation: earthBackgroundMove 24s linear infinite alternate;
-      box-shadow: 2px 0 16px 0 rgba(32, 44, 32, 0.10);
+      background: url('sidebar-background.png'), linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%);
+      background-size: cover, 250% 250%;
       background-blend-mode: multiply;
-      overflow-x: hidden;
+      box-shadow: 2px 0 16px 0 rgba(32, 44, 32, 0.10);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #e05a13 #fffaf0;
+      animation: sidebarBgMove 24s linear infinite alternate;
+    }
+    @keyframes sidebarBgMove {
+      0% { background-position: 0% 50%, 0% 50%; }
+      100% { background-position: 100% 50%, 100% 50%; }
     }
     .sidebar-top {
       width: 100%;
@@ -159,9 +166,7 @@
       opacity: 0;
       transition: top 0.28s cubic-bezier(.4,0,.2,1), opacity 0.22s, height 0.18s;
     }
-    [data-tooltip] {
-      position: relative;
-    }
+    [data-tooltip] { position: relative; }
     [data-tooltip]:hover::after, [data-tooltip]:focus::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -181,9 +186,7 @@
       transition: opacity 0.18s;
     }
     .sidebar-btn:active,
-    .sidebar-btn.active {
-      outline: none;
-    }
+    .sidebar-btn.active { outline: none; }
     @media (max-width: 700px) {
       #sidebar { width: 72vw; min-width: 160px; max-width: 260px; }
       .sidebar-title { width: 92px; }
@@ -192,11 +195,10 @@
       #sidebar { width: 100vw; min-width: 0; }
       .sidebar-title { width: 70px; }
     }
-
-    /* MAIN CONTENT LAYOUT */
+    /* Main content */
     .content-pane {
       margin-left: 260px;
-      padding: 0;
+      padding: 0 0 40px 0;
       min-height: 100vh;
       background: none;
       display: flex;
@@ -211,12 +213,11 @@
       .content-pane { margin-left: 0; }
       #sidebar { position: static; width: 100vw; }
     }
-
-    /* Section blocks */
+    /* Section cards */
     section, .section-block {
       max-width: 760px;
       margin: 36px auto 0 auto;
-      background: #fdfaf5;
+      background: #fff;
       border-radius: 24px;
       box-shadow: 0 2px 32px 0 rgba(32,44,32,0.10), 0 1.5px 8px #e05a1322;
       padding: 38px 30px 32px 30px;
@@ -259,9 +260,7 @@
       font-size: 1.04em;
       line-height: 1.7;
     }
-    li {
-      margin-bottom: 0.4em;
-    }
+    li { margin-bottom: 0.4em; }
     .icon-list {
       list-style: none;
       padding: 0;
@@ -274,9 +273,7 @@
       margin-bottom: 0.6em;
       font-size: 1.08em;
     }
-    .icon-list .icon {
-      font-size: 1.3em;
-    }
+    .icon-list .icon { font-size: 1.3em; }
     a, .cta-link {
       color: #e05a13;
       text-decoration: underline;
@@ -306,39 +303,7 @@
       letter-spacing: 0.01em;
       transition: background 0.18s;
     }
-    .accordion {
-      border: none;
-      background: none;
-      padding: 0;
-      margin: 0 0 1.2em 0;
-    }
-    .accordion-toggle {
-      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
-      font-size: 1.09em;
-      font-weight: 600;
-      color: #205c40;
-      background: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 0.5em;
-      transition: color 0.18s;
-    }
-    .accordion-toggle:hover { color: #e05a13; }
-    .accordion-panel {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(.4,0,.2,1);
-      background: none;
-    }
-    .accordion-panel.open {
-      max-height: 600px;
-      transition: max-height 0.7s cubic-bezier(.4,0,.2,1);
-    }
-    /* Floating anchor menu (optional) */
+    /* Floating anchor menu */
     .anchor-menu {
       position: fixed;
       top: 48px;
@@ -408,24 +373,22 @@
       <div id="sidebar-highlight"></div>
     </nav>
   </div>
-
   <!-- FLOATING ANCHOR MENU -->
   <nav class="anchor-menu" aria-label="Privacy Policy Sections">
     <a class="anchor-link" href="#effective-date">Effective Date</a>
     <a class="anchor-link" href="#introduction">Introduction</a>
     <a class="anchor-link" href="#what-we-collect">What We Collect</a>
     <a class="anchor-link" href="#how-we-use">How We Use It</a>
-    <a class="anchor-link" href="#ai-processing">AI Processing</a>
-    <a class="anchor-link" href="#data-protection">Data Protection</a>
+    <a class="anchor-link" href="#ai-processing">AI Processing Disclosure</a>
+    <a class="anchor-link" href="#data-protection">Data Protection Measures</a>
     <a class="anchor-link" href="#sharing">Sharing of Information</a>
     <a class="anchor-link" href="#your-rights">Your Rights</a>
     <a class="anchor-link" href="#cookies">Cookie Use</a>
     <a class="anchor-link" href="#ai-optout">AI Opt-Out & Human Review</a>
-    <a class="anchor-link" href="#third-party">Third-Party Links</a>
+    <a class="anchor-link" href="#third-party">Third-Party Links Warning</a>
     <a class="anchor-link" href="#contact">Contact Info</a>
     <a class="anchor-link" href="#update-disclaimer">Update Disclaimer</a>
   </nav>
-
   <!-- MAIN CONTENT -->
   <main class="content-pane">
     <section id="effective-date" class="section-block scrollReveal">
@@ -519,8 +482,6 @@
       </p>
     </section>
   </main>
-
-  <!-- SIDEBAR LOGIC, HIGHLIGHT TRAIL, TOOLTIP, ACCESSIBILITY, SCROLLREVEAL, ANCHOR MENU -->
   <script>
     // Sidebar active state logic, highlight trail, keyboard nav, tooltips
     (function() {
@@ -616,7 +577,6 @@
         });
       });
     })();
-
     // ScrollReveal for section fade-in
     (function() {
       function revealSections() {
@@ -634,7 +594,6 @@
       window.addEventListener('DOMContentLoaded', revealSections);
       revealSections();
     })();
-
     // Floating anchor menu: highlight section in view
     (function() {
       const anchors = Array.from(document.querySelectorAll('.anchor-link'));
@@ -651,7 +610,6 @@
       window.addEventListener('DOMContentLoaded', highlightAnchor);
       highlightAnchor();
     })();
-
     // Last Updated Badge (dynamic)
     document.getElementById('last-updated-badge').textContent =
       "Last Updated: July 6, 2025";
