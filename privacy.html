@@ -2,436 +2,659 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review AutoList Canada's Privacy Policy to learn how we collect, protect, and use your data in compliance with Canadian privacy laws, including PIPEDA.">
-
-  <title>AutoList Canada - Privacy Policy</title>
+  <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1">
+  <title>Privacy Policy | AutoList Canada</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <meta name="theme-color" content="#205c40">
+  <meta name="description" content="AutoList Canada Privacy Policy - Seller-first, science-backed privacy and data protection.">
   <style>
-    body { font-family: Arial, sans-serif; padding: 40px; background: #f4f4f4; }
-    <div class="topnav" style="background-color: #e05a13; overflow: hidden; display: flex; padding: 10px 20px; align-items: center;">
-  <div class="logo" style="font-weight: bold; color: white; margin-right: auto;">AutoList Canada</div>
-  <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Home</a>
-  <a href="dashboard.html" style="color: white; text-decoration: none; padding: 10px 15px;">Dashboard</a>
-  <a href="features.html" style="color: white; text-decoration: none; padding: 10px 15px;">Features</a>
-  <a href="pricing.html" style="color: white; text-decoration: none; padding: 10px 15px;">Pricing</a>
-  <a href="contact.html" style="color: white; text-decoration: none; padding: 10px 15px;">Contact</a>
-</div>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Inter:wght@400;500;700&display=swap');
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%, #3b5b47 100%);
+      background-size: 250% 250%;
+      animation: earthBackgroundMove 24s linear infinite alternate;
+      color: #2d3a33;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    @keyframes earthBackgroundMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
 
-    h1 { color: #205c40; }
-    h2 { margin-top: 30px; color: #e05a13; }
-    p { margin-bottom: 15px; }
+    /* SIDEBAR (copied from dashboard/listings) */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 260px; height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      z-index: 1000;
+      background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%, #3b5b47 100%);
+      background-size: 250% 250%;
+      animation: earthBackgroundMove 24s linear infinite alternate;
+      box-shadow: 2px 0 16px 0 rgba(32, 44, 32, 0.10);
+      background-blend-mode: multiply;
+      overflow-x: hidden;
+    }
+    .sidebar-top {
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 36px; padding-bottom: 32px; gap: 18px;
+      backdrop-filter: blur(2.5px);
+    }
+    .sidebar-logo {
+      width: 56px; height: 56px; border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(60, 60, 40, 0.08);
+      background: rgba(255,255,255,0.10);
+      object-fit: contain;
+    }
+    .sidebar-title {
+      width: 130px; height: auto; margin-top: 2px; object-fit: contain;
+      filter: drop-shadow(0 1px 4px rgba(80,60,30,0.05));
+    }
+    .sidebar-nav {
+      width: 100%; display: flex; flex-direction: column; gap: 8px;
+      margin-top: 18px; padding: 0 18px 0 18px; position: relative;
+    }
+    .sidebar-btn {
+      display: flex; align-items: center; position: relative;
+      padding: 13px 20px;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 1rem; font-weight: 500; color: #f4f1e8;
+      background: rgba(38, 61, 50, 0.62);
+      border: none; border-radius: 16px; margin-bottom: 2px;
+      text-decoration: none; letter-spacing: 0.01em;
+      transition:
+        background 0.20s cubic-bezier(.4,0,.2,1),
+        color 0.20s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.18s cubic-bezier(.4,0,.2,1),
+        transform 0.14s cubic-bezier(.4,0,.2,1);
+      cursor: pointer; outline: none; min-height: 44px;
+      backdrop-filter: blur(1.5px);
+    }
+    .sidebar-btn:focus-visible {
+      box-shadow: 0 0 0 3px #ffb94a66;
+      z-index: 2;
+    }
+    .sidebar-btn:hover,
+    .sidebar-btn:focus {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffe8b2;
+      box-shadow: 0 2px 8px rgba(80, 60, 30, 0.13);
+      transform: translateX(4px) scale(1.03);
+    }
+    .sidebar-btn.active,
+    .sidebar-btn:active {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffb94a;
+      box-shadow: 0 4px 16px rgba(60, 44, 22, 0.16);
+    }
+    .sidebar-btn.active::before,
+    .sidebar-btn:active::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px; width: 5px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
+      box-shadow: 0 0 8px #ffb94a55;
+      transition: opacity 0.18s;
+      opacity: 1;
+    }
+    .sidebar-btn:not(.active):hover::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 12px; bottom: 12px; width: 4px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
+      opacity: 0.7;
+      transition: opacity 0.18s;
+    }
+    .sidebar-btn .badge {
+      margin-left: 10px;
+      font-size: 0.98em;
+      color: #ffb94a;
+      background: rgba(255, 185, 74, 0.18);
+      border-radius: 8px;
+      padding: 2px 7px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      box-shadow: 0 0 8px #ffb94a33;
+      animation: badge-pulse 1.7s infinite alternate;
+    }
+    @keyframes badge-pulse {
+      0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
+      100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
+    }
+    .sidebar-btn.featured {
+      background: rgba(255, 185, 74, 0.18);
+      color: #ffe8b2; position: relative;
+    }
+    .sidebar-btn.featured::after {
+      content: '';
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: radial-gradient(circle, #ffe8b2 60%, #ffb94a 100%);
+      box-shadow: 0 0 10px 2px #ffe8b288;
+      animation: ai-pulse 1.7s infinite alternate;
+      opacity: 0.7;
+    }
+    @keyframes ai-pulse {
+      0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
+      100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
+    }
+    #sidebar-highlight {
+      position: absolute;
+      left: 0; width: 100%; height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #ffe8b244 10%, #ffb94a33 100%);
+      box-shadow: 0 2px 8px #ffb94a22;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: top 0.28s cubic-bezier(.4,0,.2,1), opacity 0.22s, height 0.18s;
+    }
+    [data-tooltip] {
+      position: relative;
+    }
+    [data-tooltip]:hover::after, [data-tooltip]:focus::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 105%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(34, 44, 32, 0.98);
+      color: #ffe8b2;
+      font-size: 0.97em;
+      padding: 7px 14px;
+      border-radius: 10px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px #2e4e3d33;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.18s;
+    }
+    .sidebar-btn:active,
+    .sidebar-btn.active {
+      outline: none;
+    }
+    @media (max-width: 700px) {
+      #sidebar { width: 72vw; min-width: 160px; max-width: 260px; }
+      .sidebar-title { width: 92px; }
+    }
+    @media (max-width: 450px) {
+      #sidebar { width: 100vw; min-width: 0; }
+      .sidebar-title { width: 70px; }
+    }
+
+    /* MAIN CONTENT LAYOUT */
+    .content-pane {
+      margin-left: 260px;
+      padding: 0;
+      min-height: 100vh;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      transition: margin-left 0.2s;
+    }
+    @media (max-width: 700px) {
+      .content-pane { margin-left: 72vw; }
+    }
+    @media (max-width: 450px) {
+      .content-pane { margin-left: 0; }
+      #sidebar { position: static; width: 100vw; }
+    }
+
+    /* Section blocks */
+    section, .section-block {
+      max-width: 760px;
+      margin: 36px auto 0 auto;
+      background: #fdfaf5;
+      border-radius: 24px;
+      box-shadow: 0 2px 32px 0 rgba(32,44,32,0.10), 0 1.5px 8px #e05a1322;
+      padding: 38px 30px 32px 30px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: box-shadow 0.18s, background 0.18s, opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+      will-change: opacity, transform;
+    }
+    section.visible, .section-block.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    section:hover, .section-block:hover {
+      box-shadow: 0 6px 40px 0 #e05a1322, 0 2px 12px #205c4011;
+      background: #fffaf0;
+    }
+    h1, .main-title {
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 2.15rem;
+      color: #205c40;
+      margin-top: 0;
+      margin-bottom: 18px;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      text-shadow: 0 1px 8px #205c4011;
+    }
+    h2 {
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      color: #205c40;
+      font-size: 1.25rem;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    ul, ol {
+      margin: 0 0 0 1.2em;
+      padding: 0 0 0 1.1em;
+      font-size: 1.04em;
+      line-height: 1.7;
+    }
+    li {
+      margin-bottom: 0.4em;
+    }
+    .icon-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .icon-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.6em;
+      font-size: 1.08em;
+    }
+    .icon-list .icon {
+      font-size: 1.3em;
+    }
+    a, .cta-link {
+      color: #e05a13;
+      text-decoration: underline;
+      transition: color 0.18s;
+      font-weight: 500;
+    }
+    a:hover, .cta-link:hover {
+      color: #ffb94a;
+      text-decoration: underline;
+    }
+    .last-updated-badge {
+      position: sticky;
+      top: 18px;
+      float: right;
+      background: #fffaf0;
+      color: #205c40;
+      border-radius: 11px;
+      box-shadow: 0 1px 8px #205c4011;
+      font-size: 0.98em;
+      padding: 7px 18px;
+      font-weight: 500;
+      z-index: 10;
+      margin-bottom: 0;
+      margin-top: -20px;
+      margin-right: 0;
+      border: 1px solid #ffb94a44;
+      letter-spacing: 0.01em;
+      transition: background 0.18s;
+    }
+    .accordion {
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0 0 1.2em 0;
+    }
+    .accordion-toggle {
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 1.09em;
+      font-weight: 600;
+      color: #205c40;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.5em;
+      transition: color 0.18s;
+    }
+    .accordion-toggle:hover { color: #e05a13; }
+    .accordion-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(.4,0,.2,1);
+      background: none;
+    }
+    .accordion-panel.open {
+      max-height: 600px;
+      transition: max-height 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    /* Floating anchor menu (optional) */
+    .anchor-menu {
+      position: fixed;
+      top: 48px;
+      right: 32px;
+      background: #fffaf0ee;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #205c4011;
+      padding: 20px 18px 20px 22px;
+      z-index: 1100;
+      font-size: 1.01em;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 180px;
+      border: 1px solid #ffb94a33;
+    }
+    .anchor-link {
+      color: #205c40;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      border-left: 4px solid transparent;
+      padding-left: 9px;
+      transition: color 0.15s, border-color 0.18s;
+    }
+    .anchor-link.active, .anchor-link:focus {
+      color: #e05a13;
+      border-left: 4px solid #e05a13;
+      background: #ffb94a22;
+      border-radius: 7px 0 0 7px;
+    }
+    @media (max-width: 1100px) {
+      .anchor-menu { display: none; }
+    }
+    @media (max-width: 900px) {
+      section, .section-block { max-width: 98vw; }
+    }
+    @media (max-width: 700px) {
+      section, .section-block { margin: 18px 2vw 0 2vw; padding: 22px 7vw 22px 7vw; }
+      .anchor-menu { display: none; }
+    }
+    @media (max-width: 450px) {
+      section, .section-block { margin: 10px 0 0 0; padding: 12vw 2vw 12vw 2vw; }
+      .anchor-menu { display: none; }
+    }
   </style>
 </head>
 <body>
-  <div id="sidebar" role="navigation" aria-label="Main sidebar">
-  <div class="sidebar-top">
-    <img src="logo.png" alt="AutoList Canada Logo" class="sidebar-logo" />
-    <img src="title.png" alt="AutoList Canada Title" class="sidebar-title" />
-  </div>
-  <nav class="sidebar-nav" tabindex="0">
-    <div class="sidebar-section" aria-label="Main">
+  <!-- SIDEBAR -->
+  <div id="sidebar" role="navigation" aria-label="AutoList Canada Sidebar">
+    <div class="sidebar-top">
+      <img src="logo.png" alt="AutoList Canada Logo" class="sidebar-logo" />
+      <img src="title.png" alt="AutoList Canada Title" class="sidebar-title" />
+    </div>
+    <nav class="sidebar-nav" tabindex="0">
       <a href="dashboard.html" class="sidebar-btn" id="nav-dashboard" data-tooltip="Dashboard: Your overview hub" accesskey="1">Dashboard</a>
       <a href="listings.html" class="sidebar-btn" id="nav-listings" data-tooltip="Listings: Manage your inventory" accesskey="2">Listings</a>
       <a href="ai-tools.html" class="sidebar-btn featured" id="nav-ai-tools" data-tooltip="AI Tools: Science-backed optimization" accesskey="3">
         AI Tools
         <span class="badge" aria-label="Featured">★</span>
       </a>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section" aria-label="Info">
       <a href="index.html" class="sidebar-btn" id="nav-home" data-tooltip="Home: Return to main page" accesskey="4">Home</a>
       <a href="#how-it-works" class="sidebar-btn" id="nav-how" data-tooltip="How It Works: Learn our methods" accesskey="5">How It Works</a>
       <a href="#faq" class="sidebar-btn" id="nav-faq" data-tooltip="FAQ: Common questions answered" accesskey="6">FAQ</a>
-      <a href="#import" class="sidebar-btn" id="nav-import" data-tooltip="Listings Import: Bring in your data" accesskey="7">Listings Import</a>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section" aria-label="Legal">
-      <a href="terms.html" class="sidebar-btn" id="nav-terms" data-tooltip="Terms of Service: Legal details" accesskey="8">Terms of Service</a>
-      <a href="privacy.html" class="sidebar-btn" id="nav-privacy" data-tooltip="Privacy Policy: Your data rights" accesskey="9">Privacy Policy</a>
-    </div>
-    <div id="sidebar-highlight"></div>
+      <a href="terms.html" class="sidebar-btn" id="nav-terms" data-tooltip="Terms of Service: Legal details" accesskey="7">Terms of Service</a>
+      <a href="privacy.html" class="sidebar-btn" id="nav-privacy" data-tooltip="Privacy Policy: Your data rights" accesskey="8">Privacy Policy</a>
+      <div id="sidebar-highlight"></div>
+    </nav>
+  </div>
+
+  <!-- FLOATING ANCHOR MENU -->
+  <nav class="anchor-menu" aria-label="Privacy Policy Sections">
+    <a class="anchor-link" href="#effective-date">Effective Date</a>
+    <a class="anchor-link" href="#introduction">Introduction</a>
+    <a class="anchor-link" href="#what-we-collect">What We Collect</a>
+    <a class="anchor-link" href="#how-we-use">How We Use It</a>
+    <a class="anchor-link" href="#ai-processing">AI Processing</a>
+    <a class="anchor-link" href="#data-protection">Data Protection</a>
+    <a class="anchor-link" href="#sharing">Sharing of Information</a>
+    <a class="anchor-link" href="#your-rights">Your Rights</a>
+    <a class="anchor-link" href="#cookies">Cookie Use</a>
+    <a class="anchor-link" href="#ai-optout">AI Opt-Out & Human Review</a>
+    <a class="anchor-link" href="#third-party">Third-Party Links</a>
+    <a class="anchor-link" href="#contact">Contact Info</a>
+    <a class="anchor-link" href="#update-disclaimer">Update Disclaimer</a>
   </nav>
-</div>
 
-<style>
-@keyframes earthBackgroundMove {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-#sidebar {
-  position: fixed;
-  top: 0; left: 0;
-  width: 260px; height: 100vh;
-  display: flex; flex-direction: column; align-items: center;
-  z-index: 1000;
-  /* Animated, layered earth-tone background */
-  background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 100%, #ffb94a 60%, #3b5b47 100%);
-  background-size: 250% 250%;
-  animation: earthBackgroundMove 24s linear infinite alternate;
-  box-shadow: 2px 0 16px 0 rgba(32, 44, 32, 0.10);
-  background-blend-mode: multiply;
-  overflow-x: hidden;
-}
-.sidebar-top {
-  width: 100%;
-  display: flex; flex-direction: column; align-items: center;
-  padding-top: 36px; padding-bottom: 32px; gap: 18px;
-  backdrop-filter: blur(2.5px);
-}
-.sidebar-logo {
-  width: 56px; height: 56px; border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(60, 60, 40, 0.08);
-  background: rgba(255,255,255,0.10);
-  object-fit: contain;
-}
-.sidebar-title {
-  width: 130px; height: auto; margin-top: 2px; object-fit: contain;
-  filter: drop-shadow(0 1px 4px rgba(80,60,30,0.05));
-}
-.sidebar-nav {
-  width: 100%; display: flex; flex-direction: column; gap: 0;
-  margin-top: 18px; padding: 0 18px 0 18px; position: relative;
-}
-.sidebar-section {
-  display: flex; flex-direction: column; gap: 8px;
-}
-.sidebar-divider {
-  height: 1px;
-  margin: 14px 0 10px 0;
-  background: linear-gradient(90deg, transparent 0%, #ffe8b299 35%, #ffe8b200 100%);
-  border-radius: 2px;
-  width: 85%;
-  align-self: center;
-  opacity: 0.55;
-}
-.sidebar-btn {
-  display: flex; align-items: center; position: relative;
-  padding: 13px 20px; font-family: 'Montserrat', 'Inter', Arial, sans-serif;
-  font-size: 1rem; font-weight: 500; color: #f4f1e8;
-  background: rgba(38, 61, 50, 0.62);
-  border: none; border-radius: 16px; margin-bottom: 2px;
-  text-decoration: none; letter-spacing: 0.01em;
-  transition:
-    background 0.20s cubic-bezier(.4,0,.2,1),
-    color 0.20s cubic-bezier(.4,0,.2,1),
-    box-shadow 0.18s cubic-bezier(.4,0,.2,1),
-    transform 0.14s cubic-bezier(.4,0,.2,1);
-  cursor: pointer; outline: none; min-height: 44px;
-  backdrop-filter: blur(1.5px);
-}
-.sidebar-btn:focus-visible {
-  box-shadow: 0 0 0 3px #ffb94a66;
-  z-index: 2;
-}
-.sidebar-btn:hover,
-.sidebar-btn:focus {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffe8b2;
-  box-shadow: 0 2px 8px rgba(80, 60, 30, 0.13);
-  transform: translateX(4px) scale(1.03);
-}
-.sidebar-btn.active,
-.sidebar-btn:active {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffb94a;
-  box-shadow: 0 4px 16px rgba(60, 44, 22, 0.16);
-}
-.sidebar-btn.active::before,
-.sidebar-btn:active::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 8px; bottom: 8px; width: 5px;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
-  box-shadow: 0 0 8px #ffb94a55;
-  transition: opacity 0.18s;
-  opacity: 1;
-}
-.sidebar-btn:not(.active):hover::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 12px; bottom: 12px; width: 4px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
-  opacity: 0.7;
-  transition: opacity 0.18s;
-}
-.sidebar-btn .badge {
-  margin-left: 10px;
-  font-size: 0.98em;
-  color: #ffb94a;
-  background: rgba(255, 185, 74, 0.18);
-  border-radius: 8px;
-  padding: 2px 7px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  box-shadow: 0 0 8px #ffb94a33;
-  animation: badge-pulse 1.7s infinite alternate;
-}
-@keyframes badge-pulse {
-  0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
-  100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
-}
-.sidebar-btn.featured {
-  background: rgba(255, 185, 74, 0.18);
-  color: #ffe8b2; position: relative;
-}
-.sidebar-btn.featured::after {
-  content: '';
-  position: absolute;
-  left: 12px; top: 50%;
-  transform: translateY(-50%);
-  width: 8px; height: 8px; border-radius: 50%;
-  background: radial-gradient(circle, #ffe8b2 60%, #ffb94a 100%);
-  box-shadow: 0 0 10px 2px #ffe8b288;
-  animation: ai-pulse 1.7s infinite alternate;
-  opacity: 0.7;
-}
-@keyframes ai-pulse {
-  0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
-  100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
-}
-/* Highlight trail animation */
-#sidebar-highlight {
-  position: absolute;
-  left: 0; width: 100%; height: 48px;
-  border-radius: 16px;
-  background: linear-gradient(90deg, #ffe8b244 10%, #ffb94a33 100%);
-  box-shadow: 0 2px 8px #ffb94a22;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: top 0.28s cubic-bezier(.4,0,.2,1), opacity 0.22s;
-}
-.sidebar-btn.active ~ #sidebar-highlight,
-.sidebar-btn:focus ~ #sidebar-highlight {
-  opacity: 1;
-}
-[data-tooltip] {
-  position: relative;
-}
-[data-tooltip]:hover::after, [data-tooltip]:focus::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 105%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(34, 44, 32, 0.98);
-  color: #ffe8b2;
-  font-size: 0.97em;
-  padding: 7px 14px;
-  border-radius: 10px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px #2e4e3d33;
-  z-index: 999;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.18s;
-}
-.sidebar-btn:active,
-.sidebar-btn.active {
-  outline: none;
-}
-@media (max-width: 700px) {
-  #sidebar { width: 72vw; min-width: 160px; max-width: 260px; }
-  .sidebar-title { width: 92px; }
-}
-@media (max-height: 600px) {
-  .sidebar-top { padding-top: 18px; padding-bottom: 12px; }
-  .sidebar-nav { margin-top: 6px; }
-  .sidebar-btn { padding: 9px 12px; font-size: 0.97rem; }
-}
-@media (max-width: 450px) {
-  #sidebar { width: 100vw; min-width: 0; }
-  .sidebar-title { width: 70px; }
-}
-</style>
+  <!-- MAIN CONTENT -->
+  <main class="content-pane">
+    <section id="effective-date" class="section-block scrollReveal">
+      <span class="last-updated-badge" id="last-updated-badge"></span>
+      <h1 class="main-title">Privacy Policy</h1>
+      <h2>Effective Date</h2>
+      <p>July 6, 2025</p>
+    </section>
+    <section id="introduction" class="section-block scrollReveal">
+      <h2>Introduction</h2>
+      <p>
+        At AutoList Canada, your privacy is our priority. This Privacy Policy explains how we collect, use, and protect your personal information when you use our platform. By accessing or using AutoList Canada, you agree to the practices described in this policy.
+      </p>
+    </section>
+    <section id="what-we-collect" class="section-block scrollReveal">
+      <h2>What We Collect</h2>
+      <ul>
+        <li>Contact information (name, email address, phone number)</li>
+        <li>Account credentials</li>
+        <li>Listing details and business data</li>
+        <li>Usage and device information</li>
+        <li>Cookies and analytics data</li>
+        <li>Communications with our support team</li>
+      </ul>
+    </section>
+    <section id="how-we-use" class="section-block scrollReveal">
+      <h2>How We Use It</h2>
+      <ul>
+        <li>To provide and improve our services</li>
+        <li>To personalize your experience</li>
+        <li>To communicate updates and offers</li>
+        <li>To analyze usage and trends</li>
+        <li>To protect our users and platform</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+    </section>
+    <section id="ai-processing" class="section-block scrollReveal">
+      <h2>AI Processing Disclosure</h2>
+      <p>
+        Some features of AutoList Canada use artificial intelligence, including models provided by OpenAI, to enhance your experience and optimize your listings. You may opt out of AI-powered features at any time. If you choose to opt out, your data will not be processed by AI systems for those features.
+      </p>
+    </section>
+    <section id="data-protection" class="section-block scrollReveal">
+      <h2>Data Protection Measures</h2>
+      <p>
+        We implement industry-standard security measures to protect your information, including encryption, access controls, and regular audits. Your data is stored securely and only accessible to authorized personnel.
+      </p>
+    </section>
+    <section id="sharing" class="section-block scrollReveal">
+      <h2>Sharing of Information</h2>
+      <p>
+        We do <strong>not</strong> sell your personal information. We may share information with trusted service providers who assist us in operating our platform, only as necessary and under strict confidentiality agreements.
+      </p>
+    </section>
+    <section id="your-rights" class="section-block scrollReveal">
+      <h2>Your Rights</h2>
+      <ul class="icon-list">
+        <li><span class="icon">✅</span> <strong>Access:</strong> You may request a copy of your personal data at any time.</li>
+        <li><span class="icon">📝</span> <strong>Edit:</strong> You may update or correct your information through your account settings.</li>
+        <li><span class="icon">❌</span> <strong>Delete:</strong> You may request deletion of your data, subject to legal requirements.</li>
+      </ul>
+    </section>
+    <section id="cookies" class="section-block scrollReveal">
+      <h2>Cookie Use</h2>
+      <p>
+        We use cookies and similar technologies to enhance your experience, analyze usage, and deliver relevant content. You can manage cookie preferences in your browser settings.
+      </p>
+    </section>
+    <section id="ai-optout" class="section-block scrollReveal">
+      <h2>AI Opt-Out & Human Review</h2>
+      <p>
+        You may opt out of AI-powered features at any time. If you do, your requests will be handled by a human reviewer instead of automated systems.
+      </p>
+    </section>
+    <section id="third-party" class="section-block scrollReveal">
+      <h2>Third-Party Links Warning</h2>
+      <p>
+        Our platform may contain links to third-party websites. We are not responsible for the privacy practices or content of those sites. Please review their policies before providing personal information.
+      </p>
+    </section>
+    <section id="contact" class="section-block scrollReveal">
+      <h2>Contact Info</h2>
+      <p>
+        If you have questions or concerns about this Privacy Policy, please contact us at <a href="mailto:privacy@autolistcanada.com" class="cta-link">privacy@autolistcanada.com</a>.
+      </p>
+    </section>
+    <section id="update-disclaimer" class="section-block scrollReveal">
+      <h2>Update Disclaimer</h2>
+      <p>
+        We may update this Privacy Policy from time to time. Changes will be posted on this page, and your continued use of AutoList Canada constitutes acceptance of those changes.
+      </p>
+    </section>
+  </main>
 
-<script>
-(function() {
-  // Sidebar nav logic for active state, highlight trail, keyboard nav, and accessibility
-  const navLinks = Array.from(document.querySelectorAll('#sidebar .sidebar-btn'));
-  const highlight = document.getElementById('sidebar-highlight');
-  const nav = document.querySelector('.sidebar-nav');
-  function setActiveLink() {
-    const { pathname, hash } = window.location;
-    let activeFound = false;
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href') || '';
-      // For anchor links (hash), match hash exactly
-      if (href.startsWith('#')) {
-        if (hash === href) {
-          link.classList.add('active');
-          link.setAttribute('aria-current','page');
-          activeFound = link;
+  <!-- SIDEBAR LOGIC, HIGHLIGHT TRAIL, TOOLTIP, ACCESSIBILITY, SCROLLREVEAL, ANCHOR MENU -->
+  <script>
+    // Sidebar active state logic, highlight trail, keyboard nav, tooltips
+    (function() {
+      const navLinks = Array.from(document.querySelectorAll('#sidebar .sidebar-btn'));
+      const highlight = document.getElementById('sidebar-highlight');
+      const nav = document.querySelector('.sidebar-nav');
+      function setActiveLink() {
+        const { pathname, hash } = window.location;
+        let activeFound = false;
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href') || '';
+          if (href.startsWith('#')) {
+            if (hash === href) {
+              link.classList.add('active');
+              link.setAttribute('aria-current','page');
+              activeFound = link;
+            } else {
+              link.classList.remove('active');
+              link.removeAttribute('aria-current');
+            }
+          }
+          else if (href && (pathname.endsWith(href.replace(/^\//, '')) || pathname.startsWith('/' + href.replace('.html','')))) {
+            link.classList.add('active');
+            link.setAttribute('aria-current','page');
+            activeFound = link;
+          } else {
+            link.classList.remove('active');
+            link.removeAttribute('aria-current');
+          }
+        });
+        if (activeFound) {
+          highlight.style.top = (activeFound.offsetTop - nav.offsetTop) + "px";
+          highlight.style.height = activeFound.offsetHeight + "px";
+          highlight.style.opacity = 1;
         } else {
-          link.classList.remove('active');
-          link.removeAttribute('aria-current');
+          highlight.style.opacity = 0;
         }
       }
-      // For normal links, match pathname or prefix (for subpages)
-      else if (href && (pathname.endsWith(href.replace(/^\//, '')) || pathname.startsWith('/' + href.replace('.html','')))) {
-        link.classList.add('active');
-        link.setAttribute('aria-current','page');
-        activeFound = link;
-      } else {
-        link.classList.remove('active');
-        link.removeAttribute('aria-current');
+      setActiveLink();
+      window.addEventListener('hashchange', setActiveLink);
+      window.addEventListener('popstate', setActiveLink);
+
+      document.addEventListener('keydown', function(e) {
+        if (e.altKey && !isNaN(e.key) && e.key >= '1' && e.key <= String(navLinks.length)) {
+          const idx = parseInt(e.key, 10) - 1;
+          if (navLinks[idx]) {
+            navLinks[idx].focus();
+            navLinks[idx].click();
+            e.preventDefault();
+          }
+        }
+        if (document.activeElement.classList.contains('sidebar-btn')) {
+          let idx = navLinks.indexOf(document.activeElement);
+          if (e.key === 'ArrowDown') {
+            navLinks[(idx+1)%navLinks.length].focus();
+            e.preventDefault();
+          }
+          if (e.key === 'ArrowUp') {
+            navLinks[(idx-1+navLinks.length)%navLinks.length].focus();
+            e.preventDefault();
+          }
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('focus', function() {
+          highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
+          highlight.style.height = link.offsetHeight + "px";
+          highlight.style.opacity = 1;
+        });
+        link.addEventListener('mouseenter', function() {
+          highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
+          highlight.style.height = link.offsetHeight + "px";
+          highlight.style.opacity = 1;
+        });
+        link.addEventListener('mouseleave', setActiveLink);
+        link.addEventListener('blur', setActiveLink);
+      });
+
+      navLinks.forEach(link => {
+        link.setAttribute('tabindex', '0');
+        link.setAttribute('role', 'link');
+      });
+
+      window.addEventListener('resize', setActiveLink);
+
+      navLinks.forEach(link => {
+        link.addEventListener('focus', function() {
+          link.setAttribute('data-show-tooltip', 'true');
+        });
+        link.addEventListener('blur', function() {
+          link.removeAttribute('data-show-tooltip');
+        });
+      });
+    })();
+
+    // ScrollReveal for section fade-in
+    (function() {
+      function revealSections() {
+        const reveals = document.querySelectorAll('.scrollReveal');
+        const windowHeight = window.innerHeight;
+        for (let i = 0; i < reveals.length; i++) {
+          const elementTop = reveals[i].getBoundingClientRect().top;
+          if (elementTop < windowHeight - 80) {
+            reveals[i].classList.add('visible');
+          }
+        }
       }
-    });
-    // Move highlight trail
-    if (activeFound) {
-      const rect = activeFound.getBoundingClientRect();
-      const navRect = nav.getBoundingClientRect();
-      highlight.style.top = (activeFound.offsetTop - nav.offsetTop) + "px";
-      highlight.style.height = activeFound.offsetHeight + "px";
-      highlight.style.opacity = 1;
-    } else {
-      highlight.style.opacity = 0;
-    }
-  }
-  setActiveLink();
-  window.addEventListener('hashchange', setActiveLink);
-  window.addEventListener('popstate', setActiveLink);
+      window.addEventListener('scroll', revealSections);
+      window.addEventListener('resize', revealSections);
+      window.addEventListener('DOMContentLoaded', revealSections);
+      revealSections();
+    })();
 
-  // Keyboard navigation (Alt+1...9)
-  document.addEventListener('keydown', function(e) {
-    if (e.altKey && !isNaN(e.key) && e.key >= '1' && e.key <= String(navLinks.length)) {
-      const idx = parseInt(e.key, 10) - 1;
-      if (navLinks[idx]) {
-        navLinks[idx].focus();
-        navLinks[idx].click();
-        e.preventDefault();
+    // Floating anchor menu: highlight section in view
+    (function() {
+      const anchors = Array.from(document.querySelectorAll('.anchor-link'));
+      const sections = anchors.map(a => document.querySelector(a.getAttribute('href')));
+      function highlightAnchor() {
+        let idx = 0;
+        for (let i = 0; i < sections.length; i++) {
+          const rect = sections[i].getBoundingClientRect();
+          if (rect.top < 120) idx = i;
+        }
+        anchors.forEach((a, i) => a.classList.toggle('active', i === idx));
       }
-    }
-    // Arrow navigation
-    if (document.activeElement.classList.contains('sidebar-btn')) {
-      let idx = navLinks.indexOf(document.activeElement);
-      if (e.key === 'ArrowDown') {
-        navLinks[(idx+1)%navLinks.length].focus();
-        e.preventDefault();
-      }
-      if (e.key === 'ArrowUp') {
-        navLinks[(idx-1+navLinks.length)%navLinks.length].focus();
-        e.preventDefault();
-      }
-    }
-  });
+      window.addEventListener('scroll', highlightAnchor);
+      window.addEventListener('DOMContentLoaded', highlightAnchor);
+      highlightAnchor();
+    })();
 
-  // Highlight trail on focus/hover
-  navLinks.forEach(link => {
-    link.addEventListener('focus', function() {
-      highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
-      highlight.style.height = link.offsetHeight + "px";
-      highlight.style.opacity = 1;
-    });
-    link.addEventListener('mouseenter', function() {
-      highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
-      highlight.style.height = link.offsetHeight + "px";
-      highlight.style.opacity = 1;
-    });
-    link.addEventListener('mouseleave', setActiveLink);
-    link.addEventListener('blur', setActiveLink);
-  });
-
-  // Accessibility: focus outlines, ARIA
-  navLinks.forEach(link => {
-    link.setAttribute('tabindex', '0');
-    link.setAttribute('role', 'link');
-  });
-
-  // Responsive: recalc highlight on resize
-  window.addEventListener('resize', setActiveLink);
-
-  // Tooltip accessibility: show on focus
-  navLinks.forEach(link => {
-    link.addEventListener('focus', function() {
-      link.setAttribute('data-show-tooltip', 'true');
-    });
-    link.addEventListener('blur', function() {
-      link.removeAttribute('data-show-tooltip');
-    });
-  });
-})();
-</script>
-  <h1>AutoList Canada - Privacy Policy</h1>
-  <p><strong>Effective Date:</strong> May 2025</p>
-
-  <h2>1. Introduction</h2>
-  <p>AutoList Canada ("we," "our," or "us") is committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, disclose, and safeguard your information in compliance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and other applicable privacy laws in Canada.</p>
-
-  <h2>2. Information We Collect</h2>
-  <p>We may collect the following types of information:
-    <ul>
-      <li><strong>Personal Information:</strong> Name, email address, contact information, and account details you voluntarily provide.</li>
-      <li><strong>Usage Data:</strong> Information about how you use our Service, including log data, device information, and interaction data.</li>
-    </ul>
-  </p>
-
-  <h2>3. How We Use Your Information</h2>
-  <p>We use your information to:
-    <ul>
-      <li>Provide, operate, and maintain the Service</li>
-      <li>Improve user experience and functionality</li>
-      <li>Communicate with you, including support and updates</li>
-      <li>Comply with legal obligations</li>
-    </ul>
-  <div style="margin-top: 10px;">
-  <p>Some features, such as AI-generated titles and descriptions, may temporarily process your content via OpenAI’s API. No user data is stored by OpenAI, and all processing complies with their privacy practices.</p>
-
-  <p>We retain your listing content and personal data only as long as necessary to operate our platform, improve features, or meet legal requirements.</p>
-</div>
-
-  <p>Some features, such as AI-generated titles and descriptions, may temporarily process your content via OpenAI’s API. No user data is stored by OpenAI, and all processing complies with their privacy practices.</p>
-
-  </p>
-<p>We retain your listing content and personal data only as long as necessary to operate our platform, improve features, or meet legal requirements.</p>
-
-  <h2>4. Data Protection and Storage</h2>
-  <p>Your data is securely stored on privacy-compliant systems. We use encryption and access controls to protect your personal information. We retain personal data only as long as necessary to fulfill the purposes outlined in this Policy.</p>
-
-  <div style="margin-top: 10px;">
-  <p>By using AutoList Canada’s AI features, you consent to the temporary processing of your submitted content solely for the purpose of generating listing enhancements.</p>
-</div>
-
-  <h2>5. Sharing of Information</h2>
-  <p>We do not sell or rent your personal information. We may share your data with trusted service providers who assist us in operating our Service, provided they comply with strict privacy standards.</p>
-
-  <h2>6. Your Rights</h2>
-  <p>You have the right to:
-    <ul>
-      <p>By using AutoList Canada’s AI features, you consent to the temporary processing of your submitted content solely for the purpose of generating listing enhancements.</p>
-
-      <li>Access your personal information</li>
-      <li>Correct inaccuracies in your data</li>
-      <li>Withdraw your consent to data processing (where applicable)</li>
-      <li>Request deletion of your personal information</li>
-    </ul>
-  </p>
-
-  <h2>7. Cookies and Tracking Technologies</h2>
-  <p>We may use cookies and similar tracking technologies to enhance your experience on our website. You can manage cookie preferences through your browser settings.</p>
-
-  <h2>8. Third-Party Links</h2>
-  <h2>11. AI Opt-Out and Human Review</h2>
-<p>While AI tools are core to AutoList Canada, we respect your preferences. If you would like your listing data excluded from AI-based enhancements or prefer a manual support option when available, please contact us at <a href="mailto:autolistcanada@myyahoo.com">autolistcanada@myyahoo.com</a>.</p>
-
-  <p>Our Service may contain links to third-party websites. We are not responsible for the privacy practices of these external sites.</p>
-
-  <h2>9. Changes to This Policy</h2>
-  <p>We reserve the right to update this Privacy Policy at any time. We will notify you of significant changes by posting the updated Policy on our website with the new effective date.</p>
-
-  <h2>10. Contact Us</h2>
-  <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-  <p><strong>AutoList Canada</strong><br>
-     Email: <a href="mailto:autolistcanada@myyahoo.com">autolistcanada@myyahoo.com</a></p>
- <footer style="background-color: #e05a13; padding: 20px; text-align: center; color: white;">
-    <a href="terms.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Terms of Use</a>
-    <a href="privacy.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Privacy Policy</a>
-    <a href="contact.html" style="color: #f5b748; text-decoration: none;">Contact</a>
-    <p style="margin-top: 10px; font-size: 0.8em;">&copy; 2025 AutoList Canada. All rights reserved.</p>
-  </footer>
+    // Last Updated Badge (dynamic)
+    document.getElementById('last-updated-badge').textContent =
+      "Last Updated: July 6, 2025";
+  </script>
 </body>
 </html>
