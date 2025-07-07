@@ -25,6 +25,337 @@
   </style>
 </head>
 <body>
+  <div id="sidebar" role="navigation" aria-label="Main sidebar">
+  <div class="sidebar-top">
+    <img src="logo.png" alt="AutoList Canada Logo" class="sidebar-logo" />
+    <img src="title.png" alt="AutoList Canada Title" class="sidebar-title" />
+  </div>
+  <nav class="sidebar-nav" tabindex="0">
+    <div class="sidebar-section" aria-label="Main">
+      <a href="dashboard.html" class="sidebar-btn" id="nav-dashboard" data-tooltip="Dashboard: Your overview hub" accesskey="1">Dashboard</a>
+      <a href="listings.html" class="sidebar-btn" id="nav-listings" data-tooltip="Listings: Manage your inventory" accesskey="2">Listings</a>
+      <a href="ai-tools.html" class="sidebar-btn featured" id="nav-ai-tools" data-tooltip="AI Tools: Science-backed optimization" accesskey="3">
+        AI Tools
+        <span class="badge" aria-label="Featured">★</span>
+      </a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section" aria-label="Info">
+      <a href="index.html" class="sidebar-btn" id="nav-home" data-tooltip="Home: Return to main page" accesskey="4">Home</a>
+      <a href="#how-it-works" class="sidebar-btn" id="nav-how" data-tooltip="How It Works: Learn our methods" accesskey="5">How It Works</a>
+      <a href="#faq" class="sidebar-btn" id="nav-faq" data-tooltip="FAQ: Common questions answered" accesskey="6">FAQ</a>
+      <a href="#import" class="sidebar-btn" id="nav-import" data-tooltip="Listings Import: Bring in your data" accesskey="7">Listings Import</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section" aria-label="Legal">
+      <a href="terms.html" class="sidebar-btn" id="nav-terms" data-tooltip="Terms of Service: Legal details" accesskey="8">Terms of Service</a>
+      <a href="privacy.html" class="sidebar-btn" id="nav-privacy" data-tooltip="Privacy Policy: Your data rights" accesskey="9">Privacy Policy</a>
+    </div>
+    <div id="sidebar-highlight"></div>
+  </nav>
+</div>
+
+<style>
+@keyframes earthBackgroundMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 260px; height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  z-index: 1000;
+  /* Animated, layered earth-tone background */
+  background: linear-gradient(120deg, #2e4e3d 0%, #f66d2c 100%, #ffb94a 60%, #3b5b47 100%);
+  background-size: 250% 250%;
+  animation: earthBackgroundMove 24s linear infinite alternate;
+  box-shadow: 2px 0 16px 0 rgba(32, 44, 32, 0.10);
+  background-blend-mode: multiply;
+  overflow-x: hidden;
+}
+.sidebar-top {
+  width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 36px; padding-bottom: 32px; gap: 18px;
+  backdrop-filter: blur(2.5px);
+}
+.sidebar-logo {
+  width: 56px; height: 56px; border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(60, 60, 40, 0.08);
+  background: rgba(255,255,255,0.10);
+  object-fit: contain;
+}
+.sidebar-title {
+  width: 130px; height: auto; margin-top: 2px; object-fit: contain;
+  filter: drop-shadow(0 1px 4px rgba(80,60,30,0.05));
+}
+.sidebar-nav {
+  width: 100%; display: flex; flex-direction: column; gap: 0;
+  margin-top: 18px; padding: 0 18px 0 18px; position: relative;
+}
+.sidebar-section {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sidebar-divider {
+  height: 1px;
+  margin: 14px 0 10px 0;
+  background: linear-gradient(90deg, transparent 0%, #ffe8b299 35%, #ffe8b200 100%);
+  border-radius: 2px;
+  width: 85%;
+  align-self: center;
+  opacity: 0.55;
+}
+.sidebar-btn {
+  display: flex; align-items: center; position: relative;
+  padding: 13px 20px; font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+  font-size: 1rem; font-weight: 500; color: #f4f1e8;
+  background: rgba(38, 61, 50, 0.62);
+  border: none; border-radius: 16px; margin-bottom: 2px;
+  text-decoration: none; letter-spacing: 0.01em;
+  transition:
+    background 0.20s cubic-bezier(.4,0,.2,1),
+    color 0.20s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.18s cubic-bezier(.4,0,.2,1),
+    transform 0.14s cubic-bezier(.4,0,.2,1);
+  cursor: pointer; outline: none; min-height: 44px;
+  backdrop-filter: blur(1.5px);
+}
+.sidebar-btn:focus-visible {
+  box-shadow: 0 0 0 3px #ffb94a66;
+  z-index: 2;
+}
+.sidebar-btn:hover,
+.sidebar-btn:focus {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffe8b2;
+  box-shadow: 0 2px 8px rgba(80, 60, 30, 0.13);
+  transform: translateX(4px) scale(1.03);
+}
+.sidebar-btn.active,
+.sidebar-btn:active {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffb94a;
+  box-shadow: 0 4px 16px rgba(60, 44, 22, 0.16);
+}
+.sidebar-btn.active::before,
+.sidebar-btn:active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px; width: 5px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
+  box-shadow: 0 0 8px #ffb94a55;
+  transition: opacity 0.18s;
+  opacity: 1;
+}
+.sidebar-btn:not(.active):hover::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12px; bottom: 12px; width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ffb94a 0%, #f66d2c 100%);
+  opacity: 0.7;
+  transition: opacity 0.18s;
+}
+.sidebar-btn .badge {
+  margin-left: 10px;
+  font-size: 0.98em;
+  color: #ffb94a;
+  background: rgba(255, 185, 74, 0.18);
+  border-radius: 8px;
+  padding: 2px 7px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 8px #ffb94a33;
+  animation: badge-pulse 1.7s infinite alternate;
+}
+@keyframes badge-pulse {
+  0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
+  100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
+}
+.sidebar-btn.featured {
+  background: rgba(255, 185, 74, 0.18);
+  color: #ffe8b2; position: relative;
+}
+.sidebar-btn.featured::after {
+  content: '';
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: radial-gradient(circle, #ffe8b2 60%, #ffb94a 100%);
+  box-shadow: 0 0 10px 2px #ffe8b288;
+  animation: ai-pulse 1.7s infinite alternate;
+  opacity: 0.7;
+}
+@keyframes ai-pulse {
+  0% { box-shadow: 0 0 0 0 #ffe8b288; opacity: 0.7;}
+  100% { box-shadow: 0 0 10px 6px #ffe8b288; opacity: 1;}
+}
+/* Highlight trail animation */
+#sidebar-highlight {
+  position: absolute;
+  left: 0; width: 100%; height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #ffe8b244 10%, #ffb94a33 100%);
+  box-shadow: 0 2px 8px #ffb94a22;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: top 0.28s cubic-bezier(.4,0,.2,1), opacity 0.22s;
+}
+.sidebar-btn.active ~ #sidebar-highlight,
+.sidebar-btn:focus ~ #sidebar-highlight {
+  opacity: 1;
+}
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]:hover::after, [data-tooltip]:focus::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 105%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(34, 44, 32, 0.98);
+  color: #ffe8b2;
+  font-size: 0.97em;
+  padding: 7px 14px;
+  border-radius: 10px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px #2e4e3d33;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.18s;
+}
+.sidebar-btn:active,
+.sidebar-btn.active {
+  outline: none;
+}
+@media (max-width: 700px) {
+  #sidebar { width: 72vw; min-width: 160px; max-width: 260px; }
+  .sidebar-title { width: 92px; }
+}
+@media (max-height: 600px) {
+  .sidebar-top { padding-top: 18px; padding-bottom: 12px; }
+  .sidebar-nav { margin-top: 6px; }
+  .sidebar-btn { padding: 9px 12px; font-size: 0.97rem; }
+}
+@media (max-width: 450px) {
+  #sidebar { width: 100vw; min-width: 0; }
+  .sidebar-title { width: 70px; }
+}
+</style>
+
+<script>
+(function() {
+  // Sidebar nav logic for active state, highlight trail, keyboard nav, and accessibility
+  const navLinks = Array.from(document.querySelectorAll('#sidebar .sidebar-btn'));
+  const highlight = document.getElementById('sidebar-highlight');
+  const nav = document.querySelector('.sidebar-nav');
+  function setActiveLink() {
+    const { pathname, hash } = window.location;
+    let activeFound = false;
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href') || '';
+      // For anchor links (hash), match hash exactly
+      if (href.startsWith('#')) {
+        if (hash === href) {
+          link.classList.add('active');
+          link.setAttribute('aria-current','page');
+          activeFound = link;
+        } else {
+          link.classList.remove('active');
+          link.removeAttribute('aria-current');
+        }
+      }
+      // For normal links, match pathname or prefix (for subpages)
+      else if (href && (pathname.endsWith(href.replace(/^\//, '')) || pathname.startsWith('/' + href.replace('.html','')))) {
+        link.classList.add('active');
+        link.setAttribute('aria-current','page');
+        activeFound = link;
+      } else {
+        link.classList.remove('active');
+        link.removeAttribute('aria-current');
+      }
+    });
+    // Move highlight trail
+    if (activeFound) {
+      const rect = activeFound.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
+      highlight.style.top = (activeFound.offsetTop - nav.offsetTop) + "px";
+      highlight.style.height = activeFound.offsetHeight + "px";
+      highlight.style.opacity = 1;
+    } else {
+      highlight.style.opacity = 0;
+    }
+  }
+  setActiveLink();
+  window.addEventListener('hashchange', setActiveLink);
+  window.addEventListener('popstate', setActiveLink);
+
+  // Keyboard navigation (Alt+1...9)
+  document.addEventListener('keydown', function(e) {
+    if (e.altKey && !isNaN(e.key) && e.key >= '1' && e.key <= String(navLinks.length)) {
+      const idx = parseInt(e.key, 10) - 1;
+      if (navLinks[idx]) {
+        navLinks[idx].focus();
+        navLinks[idx].click();
+        e.preventDefault();
+      }
+    }
+    // Arrow navigation
+    if (document.activeElement.classList.contains('sidebar-btn')) {
+      let idx = navLinks.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') {
+        navLinks[(idx+1)%navLinks.length].focus();
+        e.preventDefault();
+      }
+      if (e.key === 'ArrowUp') {
+        navLinks[(idx-1+navLinks.length)%navLinks.length].focus();
+        e.preventDefault();
+      }
+    }
+  });
+
+  // Highlight trail on focus/hover
+  navLinks.forEach(link => {
+    link.addEventListener('focus', function() {
+      highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
+      highlight.style.height = link.offsetHeight + "px";
+      highlight.style.opacity = 1;
+    });
+    link.addEventListener('mouseenter', function() {
+      highlight.style.top = (link.offsetTop - nav.offsetTop) + "px";
+      highlight.style.height = link.offsetHeight + "px";
+      highlight.style.opacity = 1;
+    });
+    link.addEventListener('mouseleave', setActiveLink);
+    link.addEventListener('blur', setActiveLink);
+  });
+
+  // Accessibility: focus outlines, ARIA
+  navLinks.forEach(link => {
+    link.setAttribute('tabindex', '0');
+    link.setAttribute('role', 'link');
+  });
+
+  // Responsive: recalc highlight on resize
+  window.addEventListener('resize', setActiveLink);
+
+  // Tooltip accessibility: show on focus
+  navLinks.forEach(link => {
+    link.addEventListener('focus', function() {
+      link.setAttribute('data-show-tooltip', 'true');
+    });
+    link.addEventListener('blur', function() {
+      link.removeAttribute('data-show-tooltip');
+    });
+  });
+})();
+</script>
   <h1>AutoList Canada - Privacy Policy</h1>
   <p><strong>Effective Date:</strong> May 2025</p>
 
