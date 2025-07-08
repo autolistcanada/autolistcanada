@@ -29,6 +29,160 @@
       align-items: stretch;
       justify-content: flex-start;
     }
+    /* --- Sidebar Styles (ai-tools.html parity) --- */
+    .alc-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 270px;
+      height: 100vh;
+      background: url('/assets/sidebar-background.png') center/cover no-repeat, #156a5d;
+      background-blend-mode: multiply;
+      box-shadow: 2px 0 24px 0 rgba(32,44,32,0.13);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+    }
+    .alc-sidebar-top {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 36px;
+      padding-bottom: 26px;
+      gap: 14px;
+      backdrop-filter: blur(2.5px);
+    }
+    .alc-sidebar-logo {
+      width: 82px; height: 82px; /* Larger than AI Tools */
+      border-radius: 50%;
+      box-shadow: 0 2px 12px 0 rgba(32,44,32,0.10);
+      background: rgba(255,255,255,0.10);
+      object-fit: contain;
+      margin-bottom: 2px;
+    }
+    .alc-sidebar-title {
+      width: 175px; height: auto; object-fit: contain;
+      filter: drop-shadow(0 1px 4px rgba(80,60,30,0.07));
+    }
+    .alc-sidebar-nav {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-top: 12px;
+      padding: 0 18px 0 18px;
+    }
+    .alc-sidebar-btn {
+      display: flex; align-items: center; position: relative;
+      padding: 15px 0 15px 30px;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(24,50,42,0.18);
+      border: none;
+      border-radius: 30px;
+      margin-bottom: 2px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      box-shadow: 0 3px 18px 0 rgba(32,44,32,0.08);
+      transition:
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        color 0.17s,
+        box-shadow 0.18s,
+        transform 0.14s;
+      cursor: pointer;
+      outline: none;
+      min-height: 52px;
+      user-select: none;
+      overflow: hidden;
+      position: relative;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .alc-sidebar-btn:focus-visible {
+      box-shadow: 0 0 0 3px #ffb94a66;
+      z-index: 2;
+    }
+    .alc-sidebar-btn:hover, .alc-sidebar-btn:focus {
+      background: linear-gradient(90deg, #1db16f 0%, #ffb94a 100%);
+      color: #1e5e4b;
+      box-shadow: 0 4px 18px 0 #ffb94a44, 0 2px 8px #1db16f33;
+      transform: translateX(3px) scale(1.03);
+    }
+    .alc-sidebar-btn.active, .alc-sidebar-btn:active {
+      background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+      color: #b23d00;
+      box-shadow: 0 0 0 4px #ffe25980, 0 6px 24px 0 #ffb94a55, 0 2px 8px #1db16f33;
+      border: 2.5px solid #ffe259;
+      font-weight: 900;
+      z-index: 2;
+    }
+    @media (max-width: 1000px) {
+      .alc-sidebar { width: 200px; }
+      .alc-sidebar-logo { width: 56px; height: 56px; }
+      .alc-sidebar-title { width: 110px; }
+      .alc-sidebar-btn { font-size: 1em; padding: 14px 0 14px 18px; }
+    }
+    /* --- Responsive: Mobile collapses to topnav --- */
+    .alc-sidebar-mobile {
+      position: fixed;
+      left: 0; top: 0;
+      width: 100vw;
+      height: auto;
+      min-height: unset;
+      flex-direction: row;
+      align-items: flex-start;
+      background: url('/assets/sidebar-background.png') center/cover no-repeat, #156a5d;
+      box-shadow: 0 4px 18px #1e5e4b11;
+      z-index: 1002;
+      padding: 0;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+    .alc-sidebar-mobile .alc-sidebar-top {
+      flex-direction: row;
+      padding: 10px 8px 10px 10px;
+      gap: 12px;
+      width: auto;
+    }
+    .alc-sidebar-mobile .alc-sidebar-logo { width: 38px; height: 38px; }
+    .alc-sidebar-mobile .alc-sidebar-title { width: 60px; }
+    .alc-sidebar-mobile .alc-sidebar-nav {
+      flex-direction: row;
+      gap: 0.5em;
+      padding: 0 0 0 0;
+      margin: 0 0 0 12px;
+      width: auto;
+    }
+    .alc-sidebar-mobile .alc-sidebar-btn {
+      font-size: 0.98em;
+      padding: 10px 10px;
+      min-width: 96px;
+      margin-bottom: 0;
+      margin-right: 2px;
+      border-radius: 18px;
+    }
+    /* --- Main content shift for sidebar --- */
+    .alc-main-content {
+      margin-left: 270px;
+      transition: margin-left 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    @media (max-width: 1000px) {
+      .alc-main-content { margin-left: 200px; }
+    }
+    @media (max-width: 800px) {
+      .alc-sidebar { display: none; }
+      .alc-main-content { margin-left: 0; }
+      .alc-sidebar-mobile { display: flex !important; }
+      .alc-main-mobile { margin-top: 88px; }
+    }
+    @media (max-width: 600px) {
+      .alc-main-mobile { margin-top: 66px; }
+    }
+    /* --- Privacy Page Styles (unchanged) --- */
     .header-callout {
       margin: 0 auto 32px auto;
       max-width: 820px;
@@ -244,119 +398,164 @@
   </style>
 </head>
 <body>
-  <div class="header-callout">
-    <span class="date">Last Updated: July 6, 2025</span><br>
-    <strong>This Privacy Policy reflects our launch-ready commitment to public trust.</strong><br>
-    <span class="subtext">It is designed to be clear, beautiful, and built with integrity.</span>
+  <!-- Sidebar START -->
+  <aside id="sidebar" class="alc-sidebar" role="navigation" aria-label="Main Navigation">
+    <div class="alc-sidebar-top">
+      <img src="/assets/logo.png" alt="AutoList Canada Logo" class="alc-sidebar-logo" />
+      <img src="/assets/AutoList Canada Title.png" alt="AutoList Canada Title" class="alc-sidebar-title" />
+    </div>
+    <nav class="alc-sidebar-nav">
+      <a href="index.html" class="alc-sidebar-btn" id="nav-home">Home</a>
+      <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard">Dashboard</a>
+      <a href="listings.html" class="alc-sidebar-btn" id="nav-listings">Listings</a>
+      <a href="ai-tools.html" class="alc-sidebar-btn" id="nav-ai-tools">AI Tools</a>
+      <a href="faq.html" class="alc-sidebar-btn" id="nav-faq">FAQ</a>
+      <a href="privacy.html" class="alc-sidebar-btn active" id="nav-privacy">Privacy Policy</a>
+      <a href="terms.html" class="alc-sidebar-btn" id="nav-terms">Terms</a>
+    </nav>
+  </aside>
+  <!-- Sidebar END -->
+  <div class="alc-main-content">
+    <div class="header-callout">
+      <span class="date">Last Updated: July 6, 2025</span><br>
+      <strong>This Privacy Policy reflects our launch-ready commitment to public trust.</strong><br>
+      <span class="subtext">It is designed to be clear, beautiful, and built with integrity.</span>
+    </div>
+    <nav class="sticky-nav" id="sticky-nav">
+      <a href="#intro" class="navlink">Intro</a>
+      <a href="#collect" class="navlink">What We Collect</a>
+      <a href="#use" class="navlink">How We Use It</a>
+      <a href="#ai" class="navlink">AI & Automation</a>
+      <a href="#security" class="navlink">Data Protection</a>
+      <a href="#rights" class="navlink">Your Rights</a>
+      <a href="#cookies" class="navlink">Cookies</a>
+      <a href="#optout" class="navlink">AI Opt-Out</a>
+      <a href="#thirdparty" class="navlink">3rd-Party Links</a>
+      <a href="#contact" class="navlink">Contact</a>
+      <a href="#updatelog" class="navlink">Update Log</a>
+    </nav>
+    <main class="main-content">
+      <section class="glass-section" id="intro">
+        <h2>Welcome to Your Privacy at AutoList Canada</h2>
+        <span class="subtext">Effective Date: July 6, 2025</span>
+        <p>
+          At AutoList Canada, your privacy isn’t just a checkbox — it’s a promise. We’re a Canadian platform designed for sellers, powered by AI, and built on trust. This page explains how we handle your information in clear, friendly language. If you have questions, we’re here to help.
+        </p>
+        <p><strong>PIPEDA Compliant:</strong> We follow Canadian privacy principles and only use your info to deliver value — never for resale or hidden purposes.</p>
+      </section>
+      <section class="glass-section" id="collect">
+        <h2>What We Collect</h2>
+        <ul>
+          <li><strong>Contact Details:</strong> Name, email, and phone (for support and account access)</li>
+          <li><strong>Account Info:</strong> Login credentials, seller profile, and listing details</li>
+          <li><strong>Usage Data:</strong> How you use AutoList Canada (to improve your experience)</li>
+          <li><strong>Device Info:</strong> Browser, device type, and region (for security and analytics)</li>
+          <li><strong>Support Chats:</strong> Messages with our team (so we can help you better)</li>
+        </ul>
+      </section>
+      <section class="glass-section" id="use">
+        <h2>How We Use It</h2>
+        <ul>
+          <li>To create and manage your account</li>
+          <li>To help you list, edit, and optimize your inventory</li>
+          <li>To send important updates or offers (you can opt out anytime)</li>
+          <li>To improve our platform with anonymous analytics</li>
+          <li>To keep your experience secure and smooth</li>
+        </ul>
+        <span class="subtext">We do <strong>not</strong> sell your data. Ever.</span>
+      </section>
+      <section class="glass-section" id="ai">
+        <h2>AI Processing & Automation</h2>
+        <p>
+          Our AI features help you write listings, suggest improvements, and save time. We use AI (including models from OpenAI) only to enhance your experience — never to make binding decisions or replace your judgment.
+        </p>
+        <ul>
+          <li>AI suggestions are always optional</li>
+          <li>You can request a human review at any time</li>
+          <li>Your data is <strong>never</strong> sold or shared with AI providers for their own use</li>
+        </ul>
+      </section>
+      <section class="glass-section" id="security">
+        <h2>Data Protection Measures</h2>
+        <ul>
+          <li>All data is encrypted in transit (SSL) and at rest</li>
+          <li>We use secure Canadian cloud infrastructure</li>
+          <li>Access to your info is strictly limited to trusted staff</li>
+          <li>We audit our systems regularly for safety</li>
+        </ul>
+        <span class="subtext">We treat your data like we’d want ours treated: with respect and care.</span>
+      </section>
+      <section class="rights-section" id="rights">
+        <h2>Your Rights</h2>
+        <ul class="rights-list">
+          <li><span class="icon">✅</span> <span class="title">Access Your Data</span> – See what we’ve stored</li>
+          <li><span class="icon">🧠</span> <span class="title">AI Opt-Out</span> – Request a human review of AI outputs</li>
+          <li><span class="icon">🔐</span> <span class="title">Delete Your Info</span> – Ask for your data to be erased</li>
+          <li><span class="icon">❌</span> <span class="title">Withdraw Consent</span> – You can opt out of tools anytime</li>
+          <li><span class="icon">🔄</span> <span class="title">Correct Mistakes</span> – Request data updates if info is wrong</li>
+        </ul>
+        <span class="subtext">To exercise any right, just email us — no forms, no runaround.</span>
+      </section>
+      <section class="glass-section" id="cookies">
+        <h2>Cookie Use</h2>
+        <p>
+          We use cookies to keep you logged in, remember your preferences, and understand how you use AutoList Canada. You can manage cookies in your browser settings. No creepy tracking — just tools to make things work better.
+        </p>
+      </section>
+      <section class="glass-section" id="optout">
+        <h2>AI Opt-Out & Human Review</h2>
+        <p>
+          Want to skip AI suggestions? No problem. You can opt out of AI-powered features at any time. If you do, a real person will review your requests or listings instead.
+        </p>
+        <span class="subtext">We believe in human judgment — always.</span>
+      </section>
+      <section class="glass-section" id="thirdparty">
+        <h2>Third-Party Links Notice</h2>
+        <p>
+          Sometimes we link to other sites for your convenience. We can’t control their privacy practices — so check their policies before sharing info. We only partner with platforms we trust.
+        </p>
+      </section>
+      <section class="glass-section" id="contact">
+        <h2>Contact Info</h2>
+        <p>
+          Any questions, concerns, or requests? Reach our privacy team at <a href="mailto:support@autolistcanada.ca">support@autolistcanada.ca</a>. We’re real people, and we always reply.
+        </p>
+      </section>
+      <section class="glass-section" id="updatelog">
+        <h2>Update Log</h2>
+        <div class="update-log">
+          <strong>July 6, 2025:</strong> Launch version of our Privacy Policy. Designed for clarity, trust, and Canadian sellers.
+        </div>
+      </section>
+    </main>
   </div>
-  <nav class="sticky-nav" id="sticky-nav">
-    <a href="#intro" class="navlink">Intro</a>
-    <a href="#collect" class="navlink">What We Collect</a>
-    <a href="#use" class="navlink">How We Use It</a>
-    <a href="#ai" class="navlink">AI & Automation</a>
-    <a href="#security" class="navlink">Data Protection</a>
-    <a href="#rights" class="navlink">Your Rights</a>
-    <a href="#cookies" class="navlink">Cookies</a>
-    <a href="#optout" class="navlink">AI Opt-Out</a>
-    <a href="#thirdparty" class="navlink">3rd-Party Links</a>
-    <a href="#contact" class="navlink">Contact</a>
-    <a href="#updatelog" class="navlink">Update Log</a>
-  </nav>
-  <main class="main-content">
-    <section class="glass-section" id="intro">
-      <h2>Welcome to Your Privacy at AutoList Canada</h2>
-      <span class="subtext">Effective Date: July 6, 2025</span>
-      <p>
-        At AutoList Canada, your privacy isn’t just a checkbox — it’s a promise. We’re a Canadian platform designed for sellers, powered by AI, and built on trust. This page explains how we handle your information in clear, friendly language. If you have questions, we’re here to help.
-      </p>
-      <p><strong>PIPEDA Compliant:</strong> We follow Canadian privacy principles and only use your info to deliver value — never for resale or hidden purposes.</p>
-    </section>
-    <section class="glass-section" id="collect">
-      <h2>What We Collect</h2>
-      <ul>
-        <li><strong>Contact Details:</strong> Name, email, and phone (for support and account access)</li>
-        <li><strong>Account Info:</strong> Login credentials, seller profile, and listing details</li>
-        <li><strong>Usage Data:</strong> How you use AutoList Canada (to improve your experience)</li>
-        <li><strong>Device Info:</strong> Browser, device type, and region (for security and analytics)</li>
-        <li><strong>Support Chats:</strong> Messages with our team (so we can help you better)</li>
-      </ul>
-    </section>
-    <section class="glass-section" id="use">
-      <h2>How We Use It</h2>
-      <ul>
-        <li>To create and manage your account</li>
-        <li>To help you list, edit, and optimize your inventory</li>
-        <li>To send important updates or offers (you can opt out anytime)</li>
-        <li>To improve our platform with anonymous analytics</li>
-        <li>To keep your experience secure and smooth</li>
-      </ul>
-      <span class="subtext">We do <strong>not</strong> sell your data. Ever.</span>
-    </section>
-    <section class="glass-section" id="ai">
-      <h2>AI Processing & Automation</h2>
-      <p>
-        Our AI features help you write listings, suggest improvements, and save time. We use AI (including models from OpenAI) only to enhance your experience — never to make binding decisions or replace your judgment.
-      </p>
-      <ul>
-        <li>AI suggestions are always optional</li>
-        <li>You can request a human review at any time</li>
-        <li>Your data is <strong>never</strong> sold or shared with AI providers for their own use</li>
-      </ul>
-    </section>
-    <section class="glass-section" id="security">
-      <h2>Data Protection Measures</h2>
-      <ul>
-        <li>All data is encrypted in transit (SSL) and at rest</li>
-        <li>We use secure Canadian cloud infrastructure</li>
-        <li>Access to your info is strictly limited to trusted staff</li>
-        <li>We audit our systems regularly for safety</li>
-      </ul>
-      <span class="subtext">We treat your data like we’d want ours treated: with respect and care.</span>
-    </section>
-    <section class="rights-section" id="rights">
-      <h2>Your Rights</h2>
-      <ul class="rights-list">
-        <li><span class="icon">✅</span> <span class="title">Access Your Data</span> – See what we’ve stored</li>
-        <li><span class="icon">🧠</span> <span class="title">AI Opt-Out</span> – Request a human review of AI outputs</li>
-        <li><span class="icon">🔐</span> <span class="title">Delete Your Info</span> – Ask for your data to be erased</li>
-        <li><span class="icon">❌</span> <span class="title">Withdraw Consent</span> – You can opt out of tools anytime</li>
-        <li><span class="icon">🔄</span> <span class="title">Correct Mistakes</span> – Request data updates if info is wrong</li>
-      </ul>
-      <span class="subtext">To exercise any right, just email us — no forms, no runaround.</span>
-    </section>
-    <section class="glass-section" id="cookies">
-      <h2>Cookie Use</h2>
-      <p>
-        We use cookies to keep you logged in, remember your preferences, and understand how you use AutoList Canada. You can manage cookies in your browser settings. No creepy tracking — just tools to make things work better.
-      </p>
-    </section>
-    <section class="glass-section" id="optout">
-      <h2>AI Opt-Out & Human Review</h2>
-      <p>
-        Want to skip AI suggestions? No problem. You can opt out of AI-powered features at any time. If you do, a real person will review your requests or listings instead.
-      </p>
-      <span class="subtext">We believe in human judgment — always.</span>
-    </section>
-    <section class="glass-section" id="thirdparty">
-      <h2>Third-Party Links Notice</h2>
-      <p>
-        Sometimes we link to other sites for your convenience. We can’t control their privacy practices — so check their policies before sharing info. We only partner with platforms we trust.
-      </p>
-    </section>
-    <section class="glass-section" id="contact">
-      <h2>Contact Info</h2>
-      <p>
-        Any questions, concerns, or requests? Reach our privacy team at <a href="mailto:support@autolistcanada.ca">support@autolistcanada.ca</a>. We’re real people, and we always reply.
-      </p>
-    </section>
-    <section class="glass-section" id="updatelog">
-      <h2>Update Log</h2>
-      <div class="update-log">
-        <strong>July 6, 2025:</strong> Launch version of our Privacy Policy. Designed for clarity, trust, and Canadian sellers.
-      </div>
-    </section>
-  </main>
   <script>
+    // Sidebar active highlight logic (matches ai-tools.html)
+    (function() {
+      var sidebarBtns = document.querySelectorAll('.alc-sidebar-btn');
+      sidebarBtns.forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      var activeBtn = document.getElementById('nav-privacy');
+      if(activeBtn) activeBtn.classList.add('active');
+    })();
+    // Responsive sidebar to topnav on mobile
+    (function() {
+      function handleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        var main = document.querySelector('.alc-main-content');
+        if(window.innerWidth <= 800) {
+          sidebar.classList.add('alc-sidebar-mobile');
+          main.classList.add('alc-main-mobile');
+        } else {
+          sidebar.classList.remove('alc-sidebar-mobile');
+          main.classList.remove('alc-main-mobile');
+        }
+      }
+      window.addEventListener('resize', handleSidebar);
+      window.addEventListener('DOMContentLoaded', handleSidebar);
+      handleSidebar();
+    })();
     // Sticky nav active link logic
     (function() {
       const navlinks = Array.from(document.querySelectorAll('.sticky-nav .navlink'));
