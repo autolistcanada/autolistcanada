@@ -10,15 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     html, body {
-      height: 100%;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
       font-family: 'Inter', 'Montserrat', Arial, sans-serif;
-      background: url('dashboard-background.png'), linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%);
+      background: url('sidebar-background.png'), linear-gradient(120deg, #2e4e3d 0%, #f66d2c 70%, #ffb94a 100%);
       background-size: cover, 250% 250%;
       background-repeat: no-repeat, repeat;
       background-blend-mode: multiply;
-      min-height: 100vh;
       color: #2d3a33;
       box-sizing: border-box;
       overflow-x: hidden;
@@ -270,7 +269,7 @@
       margin-bottom: 0.6em;
       font-size: 1.08em;
     }
-    .icon-list .icon { font-size: 1.3em; }
+    .icon-list .icon { font-size: 1.3em; color: #1db16f; }
     a, .cta-link {
       color: #e05a13;
       text-decoration: underline;
@@ -284,7 +283,6 @@
     .last-updated-badge {
       position: sticky;
       top: 18px;
-      float: right;
       background: #fffaf0;
       color: #205c40;
       border-radius: 11px;
@@ -299,6 +297,7 @@
       border: 1px solid #ffb94a44;
       letter-spacing: 0.01em;
       transition: background 0.18s;
+      display: block;
     }
     .anchor-menu {
       position: fixed;
@@ -363,7 +362,7 @@
       <a href="index.html" class="sidebar-btn" id="nav-home" data-tooltip="Home: Return to main page" accesskey="4">Home</a>
       <a href="#how-it-works" class="sidebar-btn" id="nav-how" data-tooltip="How It Works: Learn our methods" accesskey="5">How It Works</a>
       <a href="terms.html" class="sidebar-btn" id="nav-terms" data-tooltip="Terms of Service: Legal details" accesskey="7">Terms of Service</a>
-      <a href="privacy.html" class="sidebar-btn" id="nav-privacy" data-tooltip="Privacy Policy: Your data rights" accesskey="8">Privacy Policy</a>
+      <a href="privacy.html" class="sidebar-btn active" id="nav-privacy" data-tooltip="Privacy Policy: Your data rights" accesskey="8">Privacy Policy</a>
       <div id="sidebar-highlight"></div>
     </nav>
   </div>
@@ -384,7 +383,7 @@
   </nav>
   <main class="content-pane">
     <section id="effective-date" class="section-block scrollReveal">
-      <span class="last-updated-badge" id="last-updated-badge"></span>
+      <span class="last-updated-badge" id="last-updated-badge">Last Updated: July 6, 2025</span>
       <h1 class="main-title">Privacy Policy</h1>
       <h2>Effective Date</h2>
       <p>July 6, 2025</p>
@@ -438,9 +437,9 @@
     <section id="your-rights" class="section-block scrollReveal">
       <h2>Your Rights</h2>
       <ul class="icon-list">
-        <li><span class="icon">✅</span> <strong>Access:</strong> You may request a copy of your personal data at any time.</li>
-        <li><span class="icon">📝</span> <strong>Edit:</strong> You may update or correct your information through your account settings.</li>
-        <li><span class="icon">❌</span> <strong>Delete:</strong> You may request deletion of your data, subject to legal requirements.</li>
+        <li><span class="icon" style="color:#1db16f">✅</span> <strong>Access:</strong> You may request a copy of your personal data at any time.</li>
+        <li><span class="icon" style="color:#1db16f">📝</span> <strong>Edit:</strong> You may update or correct your information through your account settings.</li>
+        <li><span class="icon" style="color:#e05a13">❌</span> <strong>Delete:</strong> You may request deletion of your data, subject to legal requirements.</li>
       </ul>
     </section>
     <section id="cookies" class="section-block scrollReveal">
@@ -599,8 +598,6 @@
       window.addEventListener('DOMContentLoaded', highlightAnchor);
       highlightAnchor();
     })();
-    document.getElementById('last-updated-badge').textContent =
-      "Last Updated: July 6, 2025";
   </script>
 </body>
 </html>
