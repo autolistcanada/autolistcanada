@@ -391,14 +391,15 @@
 </head>
 <body>
   <!-- Sidebar START -->
-  <aside id="alc-sidebar" class="alc-sidebar" role="navigation" aria-label="Main Navigation">
+ <body>
+  <aside id="sidebar" class="alc-sidebar" role="navigation" aria-label="Main Navigation">
     <div class="alc-sidebar-top">
       <img src="/assets/logo.png" alt="AutoList Canada Logo" class="alc-sidebar-logo" />
       <img src="/assets/AutoList Canada Title.png" alt="AutoList Canada" class="alc-sidebar-title" />
     </div>
     <nav class="alc-sidebar-nav" aria-label="Sidebar Navigation">
       <a href="index.html" class="alc-sidebar-btn" id="nav-home" tabindex="0"><span>🏡</span> <span class="sidebar-text">Home</span></a>
-      <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard" tabindex="0"><span>⚡</span> <span class="sidebar-text">Dashboard</span></a>
+      <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard" tabindex="0"><span>📊</span> <span class="sidebar-text">Dashboard</span></a>
       <a href="listings.html" class="alc-sidebar-btn" id="nav-listings" tabindex="0"><span>🚗</span> <span class="sidebar-text">Listings</span></a>
       <a href="ai-tools.html" class="alc-sidebar-btn" id="nav-ai-tools" tabindex="0"><span>🤖</span> <span class="sidebar-text">AI Tools</span></a>
       <a href="faq.html" class="alc-sidebar-btn" id="nav-faq" tabindex="0"><span>❓</span> <span class="sidebar-text">FAQ</span></a>
@@ -412,8 +413,197 @@
         <div class="text-xs" style="color:#4b6e61;">Choose local buyers to reduce your carbon footprint!</div>
       </div>
     </div>
-    <div id="einstein-quote" class="text-xs text-center mt-2 text-purple-700 italic einstein-blink"></div>
   </aside>
+  <div class="alc-main-content">
+    <!-- All page-specific content goes here -->
+  </div>
+
+  <!-- SIDEBAR & LAYOUT CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Inter:wght@400;500;700&display=swap');
+    html, body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+      background: url('/assets/sidebar-background.png') center/cover no-repeat, linear-gradient(120deg, #1e5e4b 0%, #f66d2c 70%, #ffb94a 100%);
+      background-blend-mode: multiply;
+      color: #18322a;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .alc-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 270px;
+      height: 100vh;
+      background: linear-gradient(135deg, #1e5e4b 0%, #38bdf8 40%, #ffe259 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 9s ease-in-out infinite;
+      box-shadow: 2px 0 24px 0 rgba(32,44,32,0.13);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes gradientMove {
+      0%,100% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+    }
+    .alc-sidebar-top {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 36px;
+      padding-bottom: 26px;
+      gap: 14px;
+      backdrop-filter: blur(2.5px);
+    }
+    .alc-sidebar-logo {
+      width: 82px; height: 82px;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px 0 rgba(32,44,32,0.10);
+      background: rgba(255,255,255,0.10);
+      object-fit: contain;
+      margin-bottom: 2px;
+    }
+    .alc-sidebar-title {
+      width: 175px; height: auto; object-fit: contain;
+      filter: drop-shadow(0 1px 4px rgba(80,60,30,0.07));
+    }
+    .alc-sidebar-nav {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-top: 12px;
+      padding: 0 18px 0 18px;
+    }
+    .alc-sidebar-btn {
+      display: flex; align-items: center; position: relative;
+      padding: 15px 0 15px 30px;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 1.13em;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(24,50,42,0.18);
+      border: none;
+      border-radius: 30px;
+      margin-bottom: 2px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      box-shadow: 0 3px 18px 0 rgba(32,44,32,0.08);
+      transition:
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        color 0.17s,
+        box-shadow 0.18s,
+        transform 0.14s;
+      cursor: pointer;
+      outline: none;
+      min-height: 52px;
+      user-select: none;
+      overflow: hidden;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .alc-sidebar-btn:focus-visible {
+      box-shadow: 0 0 0 3px #ffb94a66;
+      z-index: 2;
+    }
+    .alc-sidebar-btn:hover, .alc-sidebar-btn:focus {
+      background: linear-gradient(90deg, #1db16f 0%, #ffb94a 100%);
+      color: #1e5e4b;
+      box-shadow: 0 4px 18px 0 #ffb94a44, 0 2px 8px #1db16f33;
+      transform: translateX(3px) scale(1.03);
+    }
+    .alc-sidebar-btn.active, .alc-sidebar-btn:active, .alc-sidebar-btn[aria-current="page"] {
+      background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+      color: #b23d00;
+      box-shadow: 0 0 0 4px #ffe25980, 0 6px 24px 0 #ffb94a55, 0 2px 8px #1db16f33;
+      border: 2.5px solid #ffe259;
+      font-weight: 900;
+      z-index: 2;
+    }
+    @media (max-width: 1000px) {
+      .alc-sidebar { width: 200px; }
+      .alc-sidebar-logo { width: 56px; height: 56px; }
+      .alc-sidebar-title { width: 110px; }
+      .alc-sidebar-btn { font-size: 1em; padding: 14px 0 14px 18px; }
+    }
+    @media (max-width: 800px) {
+      .alc-sidebar { display: none; }
+      .alc-main-content { margin-left: 0 !important; }
+    }
+    .alc-main-content {
+      margin-left: 270px;
+      transition: margin-left 0.22s cubic-bezier(.4,0,.2,1);
+      width: 100%;
+    }
+    @media (max-width: 1000px) {
+      .alc-main-content { margin-left: 200px; }
+    }
+    @media (max-width: 800px) {
+      .alc-main-content { margin-left: 0; }
+    }
+    .alc-eco-tip {
+      background: rgba(255,255,255,0.92);
+      border-radius: 2em;
+      box-shadow: 0 8px 32px 0 rgba(32,44,32,0.11), 0 1.5px 8px #1e5e4b22;
+      padding: 1em 1.2em;
+      margin-top: 1.5em;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      font-size: 1em;
+    }
+    .alc-eco-tip-icon {
+      width: 2.2em; height: 2.2em;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1db16f 0%, #ffb94a 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      box-shadow: 0 1px 8px #1db16f33;
+    }
+  </style>
+  <!-- SIDEBAR ACTIVE JS -->
+  <script>
+    // Highlight active sidebar button
+    (function() {
+      var sidebarBtns = document.querySelectorAll('.alc-sidebar-btn');
+      sidebarBtns.forEach(function(btn) {
+        btn.classList.remove('active');
+        // For accessibility, remove aria-current except for the active one
+        btn.removeAttribute('aria-current');
+        if(window.location.pathname.endsWith(btn.getAttribute('href'))) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-current', 'page');
+        }
+      });
+      // Fallback for static HTML: ensure Privacy Policy is active if on privacy.html
+      var activeBtn = document.getElementById('nav-privacy');
+      if(activeBtn && window.location.pathname.indexOf('privacy') !== -1) {
+        activeBtn.classList.add('active');
+        activeBtn.setAttribute('aria-current', 'page');
+      }
+    })();
+  </script>
+</body>
   <!-- Sidebar END -->
   <div class="alc-main-content">
     <div class="header-callout">
