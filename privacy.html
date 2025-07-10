@@ -29,142 +29,182 @@
       align-items: stretch;
       justify-content: flex-start;
     }
-    /* --- Sidebar Styles (ai-tools.html parity) --- */
-    .alc-sidebar {
+     /* --- UNIVERSAL SIDEBAR STYLES (AutoList Canada) --- */
+  .alc-universal-sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 270px;
+    background: url('/assets/sidebar-background.png') center/cover no-repeat, linear-gradient(135deg, #2dcfc5 0%, #ff9335 100%);
+    background-blend-mode: soft-light;
+    box-shadow: 0 8px 40px 0 rgba(46, 79, 71, 0.14), 0 2px 16px #2dcfc522;
+    border-radius: 0 32px 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1002;
+    padding: 0 0 24px 0;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    backdrop-filter: blur(8px) saturate(1.15);
+    background-color: rgba(255,255,255,0.68);
+    overflow-y: auto;
+    border-right: 3.5px solid #2dcfc5;
+  }
+  .alc-sidebar-logo-wrap {
+    width: 100%; display: flex; justify-content: center; align-items: center;
+    padding-top: 36px; padding-bottom: 12px;
+  }
+  .alc-sidebar-logo {
+    width: 64px; height: 64px; border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(45, 207, 197, 0.09);
+    background: rgba(255,255,255,0.13);
+    object-fit: contain;
+  }
+  .alc-sidebar-title-wrap {
+    width: 100%; display: flex; justify-content: center; align-items: center;
+    padding-bottom: 18px;
+  }
+  .alc-sidebar-title {
+    width: 160px; height: auto; object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(45,207,197,0.09));
+    margin-top: 2px;
+  }
+  .alc-sidebar-title-large {
+    width: 180px;
+    max-width: 90vw;
+    transition: width 0.3s;
+  }
+  .alc-sidebar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-top: 16px;
+    padding: 0 18px;
+    position: relative;
+  }
+  .alc-sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 22px;
+    font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #0d3e38;
+    background: rgba(255,255,255,0.68);
+    border: none;
+    border-radius: 22px;
+    margin-bottom: 2px;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 14px 0 rgba(45,207,197,0.07);
+    transition: background 0.18s, color 0.18s, box-shadow 0.22s, transform 0.16s;
+    cursor: pointer;
+    outline: none;
+    min-height: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .alc-sidebar-btn .alc-nav-ic {
+    font-size: 1.22em;
+    flex-shrink: 0;
+  }
+  .alc-sidebar-btn .alc-nav-label {
+    font-size: 1em;
+    flex: 1;
+    white-space: nowrap;
+  }
+  .alc-sidebar-btn:focus-visible {
+    box-shadow: 0 0 0 4px #2dcfc555;
+    z-index: 2;
+  }
+  .alc-sidebar-btn:hover,
+  .alc-sidebar-btn:focus {
+    background: rgba(45, 207, 197, 0.15);
+    color: #178e80;
+    box-shadow: 0 4px 18px 0 #2dcfc544, 0 2px 14px #ff933522;
+    transform: scale(1.04) translateX(3px);
+  }
+  .alc-sidebar-btn.active,
+  .alc-sidebar-btn[aria-current="page"] {
+    background: rgba(45, 207, 197, 0.23);
+    color: #178e80;
+    box-shadow: 0 0 0 4px #2dcfc555, 0 6px 24px #2dcfc544;
+    font-weight: 700;
+  }
+  .alc-sidebar-btn.active::before,
+  .alc-sidebar-btn[aria-current="page"]::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px; width: 6px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #2dcfc5 0%, #ff9335 100%);
+    box-shadow: 0 0 12px #2dcfc555;
+    opacity: 1;
+    transition: opacity 0.18s;
+  }
+  .alc-sidebar-btn:not(.active):hover::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 12px; bottom: 12px; width: 4px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #2dcfc5 0%, #ff9335 100%);
+    opacity: 0.7;
+    transition: opacity 0.18s;
+  }
+  @media (max-width: 900px) {
+    .alc-universal-sidebar {
+      width: 64vw; min-width: 140px; max-width: 270px;
+      border-radius: 0 18px 18px 0;
+    }
+    .alc-sidebar-title-large { width: 120px; }
+  }
+  @media (max-width: 700px) {
+    .alc-universal-sidebar {
       position: fixed;
-      top: 0; left: 0;
-      width: 270px;
-      height: 100vh;
-      background: url('/assets/sidebar-background.png') center/cover no-repeat, #156a5d;
-      background-blend-mode: multiply;
-      box-shadow: 2px 0 24px 0 rgba(32,44,32,0.13);
-      display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      width: 100vw; height: 64px;
+      min-width: 0; max-width: none;
+      border-radius: 0 0 22px 22px;
+      box-shadow: 0 2px 18px #2dcfc522;
+      padding: 0 10px;
       align-items: center;
-      z-index: 1000;
-      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      justify-content: flex-start;
+      top: 0; left: 0; right: 0;
+      z-index: 1002;
     }
-    .alc-sidebar-top {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 36px;
-      padding-bottom: 26px;
-      gap: 14px;
-      backdrop-filter: blur(2.5px);
-    }
-    .alc-sidebar-logo {
-      width: 82px; height: 82px; /* Larger than AI Tools */
-      border-radius: 50%;
-      box-shadow: 0 2px 12px 0 rgba(32,44,32,0.10);
-      background: rgba(255,255,255,0.10);
-      object-fit: contain;
-      margin-bottom: 2px;
-    }
-    .alc-sidebar-title {
-      width: 175px; height: auto; object-fit: contain;
-      filter: drop-shadow(0 1px 4px rgba(80,60,30,0.07));
-    }
+    .alc-sidebar-logo-wrap { padding: 7px 0 7px 0; }
+    .alc-sidebar-title-wrap { padding-bottom: 0; }
+    .alc-sidebar-title-large { width: 92px; }
     .alc-sidebar-nav {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      margin-top: 12px;
-      padding: 0 18px 0 18px;
+      flex-direction: row;
+      gap: 7px;
+      margin-top: 0;
+      padding: 0 0 0 10px;
+      width: auto;
+      align-items: center;
     }
     .alc-sidebar-btn {
-      display: flex; align-items: center; position: relative;
-      padding: 15px 0 15px 30px;
-      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
-      font-size: 1.13em;
-      font-weight: 700;
-      color: #fff;
-      background: rgba(24,50,42,0.18);
-      border: none;
-      border-radius: 30px;
-      margin-bottom: 2px;
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      box-shadow: 0 3px 18px 0 rgba(32,44,32,0.08);
-      transition:
-        background 0.22s cubic-bezier(.4,0,.2,1),
-        color 0.17s,
-        box-shadow 0.18s,
-        transform 0.14s;
-      cursor: pointer;
-      outline: none;
-      min-height: 52px;
-      user-select: none;
-      overflow: hidden;
-      position: relative;
-      margin-left: 0;
-      margin-right: 0;
-    }
-    .alc-sidebar-btn:focus-visible {
-      box-shadow: 0 0 0 3px #ffb94a66;
-      z-index: 2;
-    }
-    .alc-sidebar-btn:hover, .alc-sidebar-btn:focus {
-      background: linear-gradient(90deg, #1db16f 0%, #ffb94a 100%);
-      color: #1e5e4b;
-      box-shadow: 0 4px 18px 0 #ffb94a44, 0 2px 8px #1db16f33;
-      transform: translateX(3px) scale(1.03);
-    }
-    .alc-sidebar-btn.active, .alc-sidebar-btn:active {
-      background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
-      color: #b23d00;
-      box-shadow: 0 0 0 4px #ffe25980, 0 6px 24px 0 #ffb94a55, 0 2px 8px #1db16f33;
-      border: 2.5px solid #ffe259;
-      font-weight: 900;
-      z-index: 2;
-    }
-    @media (max-width: 1000px) {
-      .alc-sidebar { width: 200px; }
-      .alc-sidebar-logo { width: 56px; height: 56px; }
-      .alc-sidebar-title { width: 110px; }
-      .alc-sidebar-btn { font-size: 1em; padding: 14px 0 14px 18px; }
-    }
-    /* --- Responsive: Mobile collapses to topnav --- */
-    .alc-sidebar-mobile {
-      position: fixed;
-      left: 0; top: 0;
-      width: 100vw;
-      height: auto;
-      min-height: unset;
-      flex-direction: row;
-      align-items: flex-start;
-      background: url('/assets/sidebar-background.png') center/cover no-repeat, #156a5d;
-      box-shadow: 0 4px 18px #1e5e4b11;
-      z-index: 1002;
-      padding: 0;
-      overflow-x: auto;
-      overflow-y: visible;
-    }
-    .alc-sidebar-mobile .alc-sidebar-top {
-      flex-direction: row;
-      padding: 10px 8px 10px 10px;
-      gap: 12px;
-      width: auto;
-    }
-    .alc-sidebar-mobile .alc-sidebar-logo { width: 38px; height: 38px; }
-    .alc-sidebar-mobile .alc-sidebar-title { width: 60px; }
-    .alc-sidebar-mobile .alc-sidebar-nav {
-      flex-direction: row;
-      gap: 0.5em;
-      padding: 0 0 0 0;
-      margin: 0 0 0 12px;
-      width: auto;
-    }
-    .alc-sidebar-mobile .alc-sidebar-btn {
-      font-size: 0.98em;
-      padding: 10px 10px;
-      min-width: 96px;
+      padding: 10px 12px;
+      font-size: 0.97rem;
+      min-height: 36px;
+      border-radius: 16px;
       margin-bottom: 0;
-      margin-right: 2px;
-      border-radius: 18px;
     }
+    .alc-sidebar-btn .alc-nav-label { display: none; }
+  }
+  @media (max-width: 500px) {
+    .alc-universal-sidebar {
+      height: 56px;
+      min-width: 0; max-width: none;
+      border-radius: 0 0 14px 14px;
+      padding: 0 3px;
+    }
+    .alc-sidebar-logo { width: 38px; height: 38px; }
+    .alc-sidebar-title-large { width: 66px; }
+  }
+  /* --- END UNIVERSAL SIDEBAR STYLES --- */
     /* --- Main content shift for sidebar --- */
     .alc-main-content {
       margin-left: 270px;
@@ -398,23 +438,41 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar START -->
-  <aside id="sidebar" class="alc-sidebar" role="navigation" aria-label="Main Navigation">
-    <div class="alc-sidebar-top">
-      <img src="/assets/logo.png" alt="AutoList Canada Logo" class="alc-sidebar-logo" />
-      <img src="/assets/AutoList Canada Title.png" alt="AutoList Canada Title" class="alc-sidebar-title" />
-    </div>
-    <nav class="alc-sidebar-nav">
-      <a href="index.html" class="alc-sidebar-btn" id="nav-home">Home</a>
-      <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard">Dashboard</a>
-      <a href="listings.html" class="alc-sidebar-btn" id="nav-listings">Listings</a>
-      <a href="ai-tools.html" class="alc-sidebar-btn" id="nav-ai-tools">AI Tools</a>
-      <a href="faq.html" class="alc-sidebar-btn" id="nav-faq">FAQ</a>
-      <a href="privacy.html" class="alc-sidebar-btn active" id="nav-privacy">Privacy Policy</a>
-      <a href="terms.html" class="alc-sidebar-btn" id="nav-terms">Terms</a>
-    </nav>
-  </aside>
-  <!-- Sidebar END -->
+<!-- Sidebar START -->
+<aside id="sidebar" class="alc-universal-sidebar" role="navigation" aria-label="Main Navigation">
+  <div class="alc-sidebar-logo-wrap">
+    <img src="/assets/logo.png" alt="AutoList Canada Logo" class="alc-sidebar-logo" />
+  </div>
+  <div class="alc-sidebar-title-wrap">
+    <img src="/assets/AutoList Canada Title.png" alt="AutoList Canada Title" class="alc-sidebar-title alc-sidebar-title-large" />
+  </div>
+  <nav class="alc-sidebar-nav">
+    <a href="index.html" class="alc-sidebar-btn" id="nav-home">
+      <span class="alc-nav-label">Home</span>
+    </a>
+    <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard">
+      <span class="alc-nav-label">Dashboard</span>
+    </a>
+    <a href="listings.html" class="alc-sidebar-btn" id="nav-listings">
+      <span class="alc-nav-label">Listings</span>
+    </a>
+    <a href="ai-tools.html" class="alc-sidebar-btn" id="nav-ai-tools">
+      <span class="alc-nav-label">AI Tools</span>
+    </a>
+    <a href="faq.html" class="alc-sidebar-btn" id="nav-faq">
+      <span class="alc-nav-label">FAQ</span>
+    </a>
+    <a href="privacy.html" class="alc-sidebar-btn active" id="nav-privacy">
+      <span class="alc-nav-label">Privacy</span>
+    </a>
+    <a href="terms.html" class="alc-sidebar-btn" id="nav-terms">
+      <span class="alc-nav-label">Terms</span>
+    </a>
+  </nav>
+</aside>
+<!-- Sidebar END -->
+
+
   <div class="alc-main-content">
     <div class="header-callout">
       <span class="date">Last Updated: July 6, 2025</span><br>
