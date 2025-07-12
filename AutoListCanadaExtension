@@ -1,6 +1,0 @@
-AutoListCanadaExtension/
-├── popup.html       ✅ (Paste that Cascade HTML here)
-├── manifest.json    ✅ (We’ll generate this below)
-├── popup.js         ✅ (Add interactivity – Cascade will help)
-├── icon.png         ✅ (You can use the placeholder Base64 for now)
-└── README.md        ✅ (Optional for GitHub clarity)
