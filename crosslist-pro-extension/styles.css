@@ -1,0 +1,14 @@
+.autolist-crosslist-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ff9335;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
