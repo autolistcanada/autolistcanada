@@ -1,0 +1,33 @@
+<!-- crosslist-pro-extension/popup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crosslist Pro Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="popup-root">
+    <h2>Crosslist Pro Panel</h2>
+    <div id="auth-section">
+      <button id="login-btn" class="crosslist-btn">Mock Login</button>
+      <span id="auth-status"></span>
+      <div id="token-view"></div>
+    </div>
+    <hr>
+    <div id="settings-section">
+      <strong>Default Platforms:</strong>
+      <div id="platform-checkboxes"></div>
+    </div>
+    <hr>
+    <button id="open-float-panel" class="crosslist-btn">Open Float Panel</button>
+    <hr>
+    <div id="history-section">
+      <h3>Listing History</h3>
+      <ul id="listing-history"></ul>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
