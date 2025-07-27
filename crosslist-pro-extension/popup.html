@@ -2,13 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AutoList Crosslist</title>
+  <title>AutoList Canada Crosslist Pro</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="popup">
-    <h1>Crosslist Pro</h1>
-    <button id="crosslist-btn">Start Crosslisting</button>
+  <div class="autolist-popup">
+    <div class="autolist-header">
+      <img src="assets/icon48.png" alt="AutoList Canada" class="autolist-logo" />
+      <div class="autolist-title">AutoList Canada</div>
+      <div class="autolist-subtitle">Crosslist Pro</div>
+    </div>
+    <div id="listing-section">
+      <div id="listing-loading" class="autolist-loading">Detecting listings...</div>
+      <div id="listing-list" style="display:none"></div>
+    </div>
+    <div class="autolist-actions">
+      <button id="ai-btn" class="autolist-btn autolist-btn-glow" title="Generate Title & Description with AI">
+        🧠 Generate Title & Description
+      </button>
+      <button id="airtable-btn" class="autolist-btn autolist-btn-green" title="Sync selected to Airtable">
+        ☁️ Sync to Airtable
+      </button>
+      <button id="crosslist-btn" class="autolist-btn autolist-btn-teal" title="Crosslist to Platforms">
+        🔄 Crosslist to Platforms
+      </button>
+    </div>
+    <div id="autolist-feedback"></div>
   </div>
   <script src="popup.js"></script>
 </body>
