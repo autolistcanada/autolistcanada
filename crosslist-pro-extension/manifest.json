@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "AutoList Canada Crosslist Pro",
   "version": "1.0",
-  "description": "Injects a floating button to crosslist and extract product listing data.",
+  "description": "Popup-based crosslisting and inventory sync for Canadian resale marketplaces. Detects listings and enables AI-powered title/description generation, Airtable sync, and crosslisting—all from the extension popup.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -16,14 +16,43 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "https://www.ebay.ca/*",
+        "https://www.ebay.com/*",
+        "https://www.etsy.com/*",
+        "https://poshmark.com/*",
+        "https://www.mercari.com/*",
+        "https://www.facebook.com/*",
+        "https://www.grailed.com/*",
+        "https://www.depop.com/*",
+        "https://*.shopify.com/*",
+        "https://www.bonanza.com/*",
+        "https://www.amazon.ca/*",
+        "https://www.amazon.com/*",
+        "https://www.varagesale.com/*",
+        "https://www.kijiji.ca/*"
+      ],
       "js": ["content.js"],
-      "css": ["styles.css"],
       "run_at": "document_idle"
     }
   ],
   "permissions": ["scripting", "activeTab", "storage", "tabs"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "https://www.ebay.ca/*",
+    "https://www.ebay.com/*",
+    "https://www.etsy.com/*",
+    "https://poshmark.com/*",
+    "https://www.mercari.com/*",
+    "https://www.facebook.com/*",
+    "https://www.grailed.com/*",
+    "https://www.depop.com/*",
+    "https://*.shopify.com/*",
+    "https://www.bonanza.com/*",
+    "https://www.amazon.ca/*",
+    "https://www.amazon.com/*",
+    "https://www.varagesale.com/*",
+    "https://www.kijiji.ca/*"
+  ],
   "icons": {
     "16": "assets/icon16.png",
     "48": "assets/icon48.png",
