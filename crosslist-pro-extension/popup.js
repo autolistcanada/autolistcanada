@@ -27,34 +27,42 @@ const PLATFORMS = {
 };
 
 // DOM Elements
-const elements = {
-  // Main containers
-  app: document.querySelector('.app-container'),
-  mainContent: document.querySelector('.main-content'),
-  onboarding: $('#onboarding-walkthrough'),
-  platformsGrid: $('#platforms-grid'),
-  listingsGrid: $('#listings-grid'),
-  emptyState: $('#empty-state'),
-  aiPanel: $('#ai-panel'),
-  statusMessage: $('#status-message'),
-  syncProgress: $('#sync-progress'),
-  syncStatusText: $('#sync-status-text'),
+let elements;
+
+// Initialize elements when jQuery is ready
+$(document).ready(function() {
+  elements = {
+    // Main containers
+    app: document.querySelector('.app-container'),
+    mainContent: document.querySelector('.main-content'),
+    onboarding: $('#onboarding-walkthrough'),
+    platformsGrid: $('#platforms-grid'),
+    listingsGrid: $('#listings-grid'),
+    emptyState: $('#empty-state'),
+    aiPanel: $('#ai-panel'),
+    statusMessage: $('#status-message'),
+    syncProgress: $('#sync-progress'),
+    syncStatusText: $('#sync-status-text'),
+    
+    // Buttons
+    minimizeBtn: $('#minimize-btn'),
+    pinBtn: $('#pin-btn'),
+    closeBtn: $('#close-btn'),
+    syncNowBtn: $('#sync-now-btn'),
+    demoListingBtn: $('#demo-listing-btn'),
+    closeAiPanelBtn: $('.close-ai-panel'),
+    applyAllBtn: $('#apply-all-btn'),
+    
+    // AI Panel
+    aiTitle: $('#ai-title'),
+    aiDescription: $('#ai-description'),
+    aiTags: $('#ai-tags'),
+    aiPrice: $('#ai-price')
+  };
   
-  // Buttons
-  minimizeBtn: $('#minimize-btn'),
-  pinBtn: $('#pin-btn'),
-  closeBtn: $('#close-btn'),
-  syncNowBtn: $('#sync-now-btn'),
-  demoListingBtn: $('#demo-listing-btn'),
-  closeAiPanelBtn: $('.close-ai-panel'),
-  applyAllBtn: $('#apply-all-btn'),
-  
-  // AI Panel
-  aiTitle: $('#ai-title'),
-  aiDescription: $('#ai-description'),
-  aiTags: $('#ai-tags'),
-  aiPrice: $('#ai-price')
-};
+  // Initialize the app when DOM and jQuery are ready
+  init();
+});
 
 // Application State
 const state = {
@@ -303,9 +311,6 @@ function updateLastSyncTime() {
   const timeString = now.toLocaleTimeString('en-US', options);
   elements.syncStatusText.textContent = `Last synced: ${timeString}`;
 }
-
-// Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
 
 // Render connected platforms
 async function renderPlatforms() {
@@ -829,15 +834,13 @@ function crosslistSelected() {
 }
 
 // --- Main Logic ---
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize the app
-  init();
-  
-  // Load demo data if in development
-  if (process.env.NODE_ENV === 'development') {
+// Initialization now handled in $(document).ready() above
+// Load demo data if in development
+if (process.env.NODE_ENV === 'development') {
+  document.addEventListener("DOMContentLoaded", () => {
     loadDemoData();
-  }
-});
+  });
+}
 
 // Load demo data for development
 function loadDemoData() {
@@ -1118,15 +1121,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       selected = new Set(listings.map((_, i) => i)); // Select all by default
       renderListings(listings);
       document.querySelectorAll(".listing-checkbox").forEach(cb => cb.checked = true);
-      if ($("select-all")) $("select-all").checked = true;
+      if (utils.$("select-all")) utils.$("select-all").checked = true;
     }
   );
 });
 
 // AI Button
-$("ai-btn").onclick = async () => {
+utils.$("ai-btn").onclick = async () => {
   if (!selected.size) return showFeedback("Select at least one listing.", "error");
-  $("ai-btn").disabled = true;
+  utils.$("ai-btn").disabled = true;
   showFeedback("Generating AI content...", "info");
   for (const idx of selected) {
     const listing = listings[idx];
@@ -1139,14 +1142,14 @@ $("ai-btn").onclick = async () => {
       showFeedback("OpenAI error: " + e.message, "error");
     }
   }
-  $("ai-btn").disabled = false;
+  utils.$("ai-btn").disabled = false;
   showFeedback("AI content generated!", "success");
 };
 
 // Airtable Button
-$("airtable-btn").onclick = async () => {
+utils.$("airtable-btn").onclick = async () => {
   if (!selected.size) return showFeedback("Select at least one listing.", "error");
-  $("airtable-btn").disabled = true;
+  utils.$("airtable-btn").disabled = true;
   showFeedback("Syncing to Airtable...", "info");
   let success = 0;
   for (const idx of selected) {
@@ -1158,12 +1161,12 @@ $("airtable-btn").onclick = async () => {
       showFeedback("Airtable error: " + e.message, "error");
     }
   }
-  $("airtable-btn").disabled = false;
+  utils.$("airtable-btn").disabled = false;
   showFeedback(`${success} listing(s) synced to Airtable!`, "success");
 };
 
 // Crosslist Button
-$("crosslist-btn").onclick = () => {
+utils.$("crosslist-btn").onclick = () => {
   if (!selected.size) return showFeedback("Select at least one listing.", "error");
   crosslistSelected();
 };
