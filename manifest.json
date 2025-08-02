@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
+
   "name": "AutoList Canada Crosslist Pro",
   "version": "1.0",
   "description": "Injects a floating button to crosslist and extract product listing data.",
+
+  "name": "Crosslist Pro Extension",
+  "version": "1.0",
+  "description": "Injects a floating panel to help crosslist products with AI tools and platform syncing.",
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -18,6 +24,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
+<
       "css": ["styles.css"],
       "run_at": "document_idle"
     }
@@ -29,4 +36,16 @@
     "48": "assets/icon48.png",
     "128": "assets/icon128.png"
   }
+
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*/*"
 }

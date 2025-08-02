@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoList Canada – Privacy Policy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2dcfc5">
+  <link rel="icon" href="/assets/logo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+      background: url('/assets/backgrounds/privacy-background.png') center/cover no-repeat, linear-gradient(120deg, #1e5e4b 0%, #f66d2c 70%, #ffb94a 100%);
+      background-blend-mode: multiply;
+      color: #18322a;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    /* --- UNIVERSAL SIDEBAR STYLES (AutoList Canada) --- */
+    .alc-universal-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      width: 270px;
+      background: url('/assets/sidebar-background.png') center/cover no-repeat, linear-gradient(135deg, #2dcfc5 0%, #ff9335 100%);
+      background-blend-mode: soft-light;
+      box-shadow: 0 8px 40px 0 rgba(46, 79, 71, 0.14), 0 2px 16px #2dcfc522;
+      border-radius: 0 32px 32px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1002;
+      padding: 0 0 24px 0;
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
+      backdrop-filter: blur(8px) saturate(1.15);
+      background-color: rgba(255,255,255,0.68);
+      overflow-y: auto;
+      border-right: 3.5px solid #2dcfc5;
+    }
+    .alc-sidebar-logo-wrap {
+      width: 100%; display: flex; justify-content: center; align-items: center;
+      padding-top: 36px; padding-bottom: 12px;
+    }
+    .alc-sidebar-logo {
+      width: 64px; height: 64px; border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(45, 207, 197, 0.09);
+      background: rgba(255,255,255,0.13);
+      object-fit: contain;
+    }
+    .alc-sidebar-title-wrap {
+      width: 100%; display: flex; justify-content: center; align-items: center;
+      padding-bottom: 18px;
+    }
+    .alc-sidebar-title {
+      width: 160px; height: auto; object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(45,207,197,0.09));
+      margin-top: 2px;
+    }
+    .alc-sidebar-title-large {
+      width: 180px;
+      max-width: 90vw;
+      transition: width 0.3s;
+    }
+    .alc-sidebar-nav {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-top: 16px;
+      padding: 0 18px;
+      position: relative;
+    }
+    .alc-sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px 22px;
+      font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: #0d3e38;
+      background: rgba(255,255,255,0.68);
+      border: none;
+      border-radius: 22px;
+      margin-bottom: 2px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      box-shadow: 0 2px 14px 0 rgba(45,207,197,0.07);
+      transition: background 0.18s, color 0.18s, box-shadow 0.22s, transform 0.16s;
+      cursor: pointer;
+      outline: none;
+      min-height: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .alc-sidebar-btn:focus-visible {
+      box-shadow: 0 0 0 4px #2dcfc555;
+      z-index: 2;
+    }
+    .alc-sidebar-btn:hover,
+    .alc-sidebar-btn:focus {
+      background: rgba(45, 207, 197, 0.15);
+      color: #178e80;
+      box-shadow: 0 4px 18px 0 #2dcfc544, 0 2px 14px #ff933522;
+      transform: scale(1.04) translateX(3px);
+    }
+    .alc-sidebar-btn.active,
+    .alc-sidebar-btn[aria-current="page"] {
+      background: rgba(45, 207, 197, 0.23);
+      color: #178e80;
+      box-shadow: 0 0 0 4px #2dcfc555, 0 6px 24px #2dcfc544;
+      font-weight: 700;
+    }
+    .alc-sidebar-btn.active::before,
+    .alc-sidebar-btn[aria-current="page"]::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px; width: 6px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #2dcfc5 0%, #ff9335 100%);
+      box-shadow: 0 0 12px #2dcfc555;
+      opacity: 1;
+      transition: opacity 0.18s;
+    }
+    .alc-sidebar-btn:not(.active):hover::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 12px; bottom: 12px; width: 4px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #2dcfc5 0%, #ff9335 100%);
+      opacity: 0.7;
+      transition: opacity 0.18s;
+    }
+    @media (max-width: 900px) {
+      .alc-universal-sidebar {
+        width: 64vw; min-width: 140px; max-width: 270px;
+        border-radius: 0 18px 18px 0;
+      }
+      .alc-sidebar-title-large { width: 120px; }
+    }
+    @media (max-width: 700px) {
+      .alc-universal-sidebar {
+        position: fixed;
+        flex-direction: row;
+        width: 100vw; height: 64px;
+        min-width: 0; max-width: none;
+        border-radius: 0 0 22px 22px;
+        box-shadow: 0 2px 18px #2dcfc522;
+        padding: 0 10px;
+        align-items: center;
+        justify-content: flex-start;
+        top: 0; left: 0; right: 0;
+        z-index: 1002;
+      }
+      .alc-sidebar-logo-wrap { padding: 7px 0 7px 0; }
+      .alc-sidebar-title-wrap { padding-bottom: 0; }
+      .alc-sidebar-title-large { width: 92px; }
+      .alc-sidebar-nav {
+        flex-direction: row;
+        gap: 7px;
+        margin-top: 0;
+        padding: 0 0 0 10px;
+        width: auto;
+        align-items: center;
+      }
+      .alc-sidebar-btn {
+        padding: 10px 12px;
+        font-size: 0.97rem;
+        min-height: 36px;
+        border-radius: 16px;
+        margin-bottom: 0;
+      }
+      .alc-sidebar-btn .alc-nav-label { display: none; }
+    }
+    @media (max-width: 500px) {
+      .alc-universal-sidebar {
+        height: 56px;
+        min-width: 0; max-width: none;
+        border-radius: 0 0 14px 14px;
+        padding: 0 3px;
+      }
+      .alc-sidebar-logo { width: 38px; height: 38px; }
+      .alc-sidebar-title-large { width: 66px; }
+    }
+    /* --- END UNIVERSAL SIDEBAR STYLES --- */
+    .alc-main-content {
+      margin-left: 270px;
+      padding: 2.1em 2.2em 2em 2.2em;
+      max-width: 820px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 4px 32px 0 rgba(32,44,32,0.11), 0 1.5px 8px #1e5e4b22;
+      border-radius: 20px;
+      position: relative;
+      top: 36px;
+      z-index: 2;
+      border-left: 7px solid #1db16f;
+      border-right: 7px solid #ffb94a;
+      backdrop-filter: blur(4px);
+      text-align: left;
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @media (max-width: 900px) {
+      .alc-main-content { margin-left: 64vw; max-width: none; }
+    }
+    @media (max-width: 700px) {
+      .alc-main-content {
+        margin-left: 0;
+        margin-top: 74px;
+        padding: 1.2em 0.6em 1.2em 0.6em;
+        border-radius: 15px;
+        border-left: none;
+        border-right: none;
+        top: 0;
+      }
+    }
+    @media (max-width: 500px) {
+      .alc-main-content {
+        margin-top: 60px;
+        padding: 0.6em 0.2em 0.6em 0.2em;
+        border-radius: 8px;
+      }
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #1e5e4b;
+      margin-top: 1.8em;
+      margin-bottom: 0.7em;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-top: 0.5em;
+    }
+    h2 {
+      font-size: 1.4em;
+      margin-top: 1.4em;
+    }
+    h3 {
+      font-size: 1.15em;
+      margin-top: 1.1em;
+    }
+    p, ul, ol {
+      font-size: 1.07em;
+      color: #18322a;
+      line-height: 1.7;
+      margin-bottom: 1.2em;
+    }
+    .alc-card {
+      background: rgba(255,255,255,0.96);
+      border-radius: 14px;
+      box-shadow: 0 2px 10px #2dcfc522;
+      padding: 1.3em 1.5em;
+      margin-bottom: 1.6em;
+    }
+    .alc-section {
+      margin-bottom: 2.2em;
+    }
+    .alc-section:last-child {
+      margin-bottom: 0;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(24px); }
+      100% { opacity: 1; transform: none; }
+    }
+    a:focus-visible {
+      outline: 3px solid #2dcfc5;
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="alc-universal-sidebar" role="navigation" aria-label="Main Navigation">
+    <div class="alc-sidebar-logo-wrap">
+      <img src="/assets/logo.png" alt="AutoList Canada Logo" class="alc-sidebar-logo" />
+    </div>
+    <div class="alc-sidebar-title-wrap">
+      <img src="/assets/AutoList Canada Title.png" alt="AutoList Canada" class="alc-sidebar-title alc-sidebar-title-large" />
+    </div>
+    <nav class="alc-sidebar-nav">
+      <a href="index.html" class="alc-sidebar-btn" id="nav-home"><span class="alc-nav-label">Home</span></a>
+      <a href="dashboard.html" class="alc-sidebar-btn" id="nav-dashboard"><span class="alc-nav-label">Dashboard</span></a>
+      <a href="listings.html" class="alc-sidebar-btn" id="nav-listings"><span class="alc-nav-label">Listings</span></a>
+      <a href="ai-tools.html" class="alc-sidebar-btn" id="nav-ai-tools"><span class="alc-nav-label">AI Tools</span></a>
+      <a href="faq.html" class="alc-sidebar-btn" id="nav-faq"><span class="alc-nav-label">FAQ</span></a>
+      <a href="privacy.html" class="alc-sidebar-btn active" id="nav-privacy" aria-current="page"><span class="alc-nav-label">Privacy Policy</span></a>
+      <a href="terms.html" class="alc-sidebar-btn" id="nav-terms"><span class="alc-nav-label">Terms</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="alc-main-content">
+    <h1>Privacy Policy</h1>
+    <div class="alc-card alc-section">
+      <strong>Last Updated: July 10, 2025</strong><br>
+      <p>AutoList Canada is committed to protecting your privacy and building trust with every visitor. This policy explains what data we collect, how we use it, and your rights as a user of our platform.</p>
+    </div>
+    <div class="alc-card alc-section" id="intro">
+      <h2>1. Introduction</h2>
+      <p>AutoList Canada (“we”, “us”, “our”) operates the autolist.ca website and related services. This Privacy Policy describes how we collect, use, and protect your information when you use our site.</p>
+    </div>
+    <div class="alc-card alc-section" id="collect">
+      <h2>2. What We Collect</h2>
+      <ul>
+        <li><strong>Personal Information:</strong> Name, email, phone (if provided by you)</li>
+        <li><strong>Device & Usage Data:</strong> IP address, browser type, device info, site usage analytics</li>
+        <li><strong>Listings Data:</strong> Information you submit about vehicles, including photos and descriptions</li>
+        <li><strong>AI Interactions:</strong> Content you submit to our AI tools or chat features</li>
+      </ul>
+    </div>
+    <div class="alc-card alc-section" id="use">
+      <h2>3. How We Use Your Data</h2>
+      <ul>
+        <li>To provide and improve our services</li>
+        <li>To personalize your experience</li>
+        <li>To communicate with you (if you opt in)</li>
+        <li>To monitor, secure, and analyze site usage</li>
+        <li>To develop new features, including AI-powered tools</li>
+      </ul>
+    </div>
+    <div class="alc-card alc-section" id="ai">
+      <h2>4. AI & Automation</h2>
+      <p>AutoList Canada uses AI to enhance listings, provide recommendations, and power our chat and search features. AI tools only use the information you provide and do not access private data without your consent.</p>
+    </div>
+    <div class="alc-card alc-section" id="security">
+      <h2>5. Data Protection</h2>
+      <ul>
+        <li>All data is encrypted in transit and at rest</li>
+        <li>We use secure cloud infrastructure and regular security audits</li>
+        <li>Access to your data is strictly controlled</li>
+      </ul>
+    </div>
+    <div class="alc-card alc-section" id="rights">
+      <h2>6. Your Rights</h2>
+      <ul>
+        <li>Access, update, or delete your personal information</li>
+        <li>Request a copy of your data</li>
+        <li>Opt out of marketing or analytics</li>
+        <li>Contact us for privacy-related requests at <a href="mailto:privacy@autolist.ca">privacy@autolist.ca</a></li>
+      </ul>
+    </div>
+    <div class="alc-card alc-section" id="cookies">
+      <h2>7. Cookies</h2>
+      <p>We use cookies to remember your preferences and analyze site traffic. You can manage cookie preferences in your browser settings.</p>
+    </div>
+    <div class="alc-card alc-section" id="optout">
+      <h2>8. AI Opt-Out</h2>
+      <p>If you wish to opt out of AI-powered features or data processing, please contact us at <a href="mailto:privacy@autolist.ca">privacy@autolist.ca</a>.</p>
+    </div>
+    <div class="alc-card alc-section" id="thirdparty">
+      <h2>9. Third-Party Links</h2>
+      <p>Our site may contain links to third-party websites. We are not responsible for their privacy practices. Please review their policies before providing any information.</p>
+    </div>
+    <div class="alc-card alc-section" id="contact">
+      <h2>10. Contact Us</h2>
+      <p>For questions or concerns about your privacy, contact our team at <a href="mailto:privacy@autolist.ca">privacy@autolist.ca</a>.</p>
+    </div>
+    <div class="alc-card alc-section" id="updatelog">
+      <h2>11. Update Log</h2>
+      <ul>
+        <li><strong>July 10, 2025:</strong> Initial launch-ready policy for public release</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

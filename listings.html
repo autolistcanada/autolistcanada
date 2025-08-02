@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-50">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Listings Dashboard | AutoList Canada</title>
+    <link rel="icon" href="/assets/autolist-title.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="AutoList Canada: Psychology-Driven Crosslisting Dashboard for Vintage & Resale Sellers" />
+  </head>
+  <body class="min-h-screen font-sans text-gray-900 bg-gray-50 flex">
+
+    <!-- Sidebar -->
+    <aside class="relative w-64 min-h-screen flex flex-col justify-between bg-no-repeat bg-left-top bg-cover"
+           style="background-image: url('/assets/sidebar-background.png');">
+      <div>
+        <!-- Logo -->
+        <div class="flex items-center pl-6 pt-7 pb-8">
+          <img src="/assets/autolist-title.png" alt="AutoList Canada" class="h-10" />
+        </div>
+        <!-- Nav -->
+        <nav class="mt-2">
+          <ul class="space-y-2 pl-4 pr-3">
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-current="page"
+                 class="flex items-center px-3 py-2 rounded-lg text-base text-blue-600 font-semibold bg-white/70 shadow transition">
+                <span>Listings</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>AI Tools</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>How It Works</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>FAQ</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>Import</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>Terms</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
+                <span>Privacy</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Footer: Language Toggle & Badges -->
+      <div class="mb-8 px-6">
+        <div class="flex items-center space-x-2 mb-5">
+          <button aria-label="English" class="px-2 py-1 rounded bg-blue-600 text-white text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-400">
+            EN
+          </button>
+          <button aria-label="Français" class="px-2 py-1 rounded bg-white/70 text-blue-900 text-xs font-medium hover:bg-blue-100 transition">
+            FR
+          </button>
+        </div>
+        <div class="flex space-x-2 items-center">
+          <img src="/assets/canadian-owned-badge.png" alt="Canadian Owned" class="h-8" />
+          <img src="/assets/ai-powered-tools-badge.png" alt="AI Powered Tools" class="h-8" />
+          <img src="/assets/privacy-first-badge.png" alt="Privacy First" class="h-8" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-h-screen">
+
+      <!-- Filter Bar & Search -->
+      <section class="w-full border-b bg-white shadow-sm px-8 pt-6 pb-3">
+        <div class="flex flex-wrap items-center justify-between gap-y-2">
+          <!-- Filter Tabs -->
+          <nav class="flex space-x-1 mb-2 sm:mb-0" aria-label="Listing Status Tabs">
+            <button class="px-4 py-2 rounded-t-lg bg-blue-50 text-blue-700 font-semibold border-b-2 border-blue-600">All</button>
+            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Active</button>
+            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Draft</button>
+            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Unlisted</button>
+            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Sold</button>
+            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Error</button>
+          </nav>
+          <!-- Dropdowns & Search -->
+          <div class="flex items-center gap-3 flex-wrap">
+            <!-- Tone Multi-select -->
+            <div class="relative">
+              <select multiple class="block w-32 rounded border-gray-300 pr-8 text-sm focus:ring-blue-400 focus:border-blue-400" aria-label="Filter by Tone">
+                <option>Cozy</option>
+                <option>Warm</option>
+                <option>Minimalist</option>
+                <option>Luxury</option>
+                <option>Budget</option>
+              </select>
+              <span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">&#9660;</span>
+            </div>
+            <!-- Platform Multi-select -->
+            <div class="relative">
+              <select id="platformFilter" multiple class="block w-36 rounded border-gray-300 pr-8 text-sm focus:ring-blue-400 focus:border-blue-400" aria-label="Filter by Platform">
+                <option value="all">All Platforms</option>
+                <option value="ebay">eBay</option>
+                <option value="etsy">Etsy</option>
+                <option value="shopify">Shopify</option>
+                <option value="facebook">Facebook</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+              <span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">&#9660;</span>
+            </div>
+            <!-- Search Field -->
+            <label class="relative">
+              <span class="sr-only">Search by title or SKU</span>
+              <input type="text" id="listingSearch"
+                     placeholder="Search by title or SKU…"
+                     class="pl-9 pr-3 py-2 border border-gray-300 rounded w-56 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                     aria-label="Search listings"/>
+              <svg class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bulk Actions Bar -->
+      <section class="w-full bg-white px-8 py-3 border-b flex items-center gap-3">
+        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-semibold shadow transition" onclick="// triggerBulkDelist()">
+          Bulk Delist
+        </button>
+        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold shadow transition" onclick="// triggerBulkRelist()">
+          Bulk Relist
+        </button>
+        <div class="relative">
+          <button class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded font-semibold shadow transition flex items-center gap-1" onclick="// openCrosslistDropdown()">
+            Crosslist to…
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <!-- Dropdown placeholder (not interactive) -->
+        </div>
+      </section>
+
+      <!-- Listings Table (Flex-based, not <table>) -->
+      <section class="px-8 py-6 flex-1 bg-gray-50 overflow-x-auto" id="listingsSection">
+        <!-- Table Headers -->
+        <div class="flex items-center gap-4 font-semibold text-gray-600 pb-2 border-b border-gray-200 text-sm">
+          <input type="checkbox" class="accent-blue-500" aria-label="Select all listings"/>
+          <span class="w-36"></span>
+          <span class="flex-1">Title</span>
+          <span class="w-28">SKU</span>
+          <span class="w-24">Price (CAD)</span>
+          <span class="w-36">AI Tools</span>
+          <span class="w-36">Tone</span>
+          <span class="w-44">Platforms</span>
+          <span class="w-32">Actions</span>
+        </div>
+        <!-- Listing Row 1 -->
+        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Vintage Hudson Bay Wool Blanket" data-tags="Cozy, Warm">
+          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
+          <img src="/assets/blanket-hudsonbay.jpg" alt="Vintage Hudson Bay Wool Blanket" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
+          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Vintage Hudson Bay Wool Blanket">
+            Vintage Hudson Bay Wool Blanket
+          </a>
+          <span class="w-28 text-gray-700">SKU-CA-1001</span>
+          <span class="w-24 text-gray-900 font-semibold">$145.00</span>
+          <div class="w-36 flex gap-2">
+            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1001')">💬</button>
+            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1001')">⚡</button>
+            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1001')">🏷️</button>
+          </div>
+          <div class="w-36 flex gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 text-pink-700 border border-pink-200">Cozy</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700 border border-orange-200">Warm</span>
+          </div>
+          <div class="w-44 flex gap-2 items-center platforms">
+            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
+            <span aria-label="eBay Synced" class="text-green-600 text-lg">✅</span>
+            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
+            <span aria-label="Etsy Not Listed" class="text-red-500 text-lg">❌</span>
+            <img src="/assets/facebook-logo.png" alt="Facebook" title="Facebook" class="h-7 w-7 rounded border" />
+            <span aria-label="Facebook Syncing" class="text-yellow-500 text-lg">⏳</span>
+          </div>
+          <div class="w-32 flex gap-2 items-center">
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Edit" onclick="// editListing('SKU-CA-1001')">✏️</button>
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Copy" onclick="// copyListing('SKU-CA-1001')">📋</button>
+            <button class="p-2 rounded hover:bg-red-100 text-red-600" aria-label="Delete" onclick="// deleteListing('SKU-CA-1001')">🗑️</button>
+          </div>
+        </div>
+        <!-- Listing Row 2 -->
+        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Mid-Century Modern Teak Sideboard" data-tags="Minimalist, Luxury">
+          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
+          <img src="/assets/teak-sideboard.jpg" alt="Mid-Century Modern Teak Sideboard" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
+          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Mid-Century Modern Teak Sideboard">
+            Mid-Century Modern Teak Sideboard
+          </a>
+          <span class="w-28 text-gray-700">SKU-CA-1002</span>
+          <span class="w-24 text-gray-900 font-semibold">$1,299.00</span>
+          <div class="w-36 flex gap-2">
+            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1002')">💬</button>
+            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1002')">⚡</button>
+            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1002')">🏷️</button>
+          </div>
+          <div class="w-36 flex gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 border border-blue-200">Minimalist</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">Luxury</span>
+          </div>
+          <div class="w-44 flex gap-2 items-center platforms">
+            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
+            <span aria-label="eBay Not Listed" class="text-red-500 text-lg">❌</span>
+            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
+            <span aria-label="Etsy Synced" class="text-green-600 text-lg">✅</span>
+            <img src="/assets/shopify-logo.png" alt="Shopify" title="Shopify" class="h-7 w-7 rounded border" />
+            <span aria-label="Shopify Synced" class="text-green-600 text-lg">✅</span>
+            <img src="/assets/tiktok-logo.png" alt="TikTok" title="TikTok" class="h-7 w-7 rounded border" />
+            <span aria-label="TikTok Not Listed" class="text-red-500 text-lg">❌</span>
+          </div>
+          <div class="w-32 flex gap-2 items-center">
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Edit" onclick="// editListing('SKU-CA-1002')">✏️</button>
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Copy" onclick="// copyListing('SKU-CA-1002')">📋</button>
+            <button class="p-2 rounded hover:bg-red-100 text-red-600" aria-label="Delete" onclick="// deleteListing('SKU-CA-1002')">🗑️</button>
+          </div>
+        </div>
+        <!-- Listing Row 3 -->
+        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Retro Pyrex Gooseberry Mixing Bowl (Sold)" data-tags="Budget, Sold">
+          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
+          <img src="/assets/pyrex-gooseberry.jpg" alt="Retro Pyrex Gooseberry Mixing Bowl" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
+          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Retro Pyrex Gooseberry Mixing Bowl">
+            Retro Pyrex Gooseberry Mixing Bowl <span class="ml-1 inline-block text-xs bg-gray-200 text-gray-600 rounded-full px-2 py-0.5">Sold</span>
+          </a>
+          <span class="w-28 text-gray-700">SKU-CA-1003</span>
+          <span class="w-24 text-gray-900 font-semibold">$34.50</span>
+          <div class="w-36 flex gap-2">
+            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1003')">💬</button>
+            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1003')">⚡</button>
+            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1003')">🏷️</button>
+          </div>
+          <div class="w-36 flex gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">Budget</span>
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-600 border border-gray-300">Sold</span>
+          </div>
+          <div class="w-44 flex gap-2 items-center platforms">
+            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
+            <span aria-label="eBay Synced" class="text-green-600 text-lg">✅</span>
+            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
+            <span aria-label="Etsy Not Listed" class="text-red-500 text-lg">❌</span>
+            <img src="/assets/facebook-logo.png" alt="Facebook" title="Facebook" class="h-7 w-7 rounded border" />
+            <span aria-label="Facebook Synced" class="text-green-600 text-lg">✅</span>
+          </div>
+          <div class="w-32 flex gap-2 items-center">
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Edit" onclick="// editListing('SKU-CA-1003')">✏️</button>
+            <button class="p-2 rounded hover:bg-gray-100" aria-label="Copy" onclick="// copyListing('SKU-CA-1003')">📋</button>
+            <button class="p-2 rounded hover:bg-red-100 text-red-600" aria-label="Delete" onclick="// deleteListing('SKU-CA-1003')">🗑️</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buyer Psychology Map -->
+      <section class="w-full bg-white px-8 py-7 border-t">
+        <h2 class="text-xl font-bold mb-4 text-blue-900">Canadian Buyer Psychology Map</h2>
+        <div class="w-full h-56 bg-gradient-to-r from-blue-50 to-pink-50 rounded-lg flex items-center justify-center shadow-inner relative mb-5"
+             aria-label="Abstract Map of Canadian Buyer Psychology">
+          <!-- Abstract map placeholder (replace with actual map or SVG as needed) -->
+          <div class="w-4/5 h-40 bg-white/80 rounded-full blur-[2px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+          <div class="relative z-10 flex gap-5">
+            <span class="block w-8 h-8 rounded-full bg-pink-400 border-4 border-pink-200 shadow-lg" aria-label="Cozy"></span>
+            <span class="block w-8 h-8 rounded-full bg-orange-300 border-4 border-orange-100 shadow-lg" aria-label="Warm"></span>
+            <span class="block w-8 h-8 rounded-full bg-blue-400 border-4 border-blue-200 shadow-lg" aria-label="Minimalist"></span>
+            <span class="block w-8 h-8 rounded-full bg-yellow-300 border-4 border-yellow-100 shadow-lg" aria-label="Luxury"></span>
+            <span class="block w-8 h-8 rounded-full bg-green-300 border-4 border-green-100 shadow-lg" aria-label="Budget"></span>
+          </div>
+        </div>
+        <!-- Legend -->
+        <div class="flex items-center gap-5 mb-2">
+          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-pink-400 inline-block"></span><span class="text-xs">Cozy</span></div>
+          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-orange-300 inline-block"></span><span class="text-xs">Warm</span></div>
+          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-400 inline-block"></span><span class="text-xs">Minimalist</span></div>
+          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-300 inline-block"></span><span class="text-xs">Luxury</span></div>
+          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-300 inline-block"></span><span class="text-xs">Budget</span></div>
+        </div>
+        <div class="text-xs text-gray-500 mt-2 italic">Powered by AI + Buyer Science</div>
+      </section>
+    </main>
+  </body>
+</html>

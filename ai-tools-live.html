@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Tools | AutoList Canada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'ui-rounded', 'system-ui', sans-serif;
+      background: linear-gradient(120deg, #fef9c3 0%, #f5e7fa 35%, #e0f2fe 100%);
+      min-height: 100vh;
+    }
+    /* UPGRADE: Sidebar Gradient and Animation */
+    .sidebar-animated-bg {
+      background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 40%, #f472b6 80%, #facc15 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 7s ease-in-out infinite;
+    }
+    @keyframes gradientMove {
+      0%,100% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+    }
+    .sidebar-expanded { width: 18rem; transition: width 0.6s cubic-bezier(.4,0,.2,1);}
+    .sidebar-collapsed { width: 4.5rem; transition: width 0.6s cubic-bezier(.4,0,.2,1);}
+    .sidebar-shadow { box-shadow: 0 16px 48px 0 rgba(8,145,178,0.12), 0 1.5px 12px 0 rgba(124,58,237,0.06);}
+    .nav-link { transition: all 0.22s cubic-bezier(.4,0,.2,1);}
+    .nav-link:hover {
+      transform: scale(1.08) translateX(4px);
+      box-shadow: 0 2px 12px 0 #fef08a55;
+      background: linear-gradient(90deg,#38bdf8 20%,#a78bfa 80%);
+      color: #fff !important;
+    }
+    .nav-link.active, .nav-link[aria-current="page"] {
+      background: linear-gradient(90deg,#f472b6 0,#facc15 100%);
+      color: #0f172a !important;
+      box-shadow: 0 2px 16px #fef08a44;
+    }
+    .sidebar-text { transition: opacity 0.3s; }
+    .sidebar-collapsed .sidebar-text { opacity: 0; pointer-events: none;}
+    @media (max-width: 768px) {
+      .sidebar-expanded { width: 100vw; position: fixed; z-index: 40;}
+      .sidebar-collapsed { width: 4.5rem; }
+    }
+    .einstein-blink { animation: einsteinBlink 2s infinite steps(1,start);}
+    @keyframes einsteinBlink {
+      0%,98%,100% {filter:brightness(1);}
+      99% {filter:brightness(1.4);}
+    }
+    /* UPGRADE: Tool Card Styling */
+    .tool-card {
+      box-shadow: 0 12px 32px 0 rgba(8,145,178,0.10), 0 1.5px 12px 0 rgba(124,58,237,0.07);
+      border-image: linear-gradient(135deg, #facc15 0%, #0ea5e9 100%) 1;
+      transition: box-shadow 0.22s, transform 0.15s;
+      backdrop-filter: blur(8px);
+    }
+    .tool-card:hover {
+      box-shadow: 0 18px 44px 0 rgba(8,145,178,0.17), 0 2px 18px 0 rgba(124,58,237,0.09);
+      transform: scale(1.018);
+    }
+    .glow-animate { animation: glowFadeIn 0.9s;}
+    @keyframes glowFadeIn {
+      0% { background: #fffbe8;}
+      100% { background: inherit;}
+    }
+    .fade-in { animation: fadeIn 0.6s;}
+    @keyframes fadeIn { 0% { opacity: 0;} 100% { opacity: 1;} }
+    /* UPGRADE: Animated Loading Dots */
+    .dot-flashing { display: inline-flex; gap: 2px; }
+    .dot-flashing div {
+      width:6px; height:6px; border-radius:50%; background:#facc15; animation:dotFlash 1s infinite alternate;
+    }
+    .dot-flashing div:nth-child(2) { background:#0ea5e9; animation-delay:0.3s;}
+    .dot-flashing div:nth-child(3) { background:#8b5cf6; animation-delay:0.6s;}
+    @keyframes dotFlash { 0%{opacity:0.5;} 100%{opacity:1;} }
+    /* UPGRADE: SVG Section Divider */
+    .wave-divider { line-height: 0; }
+    /* Tone presets */
+    .tone-cozy { --tone-bg: #fef9c3; --tone-text: #92400E;}
+    .tone-luxury { --tone-bg: #f3e8ff; --tone-text: #7C3AED;}
+    .tone-minimal { --tone-bg: #fff; --tone-text: #0F172A;}
+    /* Responsive Grids */
+    @media (max-width: 1000px) {
+      .main-grid { grid-template-columns: 1fr !important;}
+    }
+  </style>
+</head>
+<body class="tone-minimal">
+  <div class="flex min-h-screen">
+    <!-- UPGRADE: Modern Sidebar -->
+    <aside id="sidebar" class="sidebar-expanded fixed left-0 top-0 h-screen z-30 transition-all sidebar-animated-bg sidebar-shadow flex flex-col">
+      <div class="flex flex-col items-center pt-5 pb-4">
+        <img src="logo.png" alt="AutoList Canada Logo" class="w-14 h-14 mb-2 drop-shadow-lg">
+        <img src="title.png" alt="AutoList Canada" class="w-32 mb-4">
+        <!-- Collapse Button -->
+        <button onclick="toggleSidebar()" class="mb-3 p-2 rounded-full bg-white/20 hover:bg-white/40 transition" aria-label="Toggle sidebar">
+          <svg class="w-6 h-6 text-white"><use href="#icon-menu"/></svg>
+        </button>
+      </div>
+      <nav class="flex-1 flex flex-col gap-1 w-full px-3">
+        <a href="dashboard.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-white hover:bg-white/10 transition group">
+          <span class="text-lg">⚡</span> <span class="sidebar-text">Dashboard</span>
+        </a>
+        <a href="listings.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-white hover:bg-white/10 transition group">
+          <span class="text-lg">🚗</span> <span class="sidebar-text">Listings</span>
+        </a>
+        <a href="ai-tools-live.html" class="nav-link active flex items-center gap-3 px-4 py-3 rounded-xl font-semibold bg-white/90 text-orange-600 shadow ring-2 ring-orange-400 transition group" aria-current="page">
+          <span class="text-lg">🤖</span> <span class="sidebar-text font-bold">AI Tools</span>
+        </a>
+        <a href="terms.html" class="nav-link flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-white hover:bg-white/10 transition group">
+          <span class="text-lg">📄</span> <span class="sidebar-text">Terms</span>
+        </a>
+      </nav>
+      <div class="mt-auto w-full px-4 pb-8">
+        <div class="bg-white/90 rounded-3xl shadow-xl px-4 py-4 flex items-start gap-3 mb-2">
+          <span class="w-9 h-9 rounded-full bg-cyan-600 text-white flex items-center justify-center text-xl">🤖</span>
+          <div>
+            <div class="text-xs font-bold text-cyan-700 mb-1">AI Tip of the Day</div>
+            <div class="text-xs text-gray-700">“Short, specific titles boost clicks. Try adding a unique feature!”</div>
+          </div>
+        </div>
+        <div id="einstein-quote" class="text-xs text-center mt-2 text-purple-700 italic einstein-blink"></div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main" class="flex-1 ml-[18rem] max-w-full p-6 sm:p-10 bg-transparent relative z-10 transition-all duration-700">
+      <header class="mb-10">
+        <h1 class="text-4xl font-extrabold text-orange-500 mb-2">AutoList Canada – AI Tools</h1>
+        <p class="text-gray-600 max-w-xl">Our full toolkit for sellers. Powered by psychology, tone theory, and GPT automation. 100% browser-based. No install needed.</p>
+      </header>
+      <!-- Tone Preset Toggle -->
+      <div class="mb-8 flex gap-3 items-center">
+        <span class="text-sm font-semibold text-gray-500">Tone Preset:</span>
+        <div class="flex gap-2">
+          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;">Cozy</button>
+          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;">Luxury</button>
+          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border ring-2 ring-cyan-400" style="background-color: #fff; color: #0F172A; border-color: #E2E8F0;">Minimalist</button>
+        </div>
+      </div>
+      <!-- WAVE DIVIDER -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-8"><path fill="url(#grad1)" d="M0 24L60 32C120 40 240 56 360 56C480 56 600 40 720 32C840 24 960 24 1080 32C1200 40 1320 56 1380 56L1440 56V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V24Z"/><defs><linearGradient id="grad1" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#facc15"/><stop offset="0.5" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+
+      <!-- SECTION 1: Core Tools Grid -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-orange-500 mb-7 flex items-center gap-2">
+          <svg class="w-7 h-7"><use href="#icon-star"/></svg>
+          01. Core AI Tools
+        </h2>
+        <div class="grid main-grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          <!-- Tool 1: Title Generator -->
+          <section class="tool-card bg-white/80 dark:bg-white/10 rounded-2xl border-2 p-6 transition-transform group relative max-w-lg w-full mx-auto mb-2">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="inline-block text-2xl text-orange-400 animate-pulse">⭐</span>
+              <h3 class="text-lg font-bold text-orange-600 group-hover:text-cyan-700 transition">Title Generator</h3>
+              <button onclick="toggleExplain(this)" aria-label="Explain tool" class="ml-auto text-gray-400 hover:text-cyan-600 transition"><svg class="w-5 h-5"><use href="#icon-help"/></svg></button>
+            </div>
+            <p class="explanation hidden text-sm mb-3 text-gray-500">Creates a catchy, effective listing title based on your item info.</p>
+            <form onsubmit="event.preventDefault();generateAI('title')" class="flex flex-col gap-3">
+              <div class="relative">
+                <input type="text" id="title-input" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 text-lg transition" placeholder="Enter product details (e.g. 2018 Honda Civic LX)" oninput="liveConfidence('title')">
+                <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-orange-300 text-xl">🚗</span>
+              </div>
+              <button type="submit" id="btn-title" class="w-full py-2 rounded-lg font-semibold text-white bg-gradient-to-r from-orange-500 to-cyan-500 hover:from-orange-600 hover:to-cyan-600 shadow-lg transition-all">Generate</button>
+              <div id="title-result" class="sim-result mt-2 min-h-6 text-cyan-700 glow-animate"></div>
+            </form>
+            <div class="absolute right-5 top-5 flex items-center gap-2">
+              <span class="text-xs text-gray-400">Confidence</span>
+              <span id="conf-score-title" class="inline-block px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-700 text-xs font-bold animate-pulse">85%</span>
+            </div>
+          </section>
+          <!-- Tool 2: Description Generator -->
+          <!-- ...repeat tool card markup for each tool... -->
+          <!-- Tool 3: Tags Generator -->
+          <!-- Tool 4: Price Suggestion -->
+        </div>
+      </section>
+
+      <!-- WAVE DIVIDER -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-8"><path fill="url(#grad2)" d="M0 40L60 32C120 24 240 8 360 8C480 8 600 24 720 32C840 40 960 40 1080 32C1200 24 1320 8 1380 8L1440 8V64H1380C1320 64 1200 64 1080 64C960 64 840 64 720 64C600 64 480 64 360 64C240 64 120 64 60 64H0V40Z"/><defs><linearGradient id="grad2" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#facc15"/><stop offset="0.5" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+
+      <!-- SECTION 2: Visual Insight Tools (momentum trail style) -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-orange-500 mb-7 flex items-center gap-2">
+          <svg class="w-7 h-7"><use href="#icon-scan"/></svg>
+          02. Psychology Boosters
+        </h2>
+        <div class="space-y-8" id="psych-tools">
+          <!-- Repeat upgraded tool cards for tools 5-10 here -->
+        </div>
+      </section>
+
+      <!-- WAVE DIVIDER -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-8"><path fill="url(#grad3)" d="M0 30L60 38C120 46 240 62 360 62C480 62 600 46 720 38C840 30 960 30 1080 38C1200 46 1320 62 1380 62L1440 62V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V30Z"/><defs><linearGradient id="grad3" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#facc15"/><stop offset="0.5" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+
+      <!-- SECTION 3: Behavioral Insights -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold text-orange-500 mb-7 flex items-center gap-2">
+          <svg class="w-7 h-7"><use href="#icon-fusion"/></svg>
+          03. Behavioral Insights
+        </h2>
+        <div class="grid main-grid grid-cols-1 md:grid-cols-2 gap-8" id="behavior-tools">
+          <!-- Repeat upgraded tool cards for tools 11-15 here -->
+        </div>
+      </section>
+
+      <!-- WAVE DIVIDER -->
+      <div class="wave-divider">
+        <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-8"><path fill="url(#grad4)" d="M0 48L60 56C120 64 240 64 360 56C480 48 600 32 720 24C840 16 960 16 1080 24C1200 32 1320 48 1380 56L1440 64V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V48Z"/><defs><linearGradient id="grad4" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#facc15"/><stop offset="0.5" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+      </div>
+
+      <!-- SECTION 4: Final Listing Composers -->
+      <section>
+        <h2 class="text-2xl font-bold text-orange-500 mb-7 flex items-center gap-2">
+          <svg class="w-7 h-7"><use href="#icon-clipboard"/></svg>
+          04. Final Listing Composers
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="final-tools">
+          <!-- Repeat upgraded tool cards for tools 16-20 here -->
+        </div>
+      </section>
+
+      <footer class="mt-10 text-center text-gray-400 text-sm">
+        &copy; 2025 AutoList Canada &mdash; AI Tools Demo
+      </footer>
+    </main>
+  </div>
+
+  <!-- Modal for Title Analysis -->
+  <div id="titleModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-2xl w-11/12 max-w-md p-6 relative fade-in">
+      <button onclick="closeModal()" class="absolute right-4 top-3 text-gray-400 hover:text-cyan-500 text-xl">&times;</button>
+      <h3 class="text-lg font-bold text-cyan-800 mb-2">Why This Title Works</h3>
+      <ul class="text-gray-700 text-sm space-y-2">
+        <li><span class="font-semibold text-cyan-600">Structure:</span> Puts the most attractive features first.</li>
+        <li><span class="font-semibold text-cyan-600">Tone:</span> Friendly and confident, not pushy.</li>
+        <li><span class="font-semibold text-cyan-600">Clarity:</span> Easy to read at a glance; no jargon.</li>
+        <li><span class="font-semibold text-cyan-600">Buyer Focus:</span> Highlights what matters (low KM, great price).</li>
+      </ul>
+      <div class="mt-4 text-xs text-cyan-400">Want more tips? Tune your tone for different buyers!</div>
+    </div>
+  </div>
+
+  <!-- UPGRADE: All SVG icons referenced in <use href="#icon-..."/> -->
+  <svg style="display: none;">
+    <symbol id="icon-menu" viewBox="0 0 24 24"><rect y="4" width="24" height="2" rx="1"/><rect y="11" width="24" height="2" rx="1"/><rect y="18" width="24" height="2" rx="1"/></symbol>
+    <symbol id="icon-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#0ea5e9" stroke-width="2" fill="none"/><path d="M12 16v-2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2" stroke="#0ea5e9" stroke-width="2" fill="none"/><circle cx="12" cy="18" r="1" fill="#0ea5e9"/></symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24"><polygon points="12,2 15,8.5 22,9.3 17,14 18,21 12,17.7 6,21 7,14 2,9.3 9,8.5" fill="#facc15"/></symbol>
+    <symbol id="icon-scan" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#0ea5e9"/></symbol>
+    <symbol id="icon-fusion" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#8b5cf6"/><circle cx="12" cy="12" r="5" fill="#facc15"/></symbol>
+    <symbol id="icon-clipboard" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2" fill="#f472b6"/></symbol>
+  </svg>
+
+  <script>
+    // Sidebar Collapse/Expand
+    let sidebarCollapsed = false;
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const main = document.getElementById('main');
+      sidebarCollapsed = !sidebarCollapsed;
+      if (sidebarCollapsed) {
+        sidebar.classList.remove('sidebar-expanded');
+        sidebar.classList.add('sidebar-collapsed');
+        main.style.marginLeft = "4.5rem";
+      } else {
+        sidebar.classList.remove('sidebar-collapsed');
+        sidebar.classList.add('sidebar-expanded');
+        main.style.marginLeft = "18rem";
+      }
+    }
+    // Einstein Rotating Quote
+    const einsteinQuotes = [
+      "Imagination is more important than knowledge.",
+      "The true sign of intelligence is not knowledge but imagination.",
+      "Life is like riding a bicycle. To keep your balance you must keep moving.",
+      "AI today, history tomorrow!",
+      "Logic will get you from A to B. Imagination will take you everywhere."
+    ];
+    let quoteIdx = 0;
+    function showQuote() {
+      document.getElementById('einstein-quote').textContent = 'Einstein says: “'+einsteinQuotes[quoteIdx]+'”';
+      quoteIdx = (quoteIdx + 1) % einsteinQuotes.length;
+    }
+    // Tone preset logic
+    let currentTone = 'minimal';
+    function setTone(tone) {
+      currentTone = tone;
+      document.querySelectorAll('.tone-btn').forEach(btn => btn.classList.remove('ring-2', 'ring-cyan-400'));
+      if (tone==='cozy') {
+        document.body.classList.add('tone-cozy');
+        document.body.classList.remove('tone-luxury', 'tone-minimal');
+        document.querySelectorAll('.tone-btn')[0].classList.add('ring-2', 'ring-cyan-400');
+      } else if (tone==='luxury') {
+        document.body.classList.add('tone-luxury');
+        document.body.classList.remove('tone-cozy', 'tone-minimal');
+        document.querySelectorAll('.tone-btn')[1].classList.add('ring-2', 'ring-cyan-400');
+      } else {
+        document.body.classList.add('tone-minimal');
+        document.body.classList.remove('tone-cozy', 'tone-luxury');
+        document.querySelectorAll('.tone-btn')[2].classList.add('ring-2', 'ring-cyan-400');
+      }
+    }
+    setTone('minimal');
+    // Confidence Score Simulation
+    function liveConfidence(tool) {
+      const input = document.getElementById(tool+'-input').value;
+      let score = 70 + Math.min(input.length * 2, 30);
+      if (!input.trim()) score = 0;
+      document.getElementById('conf-score-'+tool).textContent = score + '%';
+    }
+    // Modal Logic
+    function openModal() { document.getElementById('titleModal').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('titleModal').classList.add('hidden'); }
+    // AI Result Animation
+    function animateResult(resultId) {
+      const el = document.getElementById(resultId);
+      el.classList.remove('glow-animate', 'fade-in');
+      void el.offsetWidth;
+      el.classList.add('glow-animate', 'fade-in');
+    }
+    // Loading Animation
+    function showLoading(resultId) {
+      document.getElementById(resultId).innerHTML =
+        '<span class="dot-flashing"><div></div><div></div><div></div></span> <span class="ml-2 text-gray-400">Thinking...</span>';
+    }
+    // Live AI Integration (simulated)
+    async function generateAI(tool) {
+      let resultId = tool+'-result';
+      let inputId = tool+'-input';
+      let confId = 'conf-score-'+tool;
+      let btnId = 'btn-'+tool;
+      let input = document.getElementById(inputId).value;
+      let btn = document.getElementById(btnId);
+      showLoading(resultId);
+      btn.disabled = true;
+      btn.classList.add('opacity-60','cursor-not-allowed');
+      setTimeout(() => { // Simulate AI
+        document.getElementById(resultId).textContent = (input ? `AI suggestion for "${input}"` : 'Try entering product details.');
+        document.getElementById(confId).textContent = input ? (80 + Math.floor(Math.random()*10)) + '%' : '0%';
+        animateResult(resultId);
+        btn.disabled = false;
+        btn.classList.remove('opacity-60','cursor-not-allowed');
+      }, 1200);
+    }
+    // Tool Explain Toggle
+    function toggleExplain(btn) {
+      const expl = btn.parentNode.querySelector('.explanation');
+      if (expl) expl.classList.toggle('hidden');
+    }
+    // On load: Einstein quote
+    window.onload = function() {
+      showQuote();
+      setInterval(showQuote, 7000);
+    };
+  </script>
+</body>
+</html>
