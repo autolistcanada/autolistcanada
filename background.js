@@ -1,4 +1,4 @@
-// crosslist-pro-extension/background.js
+
 
 let authToken = null;
 let crosslistSettings = {

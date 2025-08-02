@@ -2,6 +2,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <title>AutoList Crosslist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="autolist-popup">
+  <div style="display:flex;justify-content:center;margin-bottom:12px;">
+    <img src="assets/icon128.png" alt="AutoList Canada" style="width:64px;height:64px;border-radius:18px;" />
+  </div>
+  <div class="listing-data" style="margin-bottom:18px;">
+    <p><strong>Title:</strong> <span id="title">Loading...</span></p>
+    <p><strong>Price:</strong> <span id="price">Loading...</span></p>
+    <p><strong>Description:</strong> <span id="description">Loading...</span></p>
+  </div>
+  <div class="platform-row" style="display:flex;justify-content:center;align-items:flex-end;margin-bottom:18px;gap:12px;">
+    <div class="platform-toggle" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="assets/ebay.svg" alt="eBay" style="width:32px;height:32px;" />
+      <input type="checkbox" id="ebay-checkbox" name="ebay" />
+    </div>
+    <div class="platform-toggle" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="assets/poshmark.svg" alt="Poshmark" style="width:32px;height:32px;" />
+      <input type="checkbox" id="poshmark-checkbox" name="poshmark" />
+    </div>
+    <div class="platform-toggle" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="assets/etsy.svg" alt="Etsy" style="width:32px;height:32px;" />
+      <input type="checkbox" id="etsy-checkbox" name="etsy" />
+    </div>
+    <div class="platform-toggle" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="assets/depop.svg" alt="Depop" style="width:32px;height:32px;" />
+      <input type="checkbox" id="depop-checkbox" name="depop" />
+    </div>
+    <div class="platform-toggle" style="display:flex;flex-direction:column;align-items:center;">
+      <img src="assets/facebook.svg" alt="Facebook" style="width:32px;height:32px;" />
+      <input type="checkbox" id="facebook-checkbox" name="facebook" />
+    </div>
+  </div>
+  <button id="import-button" class="autolist-btn">Import to AutoList</button>
+  <button id="crosslist-button" class="autolist-btn" style="margin-top:12px;">Crosslist to Selected Platforms</button>
+</div>
+<script src="popup.js"></script>
+
   <meta charset="UTF-8">
   <title>Crosslist Pro Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,5 +70,6 @@
     </div>
   </div>
   <script src="popup.js"></script>
+
 </body>
 </html>

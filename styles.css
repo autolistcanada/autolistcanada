@@ -1,3 +1,68 @@
+
+body, .autolist-popup {
+  background: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  width: 100%;
+  min-width: 300px;
+  max-width: 360px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.autolist-popup {
+  padding: 18px 10px 18px 10px;
+  background: #f8f8f8;
+  border-radius: 18px;
+  min-width: 300px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.listing-data p {
+  margin: 0 0 7px 0;
+  font-size: 1em;
+}
+.platform-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px;
+}
+.platform-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.platform-toggle img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 2px;
+}
+.platform-toggle input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #e68129;
+}
+.autolist-btn {
+  width: 100%;
+  background: #e68129;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 0;
+  font-size: 1.08em;
+  margin-top: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: background 0.2s;
+}
+.autolist-btn:hover {
+  background: #ff9335;
+}
+@media (max-width: 340px) {
+  .autolist-popup { padding: 10px 2px; min-width: 200px; }
+  .platform-row { gap: 3px; }
+  .platform-toggle img { width: 26px; height: 26px; }
+=======
 /* crosslist-pro-extension/styles.css */
 
 body {
