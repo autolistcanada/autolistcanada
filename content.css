@@ -1,0 +1,201 @@
+/* Content Script Styles for AutoList Canada */
+/* These styles are injected into marketplace pages */
+
+/* AutoList Badge for Detected Listings */
+.autolist-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(135deg, #ff6b35, #ff9e3f);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 10px;
+  z-index: 10000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+.autolist-badge::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.8; }
+}
+
+/* Hover state for listing cards */
+[data-autolist-detected="true"] {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-autolist-detected="true"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-autolist-detected="true"]:hover .autolist-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* AutoList Button */
+.autolist-button {
+  background: linear-gradient(135deg, #ff6b35, #ff9e3f);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.autolist-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.autolist-button:active {
+  transform: translateY(0);
+}
+
+.autolist-button i {
+  font-size: 14px;
+}
+
+/* Import to AutoList Button */
+.autolist-import-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10000;
+  background: linear-gradient(135deg, #FF7300 0%, #FFE600 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  opacity: 0.9;
+}
+
+.autolist-import-button:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.autolist-import-button:active {
+  transform: scale(1);
+}
+
+/* Platform-specific overrides */
+/* eBay */
+.autolist-platform-ebay .autolist-badge {
+  top: 5px;
+  right: 5px;
+}
+
+/* Poshmark */
+.autolist-platform-poshmark [data-autolist-detected="true"] {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Etsy */
+.autolist-platform-etsy .autolist-badge {
+  background: linear-gradient(135deg, #f16521, #f8a03d);
+}
+
+/* Facebook Marketplace */
+.autolist-platform-facebook [data-autolist-detected="true"] {
+  border-radius: 8px;
+}
+
+/* Tooltip */
+.autolist-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 10001;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transform: translateY(5px);
+}
+
+[data-autolist-detected="true"]:hover .autolist-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Loading spinner */
+.autolist-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success state */
+.autolist-success {
+  color: #2ecc71;
+}
+
+/* Error state */
+.autolist-error {
+  color: #e74c3c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .autolist-badge {
+    font-size: 8px;
+    padding: 2px 5px;
+  }
+  
+  .autolist-button {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .autolist-import-button {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}

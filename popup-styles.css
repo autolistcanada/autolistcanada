@@ -1,0 +1,310 @@
+/* Modern Popup Styles for AutoList Canada Crosslist Pro */
+
+/* Glass Panel Effect */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  width: 100%;
+  min-width: 320px;
+  max-width: 420px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+}
+
+/* App Container */
+.app-container {
+  padding: 20px;
+  position: relative;
+  min-height: 500px;
+}
+
+/* App Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.app-header h1 {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #FF7300;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Icon Buttons */
+.icon-btn {
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+/* Platform Sync Bar */
+.platform-sync-bar {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.platform-icons {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.platform-icon-container {
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.platform-icon-container:hover {
+  transform: scale(1.1);
+}
+
+.platform-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+
+.platform-icon-container .connected,
+.platform-icon-container .disconnected {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  font-size: 10px;
+}
+
+.platform-icon-container .connected {
+  color: #10B981; /* green-500 */
+  display: block;
+}
+
+.platform-icon-container .disconnected {
+  color: #F59E0B; /* amber-500 */
+  display: none;
+}
+
+.platform-icon-container:not(.connected) .connected {
+  display: none;
+}
+
+.platform-icon-container:not(.connected) .disconnected {
+  display: block;
+}
+
+/* Main Content - Tiles Grid */
+.main-content {
+  margin-bottom: 20px;
+}
+
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.tile {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 16px;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.tile:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #FF7300;
+  background: linear-gradient(135deg, #fff7e6 0%, #ffe6cc 100%);
+}
+
+.tile.selected {
+  border-color: #14b8a6;
+  background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+}
+
+.tile-icon {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #FF7300;
+}
+
+.tile:hover .tile-icon {
+  color: #14b8a6;
+}
+
+.tile-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #333;
+}
+
+/* App Footer */
+.app-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 15px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.footer-item {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.footer-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+/* Wave Background */
+.wave-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.wave-bg svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utility Classes */
+.minimized .main-content {
+  display: none;
+}
+
+.minimized .app-footer {
+  display: none;
+}
+
+.minimized .app-container {
+  padding: 10px;
+}
+
+.minimized .app-header {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.blurred {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+/* Responsive Design */
+@media (max-width: 420px) {
+  .glass-panel {
+    min-width: 300px;
+  }
+  
+  .app-container {
+    padding: 15px;
+  }
+  
+  .platform-icons {
+    grid-template-columns: repeat(9, 1fr);
+    gap: 4px;
+  }
+  
+  .platform-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .tiles-grid {
+    gap: 10px;
+  }
+  
+  .tile {
+    padding: 15px 5px;
+  }
+  
+  .footer-content {
+    gap: 10px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 360px) {
+  .glass-panel {
+    min-width: 280px;
+  }
+  
+  .platform-icons {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  
+  .tiles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .tile-label {
+    font-size: 0.75em;
+  }
+}
