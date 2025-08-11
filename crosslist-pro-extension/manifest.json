@@ -11,7 +11,7 @@
     "128": "assets/icon128.png"
   },
   "background": { "service_worker": "background.js", "type": "module" },
-  "permissions": ["storage", "scripting", "activeTab", "tabs"],
+  "permissions": ["storage", "scripting", "activeTab", "tabs", "alarms"],
   "host_permissions": [
     "*://*.ebay.ca/*",
     "*://*.ebay.com/*",

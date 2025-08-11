@@ -28,8 +28,16 @@ chrome.runtime.onInstalled.addListener(async () => {
   // Initialize settings
   await initializeSettings();
   
-  // Set up alarm for periodic sync
-  chrome.alarms.create('periodicSync', { periodInMinutes: 30 });
+  // Ensure alarms exist before use
+  if (chrome.alarms && chrome.alarms.create) {
+    chrome.alarms.get('periodicSync', (existing) => {
+      if (!existing) {
+        chrome.alarms.create('periodicSync', { periodInMinutes: 15 });
+      }
+    });
+  } else {
+    console.warn('Alarms API not available. Check "alarms" permission in manifest.');
+  }
 });
 
 // Handle messages from popup and content scripts
@@ -316,13 +324,15 @@ async function handleOAuthResponse(message) {
   }
 }
 
-// Handle periodic sync alarm
-chrome.alarms.onAlarm.addListener(async (alarm) => {
-  if (alarm.name === 'periodicSync') {
-    console.log('Running periodic sync');
-    // In a real implementation, this would perform actual sync operations
-  }
-});
+// Safely attach the listener
+if (chrome.alarms && chrome.alarms.onAlarm && chrome.alarms.onAlarm.addListener) {
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    if (alarm && alarm.name === 'periodicSync') {
+      console.log('Running periodic sync');
+      // TODO: real sync work
+    }
+  });
+}
 
 // Handle tab updates for content script injection
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
