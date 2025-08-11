@@ -2,8 +2,8 @@
 // Injects floating 'Import to AutoList' buttons on marketplace listings and responds to popup.js with extracted listings.
 
 const SUPPORTED = [
-  { host: /ebay\.(ca|com)$/i, path: /\/(sh\/lst|selling)/i, platform: 'eBay' },
-  { host: /etsy\.com$/i, path: /\/(your\/shops|listings)/i, platform: 'Etsy' },
+  { host: /ebay\.(ca|com)$/i, path: /\/sh\/lst|selling/i, platform: 'eBay' },
+  { host: /etsy\.com$/i, path: /\/your\/shops|listings/i, platform: 'Etsy' },
   { host: /poshmark\.com$/i, path: /\/your\/listings/i, platform: 'Poshmark' },
   { host: /mercari\.com$/i, path: /\/selling/i, platform: 'Mercari' },
   { host: /facebook\.com$/i, path: /\/marketplace\/.*\/your-listings\//i, platform: 'Facebook Marketplace' },
@@ -13,7 +13,9 @@ const SUPPORTED = [
   { host: /bonanza\.com$/i, path: /\/booth\/items/i, platform: 'Bonanza' },
   { host: /amazon\.(ca|com)$/i, path: /\/gp\/seller/i, platform: 'Amazon' },
   { host: /varagesale\.com$/i, path: /\/my\/listings/i, platform: 'VarageSale' },
-  { host: /kijiji\.ca$/i, path: /\/my\/ads/i, platform: 'Kijiji' }
+  { host: /kijiji\.ca$/i, path: /\/my\/ads/i, platform: 'Kijiji' },
+  { host: /offerup\.com$/i, path: /\/profile\/listings/i, platform: 'OfferUp' },
+  { host: /letgo\.com$/i, path: /\/listings/i, platform: 'Letgo' }
 ];
 
 // Store injected buttons to prevent duplicates
@@ -61,6 +63,10 @@ function injectImportButtons(platform) {
     } else if (platform === 'VarageSale') {
       injectButtonsForSelector('.listing-card', platform);
     } else if (platform === 'Kijiji') {
+      injectButtonsForSelector('.listing-card', platform);
+    } else if (platform === 'OfferUp') {
+      injectButtonsForSelector('.listing-item', platform);
+    } else if (platform === 'Letgo') {
       injectButtonsForSelector('.listing-card', platform);
     }
   } catch (e) {
@@ -366,6 +372,22 @@ function extractListings(platform) {
     } else if (platform === 'Kijiji') {
       items = Array.from(document.querySelectorAll('.listing-card')).map(card => ({
         platform: 'Kijiji',
+        title: card.querySelector('.listing-title')?.innerText || '',
+        price: card.querySelector('.listing-price')?.innerText || '',
+        image: card.querySelector('img')?.src || '',
+        url: card.querySelector('a')?.href || location.href
+      }));
+    } else if (platform === 'OfferUp') {
+      items = Array.from(document.querySelectorAll('.listing-item')).map(card => ({
+        platform: 'OfferUp',
+        title: card.querySelector('.listing-title')?.innerText || '',
+        price: card.querySelector('.listing-price')?.innerText || '',
+        image: card.querySelector('img')?.src || '',
+        url: card.querySelector('a')?.href || location.href
+      }));
+    } else if (platform === 'Letgo') {
+      items = Array.from(document.querySelectorAll('.listing-card')).map(card => ({
+        platform: 'Letgo',
         title: card.querySelector('.listing-title')?.innerText || '',
         price: card.querySelector('.listing-price')?.innerText || '',
         image: card.querySelector('img')?.src || '',

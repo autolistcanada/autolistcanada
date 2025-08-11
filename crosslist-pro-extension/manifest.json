@@ -22,7 +22,19 @@
     "*://*.ebay.es/*",
     "*://*.ebay.com.au/*",
     "*://*.etsy.com/*",
-    "*://*.poshmark.com/*"
+    "*://*.poshmark.com/*",
+    "*://*.facebook.com/*",
+    "*://*.depop.com/*",
+    "*://*.grailed.com/*",
+    "*://*.kijiji.ca/*",
+    "*://*.mercari.com/*",
+    "*://*.varagesale.com/*",
+    "*://*.shopify.com/*",
+    "*://*.offerup.com/*",
+    "*://*.amazon.ca/*",
+    "*://*.amazon.com/*",
+    "*://*.bonanza.com/*",
+    "*://*.letgo.com/*"
   ],
   "content_scripts": [
     {
@@ -47,6 +59,61 @@
     {
       "matches": ["*://*.poshmark.com/*"],
       "js": ["content/common.js", "content/poshmark.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content/common.js", "content/facebook.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.depop.com/*"],
+      "js": ["content/common.js", "content/depop.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.grailed.com/*"],
+      "js": ["content/common.js", "content/grailed.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.kijiji.ca/*"],
+      "js": ["content/common.js", "content/kijiji.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.mercari.com/*"],
+      "js": ["content/common.js", "content/mercari.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.varagesale.com/*"],
+      "js": ["content/common.js", "content/varagesale.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.shopify.com/*"],
+      "js": ["content/common.js", "content/shopify.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.offerup.com/*"],
+      "js": ["content/common.js", "content/offerup.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.amazon.ca/*", "*://*.amazon.com/*"],
+      "js": ["content/common.js", "content/amazon.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.bonanza.com/*"],
+      "js": ["content/common.js", "content/bonanza.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.letgo.com/*"],
+      "js": ["content/common.js", "content/letgo.js"],
       "run_at": "document_idle"
     }
   ],

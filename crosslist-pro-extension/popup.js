@@ -6,6 +6,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   const ebayChip = document.getElementById('ebay-chip');
   const etsyChip = document.getElementById('etsy-chip');
   const poshmarkChip = document.getElementById('poshmark-chip');
+  const facebookChip = document.getElementById('facebook-chip');
+  const depopChip = document.getElementById('depop-chip');
+  const grailedChip = document.getElementById('grailed-chip');
+  const kijijiChip = document.getElementById('kijiji-chip');
+  const mercariChip = document.getElementById('mercari-chip');
+  const varagesaleChip = document.getElementById('varagesale-chip');
+  const shopifyChip = document.getElementById('shopify-chip');
+  const offerupChip = document.getElementById('offerup-chip');
+  const amazonChip = document.getElementById('amazon-chip');
+  const bonanzaChip = document.getElementById('bonanza-chip');
+  const letgoChip = document.getElementById('letgo-chip');
   const syncStatus = document.getElementById('sync-status');
   const openSettingsBtn = document.getElementById('open-settings');
   
@@ -43,6 +54,17 @@ async function loadConnections() {
       updateChipStatus('ebay-chip', response.connections.ebay);
       updateChipStatus('etsy-chip', response.connections.etsy);
       updateChipStatus('poshmark-chip', response.connections.poshmark);
+      updateChipStatus('facebook-chip', response.connections.facebook);
+      updateChipStatus('depop-chip', response.connections.depop);
+      updateChipStatus('grailed-chip', response.connections.grailed);
+      updateChipStatus('kijiji-chip', response.connections.kijiji);
+      updateChipStatus('mercari-chip', response.connections.mercari);
+      updateChipStatus('varagesale-chip', response.connections.varagesale);
+      updateChipStatus('shopify-chip', response.connections.shopify);
+      updateChipStatus('offerup-chip', response.connections.offerup);
+      updateChipStatus('amazon-chip', response.connections.amazon);
+      updateChipStatus('bonanza-chip', response.connections.bonanza);
+      updateChipStatus('letgo-chip', response.connections.letgo);
     }
   } catch (error) {
     console.error('Error loading connections:', error);

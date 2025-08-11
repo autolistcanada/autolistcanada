@@ -342,7 +342,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     const supportedDomains = [
       'ebay.com', 'etsy.com', 'poshmark.com',
       'facebook.com/marketplace', 'kijiji.ca',
-      'depop.com', 'mercari.com', 'shopify.com'
+      'depop.com', 'mercari.com', 'shopify.com',
+      'grailed.com', 'varagesale.com', 'offerup.com',
+      'amazon.com', 'bonanza.com', 'letgo.com'
     ];
     
     const isSupported = supportedDomains.some(domain => 
@@ -364,6 +366,28 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         platformScript = 'content/etsy.js';
       } else if (tab.url.includes('poshmark.com')) {
         platformScript = 'content/poshmark.js';
+      } else if (tab.url.includes('facebook.com')) {
+        platformScript = 'content/facebook.js';
+      } else if (tab.url.includes('depop.com')) {
+        platformScript = 'content/depop.js';
+      } else if (tab.url.includes('grailed.com')) {
+        platformScript = 'content/grailed.js';
+      } else if (tab.url.includes('kijiji.ca')) {
+        platformScript = 'content/kijiji.js';
+      } else if (tab.url.includes('mercari.com')) {
+        platformScript = 'content/mercari.js';
+      } else if (tab.url.includes('varagesale.com')) {
+        platformScript = 'content/varagesale.js';
+      } else if (tab.url.includes('shopify.com')) {
+        platformScript = 'content/shopify.js';
+      } else if (tab.url.includes('offerup.com')) {
+        platformScript = 'content/offerup.js';
+      } else if (tab.url.includes('amazon.com') || tab.url.includes('amazon.ca')) {
+        platformScript = 'content/amazon.js';
+      } else if (tab.url.includes('bonanza.com')) {
+        platformScript = 'content/bonanza.js';
+      } else if (tab.url.includes('letgo.com')) {
+        platformScript = 'content/letgo.js';
       }
       
       if (platformScript) {
