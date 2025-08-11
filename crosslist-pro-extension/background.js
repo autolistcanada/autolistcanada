@@ -29,16 +29,10 @@ chrome.runtime.onInstalled.addListener(async () => {
   await initializeSettings();
   
   // Ensure alarms exist before use
-  if (chrome.alarms && chrome.alarms.create) {
-    chrome.alarms.get('periodicSync', (existing) => {
-      if (!existing) {
-        chrome.alarms.create('periodicSync', { periodInMinutes: 15 });
-      }
-    });
-  } else {
-    console.warn('Alarms API not available. Check "alarms" permission in manifest.');
-  }
+  if (chrome?.alarms?.create) chrome.alarms.get('periodicSync', a => {!a && chrome.alarms.create('periodicSync',{periodInMinutes:15});});
 });
+
+chrome?.alarms?.onAlarm?.addListener(a => { if (a?.name==='periodicSync'){ /* TODO: sync job */ } });
 
 // Handle messages from popup and content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -208,23 +202,26 @@ async function getSyncData() {
           message: 'Successfully synced 15 listings'
         },
         {
-          timestamp: new Date(Date.now() - 86400000).toISOString(),
+          timestamp: new Date(Date.now() - 7200000).toISOString(),
           platform: 'Poshmark',
           listingCount: 8,
           status: 'success',
           message: 'Successfully synced 8 listings'
         },
         {
-          timestamp: new Date(Date.now() - 172800000).toISOString(),
+          timestamp: new Date(Date.now() - 10800000).toISOString(),
           platform: 'Etsy',
-          listingCount: 0,
-          status: 'error',
-          message: 'Authentication failed'
+          listingCount: 12,
+          status: 'warning',
+          message: '12 listings synced with 3 warnings'
         }
       ]
     };
     
-    return { success: true, data: mockData };
+    return {
+      success: true,
+      data: mockData
+    };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -235,41 +232,21 @@ async function runAction(action) {
   try {
     console.log(`Running action: ${action}`);
     
-    // Simulate action processing
+    // In a real implementation, this would perform the actual action
+    // For now, we'll just simulate the action
     switch (action) {
-      case 'bulk-crosslist':
-        // Simulate bulk crosslisting
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      case 'crosslist':
+        // Simulate crosslisting
         break;
-      
-      case 'smart-delist':
-        // Simulate smart delist/relist
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      case 'relist':
+        // Simulate relisting
         break;
-      
-      case 'ai-title':
-        // Simulate AI title generation
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      case 'delist':
+        // Simulate delisting
         break;
-      
-      case 'ai-description':
-        // Simulate AI description generation
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      case 'sync':
+        // Simulate sync
         break;
-      
-      case 'ai-tags':
-        // Simulate AI tags generation
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        break;
-      
-      case 'price-suggest':
-        // Simulate price suggestion
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        break;
-      
-      case 'activity-logs':
-        // Simulate activity logs retrieval
-        await new Promise(resolve => setTimeout(resolve, 1000));
         break;
       
       case 'settings':

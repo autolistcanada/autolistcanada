@@ -55,7 +55,6 @@
 
 4. **New Files Created**
    - `popup-styles.css` - Modern styling for popup UI
-   - `assets/walmart.svg` - Walmart platform icon
    - `assets/letgo.svg` - Letgo platform icon
    - `assets/offerup.svg` - OfferUp platform icon
    - `test-popup.html` - Manual testing instructions
