@@ -1,76 +1,179 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AutoList Canada Popup Test</title>
-    <link rel="stylesheet" href="popup-styles.css">
-    <style>
-        body {
-            width: 400px;
-            height: 600px;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada - Crosslist Pro</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="popup-styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      width: 400px;
+      height: 600px;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
-<body>
-    <div class="app-container">
-        <header class="app-header">
-            <div class="logo-section">
-                <img src="assets/icon48.png" alt="AutoList Canada" class="app-logo">
-                <h1>AutoList Canada</h1>
-            </div>
-            <div class="window-controls">
-                <button class="window-button minimize">−</button>
-                <button class="window-button close">×</button>
-            </div>
-        </header>
-        
-        <main class="main-content">
-            <div class="onboarding-section">
-                <h2>Welcome to AutoList Canada!</h2>
-                <p>Connect your marketplace accounts to get started with cross-listing.</p>
-            </div>
-            
-            <div class="platforms-section">
-                <h3>Connected Platforms</h3>
-                <div class="platforms-grid" id="platforms-grid">
-                    <!-- Platform cards will be dynamically inserted here -->
-                </div>
-            </div>
-            
-            <div class="listings-section">
-                <h3>Your Listings</h3>
-                <div class="listings-grid" id="listings-grid">
-                    <!-- Listing cards will be dynamically inserted here -->
-                </div>
-            </div>
-            
-            <div class="ai-panel">
-                <h3>AI Suggestions</h3>
-                <div class="suggestions-container" id="suggestions-container">
-                    <!-- AI suggestions will be dynamically inserted here -->
-                </div>
-            </div>
-        </main>
-        
-        <div class="status-bar">
-            <div class="sync-status">
-                <span class="status-indicator"></span>
-                <span class="status-text">Ready to sync</span>
-            </div>
-            <div class="last-sync">Last sync: Never</div>
+<body class="glass-panel">
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <img src="assets/icon48.png" alt="AutoList Canada" class="logo" id="logo">
+        <h1>AutoList Canada</h1>
+      </div>
+      <div class="header-actions">
+        <button id="minimize-btn" class="icon-btn" title="Minimize">
+          <i class="fas fa-window-minimize"></i>
+          <span class="tooltip">Minimize</span>
+        </button>
+        <button id="pin-btn" class="icon-btn" title="Pin popup">
+          <i class="fas fa-thumbtack"></i>
+          <span class="tooltip">Pin Popup</span>
+        </button>
+        <button id="close-btn" class="icon-btn" title="Close">
+          <i class="fas fa-times"></i>
+          <span class="tooltip">Close</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Platform Sync Status Bar -->
+    <div class="platform-sync-bar" id="platform-sync-bar">
+      <div class="platform-icons">
+        <div class="platform-icon-container" data-platform="ebay">
+          <img src="assets/ebay.svg" alt="eBay" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
         </div>
-        
-        <div class="wave-background">
-            <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z" opacity=".25" />
-                <path d="M0 0v15.81c13 21.11 27.68 41.29 47.21 55.42 59.27 42.81 128.49 55.42 197.21 55.42 69.27 0 138.3-12.61 197.21-55.42 47.53-34.31 84.23-76.9 109.21-121.55C558.65 10.77 624 0 700 0c76 0 141.35 10.77 197.21 55.42 25 44.65 61.7 87.23 109.21 121.55 58.91 42.81 128.13 55.42 197.21 55.42 69.27 0 138.3-12.61 197.21-55.42V0z" opacity=".5" />
-                <path d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-36.59V0z" />
-            </svg>
+        <div class="platform-icon-container" data-platform="etsy">
+          <img src="assets/etsy.svg" alt="Etsy" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
         </div>
+        <div class="platform-icon-container" data-platform="poshmark">
+          <img src="assets/poshmark.svg" alt="Poshmark" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="facebook">
+          <img src="assets/facebook.svg" alt="Facebook" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="kijiji">
+          <img src="assets/kijiji.png" alt="Kijiji" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="depop">
+          <img src="assets/depop.svg" alt="Depop" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="mercari">
+          <img src="assets/mercari.svg" alt="Mercari" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="walmart">
+          <img src="assets/walmart.svg" alt="Walmart" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+        <div class="platform-icon-container" data-platform="letgo">
+          <img src="assets/letgo.svg" alt="Letgo" class="platform-icon">
+          <i class="fas fa-check-circle connected"></i>
+          <i class="fas fa-exclamation-circle disconnected"></i>
+        </div>
+      </div>
     </div>
-    
-    <script src="popup.js"></script>
+
+    <!-- Main Content - 9-Tile Grid -->
+    <main class="main-content">
+      <div class="tiles-grid" id="tiles-grid">
+        <!-- Tile 1: Sync Settings -->
+        <div class="tile" data-tool="sync-settings">
+          <i class="fas fa-sync-alt tile-icon"></i>
+          <span class="tile-label">Sync Settings</span>
+        </div>
+        
+        <!-- Tile 2: AI Assist -->
+        <div class="tile" data-tool="ai-assist">
+          <i class="fas fa-robot tile-icon"></i>
+          <span class="tile-label">AI Assist</span>
+        </div>
+        
+        <!-- Tile 3: Platforms -->
+        <div class="tile" data-tool="platforms">
+          <i class="fas fa-th tile-icon"></i>
+          <span class="tile-label">Platforms</span>
+        </div>
+        
+        <!-- Tile 4: Conversion Score -->
+        <div class="tile" data-tool="conversion-score">
+          <i class="fas fa-chart-line tile-icon"></i>
+          <span class="tile-label">Conversion Score</span>
+        </div>
+        
+        <!-- Tile 5: Tag Optimizer -->
+        <div class="tile" data-tool="tag-optimizer">
+          <i class="fas fa-tags tile-icon"></i>
+          <span class="tile-label">Tag Optimizer</span>
+        </div>
+        
+        <!-- Tile 6: Tone Trainer -->
+        <div class="tile" data-tool="tone-trainer">
+          <i class="fas fa-comment-dots tile-icon"></i>
+          <span class="tile-label">Tone Trainer</span>
+        </div>
+        
+        <!-- Tile 7: Title Builder -->
+        <div class="tile" data-tool="title-builder">
+          <i class="fas fa-heading tile-icon"></i>
+          <span class="tile-label">Title Builder</span>
+        </div>
+        
+        <!-- Tile 8: Bulk Edit -->
+        <div class="tile" data-tool="bulk-edit">
+          <i class="fas fa-edit tile-icon"></i>
+          <span class="tile-label">Bulk Edit</span>
+        </div>
+        
+        <!-- Tile 9: Guide Me -->
+        <div class="tile" data-tool="guide-me">
+          <i class="fas fa-question-circle tile-icon"></i>
+          <span class="tile-label">Guide Me</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <span class="footer-item" id="help-btn">Help ❓</span>
+        <span class="footer-item" id="settings-btn">Settings ⚙️</span>
+        <span class="footer-item">Version v1.0.0</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SVG Wave Background -->
+  <div class="wave-bg">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#ff6b35" fill-opacity="0.1"></path>
+      <path d="M0,320L48,309.3C96,299,192,277,288,266.7C384,256,480,256,576,272C672,288,768,320,864,309.3C960,299,1056,245,1152,213.3C1248,181,1344,171,1392,165.3L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#f7c59f" fill-opacity="0.2"></path>
+      <path d="M0,448L48,448C96,448,192,448,288,437.3C384,427,480,405,576,394.7C672,384,768,384,864,373.3C960,363,1056,341,1152,341.3C1248,341,1344,363,1392,373.3L1440,384L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#efefd0" fill-opacity="0.15"></path>
+    </svg>
+  </div>
+
+  <!-- Load jQuery from CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Then load your popup logic -->
+  <script src="popup.js" type="module"></script>
+
 </body>
 </html>

@@ -1,98 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "AutoList Canada Crosslist Pro",
-  "version": "2.0.0",
-  "description": "The ultimate crosslisting tool for Canadian resellers. AI-powered listing optimization, multi-platform sync, and inventory management for 12+ marketplaces.",
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "assets/icon16.png",
-      "48": "assets/icon48.png",
-      "128": "assets/icon128.png"
-    },
-    "default_title": "AutoList Canada - Crosslist Smarter"
-  },
-  "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  },
+  "name": "AutoList Canada",
+  "description": "Clean-room crosslisting with AI helpers and sync — geometric abstract-nature UI.",
+  "version": "1.0.0",
+  "action": { "default_popup": "popup.html" },
+  "icons": { "16":"assets/icon16.png","32":"assets/icon32.png","48":"assets/icon48.png","128":"assets/icon128.png" },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "permissions": ["storage","scripting","activeTab","tabs"],
+  "host_permissions": ["*://*.ebay.*/*","*://*.etsy.com/*","*://*.poshmark.com/*"],
   "content_scripts": [
-    {
-      "matches": [
-        "https://www.ebay.ca/*",
-        "https://www.ebay.com/*",
-        "https://www.etsy.com/*",
-        "https://poshmark.ca/*",
-        "https://poshmark.com/*",
-        "https://www.mercari.com/*",
-        "https://www.facebook.com/marketplace/*",
-        "https://www.grailed.com/*",
-        "https://www.depop.com/*",
-        "https://*.shopify.com/*",
-        "https://www.bonanza.com/*",
-        "https://www.amazon.ca/*",
-        "https://www.amazon.com/*",
-        "https://www.varagesale.com/*",
-        "https://www.kijiji.ca/*",
-        "https://offerup.com/*",
-        "https://letgo.com/*",
-        "https://www.walmart.ca/*",
-        "https://www.walmart.com/*"
-      ],
-      "js": ["content.js"],
-      "css": ["content.css"],
-      "run_at": "document_idle"
-    }
+    { "matches": ["*://*.ebay.*/*"],      "js": ["content/common.js","content/ebay.js"],      "run_at": "document_idle" },
+    { "matches": ["*://*.etsy.com/*"],    "js": ["content/common.js","content/etsy.js"],      "run_at": "document_idle" },
+    { "matches": ["*://*.poshmark.com/*"],"js": ["content/common.js","content/poshmark.js"],  "run_at": "document_idle" }
   ],
-  "permissions": [
-    "scripting",
-    "activeTab",
-    "storage",
-    "tabs",
-    "alarms",
-    "identity",
-    "notifications",
-    "clipboardWrite"
-  ],
-  "host_permissions": [
-    "https://www.ebay.ca/*",
-    "https://www.ebay.com/*",
-    "https://www.etsy.com/*",
-    "https://poshmark.ca/*",
-    "https://poshmark.com/*",
-    "https://www.mercari.com/*",
-    "https://www.facebook.com/marketplace/*",
-    "https://www.grailed.com/*",
-    "https://www.depop.com/*",
-    "https://*.shopify.com/*",
-    "https://www.bonanza.com/*",
-    "https://www.amazon.ca/*",
-    "https://www.amazon.com/*",
-    "https://www.varagesale.com/*",
-    "https://www.kijiji.ca/*",
-    "https://offerup.com/*",
-    "https://letgo.com/*",
-    "https://www.walmart.ca/*",
-    "https://www.walmart.com/*",
-    "https://autolistcanada.ca/api/*"
-  ],
-  "icons": {
-    "16": "assets/icon16.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "assets/*",
-        "styles/*",
-        "content.css"
-      ],
-      "matches": ["<all_urls>"],
-      "use_dynamic_url": true
-    }
-  ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://autolistcanada.ca;"
-  }
+  "web_accessible_resources": [{
+    "resources": ["assets/ui/*.svg","ui/*.css","content/content.css"],
+    "matches": ["<all_urls>"]
+  }],
+  "options_page": "options.html"
 }

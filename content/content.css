@@ -1,0 +1,197 @@
+/* content/content.css - AutoList Canada Extension */
+/* Styles for injected content UI */
+
+/* AutoList button styles */
+.autolist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #FF7A00 0%, #FFB800 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 10000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.autolist-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.autolist-btn:active {
+  transform: translateY(0);
+}
+
+.autolist-btn.importing {
+  background: linear-gradient(135deg, #00C896 0%, #00A8FF 100%);
+}
+
+/* Crosslist modal styles */
+.autolist-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 24px;
+  z-index: 10001;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 400px;
+  max-width: 500px;
+}
+
+.autolist-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.autolist-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.autolist-modal-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.autolist-modal-close:hover {
+  color: white;
+}
+
+.autolist-platforms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.autolist-platform {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.autolist-platform:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.autolist-platform.selected {
+  background: rgba(255, 122, 0, 0.2);
+  border: 1px solid #FF7A00;
+}
+
+.autolist-platform-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 8px;
+}
+
+.autolist-platform-name {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.autolist-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.autolist-btn-primary {
+  flex: 1;
+  background: linear-gradient(135deg, #FF7A00 0%, #FFB800 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.autolist-btn-secondary {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Overlay for modal */
+.autolist-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+}
+
+/* Onboarding tooltip */
+.autolist-tooltip {
+  position: fixed;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  z-index: 10002;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 300px;
+}
+
+.autolist-tooltip-content {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.autolist-tooltip-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.autolist-tooltip-btn {
+  background: none;
+  border: none;
+  color: #FF7A00;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .autolist-modal {
+    width: 90%;
+    min-width: auto;
+  }
+  
+  .autolist-platforms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

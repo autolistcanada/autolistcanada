@@ -19,6 +19,19 @@ const SUPPORTED = [
 // Store injected buttons to prevent duplicates
 const injectedButtons = new Set();
 
+// Error logging function
+function logContentError(type, details) {
+  // Send error to background script for centralized logging
+  chrome.runtime.sendMessage({
+    type: 'CONTENT_ERROR',
+    errorType: type,
+    details: details
+  }).catch(err => {
+    // If we can't send to background, log to console
+    console.error('Failed to log error to background:', err);
+  });
+}
+
 // Inject floating 'Import to AutoList' buttons
 function injectImportButtons(platform) {
   // Clear previously injected buttons
@@ -52,6 +65,11 @@ function injectImportButtons(platform) {
     }
   } catch (e) {
     console.error('Error injecting buttons:', e);
+    logContentError('button_injection', {
+      platform: platform,
+      error: e.message,
+      timestamp: new Date().toISOString()
+    });
   }
 }
 
@@ -355,7 +373,14 @@ function extractListings(platform) {
       }));
     }
   } catch (e) {
-    // fail silently, return empty array
+    console.error('Error extracting listings:', e);
+    logContentError('listing_extraction', {
+      platform: platform,
+      error: e.message,
+      timestamp: new Date().toISOString()
+    });
+    // Return empty array on error
+    return [];
   }
   return items.filter(x => x.title);
 }

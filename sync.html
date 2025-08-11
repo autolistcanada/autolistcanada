@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada - Sync Visualizer</title>
+  <link rel="stylesheet" href="ui/base.css">
+  <link rel="stylesheet" href="ui/sync.css">
+  <link rel="stylesheet" href="ui/patterns.css">
+</head>
+<body class="bg-tessellation">
+  <div class="sync-container">
+    <h1 class="brand-title">Sync Visualizer</h1>
+    
+    <!-- Summary cards -->
+    <div class="summary-cards">
+      <div class="card">
+        <div class="card-title">Total Listings</div>
+        <div class="card-value" id="total-listings">0</div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Active Syncs</div>
+        <div class="card-value" id="active-syncs">0</div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Last Sync</div>
+        <div class="card-value" id="last-sync">Never</div>
+      </div>
+    </div>
+    
+    <!-- Platform breakdown -->
+    <div class="section">
+      <h2 class="section-title">Platform Sync Status</h2>
+      
+      <div class="platform-status" id="platform-status">
+        <div class="platform-item">
+          <div class="platform-info">
+            <img src="assets/ui/mktg-ebay.svg" width="24" height="24" alt="eBay">
+            <span class="platform-name">eBay</span>
+          </div>
+          <div class="platform-badge badge--disconnected" id="ebay-status">Disconnected</div>
+        </div>
+        
+        <div class="platform-item">
+          <div class="platform-info">
+            <img src="assets/ui/mktg-etsy.svg" width="24" height="24" alt="Etsy">
+            <span class="platform-name">Etsy</span>
+          </div>
+          <div class="platform-badge badge--disconnected" id="etsy-status">Disconnected</div>
+        </div>
+        
+        <div class="platform-item">
+          <div class="platform-info">
+            <img src="assets/ui/mktg-posh.svg" width="24" height="24" alt="Poshmark">
+            <span class="platform-name">Poshmark</span>
+          </div>
+          <div class="platform-badge badge--disconnected" id="poshmark-status">Disconnected</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sync history -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Sync History</h2>
+        <button class="btn btn-secondary" id="refresh-history">
+          <img src="assets/ui/icon-sync.svg" width="16" height="16" alt="Refresh">
+          Refresh
+        </button>
+      </div>
+      
+      <div class="sync-history" id="sync-history">
+        <div class="empty-state" id="empty-history">
+          <p>No sync history available</p>
+        </div>
+        <!-- Sync history items will be populated here -->
+      </div>
+    </div>
+    
+    <!-- Loading spinner -->
+    <div class="loading-spinner" id="loading-spinner" style="display: none;"></div>
+  </div>
+  
+  <script src="sync.js" type="module"></script>
+</body>
+</html>
