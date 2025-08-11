@@ -140,9 +140,61 @@ function extractListingData(listingElement) {
   };
 }
 
+// Handle ALC_ACTION messages from both chrome.runtime.onMessage and window.postMessage
+function handleALCAction(action) {
+  // Show toast notification
+  const toast = document.createElement('div');
+  toast.style.position = 'fixed';
+  toast.style.top = '20px';
+  toast.style.right = '20px';
+  toast.style.padding = '10px 20px';
+  toast.style.background = '#00C2A8';
+  toast.style.color = 'white';
+  toast.style.borderRadius = '4px';
+  toast.style.zIndex = '999999';
+  toast.style.fontFamily = 'Arial, sans-serif';
+  toast.textContent = `AutoList Action: ${action}`;
+  document.body.appendChild(toast);
+  
+  // Remove toast after 3 seconds
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.parentNode.removeChild(toast);
+    }
+  }, 3000);
+  
+  // Log to console
+  console.log(`[ALC] Action:${action}`);
+}
+
+// Listen for chrome.runtime.onMessage
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'ALC_ACTION') {
+    handleALCAction(message.action);
+    sendResponse({ success: true });
+  }
+  return true; // Keep message channel open for async response
+});
+
+// Listen for window.postMessage
+window.addEventListener('message', (event) => {
+  // Verify the message is from the same window
+  if (event.source !== window) return;
+  
+  // Check if it's an ALC_ACTION message
+  if (event.data && event.data.type === 'ALC_ACTION') {
+    handleALCAction(event.data.action);
+  }
+});
+
 // Initialize common functionality
 function initCommon() {
   injectAutoListCSS();
+  
+  // Inject toolbar if on a supported marketplace page
+  if (window.initFloatingDock) {
+    window.initFloatingDock();
+  }
 }
 
 // Run initialization

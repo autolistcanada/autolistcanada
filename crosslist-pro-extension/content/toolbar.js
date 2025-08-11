@@ -11,9 +11,8 @@ function injectDockCSS() {
   style.textContent = `
     .autolist-dock {
       position: fixed;
-      top: 50%;
+      top: 20px;
       right: 20px;
-      transform: translateY(-50%);
       z-index: 2147483647;
       background: rgba(11, 15, 18, 0.9);
       backdrop-filter: blur(10px);
@@ -28,9 +27,10 @@ function injectDockCSS() {
     }
     
     .autolist-dock.collapsed {
-      width: 60px;
-      height: 60px;
-      padding: 10px;
+      width: 40px;
+      height: 40px;
+      padding: 5px;
+      border-radius: 50%;
       overflow: hidden;
     }
     
@@ -166,21 +166,37 @@ function createFloatingDock() {
     </div>
     
     <div class="autolist-dock-actions">
-      <div class="autolist-dock-action" data-action="crosslist">
+      <div class="autolist-dock-action" data-action="bulk-crosslist">
         <span>⇄</span>
-        <span>Crosslist</span>
+        <span>Bulk Crosslist</span>
       </div>
-      <div class="autolist-dock-action" data-action="relist">
+      <div class="autolist-dock-action" data-action="delist-relist">
         <span>↻</span>
-        <span>Relist</span>
+        <span>Delist/Relist</span>
       </div>
-      <div class="autolist-dock-action" data-action="sync">
+      <div class="autolist-dock-action" data-action="sync-visualizer">
         <span>⇄</span>
-        <span>Sync</span>
+        <span>Sync Visualizer</span>
       </div>
-      <div class="autolist-dock-action" data-action="ai">
+      <div class="autolist-dock-action" data-action="ai-title">
         <span>AI</span>
-        <span>AI Tools</span>
+        <span>AI Title</span>
+      </div>
+      <div class="autolist-dock-action" data-action="ai-description">
+        <span>AI</span>
+        <span>AI Description</span>
+      </div>
+      <div class="autolist-dock-action" data-action="ai-tags">
+        <span>AI</span>
+        <span>AI Tags</span>
+      </div>
+      <div class="autolist-dock-action" data-action="price-suggest">
+        <span>$</span>
+        <span>Price Suggest</span>
+      </div>
+      <div class="autolist-dock-action" data-action="settings">
+        <span>⚙</span>
+        <span>Settings</span>
       </div>
     </div>
     
@@ -267,24 +283,43 @@ function addDockEventListeners(dock) {
 
 // Handle dock action clicks
 function handleDockAction(actionType) {
-  console.log(`AutoList dock action: ${actionType}`);
+  console.log(`[ALC] Action:${actionType}`);
   
-  // Send message to background script
-  chrome.runtime.sendMessage({
-    type: 'DOCK_ACTION',
-    action: actionType,
-    url: window.location.href
-  });
+  // Send message via window.postMessage
+  window.postMessage({
+    type: 'ALC_ACTION',
+    action: actionType
+  }, '*');
 }
 
 // Initialize the floating dock
-function initFloatingDock() {
+async function initFloatingDock() {
   // Inject required CSS
   injectDockCSS();
   
+  // Load saved position and collapsed state
+  const domain = window.location.hostname;
+  const result = await chrome.storage.local.get([`alcToolbarPos_${domain}`, `alcToolbarCollapsed_${domain}`]);
+  
   // Create dock after a short delay to ensure page is loaded
   setTimeout(() => {
-    createFloatingDock();
+    const dock = createFloatingDock();
+    
+    // Apply saved position
+    if (result[`alcToolbarPos_${domain}`]) {
+      const { x, y } = result[`alcToolbarPos_${domain}`];
+      dock.style.right = `${x}px`;
+      dock.style.top = `${y}px`;
+    }
+    
+    // Apply saved collapsed state
+    if (result[`alcToolbarCollapsed_${domain}`]) {
+      dock.classList.add('collapsed');
+      const toggleBtn = dock.querySelector('#autolist-dock-toggle');
+      if (toggleBtn) toggleBtn.textContent = '≡';
+    }
+    
+    console.log('[ALC] Dock injected');
   }, 1000);
 }
 

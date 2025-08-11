@@ -87,30 +87,44 @@ async function handleTileClick(event) {
   
   if (!action) return;
   
-  // Update UI to show action is processing
-  const syncStatus = document.getElementById('sync-status');
-  syncStatus.textContent = `Processing ${action}...`;
-  
-  try {
-    // Send action to background script
-    const response = await chrome.runtime.sendMessage({
-      type: 'RUN_ACTION',
-      action: action
-    });
-    
-    // Update status based on response
-    if (response && response.success) {
-      syncStatus.textContent = `${action} completed successfully`;
-    } else {
-      syncStatus.textContent = `Error: ${response ? response.error : 'Unknown error'}`;
-    }
-  } catch (error) {
-    syncStatus.textContent = `Error: ${error.message}`;
-    console.error('Error running action:', error);
+  // Special handling for sync-visualizer and settings
+  if (action === 'sync-visualizer') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('sync.html') });
+    return;
   }
   
-  // Clear status after 3 seconds
-  setTimeout(() => {
-    syncStatus.textContent = 'Ready';
-  }, 3000);
+  if (action === 'settings') {
+    chrome.runtime.openOptionsPage();
+    return;
+  }
+  
+  // Send ALC_ACTION to the active tab
+  try {
+    const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    
+    if (activeTab && activeTab.id) {
+      await chrome.tabs.sendMessage(activeTab.id, {
+        type: 'ALC_ACTION',
+        action: action
+      });
+      
+      // Update UI to show action is processing
+      const syncStatus = document.getElementById('sync-status');
+      syncStatus.textContent = `${action} sent to active tab`;
+      
+      // Clear status after 3 seconds
+      setTimeout(() => {
+        syncStatus.textContent = 'Ready';
+      }, 3000);
+    }
+  } catch (error) {
+    console.error('Error sending action to active tab:', error);
+    const syncStatus = document.getElementById('sync-status');
+    syncStatus.textContent = `Error: ${error.message}`;
+    
+    // Clear status after 3 seconds
+    setTimeout(() => {
+      syncStatus.textContent = 'Ready';
+    }, 3000);
+  }
 }

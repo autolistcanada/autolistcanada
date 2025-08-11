@@ -23,16 +23,32 @@ const DEFAULT_SETTINGS = {
 
 // Initialize extension
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('AutoList Canada extension installed');
+  // Boot log with build tag
+  const buildTag = `ALC_EXT v1.0.0-build-${new Date().toISOString().replace(/-/g, '').replace(/:/g, '').slice(0, 12)}`;
+  console.log(`[ALC] Boot ${buildTag}`);
   
   // Initialize settings
   await initializeSettings();
   
-  // Ensure alarms exist before use
-  if (chrome?.alarms?.create) chrome.alarms.get('periodicSync', a => {!a && chrome.alarms.create('periodicSync',{periodInMinutes:15});});
+  // Ensure alarms exist before use (MV3 guard)
+  if (chrome.alarms && chrome.alarms.create) {
+    chrome.alarms.get('periodicSync', (alarm) => {
+      if (!alarm) {
+        chrome.alarms.create('periodicSync', { periodInMinutes: 15 });
+      }
+    });
+  }
 });
 
-chrome?.alarms?.onAlarm?.addListener(a => { if (a?.name==='periodicSync'){ /* TODO: sync job */ } });
+// MV3 alarms guard
+if (chrome.alarms && chrome.alarms.onAlarm && chrome.alarms.onAlarm.addListener) {
+  chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm && alarm.name === 'periodicSync') {
+      console.log('Running periodic sync');
+      // TODO: real sync work
+    }
+  });
+}
 
 // Handle messages from popup and content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
