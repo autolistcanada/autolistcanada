@@ -3,182 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoList Canada - Crosslist Pro</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="popup-styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>AutoList Canada</title>
+  <link rel="stylesheet" href="ui/base.css">
+  <link rel="stylesheet" href="ui/popup.css">
+  <link rel="stylesheet" href="ui/patterns.css">
 </head>
-<body class="glass-panel">
-  <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="logo-container">
-        <img src="assets/icon48.png" alt="AutoList Canada" class="logo" id="logo">
-        <h1>AutoList Canada</h1>
+<body class="bg-tessellation">
+  <div class="popup-container">
+    <!-- Header with brand and connection chips -->
+    <div class="header">
+      <div class="brand-section">
+        <h1 class="brand-title">AutoList Canada</h1>
+        <div class="chips">
+          <div class="chip chip--disconnected" id="ebay-chip">
+            <img src="assets/ui/mktg-ebay.svg" width="16" height="16" alt="eBay">
+            <span>eBay</span>
+          </div>
+          <div class="chip chip--disconnected" id="etsy-chip">
+            <img src="assets/ui/mktg-etsy.svg" width="16" height="16" alt="Etsy">
+            <span>Etsy</span>
+          </div>
+          <div class="chip chip--disconnected" id="poshmark-chip">
+            <img src="assets/ui/mktg-posh.svg" width="16" height="16" alt="Poshmark">
+            <span>Posh</span>
+          </div>
+        </div>
       </div>
-      <div class="header-actions">
-        <button id="minimize-btn" class="icon-btn" title="Minimize">
-          <i class="fas fa-window-minimize"></i>
-        </button>
-        <button id="pin-btn" class="icon-btn" title="Pin popup">
-          <i class="fas fa-thumbtack"></i>
-        </button>
-        <button id="close-btn" class="icon-btn" title="Close">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Onboarding Walkthrough -->
-      <div id="onboarding-walkthrough" class="onboarding-container">
-        <div class="onboarding-step" data-step="1">
-          <h3>Step 1: Select a listing</h3>
-          <p>Click on any listing to select it</p>
-          <div class="onboarding-actions">
-            <button class="btn btn-secondary skip-btn">Skip</button>
-            <button class="btn btn-primary next-btn">Next</button>
-          </div>
-        </div>
+    <!-- Grid of 3x3 tiles -->
+    <div class="grid">
+      <div class="tile tile--blaze" data-action="bulk-crosslist">
+        <span class="label-plate">
+          <span class="tile-text">Bulk Crosslist</span>
+        </span>
       </div>
+      <div class="tile tile--teal" data-action="smart-delist">
+        <span class="label-plate">
+          <span class="tile-text">Smart Delist/Relist</span>
+        </span>
+      </div>
+      <div class="tile tile--lime" data-action="sync-visualizer">
+        <span class="label-plate">
+          <span class="tile-text">Sync Visualizer</span>
+        </span>
+      </div>
+      <div class="tile tile--maple" data-action="ai-title">
+        <span class="label-plate">
+          <span class="tile-text">AI Title</span>
+        </span>
+      </div>
+      <div class="tile tile--teal" data-action="ai-description">
+        <span class="label-plate">
+          <span class="tile-text">AI Description</span>
+        </span>
+      </div>
+      <div class="tile tile--lime" data-action="ai-tags">
+        <span class="label-plate">
+          <span class="tile-text">AI Tags</span>
+        </span>
+      </div>
+      <div class="tile tile--sky" data-action="price-suggest">
+        <span class="label-plate">
+          <span class="tile-text">Price Suggest</span>
+        </span>
+      </div>
+      <div class="tile tile--forest" data-action="activity-logs">
+        <span class="label-plate">
+          <span class="tile-text">Activity & Logs</span>
+        </span>
+      </div>
+      <div class="tile tile--ink" data-action="settings">
+        <span class="label-plate">
+          <span class="tile-text">Settings</span>
+        </span>
+      </div>
+    </div>
 
-      <!-- Connected Platforms -->
-      <section class="connected-platforms">
-        <h2>Connected Platforms</h2>
-        <div class="platforms-grid" id="platforms-grid">
-          <!-- Platform connections will be added here dynamically -->
-        </div>
-      </section>
-
-      <!-- Listings Section -->
-      <section class="listings-section">
-        <div class="section-header">
-          <h2>Your Listings</h2>
-          <div class="sync-status">
-            <span id="sync-status-text">Last synced: Just now</span>
-            <button id="sync-now-btn" class="btn btn-icon" title="Sync now">
-              <i class="fas fa-sync-alt"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Listings Grid -->
-        <div class="listings-grid" id="listings-grid">
-          <!-- Listings will be added here dynamically -->
-          
-          <!-- Demo listing (shown when no listings) -->
-          <div class="empty-state" id="empty-state">
-            <div class="empty-icon">
-              <i class="fas fa-box-open"></i>
-            </div>
-            <h3>No listings found</h3>
-            <p>We'll automatically detect listings from your connected platforms</p>
-            <button class="btn btn-primary" id="demo-listing-btn">
-              <i class="fas fa-magic"></i> Show me a demo
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- AI Suggestions Panel (Hidden by default) -->
-    <aside class="ai-panel" id="ai-panel">
-      <div class="ai-panel-header">
-        <h3>AI Suggestions</h3>
-        <button class="icon-btn close-ai-panel">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="ai-panel-content">
-        <div class="ai-section">
-          <label>Title</label>
-          <div class="suggestion-box" id="ai-title">
-            <div class="suggestion-actions">
-              <button class="icon-btn btn-accept" title="Accept">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="icon-btn btn-regenerate" title="Regenerate">
-                <i class="fas fa-sync-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="ai-section">
-          <label>Description</label>
-          <div class="suggestion-box" id="ai-description">
-            <div class="suggestion-actions">
-              <button class="icon-btn btn-accept" title="Accept">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="icon-btn btn-regenerate" title="Regenerate">
-                <i class="fas fa-sync-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="ai-section">
-          <label>Tags</label>
-          <div class="suggestion-box" id="ai-tags">
-            <div class="suggestion-actions">
-              <button class="icon-btn btn-accept" title="Accept">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="icon-btn btn-regenerate" title="Regenerate">
-                <i class="fas fa-sync-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="ai-section">
-          <label>Price Suggestion</label>
-          <div class="suggestion-box" id="ai-price">
-            <div class="suggestion-actions">
-              <button class="icon-btn btn-accept" title="Accept">
-                <i class="fas fa-check"></i>
-              </button>
-              <button class="icon-btn btn-regenerate" title="Regenerate">
-                <i class="fas fa-sync-alt"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="ai-panel-footer">
-        <button class="btn btn-primary" id="apply-all-btn">
-          <i class="fas fa-check-double"></i> Apply All Changes
-        </button>
-      </div>
-    </aside>
-
-    <!-- Status Bar -->
-    <footer class="status-bar">
-      <div class="sync-progress" id="sync-progress">
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 0%"></div>
-        </div>
-        <span class="progress-text">Syncing...</span>
-      </div>
-      <div class="status-message" id="status-message">
-        Ready
-      </div>
-    </footer>
+    <!-- Footer -->
+    <div class="footer">
+      <div id="sync-status">Ready</div>
+      <button class="btn btn-settings" id="open-settings">Open Settings</button>
+    </div>
   </div>
 
-  <!-- SVG Wave Background -->
-  <div class="wave-bg">
-    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#ff6b35" fill-opacity="0.1"></path>
-      <path d="M0,320L48,309.3C96,299,192,277,288,266.7C384,256,480,256,576,272C672,288,768,320,864,309.3C960,299,1056,245,1152,213.3C1248,181,1344,171,1392,165.3L1440,160L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#f7c59f" fill-opacity="0.2"></path>
-      <path d="M0,448L48,448C96,448,192,448,288,437.3C384,427,480,405,576,394.7C672,384,768,384,864,373.3C960,363,1056,341,1152,341.3C1248,341,1344,363,1392,373.3L1440,384L1440,800L1392,800C1344,800,1248,800,1152,800C1056,800,960,800,864,800C768,800,672,800,576,800C480,800,384,800,288,800C192,800,96,800,48,800L0,800Z" fill="#efefd0" fill-opacity="0.15"></path>
-    </svg>
-  </div>
-<!-- Load jQuery from CDN -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Then load your popup logic -->
-<script src="popup.js" type="module"></script>
-
-
+  <script src="popup.js" type="module"></script>
 </body>
 </html>

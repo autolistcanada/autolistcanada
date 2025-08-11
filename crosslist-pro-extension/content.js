@@ -1,5 +1,5 @@
 // content.js - AutoList Canada Crosslist Pro
-// No UI injection. Only responds to popup.js with extracted listings.
+// Injects floating 'Import to AutoList' buttons on marketplace listings and responds to popup.js with extracted listings.
 
 const SUPPORTED = [
   { host: /ebay\.(ca|com)$/i, path: /\/(sh\/lst|selling)/i, platform: 'eBay' },
@@ -15,6 +15,262 @@ const SUPPORTED = [
   { host: /varagesale\.com$/i, path: /\/my\/listings/i, platform: 'VarageSale' },
   { host: /kijiji\.ca$/i, path: /\/my\/ads/i, platform: 'Kijiji' }
 ];
+
+// Store injected buttons to prevent duplicates
+const injectedButtons = new Set();
+
+// Error logging function
+function logContentError(type, details) {
+  // Send error to background script for centralized logging
+  chrome.runtime.sendMessage({
+    type: 'CONTENT_ERROR',
+    errorType: type,
+    details: details
+  }).catch(err => {
+    // If we can't send to background, log to console
+    console.error('Failed to log error to background:', err);
+  });
+}
+
+// Inject floating 'Import to AutoList' buttons
+function injectImportButtons(platform) {
+  // Clear previously injected buttons
+  clearInjectedButtons();
+  
+  try {
+    if (platform === 'eBay') {
+      injectButtonsForSelector('[data-testid="item-card"], .listing-card', platform);
+    } else if (platform === 'Etsy') {
+      injectButtonsForSelector('.listing-card, .wt-card', platform);
+    } else if (platform === 'Poshmark') {
+      injectButtonsForSelector('.card--with-hover', platform);
+    } else if (platform === 'Mercari') {
+      injectButtonsForSelector('.mypage-item-card, .mypage-list-item', platform);
+    } else if (platform === 'Facebook Marketplace') {
+      injectButtonsForSelector('[data-testid="marketplace_feed_item"]', platform);
+    } else if (platform === 'Grailed') {
+      injectButtonsForSelector('.listing-card', platform);
+    } else if (platform === 'Depop') {
+      injectButtonsForSelector('.css-1g5y7zy, .listing-card', platform);
+    } else if (platform === 'Shopify') {
+      injectButtonsForSelector('[data-testid="ResourceList-Item"]', platform);
+    } else if (platform === 'Bonanza') {
+      injectButtonsForSelector('.booth-item', platform);
+    } else if (platform === 'Amazon') {
+      injectButtonsForSelector('.myi-row', platform);
+    } else if (platform === 'VarageSale') {
+      injectButtonsForSelector('.listing-card', platform);
+    } else if (platform === 'Kijiji') {
+      injectButtonsForSelector('.listing-card', platform);
+    }
+  } catch (e) {
+    console.error('Error injecting buttons:', e);
+    logContentError('button_injection', {
+      platform: platform,
+      error: e.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+}
+
+// Generic function to inject buttons for a given selector
+function injectButtonsForSelector(selector, platform) {
+  const items = document.querySelectorAll(selector);
+  
+  items.forEach((item, index) => {
+    // Create a unique identifier for this item
+    const itemKey = `${platform}-${index}-${item.innerHTML.substring(0, 50)}`;
+    
+    // Skip if button already injected for this item
+    if (injectedButtons.has(itemKey)) return;
+    
+    // Create the import button
+    const button = document.createElement('button');
+    button.className = 'autolist-import-button';
+    button.innerHTML = 'Import to AutoList';
+    button.dataset.platform = platform;
+    button.dataset.index = index;
+    
+    // Style the button
+    button.style.cssText = `
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10000;
+      background: linear-gradient(135deg, #FF7300 0%, #FFE600 100%);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.2s ease;
+      opacity: 0.9;
+    `;
+    
+    // Add hover effect
+    button.addEventListener('mouseenter', () => {
+      button.style.opacity = '1';
+      button.style.transform = 'scale(1.05)';
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      button.style.opacity = '0.9';
+      button.style.transform = 'scale(1)';
+    });
+    
+    // Add click event to capture listing data
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      captureListingData(item, platform, index);
+    });
+    
+    // Position the button relative to the item
+    item.style.position = 'relative';
+    item.appendChild(button);
+    
+    // Mark this button as injected
+    injectedButtons.add(itemKey);
+  });
+}
+
+// Clear previously injected buttons
+function clearInjectedButtons() {
+  const buttons = document.querySelectorAll('.autolist-import-button');
+  buttons.forEach(button => button.remove());
+  injectedButtons.clear();
+}
+
+// Capture listing data when button is clicked
+function captureListingData(itemElement, platform, index) {
+  let listingData = {};
+  
+  try {
+    if (platform === 'eBay') {
+      listingData = {
+        platform: 'eBay',
+        title: itemElement.querySelector('[data-testid="item-title"], .listing-title')?.innerText || '',
+        price: itemElement.querySelector('[data-testid="item-price"], .listing-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Etsy') {
+      listingData = {
+        platform: 'Etsy',
+        title: itemElement.querySelector('.text-gray.text-truncate, .wt-text-caption')?.innerText || '',
+        price: itemElement.querySelector('.currency-value, .wt-text-title-01')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Poshmark') {
+      listingData = {
+        platform: 'Poshmark',
+        title: itemElement.querySelector('.title')?.innerText || '',
+        price: itemElement.querySelector('.price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Mercari') {
+      listingData = {
+        platform: 'Mercari',
+        title: itemElement.querySelector('.mypage-item-card__title, .mypage-list-item__title')?.innerText || '',
+        price: itemElement.querySelector('.mypage-item-card__price, .mypage-list-item__price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Facebook Marketplace') {
+      listingData = {
+        platform: 'Facebook Marketplace',
+        title: itemElement.querySelector('span, h2')?.innerText || '',
+        price: itemElement.querySelector('span[dir="auto"]')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Grailed') {
+      listingData = {
+        platform: 'Grailed',
+        title: itemElement.querySelector('.listing-title')?.innerText || '',
+        price: itemElement.querySelector('.listing-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Depop') {
+      listingData = {
+        platform: 'Depop',
+        title: itemElement.querySelector('.css-1g5y7zy-title, .listing-title')?.innerText || '',
+        price: itemElement.querySelector('.css-1g5y7zy-price, .listing-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Shopify') {
+      listingData = {
+        platform: 'Shopify',
+        title: itemElement.querySelector('span, h3')?.innerText || '',
+        price: itemElement.querySelector('.Polaris-TextStyle--variationStrong')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: location.origin + location.pathname
+      };
+    } else if (platform === 'Bonanza') {
+      listingData = {
+        platform: 'Bonanza',
+        title: itemElement.querySelector('.booth-item-title')?.innerText || '',
+        price: itemElement.querySelector('.booth-item-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Amazon') {
+      listingData = {
+        platform: 'Amazon',
+        title: itemElement.querySelector('.myi-title')?.innerText || '',
+        price: itemElement.querySelector('.myi-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'VarageSale') {
+      listingData = {
+        platform: 'VarageSale',
+        title: itemElement.querySelector('.listing-title')?.innerText || '',
+        price: itemElement.querySelector('.listing-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    } else if (platform === 'Kijiji') {
+      listingData = {
+        platform: 'Kijiji',
+        title: itemElement.querySelector('.listing-title')?.innerText || '',
+        price: itemElement.querySelector('.listing-price')?.innerText || '',
+        image: itemElement.querySelector('img')?.src || '',
+        url: itemElement.querySelector('a')?.href || location.href
+      };
+    }
+    
+    // Store the listing data in chrome storage
+    chrome.storage.local.set({[`autolist_listing_${Date.now()}`]: listingData}, () => {
+      // Visual feedback
+      const button = itemElement.querySelector('.autolist-import-button');
+      if (button) {
+        button.innerHTML = '✓ Imported';
+        button.style.background = 'linear-gradient(135deg, #10B981 0%, #047857 100%)';
+        setTimeout(() => {
+          if (button) {
+            button.innerHTML = 'Import to AutoList';
+            button.style.background = 'linear-gradient(135deg, #FF7300 0%, #FFE600 100%)';
+          }
+        }, 2000);
+      }
+      
+      // Send message to popup
+      chrome.runtime.sendMessage({
+        action: 'listingCaptured',
+        listing: listingData
+      });
+    });
+  } catch (e) {
+    console.error('Error capturing listing data:', e);
+  }
+}
 
 function extractListings(platform) {
   let items = [];
@@ -117,7 +373,14 @@ function extractListings(platform) {
       }));
     }
   } catch (e) {
-    // fail silently, return empty array
+    console.error('Error extracting listings:', e);
+    logContentError('listing_extraction', {
+      platform: platform,
+      error: e.message,
+      timestamp: new Date().toISOString()
+    });
+    // Return empty array on error
+    return [];
   }
   return items.filter(x => x.title);
 }
@@ -127,7 +390,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     const { hostname, pathname } = window.location;
     const matched = SUPPORTED.find(({host, path}) => host.test(hostname) && path.test(pathname));
     let listings = [];
-    if (matched) listings = extractListings(matched.platform);
+    if (matched) {
+      listings = extractListings(matched.platform);
+      // Inject import buttons after extracting listings
+      injectImportButtons(matched.platform);
+    }
     sendResponse({ listings });
   }
 });

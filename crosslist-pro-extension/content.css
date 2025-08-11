@@ -85,6 +85,34 @@
   font-size: 14px;
 }
 
+/* Import to AutoList Button */
+.autolist-import-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10000;
+  background: linear-gradient(135deg, #FF7300 0%, #FFE600 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  opacity: 0.9;
+}
+
+.autolist-import-button:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.autolist-import-button:active {
+  transform: scale(1);
+}
+
 /* Platform-specific overrides */
 /* eBay */
 .autolist-platform-ebay .autolist-badge {
@@ -163,6 +191,11 @@
   
   .autolist-button {
     padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .autolist-import-button {
+    padding: 6px 12px;
     font-size: 11px;
   }
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada - Options</title>
+  <link rel="stylesheet" href="ui/base.css">
+  <link rel="stylesheet" href="ui/options.css">
+  <link rel="stylesheet" href="ui/patterns.css">
+</head>
+<body class="bg-tessellation">
+  <div class="options-container">
+    <h1 class="brand-title">AutoList Canada Settings</h1>
+    
+    <!-- Consent banner -->
+    <div class="consent-banner" id="consent-banner">
+      <h2 class="consent-title">Privacy Consent Required</h2>
+      <p class="consent-description">Please review and accept our privacy policy and terms of use to enable telemetry and remote sync features.</p>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="accept-consent">Accept & Continue</button>
+        <button class="btn btn-secondary" id="review-policies">Review Policies</button>
+      </div>
+    </div>
+    
+    <!-- Connection settings -->
+    <div class="section" id="connection-settings">
+      <h2 class="section-title">Marketplace Connections</h2>
+      <p class="section-description">Connect your accounts to enable crosslisting and sync features.</p>
+      
+      <div class="toggle-container">
+        <div>
+          <div class="toggle-label">eBay</div>
+          <div class="toggle-description">Connect your eBay account for crosslisting</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="ebay-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="toggle-container">
+        <div>
+          <div class="toggle-label">Etsy</div>
+          <div class="toggle-description">Connect your Etsy account for crosslisting</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="etsy-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="toggle-container">
+        <div>
+          <div class="toggle-label">Poshmark</div>
+          <div class="toggle-description">Connect your Poshmark account for crosslisting</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="poshmark-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    
+    <!-- AI settings -->
+    <div class="section" id="ai-settings">
+      <h2 class="section-title">AI Preferences</h2>
+      <p class="section-description">Customize how AI tools generate content for your listings.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Tone & Style</label>
+        <select class="form-input" id="ai-tone">
+          <option value="trust-first">Trust First (Professional & Reliable)</option>
+          <option value="friendly">Friendly & Approachable</option>
+          <option value="enthusiastic">Enthusiastic & Energetic</option>
+          <option value="minimalist">Minimalist & Direct</option>
+        </select>
+        <div class="form-description">Choose the tone for AI-generated content</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Price Rounding</label>
+        <select class="form-input" id="price-rounding">
+          <option value="psych-99">Psychological Pricing ($X.99)</option>
+          <option value="round-up">Round Up to Nearest Dollar</option>
+          <option value="round-down">Round Down to Nearest Dollar</option>
+          <option value="exact">Exact Pricing</option>
+        </select>
+        <div class="form-description">How AI should format suggested prices</div>
+      </div>
+    </div>
+    
+    <!-- Privacy & Data -->
+    <div class="section" id="privacy-settings">
+      <h2 class="section-title">Privacy & Data</h2>
+      <p class="section-description">Control what data is collected and how it's used.</p>
+      
+      <div class="toggle-container">
+        <div>
+          <div class="toggle-label">Telemetry</div>
+          <div class="toggle-description">Send anonymous usage data to help improve the extension</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="telemetry-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="toggle-container">
+        <div>
+          <div class="toggle-label">Remote Sync</div>
+          <div class="toggle-description">Sync listing data with your remote server</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="remote-sync-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="form-group" id="remote-sync-config" style="display: none;">
+        <label class="form-label">Sync Endpoint</label>
+        <input type="text" class="form-input" id="sync-endpoint" placeholder="https://your-server.com/api/sync">
+        <div class="form-description">URL of your sync endpoint</div>
+        
+        <label class="form-label">API Key</label>
+        <input type="password" class="form-input" id="api-key" placeholder="Enter your API key">
+        <div class="form-description">Authentication key for your sync endpoint</div>
+      </div>
+    </div>
+    
+    <!-- Data Controls -->
+    <div class="section" id="data-controls">
+      <h2 class="section-title">Data Controls</h2>
+      <p class="section-description">Manage your local data and export settings.</p>
+      
+      <div class="btn-group">
+        <button class="btn btn-secondary" id="export-logs">Export Logs (JSON)</button>
+        <button class="btn btn-secondary" id="export-settings">Export Settings</button>
+        <button class="btn btn-danger" id="clear-data">Clear Local Data</button>
+        <button class="btn btn-danger" id="reset-settings">Reset All Settings</button>
+      </div>
+      
+      <div class="legal-links">
+        <a href="" class="legal-link" id="privacy-policy-link">Privacy Policy</a>
+        <a href="" class="legal-link" id="terms-of-use-link">Terms of Use</a>
+        <a href="" class="legal-link" id="data-safety-link">Data Safety</a>
+      </div>
+    </div>
+    
+    <div class="btn-group">
+      <button class="btn btn-primary" id="save-settings">Save Settings</button>
+      <button class="btn btn-secondary" id="reset-changes">Reset Changes</button>
+    </div>
+  </div>
+  
+  <script src="options.js" type="module"></script>
+</body>
+</html>

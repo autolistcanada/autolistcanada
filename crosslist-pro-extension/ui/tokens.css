@@ -1,0 +1,57 @@
+:root {
+  /* Vibrant palette */
+  --orange-amber-1: #FF6B00;
+  --orange-amber-2: #FF9F00;
+  --teal-1: #00C2A8;
+  --teal-2: #007B6E;
+  --lime-1: #A5FF00;
+  --lime-2: #68B300;
+  --maple-red-1: #D72638;
+  --maple-red-2: #FF3C38;
+  --forest-1: #044E42;
+  --forest-2: #066B55;
+  --sky-1: #00AEEF;
+  --sky-2: #0077B6;
+  
+  /* Dark neutrals */
+  --dark-1: #0B0F12;
+  --dark-2: #151C22;
+  --dark-3: #1F2930;
+  --dark-4: #2A353F;
+  --white-80: #EAF2F7;
+  
+  /* Gradients */
+  --gradient-blaze: linear-gradient(135deg, var(--orange-amber-1), var(--orange-amber-2));
+  --gradient-teal: linear-gradient(135deg, var(--teal-1), var(--teal-2));
+  --gradient-lime: linear-gradient(135deg, var(--lime-1), var(--lime-2));
+  --gradient-maple: linear-gradient(135deg, var(--maple-red-1), var(--maple-red-2));
+  --gradient-forest: linear-gradient(135deg, var(--forest-1), var(--forest-2));
+  --gradient-sky: linear-gradient(135deg, var(--sky-1), var(--sky-2));
+  
+  /* Geometry controls */
+  --pattern-opacity: 0.06;
+  
+  /* Radius/shadow/motion tokens */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --border-radius-xxl: 32px;
+  --border-radius-full: 50%;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Animations */
+  --animation-pulse: pulse 2s infinite;
+  --animation-glow: glow 3s ease-in-out infinite alternate;
+  --animation-float: float 3s ease-in-out infinite;
+  
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(0, 194, 168, 0.5);
+}
