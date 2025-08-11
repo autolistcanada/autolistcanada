@@ -1,21 +1,48 @@
 {
   "manifest_version": 3,
   "name": "AutoList Canada",
-  "description": "Clean-room crosslisting with AI helpers and sync \u2014 geometric abstract-nature UI.",
+  "description": "Clean-room crosslisting with AI helpers and sync — geometric abstract-nature UI.",
   "version": "1.0.0",
   "action": { "default_popup": "popup.html" },
-  "icons": { "16":"assets/icon16.png","32":"assets/icon32.png","48":"assets/icon48.png","128":"assets/icon128.png" },
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
   "background": { "service_worker": "background.js", "type": "module" },
-  "permissions": ["storage","scripting","activeTab","tabs"],
-  "host_permissions": ["*://*.ebay.*/*","*://*.etsy.com/*","*://*.poshmark.com/*"],
-  "content_scripts": [
-    { "matches": ["*://*.ebay.*/*"],      "js": ["content/common.js","content/ebay.js"],      "run_at": "document_idle" },
-    { "matches": ["*://*.etsy.com/*"],    "js": ["content/common.js","content/etsy.js"],      "run_at": "document_idle" },
-    { "matches": ["*://*.poshmark.com/*"],"js": ["content/common.js","content/poshmark.js"],  "run_at": "document_idle" }
+  "permissions": ["storage", "scripting", "activeTab", "tabs"],
+  "host_permissions": [
+    "*://*.ebay.ca/*",
+    "*://*.ebay.com/*",
+    "*://*.etsy.com/*",
+    "*://*.poshmark.com/*"
   ],
-  "web_accessible_resources": [{
-    "resources": ["assets/ui/*.svg","ui/*.css","content/content.css"],
-    "matches": ["<all_urls>"]
-  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ebay.ca/*",
+        "*://*.ebay.com/*"
+      ],
+      "js": ["content/common.js", "content/ebay.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.etsy.com/*"],
+      "js": ["content/common.js", "content/etsy.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.poshmark.com/*"],
+      "js": ["content/common.js", "content/poshmark.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/ui/*.svg", "ui/*.css", "content/content.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "options_page": "options.html"
 }
