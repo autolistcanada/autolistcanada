@@ -6,24 +6,55 @@ function extractListingData(listingElement) {
   // Try to get listing ID
   const id = listingElement.dataset.itemId || 
              listingElement.querySelector('[data-itemid]')?.dataset.itemid ||
-             null;
+             window.location.href.match(/itm\/(\d+)/) ? window.location.href.match(/itm\/(\d+)/)[1] : null;
   
   // Try to get title
   const titleElement = listingElement.querySelector('.s-item__title') ||
                       listingElement.querySelector('h3') ||
-                      listingElement.querySelector('[role="heading"]');
+                      listingElement.querySelector('[role="heading"]') ||
+                      document.querySelector('h1.x-item-title__mainTitle');
   const title = titleElement ? titleElement.textContent.trim() : '';
   
   // Try to get price
   const priceElement = listingElement.querySelector('.s-item__price') ||
-                      listingElement.querySelector('.price');
+                      listingElement.querySelector('.price') ||
+                      document.querySelector('.x-price-primary');
   const priceText = priceElement ? priceElement.textContent.trim() : '';
   const price = priceText.replace(/[^0-9.-]+/g, '');
   
-  // Try to get image URL
+  // Try to get description
+  const descriptionElement = document.querySelector('.x-item-description') ||
+                          document.querySelector('#desc_ifr');
+  let description = '';
+  if (descriptionElement) {
+    if (descriptionElement.tagName === 'IFRAME') {
+      try {
+        const iframeDoc = descriptionElement.contentDocument || descriptionElement.contentWindow.document;
+        description = iframeDoc.body.textContent.trim();
+      } catch (e) {
+        console.log('AutoList: Could not access iframe content');
+      }
+    } else {
+      description = descriptionElement.textContent.trim();
+    }
+  }
+  
+  // Try to get images
+  const images = [];
+  const imageElements = document.querySelectorAll('.ux-image-carousel-item img, .ux-image-filmstrip-carousel-item img');
+  imageElements.forEach(img => {
+    if (img.src && !images.includes(img.src)) {
+      images.push(img.src);
+    }
+  });
+  
+  // Fallback for single image
   const imageElement = listingElement.querySelector('.s-item__image img') ||
                       listingElement.querySelector('img');
   const imageUrl = imageElement ? imageElement.src : '';
+  if (imageUrl && images.length === 0) {
+    images.push(imageUrl);
+  }
   
   // Get current URL
   const url = window.location.href;
@@ -32,7 +63,8 @@ function extractListingData(listingElement) {
     id: id,
     title: title,
     price: price ? parseFloat(price) : null,
-    imageUrl: imageUrl,
+    description: description,
+    images: images,
     url: url,
     platform: 'eBay'
   };

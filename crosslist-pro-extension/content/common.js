@@ -141,7 +141,7 @@ function extractListingData(listingElement) {
 }
 
 // Handle ALC_ACTION messages from both chrome.runtime.onMessage and window.postMessage
-function handleALCAction(action) {
+async function handleALCAction(action, data = {}) {
   // Show toast notification
   const toast = document.createElement('div');
   toast.style.position = 'fixed';
@@ -164,7 +164,148 @@ function handleALCAction(action) {
   }, 3000);
   
   // Log to console
-  console.log(`[ALC] Action:${action}`);
+  console.log(`[ALC] Action:${action}`, data);
+  
+  // Handle autofill actions
+  if (action === 'autofill-to-etsy' || action === 'autofill-to-poshmark') {
+    const targetPlatform = action === 'autofill-to-etsy' ? 'etsy' : 'poshmark';
+    
+    try {
+      // Get current URL to check if we're on eBay
+      if (window.location.hostname.includes('ebay.com')) {
+        // We're on eBay, extract the data
+        const listing = window.extractListingData ? window.extractListingData(document.body) : null;
+        
+        if (listing) {
+          // Save the data to chrome.storage for the target platform to access
+          await chrome.storage.local.set({
+            'alc_autofill_data': {
+              source: 'ebay',
+              target: targetPlatform,
+              data: listing,
+              timestamp: Date.now()
+            }
+          });
+          
+          // Log the data for debugging
+          console.log(`[ALC] Extracted eBay data for ${targetPlatform}:`, listing);
+          
+          // Open the target platform's create listing page in a new tab
+          let targetUrl = '';
+          if (targetPlatform === 'etsy') {
+            targetUrl = 'https://www.etsy.com/your/shops/me/tools/listings/create';
+          } else if (targetPlatform === 'poshmark') {
+            targetUrl = 'https://poshmark.com/create-listing';
+          }
+          
+          if (targetUrl) {
+            chrome.runtime.sendMessage({
+              type: 'OPEN_URL',
+              url: targetUrl
+            });
+          }
+          
+          // Update toast message
+          toast.textContent = `Sending to ${targetPlatform}... Open a new tab.`;
+          toast.style.background = '#A5FF00'; // Lime color for success
+        } else {
+          toast.textContent = 'Could not extract listing data';
+          toast.style.background = '#FF3C38'; // Error color
+          console.error('[ALC] Failed to extract listing data for autofill');
+        }
+      } else if (window.location.hostname.includes('etsy.com') || window.location.hostname.includes('poshmark.com')) {
+        // We're on the target platform, check for data to autofill
+        const result = await chrome.storage.local.get(['alc_autofill_data']);
+        const autofillData = result.alc_autofill_data;
+        
+        if (autofillData && autofillData.target === (window.location.hostname.includes('etsy.com') ? 'etsy' : 'poshmark')) {
+          // Check if autofill data is recent (less than 5 minutes old)
+          const isFresh = Date.now() - autofillData.timestamp < 5 * 60 * 1000;
+          
+          if (isFresh) {
+            // Load autofill.js if it's not already loaded
+            if (!window.autofillListingData) {
+              await new Promise((resolve) => {
+                const script = document.createElement('script');
+                script.src = chrome.runtime.getURL('content/autofill.js');
+                script.onload = resolve;
+                document.head.appendChild(script);
+              });
+            }
+            
+            // Perform the autofill
+            if (window.autofillListingData) {
+              const platform = window.location.hostname.includes('etsy.com') ? 'etsy' : 'poshmark';
+              await window.autofillListingData(autofillData.data, platform);
+              
+              // Update toast message
+              toast.textContent = `Autofilled from eBay to ${platform}`;
+              toast.style.background = '#A5FF00'; // Success color
+              
+              // Clear the autofill data to prevent accidental re-use
+              await chrome.storage.local.remove(['alc_autofill_data']);
+              
+              // Log success
+              console.log(`[ALC] Successfully autofilled from eBay to ${platform}`);
+            }
+          } else {
+            // Stale data, remove it
+            await chrome.storage.local.remove(['alc_autofill_data']);
+            toast.textContent = 'Autofill data expired';
+            toast.style.background = '#FF9F00'; // Warning color
+          }
+        }
+      } else {
+        toast.textContent = 'Autofill only works on eBay, Etsy, or Poshmark';
+        toast.style.background = '#FF9F00'; // Warning color
+      }
+    } catch (error) {
+      console.error('[ALC] Autofill error:', error);
+      toast.textContent = `Autofill error: ${error.message}`;
+      toast.style.background = '#FF3C38'; // Error color
+    }
+  }
+  
+  // Handle bulk actions
+  if (action === 'bulk-crosslist') {
+    // Log bulk operation start
+    await logBulkOperation('start', 'crosslist');
+    toast.textContent = 'Starting bulk crosslist operation';
+  }
+}
+
+// Log bulk operations to local storage
+async function logBulkOperation(status, operationType, details = {}) {
+  try {
+    // Get existing logs
+    const result = await chrome.storage.local.get(['alc_bulk_logs']);
+    const logs = result.alc_bulk_logs || [];
+    
+    // Create new log entry
+    const logEntry = {
+      id: `bulk-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      timestamp: Date.now(),
+      status: status, // 'start', 'progress', 'complete', 'error'
+      operation: operationType, // 'crosslist', 'delist', 'relist', etc.
+      source: window.location.hostname,
+      details: details
+    };
+    
+    // Add to logs (keep most recent 100)
+    logs.unshift(logEntry);
+    if (logs.length > 100) logs.length = 100;
+    
+    // Save back to storage
+    await chrome.storage.local.set({ 'alc_bulk_logs': logs });
+    
+    // Log to console
+    console.log(`[ALC] Bulk operation logged: ${status} - ${operationType}`, logEntry);
+    
+    return logEntry.id;
+  } catch (error) {
+    console.error('[ALC] Error logging bulk operation:', error);
+    return null;
+  }
 }
 
 // Listen for chrome.runtime.onMessage
@@ -191,8 +332,45 @@ window.addEventListener('message', (event) => {
 function initCommon() {
   injectAutoListCSS();
   
-  // Inject toolbar if on a supported marketplace page
-  if (window.initFloatingDock) {
+  // Determine if we're on an item page to inject the toolbar
+  const domain = window.location.hostname;
+  const path = window.location.pathname;
+  
+  // Check if this is an item page based on URL patterns
+  let isItemPage = false;
+  
+  if (domain.includes('ebay.com') && path.includes('/itm/')) {
+    isItemPage = true;
+  } else if (domain.includes('etsy.com') && path.includes('/listing/')) {
+    isItemPage = true;
+  } else if (domain.includes('poshmark.com') && path.includes('/listing/')) {
+    isItemPage = true;
+  } else if (domain.includes('facebook.com') && path.includes('/marketplace/item/')) {
+    isItemPage = true;
+  } else if (domain.includes('depop.com') && path.includes('/products/')) {
+    isItemPage = true;
+  } else if (domain.includes('grailed.com') && path.includes('/listings/')) {
+    isItemPage = true;
+  } else if (domain.includes('kijiji.ca') && path.includes('/v-')) {
+    isItemPage = true;
+  } else if (domain.includes('mercari.com') && path.includes('/item/')) {
+    isItemPage = true;
+  } else if (domain.includes('varagesale.com') && path.includes('/items/')) {
+    isItemPage = true;
+  } else if (domain.includes('offerup.com') && path.includes('/item/')) {
+    isItemPage = true;
+  } else if (domain.includes('bonanza.com') && path.includes('/items/')) {
+    isItemPage = true;
+  } else if (domain.includes('amazon.com') && path.includes('/dp/')) {
+    isItemPage = true;
+  } else if (domain.includes('shopify.com') && path.includes('/products/')) {
+    isItemPage = true;
+  } else if (domain.includes('letgo.com') && path.includes('/item/')) {
+    isItemPage = true;
+  }
+  
+  // Inject toolbar if on an item page and initFloatingDock is available
+  if (isItemPage && window.initFloatingDock) {
     window.initFloatingDock();
   }
 }

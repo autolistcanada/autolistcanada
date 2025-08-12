@@ -1,58 +1,55 @@
 # AutoList Canada Extension - Assets Report
 
-## Overview
-This report documents all assets used in the AutoList Canada Chrome extension, confirming compliance with the launch requirements and removal of unapproved assets.
+## Marketplace Assets Table
 
-## Approved Marketplace Assets
+| Marketplace | File Path | File Size (bytes) |
+|-------------|----------|------------------|
+| Amazon | assets/amazon.svg | 43916 |
+| Bonanza | assets/bonanza.svg | 61904 |
+| Depop | assets/depop.svg | 1693 |
+| eBay | assets/ebay.svg | 3924 |
+| Etsy | assets/etsy.svg | 2101 |
+| Facebook | assets/facebook.svg | 1354 |
+| Grailed | assets/grailed.png | 1357069 |
+| Kijiji | assets/kijiji.png | 2063623 |
+| Letgo | assets/letgo.svg | 243 |
+| Mercari | assets/mercari.svg | 2249 |
+| OfferUp | assets/offerup.svg | 236 |
+| Poshmark | assets/poshmark.svg | 4589 |
+| Shopify | assets/shopify.svg | 1493 |
+| VarageSale | assets/varagesale.png | 1396498 |
 
-### SVG Icons
-- `assets/amazon.svg` - Amazon platform icon
-- `assets/bonanza.svg` - Bonanza platform icon
-- `assets/depop.svg` - Depop platform icon
-- `assets/ebay.svg` - eBay platform icon
-- `assets/etsy.svg` - Etsy platform icon
-- `assets/facebook.svg` - Facebook Marketplace platform icon
-- `assets/grailed.png` - Grailed platform icon
-- `assets/kijiji.png` - Kijiji platform icon
-- `assets/letgo.svg` - Letgo platform icon
-- `assets/mercari.svg` - Mercari platform icon
-- `assets/offerup.svg` - OfferUp platform icon
-- `assets/poshmark.svg` - Poshmark platform icon
-- `assets/shopify.svg` - Shopify platform icon
-- `assets/varagesale.png` - VarageSale platform icon
+## Brand Assets Used
 
-### Extension Icons
-- `assets/icon16.png` - 16x16 extension icon
-- `assets/icon32.png` - 32x32 extension icon
-- `assets/icon48.png` - 48x48 extension icon
-- `assets/icon128.png` - 128x128 extension icon
+- `assets/icon16.png` (757 bytes)
+- `assets/icon32.png` (3517 bytes)
+- `assets/icon48.png` (3517 bytes)
+- `assets/icon128.png` (15083 bytes)
 
-## UI/Design Assets
+## UI Assets
 
-### Background Elements
-- `assets/ui/bg-lowpoly.svg` - Low-poly geometric background pattern
-- `assets/ui/vein-geo-overlay.svg` - Vein-style geometric overlay
+- `assets/ui/leaf-faceted.svg` (429 bytes)
+- `assets/ui/leaf-faceted-vibrant.svg` (1068 bytes)
+- `assets/ui/bg-lowpoly.svg` (1325 bytes)
+- `assets/ui/vein-geo-overlay.svg` (1400 bytes)
+- `assets/ui/icon-error.svg` (318 bytes)
+- `assets/ui/icon-error-vibrant.svg` (536 bytes)
+- `assets/ui/icon-ok.svg` (223 bytes)
+- `assets/ui/icon-ok-vibrant.svg` (441 bytes)
+- `assets/ui/icon-sync.svg` (377 bytes)
+- `assets/ui/icon-sync-vibrant.svg` (595 bytes)
+- `assets/ui/mktg-ebay.svg` (277 bytes)
+- `assets/ui/mktg-etsy.svg` (277 bytes)
+- `assets/ui/mktg-posh.svg` (277 bytes)
 
-### UI Components
-- `assets/ui/leaf-faceted.svg` - Leaf-shaped mask for buttons
-- `assets/ui/leaf-faceted-vibrant.svg` - Vibrant version of leaf-shaped mask
-- `assets/ui/icon-error.svg` - Error state icon
-- `assets/ui/icon-error-vibrant.svg` - Vibrant error state icon
-- `assets/ui/icon-ok.svg` - Success state icon
-- `assets/ui/icon-ok-vibrant.svg` - Vibrant success state icon
-- `assets/ui/icon-sync.svg` - Sync state icon
-- `assets/ui/icon-sync-vibrant.svg` - Vibrant sync state icon
+**NO USER ASSETS OVERWRITTEN.**
 
-## Verification
-- ✅ All 14 approved marketplaces have corresponding assets
-- ✅ No unapproved marketplace assets (Walmart has been removed)
-- ✅ All required extension icons present at correct sizes
-- ✅ UI assets match Geometric Abstract Nature design requirements
-- ✅ All assets are properly referenced in manifest and UI files
+## PHASE A - Gate Results
 
-## Asset Usage Compliance
-- ✅ Assets only used as specified in design requirements
-- ✅ No unauthorized modifications or distributions
-- ✅ All assets are either created in-house or properly licensed
+[A1] Supported marketplaces = amazon, bonanza, depop, ebay, etsy, facebook, grailed, kijiji, letgo, mercari, offerup, poshmark, shopify, varagesale
 
-Report generated: 
+[A2] Walmart removed = absent
+
+[A3] Brand asset(s) for popup header = assets/icon16.png, assets/icon32.png, assets/icon48.png, assets/icon128.png
+
+[A4] No overwrites = true
