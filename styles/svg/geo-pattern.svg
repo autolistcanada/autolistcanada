@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circles representing natural elements -->
+  <circle cx="100" cy="100" r="80" stroke="#2DCFC5" stroke-width="0.5" stroke-dasharray="4 2" opacity="0.2"/>
+  <circle cx="100" cy="100" r="60" stroke="#FF9335" stroke-width="0.5" stroke-dasharray="6 3" opacity="0.15"/>
+  <circle cx="100" cy="100" r="40" stroke="#F66D2C" stroke-width="0.5" opacity="0.2"/>
+  <circle cx="100" cy="100" r="20" stroke="#FFDA3D" stroke-width="0.5" opacity="0.25"/>
+  
+  <!-- Geometric lines representing abstract nature -->
+  <path d="M20,20 L180,180" stroke="#2DCFC5" stroke-width="0.5" opacity="0.2"/>
+  <path d="M180,20 L20,180" stroke="#2DCFC5" stroke-width="0.5" opacity="0.2"/>
+  <path d="M100,20 L100,180" stroke="#FF9335" stroke-width="0.5" stroke-dasharray="6 3" opacity="0.15"/>
+  <path d="M20,100 L180,100" stroke="#FF9335" stroke-width="0.5" stroke-dasharray="6 3" opacity="0.15"/>
+  
+  <!-- Diamond shapes representing leaf structure -->
+  <path d="M100,0 L120,100 L100,200 L80,100 Z" stroke="#F66D2C" stroke-width="0.5" fill="none" opacity="0.1"/>
+  <path d="M0,100 L100,80 L200,100 L100,120 Z" stroke="#F66D2C" stroke-width="0.5" fill="none" opacity="0.1"/>
+  
+  <!-- Corner accents -->
+  <path d="M10,10 Q30,10 30,30" stroke="#FFDA3D" stroke-width="1" fill="none" opacity="0.3"/>
+  <path d="M190,10 Q170,10 170,30" stroke="#FFDA3D" stroke-width="1" fill="none" opacity="0.3"/>
+  <path d="M10,190 Q10,170 30,170" stroke="#FFDA3D" stroke-width="1" fill="none" opacity="0.3"/>
+  <path d="M190,190 Q190,170 170,170" stroke="#FFDA3D" stroke-width="1" fill="none" opacity="0.3"/>
+</svg>

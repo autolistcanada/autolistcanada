@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics | AutoList Canada</title>
+  <link rel="stylesheet" href="./styles/theme.css">
+  <link rel="icon" href="/assets/autolist-title.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/i18n.js" defer></script>
+  
+  <style>
+    .stat-card {
+      transition: transform 0.2s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+    
+    .insight-card {
+      border-left: 4px solid var(--color-green-500);
+    }
+    
+    .platform-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+    
+    .trend-up {
+      color: var(--color-green-500);
+    }
+    
+    .trend-down {
+      color: var(--color-red-500);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .insight-card {
+        border-left-color: var(--color-green-400);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Header component placeholder -->
+  <div id="header-placeholder"></div>
+  
+  <!-- Language Toggle Button -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
+  </div>
+  
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-center justify-between mb-8">
+      <h1 class="text-3xl font-bold" data-i18n="analytics.title">Analytics Dashboard</h1>
+      
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <div class="relative">
+          <select class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm py-2 pl-3 pr-10 text-sm">
+            <option data-i18n="analytics.timeRange.7days">Last 7 days</option>
+            <option data-i18n="analytics.timeRange.30days">Last 30 days</option>
+            <option selected data-i18n="analytics.timeRange.90days">Last 90 days</option>
+            <option data-i18n="analytics.timeRange.ytd">Year to date</option>
+            <option data-i18n="analytics.timeRange.custom">Custom range</option>
+          </select>
+        </div>
+        
+        <button class="flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm text-sm">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          <span data-i18n="analytics.export">Export</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Revenue -->
+      <div class="stat-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100" data-i18n="analytics.revenue.title">Total Revenue</h3>
+          <span class="text-green-500">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="text-3xl font-bold mt-2">$12,458.90</p>
+        <div class="flex items-center mt-4">
+          <span class="text-green-500 text-sm font-medium flex items-center">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+            </svg>
+            18.2%
+          </span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm ml-2" data-i18n="analytics.vsLastPeriod">vs last period</span>
+        </div>
+      </div>
+      
+      <!-- Orders -->
+      <div class="stat-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100" data-i18n="analytics.orders.title">Orders</h3>
+          <span class="text-green-500">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="text-3xl font-bold mt-2">87</p>
+        <div class="flex items-center mt-4">
+          <span class="text-green-500 text-sm font-medium flex items-center">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+            </svg>
+            12.5%
+          </span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm ml-2" data-i18n="analytics.vsLastPeriod">vs last period</span>
+        </div>
+      </div>
+      
+      <!-- Conversion Rate -->
+      <div class="stat-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100" data-i18n="analytics.conversion.title">Conversion Rate</h3>
+          <span class="text-yellow-500">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="text-3xl font-bold mt-2">3.42%</p>
+        <div class="flex items-center mt-4">
+          <span class="text-yellow-500 text-sm font-medium flex items-center">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+            </svg>
+            0.2%
+          </span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm ml-2" data-i18n="analytics.vsLastPeriod">vs last period</span>
+        </div>
+      </div>
+      
+      <!-- Traffic -->
+      <div class="stat-card bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100" data-i18n="analytics.views.title">Total Views</h3>
+          <span class="text-blue-500">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="text-3xl font-bold mt-2">2,547</p>
+        <div class="flex items-center mt-4">
+          <span class="text-green-500 text-sm font-medium flex items-center">
+            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"></path>
+            </svg>
+            28.4%
+          </span>
+          <span class="text-gray-500 dark:text-gray-400 text-sm ml-2" data-i18n="analytics.vsLastPeriod">vs last period</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Sales by Platform -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-medium mb-4" data-i18n="analytics.charts.salesByPlatform">Sales by Platform</h3>
+        <div class="chart-container">
+          <canvas id="platformChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- Revenue Trends -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-medium mb-4" data-i18n="analytics.charts.revenueTrends">Revenue Trends</h3>
+        <div class="chart-container">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Canadian Market Insights -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+      <h3 class="text-lg font-medium mb-4" data-i18n="analytics.canadianMarket.title">Canadian Market Insights</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Regional Performance Map -->
+        <div>
+          <h4 class="text-md font-medium mb-4" data-i18n="analytics.canadianMarket.regionalPerformance">Regional Performance</h4>
+          <div class="relative h-64 bg-gray-100 dark:bg-gray-700 rounded-lg">
+            <!-- SVG Map of Canada would go here -->
+            <div class="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400">
+              <span>Interactive Canada Map</span>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm font-medium">Top Province</p>
+              <p class="text-lg font-bold">Ontario</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">42% of total sales</p>
+            </div>
+            <div>
+              <p class="text-sm font-medium">Growth Area</p>
+              <p class="text-lg font-bold">British Columbia</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">+38% month-over-month</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Seasonal Trends -->
+        <div>
+          <h4 class="text-md font-medium mb-4" data-i18n="analytics.canadianMarket.seasonalTrends">Seasonal Trends</h4>
+          <div class="chart-container h-64">
+            <canvas id="seasonalChart"></canvas>
+          </div>
+          <div class="mt-4">
+            <p class="text-sm font-medium" data-i18n="analytics.keyInsight">Key Insight</p>
+            <p class="text-sm" data-i18n="analytics.seasonalInsight">Holiday season (November-December) shows 2.4x higher sales volume compared to rest of year. Consider increasing inventory by September.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Top Performers & Insights -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Top Listings -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-medium mb-4" data-i18n="analytics.topListings.title">Top Performing Listings</h3>
+        <div class="space-y-4">
+          <!-- Listing 1 -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden mr-4">
+              <img src="https://images.example.com/vintage-camera.jpg" alt="Vintage Camera" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+              <h4 class="text-sm font-medium">Vintage Nikon F2 Film Camera</h4>
+              <div class="flex items-center mt-1">
+                <img src="/assets/ebay-logo.png" alt="eBay" class="platform-icon mr-1">
+                <span class="text-sm text-gray-500 dark:text-gray-400">$499.99 CAD</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-green-500 text-sm font-medium">32 views</span>
+            </div>
+          </div>
+          
+          <!-- Listing 2 -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden mr-4">
+              <img src="https://images.example.com/cedar-paddle.jpg" alt="Cedar Paddle" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+              <h4 class="text-sm font-medium">Handmade Cedar Canoe Paddle</h4>
+              <div class="flex items-center mt-1">
+                <img src="/assets/etsy-logo.png" alt="Etsy" class="platform-icon mr-1">
+                <span class="text-sm text-gray-500 dark:text-gray-400">$189.99 CAD</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-green-500 text-sm font-medium">28 views</span>
+            </div>
+          </div>
+          
+          <!-- Listing 3 -->
+          <div class="flex items-center">
+            <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden mr-4">
+              <img src="https://images.example.com/blanket.jpg" alt="Blanket" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+              <h4 class="text-sm font-medium">Hudson's Bay Point Blanket</h4>
+              <div class="flex items-center mt-1">
+                <img src="/assets/facebook-logo.png" alt="Facebook" class="platform-icon mr-1">
+                <span class="text-sm text-gray-500 dark:text-gray-400">$329.99 CAD</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-green-500 text-sm font-medium">24 views</span>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="text-green-500 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium inline-block mt-4">View all listings →</a>
+      </div>
+      
+      <!-- AI Insights -->
+      <div class="col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-medium mb-4">AI-Powered Insights</h3>
+        <div class="space-y-4">
+          <!-- Insight 1 -->
+          <div class="insight-card pl-4 py-3">
+            <h4 class="text-sm font-medium" data-i18n="analytics.insights.priceOptimization">Price Optimization</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Your vintage camera listings are priced 12% above market average. Consider adjusting prices to improve conversion rates.</p>
+            <button class="text-green-500 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium mt-2">Apply recommendation</button>
+          </div>
+          
+          <!-- Insight 2 -->
+          <div class="insight-card pl-4 py-3">
+            <h4 class="text-sm font-medium" data-i18n="analytics.insights.keywordOpportunity">Keyword Opportunity</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Adding "Canadiana" to your vintage home goods listings could increase visibility by up to 18% based on current search trends.</p>
+            <button class="text-green-500 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium mt-2">Apply to listings</button>
+          </div>
+          
+          <!-- Insight 3 -->
+          <div class="insight-card pl-4 py-3">
+            <h4 class="text-sm font-medium" data-i18n="analytics.insights.photography">Photography Improvement</h4>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Listings with 8+ images have 23% higher conversion rates. 60% of your listings have fewer than 8 images.</p>
+            <button class="text-green-500 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium mt-2">See affected listings</button>
+          </div>
+          
+          <!-- Insight 4 -->
+          <div class="insight-card pl-4 py-3">
+            <h4 class="text-sm font-medium" data-i18n="analytics.insights.frenchDescription">French Description Impact</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" data-i18n="analytics.insights.frenchDescriptionDetail">Listings with French translations are performing 15% better in Quebec. Consider adding French descriptions to all listings.</p>
+            <button class="text-green-500 hover:text-green-600 dark:hover:text-green-400 text-sm font-medium mt-2" data-i18n="analytics.insights.autoTranslate">Auto-translate listings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-gray-800 shadow-md mt-8">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center">
+        <p class="text-sm text-gray-500 dark:text-gray-400">© 2023 AutoList Canada</p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-i18n="footer.terms">Terms</a>
+          <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-i18n="footer.privacy">Privacy</a>
+          <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" data-i18n="footer.help">Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Platform Chart
+      const platformCtx = document.getElementById('platformChart').getContext('2d');
+      new Chart(platformCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['eBay', 'Etsy', 'Facebook', 'Kijiji', 'Amazon'],
+          datasets: [{
+            data: [45, 25, 15, 10, 5],
+            backgroundColor: [
+              '#FF9900', '#F1641E', '#4267B2', '#ED5A29', '#232F3E'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+            }
+          }
+        }
+      });
+      
+      // Revenue Chart
+      const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+      new Chart(revenueCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue (CAD)',
+            data: [1250, 1830, 2100, 1890, 2400, 2850],
+            backgroundColor: 'rgba(34, 197, 94, 0.2)',
+            borderColor: 'rgba(34, 197, 94, 1)',
+            borderWidth: 2,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      
+      // Seasonal Chart
+      const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
+      new Chart(seasonalCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+            label: 'Sales Volume',
+            data: [65, 59, 80, 81, 56, 55, 40, 45, 60, 70, 120, 130],
+            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+            borderColor: 'rgba(59, 130, 246, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

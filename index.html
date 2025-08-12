@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoList Canada</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script src="scripts/i18n.js" defer></script>
   <style>
     html {
       scroll-behavior: smooth;
@@ -56,32 +57,35 @@
   style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
   <div>
     <div class="p-4 flex flex-col items-center space-y-4">
+      <div class="w-full flex justify-end mb-2">
+        <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
+      </div>
       <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 drop-shadow-xl">
       <img src="autolist-title.png" alt="AutoList Canada" class="w-44 mx-auto">
       <nav class="flex flex-col gap-3 mt-6 w-full px-4 text-white text-sm font-semibold">
         <a href="index.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          Home
+          <span data-i18n="navigation.home">Home</span>
         </a>
         <a href="dashboard.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          Dashboard
+          <span data-i18n="navigation.dashboard">Dashboard</span>
         </a>
         <a href="listings.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          Listings
+          <span data-i18n="navigation.listings">Listings</span>
         </a>
         <a href="ai-tools.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          AI Tools
+          <span data-i18n="navigation.aiTools">AI Tools</span>
         </a>
         <a href="how-it-works.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          How It Works
+          <span data-i18n="navigation.howItWorks">How It Works</span>
         </a>
         <a href="faq.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          FAQ
+          <span data-i18n="navigation.faq">FAQ</span>
         </a>
         <a href="#" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
@@ -89,11 +93,11 @@
         </a>
         <a href="terms.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all text-gray-300">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          Terms of Service
+          <span data-i18n="navigation.terms">Terms of Service</span>
         </a>
         <a href="privacy.html" class="relative group pl-4 py-2 hover:bg-white/10 rounded-md transition-all text-gray-300">
           <span class="absolute left-0 w-1 h-full bg-orange-400 rounded-r-full scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-300"></span>
-          Privacy Policy
+          <span data-i18n="navigation.privacy">Privacy Policy</span>
         </a>
       </nav>
     </div>
@@ -119,15 +123,13 @@
   <main class="flex-1 px-12 pt-16 space-y-40">
     <!-- Hero Section -->
     <section class="text-center space-y-6 pt-20">
-      <h1 class="text-5xl font-bold text-gray-900">This Isn’t Just Software. It’s Seller Intelligence — Built in Canada.</h1>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">AutoList Canada is the first platform that blends crosslisting automation with real cognitive science.</p>
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">Our tools don’t just speed you up — they make you sharper: AI psychology prompts, brand-aligned tone shifts, energy-saving decision systems, and market-aware logic designed for long-term growth.</p>
-<p class="text-lg text-gray-700 max-w-2xl mx-auto">
-  AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
-</p>
+      <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-orange-400" data-i18n="homepage.hero.heading">List Once, Sell Everywhere</h1>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto" data-i18n="homepage.hero.subheading">
+        AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.
+      </p>
     
-      <p class="text-lg text-gray-700 max-w-2xl mx-auto">This isn’t about shortcuts. It’s about smarter selling — backed by real systems.</p>
-      <a href="#ai-tools" class="cta-button inline-block">See What Makes Us Different</a>
+      <p class="text-lg text-gray-700 max-w-2xl mx-auto" data-i18n="homepage.hero.tagline">This isn't about shortcuts. It's about smarter selling — backed by real systems.</p>
+      <a href="#ai-tools" class="cta-button inline-block" data-i18n="actions.learnMore">See What Makes Us Different</a>
     </section>
 
     <!-- How It Works -->
@@ -148,8 +150,8 @@
     <!-- Why AutoList Canada Exists -->
     <section>
       <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Why AutoList Canada Exists</h2>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">AutoList Canada was created to bring clarity back to the selling process.</p>
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4" data-i18n="homepage.whyAutoList.heading">Why AutoList Canada Exists</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg" data-i18n="homepage.whyAutoList.content">We built this because we're tired of watching Canadian sellers waste time on manual tasks and unclear listings. Every feature was designed with one goal: to help you sell more items with less work.</p>
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Too many tools are built for speed, scale, or surface-level convenience — but not for the people doing the work. We believe sellers deserve more than automation. They deserve alignment.</p>
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">That’s why we built a system that supports cognitive flow, creative momentum, and intentional growth — not just output.</p>
         <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">Our foundation is neuroscience, our structure is strategy, and our purpose is to help you build a business that’s sustainable, thoughtful, and truly aligned with your values.</p>
@@ -159,8 +161,8 @@
     <!-- Explore AI Tools -->
     <section id="ai-tools">
       <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Explore AI Tools</h2>
-        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg">These aren’t just writing tools — they’re business intelligence systems for sellers who want to grow with precision.</p>
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4" data-i18n="homepage.aiTools.heading">Explore AI Tools</h2>
+        <p class="text-gray-700 text-center max-w-3xl mx-auto text-lg" data-i18n="homepage.aiTools.content">These aren't just writing tools — they're business intelligence systems for sellers who want to grow with precision.</p>
         <ul class="space-y-3 text-gray-700 list-disc list-inside text-lg max-w-3xl mx-auto">
           <li><strong>Cognitive Title Optimizer</strong> – structures titles to boost clarity, buyer focus, and intent-matching — no filler, no fluff</li>
           <li><strong>Strategic Tag Builder</strong> – suggests tags based on relevance, uniqueness, and Canadian search flow</li>
@@ -176,7 +178,7 @@
     <!-- FAQ Section -->
     <section id="faq">
       <div class="glass-section">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Frequently Asked Questions</h2>
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4" data-i18n="faq.title">Frequently Asked Questions</h2>
         <div class="mt-4 space-y-6 text-lg">
           <div>
             <h3 class="font-semibold">Do I need to connect marketplace accounts to use AutoList Canada?</h3>
@@ -206,8 +208,8 @@
         <img src="privacy-first-badge.png" alt="Privacy First Badge" class="w-16">
       </div>
       <nav class="text-sm mt-2 space-x-6">
-        <a href="terms.html" class="text-gray-500 hover:text-orange-500 font-medium">Terms of Service</a>
-        <a href="privacy.html" class="text-gray-500 hover:text-orange-500 font-medium">Privacy Policy</a>
+        <a href="terms.html" class="text-gray-500 hover:text-orange-500 font-medium" data-i18n="navigation.terms">Terms of Service</a>
+        <a href="privacy.html" class="text-gray-500 hover:text-orange-500 font-medium" data-i18n="navigation.privacy">Privacy Policy</a>
       </nav>
       <p class="text-xs text-gray-400">© 2025 AutoList Canada — All rights reserved.</p>
     </footer>

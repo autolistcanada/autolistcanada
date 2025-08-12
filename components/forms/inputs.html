@@ -1,0 +1,510 @@
+<!-- 
+  AutoList Canada - Form Input Components
+  
+  Features:
+  - Text inputs with various states (default, focus, error, success)
+  - Label and helper text support
+  - Icon integration
+  - Input groups
+  - Accessibility features (aria attributes, focus states, error messaging)
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Form Input Components</h2>
+  
+  <!-- Text Input -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Text Input</h3>
+    <div class="alc-component-demo">
+      <div class="alc-form-group">
+        <label for="text-input" class="alc-form-label">Default Input</label>
+        <input type="text" id="text-input" class="alc-form-input" placeholder="Enter text here">
+        <span class="alc-form-helper">Helper text for this field</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Input States -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Input States</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Success State -->
+      <div class="alc-form-group">
+        <label for="success-input" class="alc-form-label">Success Input</label>
+        <div class="alc-input-wrapper alc-input-success">
+          <input type="text" id="success-input" class="alc-form-input" value="Verified value">
+          <div class="alc-input-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <path d="M20 6L9 17l-5-5"></path>
+            </svg>
+          </div>
+        </div>
+        <span class="alc-form-helper alc-helper-success">Field validated successfully</span>
+      </div>
+      
+      <!-- Error State -->
+      <div class="alc-form-group">
+        <label for="error-input" class="alc-form-label">Error Input</label>
+        <div class="alc-input-wrapper alc-input-error">
+          <input 
+            type="email" 
+            id="error-input" 
+            class="alc-form-input" 
+            value="invalid-email" 
+            aria-describedby="error-message"
+            aria-invalid="true">
+          <div class="alc-input-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+        </div>
+        <span id="error-message" class="alc-form-helper alc-helper-error">Please enter a valid email address</span>
+      </div>
+      
+      <!-- Disabled State -->
+      <div class="alc-form-group">
+        <label for="disabled-input" class="alc-form-label">Disabled Input</label>
+        <input type="text" id="disabled-input" class="alc-form-input" value="This field is disabled" disabled>
+      </div>
+      
+      <!-- Read-only State -->
+      <div class="alc-form-group">
+        <label for="readonly-input" class="alc-form-label">Read-only Input</label>
+        <input type="text" id="readonly-input" class="alc-form-input" value="This field is read-only" readonly>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Input with Icons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Input with Icons</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Leading Icon -->
+      <div class="alc-form-group">
+        <label for="search-input" class="alc-form-label">Search</label>
+        <div class="alc-input-wrapper alc-input-leading-icon">
+          <div class="alc-input-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="search" id="search-input" class="alc-form-input" placeholder="Search listings...">
+        </div>
+      </div>
+      
+      <!-- Trailing Icon (Clearable) -->
+      <div class="alc-form-group">
+        <label for="clearable-input" class="alc-form-label">Clearable Input</label>
+        <div class="alc-input-wrapper">
+          <input type="text" id="clearable-input" class="alc-form-input" placeholder="Type to see clear button..." value="Clear me">
+          <button class="alc-input-icon alc-input-action" type="button" aria-label="Clear input">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Password Toggle -->
+      <div class="alc-form-group">
+        <label for="password-input" class="alc-form-label">Password</label>
+        <div class="alc-input-wrapper">
+          <input type="password" id="password-input" class="alc-form-input" placeholder="Enter your password" value="password123">
+          <button class="alc-input-icon alc-input-action" type="button" data-toggle="password" aria-label="Show password">
+            <svg class="icon-show" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="icon-hide" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="display: none;">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Input Groups -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Input Groups</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Prefix Group -->
+      <div class="alc-form-group">
+        <label for="currency-input" class="alc-form-label">Price</label>
+        <div class="alc-input-group">
+          <span class="alc-input-addon">$</span>
+          <input type="text" id="currency-input" class="alc-form-input" placeholder="0.00">
+          <span class="alc-input-addon">CAD</span>
+        </div>
+      </div>
+      
+      <!-- Button Group -->
+      <div class="alc-form-group">
+        <label for="search-with-btn" class="alc-form-label">Search with Button</label>
+        <div class="alc-input-group">
+          <input type="text" id="search-with-btn" class="alc-form-input" placeholder="Search...">
+          <button class="alc-btn alc-btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Sizing -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Input Sizes</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <div class="alc-form-group">
+        <label for="small-input" class="alc-form-label">Small Input</label>
+        <input type="text" id="small-input" class="alc-form-input alc-input-sm" placeholder="Small input">
+      </div>
+      
+      <div class="alc-form-group">
+        <label for="default-input" class="alc-form-label">Default Input</label>
+        <input type="text" id="default-input" class="alc-form-input" placeholder="Default input">
+      </div>
+      
+      <div class="alc-form-group">
+        <label for="large-input" class="alc-form-label">Large Input</label>
+        <input type="text" id="large-input" class="alc-form-input alc-input-lg" placeholder="Large input">
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+
+  .alc-demo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Form Group */
+  .alc-form-group {
+    margin-bottom: var(--space-4);
+  }
+  
+  .alc-form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-800);
+  }
+  
+  .alc-form-helper {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-600);
+    margin-top: var(--space-1);
+  }
+  
+  .alc-helper-success {
+    color: var(--color-green-600);
+  }
+  
+  .alc-helper-error {
+    color: var(--color-red-600);
+  }
+
+  /* Form Input */
+  .alc-form-input {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    color: var(--color-neutral-900);
+    background-color: white;
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+  }
+  
+  .alc-form-input::placeholder {
+    color: var(--color-neutral-500);
+    opacity: 1;
+  }
+  
+  .alc-form-input:focus {
+    outline: none;
+    border-color: var(--color-green-500);
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+  
+  .alc-form-input:disabled,
+  .alc-form-input:read-only {
+    background-color: var(--color-neutral-100);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .alc-form-input:read-only {
+    cursor: default;
+  }
+
+  /* Input Wrapper and Icons */
+  .alc-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .alc-input-wrapper .alc-form-input {
+    padding-right: var(--space-8);
+  }
+  
+  .alc-input-leading-icon .alc-form-input {
+    padding-left: var(--space-8);
+  }
+  
+  .alc-input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-500);
+    width: var(--space-6);
+    height: var(--space-6);
+  }
+  
+  .alc-input-leading-icon .alc-input-icon {
+    left: var(--space-1);
+  }
+  
+  .alc-input-wrapper .alc-input-icon:not(.alc-input-leading-icon .alc-input-icon) {
+    right: var(--space-1);
+  }
+  
+  .alc-input-action {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: var(--space-1);
+    border-radius: var(--border-radius-sm);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+  
+  .alc-input-action:hover {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+  }
+
+  /* Input States */
+  .alc-input-success .alc-form-input {
+    border-color: var(--color-green-500);
+  }
+  
+  .alc-input-success .alc-input-icon {
+    color: var(--color-green-600);
+  }
+  
+  .alc-input-error .alc-form-input {
+    border-color: var(--color-red-500);
+  }
+  
+  .alc-input-error .alc-input-icon {
+    color: var(--color-red-600);
+  }
+  
+  .alc-input-error .alc-form-input:focus {
+    box-shadow: 0 0 0 3px rgba(var(--color-red-rgb-500), 0.2);
+  }
+
+  /* Input Groups */
+  .alc-input-group {
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .alc-input-group .alc-form-input {
+    flex: 1;
+    border-radius: 0;
+  }
+  
+  .alc-input-group .alc-form-input:first-child {
+    border-top-left-radius: var(--border-radius-md);
+    border-bottom-left-radius: var(--border-radius-md);
+  }
+  
+  .alc-input-group .alc-form-input:last-child {
+    border-top-right-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
+  }
+  
+  .alc-input-addon {
+    display: flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-700);
+    background-color: var(--color-neutral-100);
+    border: 1px solid var(--color-neutral-300);
+  }
+  
+  .alc-input-group .alc-input-addon:first-child {
+    border-right: 0;
+    border-top-left-radius: var(--border-radius-md);
+    border-bottom-left-radius: var(--border-radius-md);
+  }
+  
+  .alc-input-group .alc-input-addon:last-child {
+    border-left: 0;
+    border-top-right-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
+  }
+  
+  .alc-input-group .alc-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Input Sizes */
+  .alc-input-sm {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    height: calc(var(--space-6) + var(--space-2));
+  }
+  
+  .alc-form-input {
+    height: calc(var(--space-6) + var(--space-4));
+  }
+  
+  .alc-input-lg {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-md);
+    height: calc(var(--space-6) + var(--space-6));
+  }
+  
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-form-label {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-form-helper {
+      color: var(--color-neutral-400);
+    }
+    
+    .alc-form-input {
+      color: var(--color-neutral-100);
+      background-color: var(--color-neutral-800);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-form-input::placeholder {
+      color: var(--color-neutral-500);
+    }
+    
+    .alc-form-input:disabled,
+    .alc-form-input:read-only {
+      background-color: var(--color-neutral-700);
+    }
+    
+    .alc-input-addon {
+      color: var(--color-neutral-300);
+      background-color: var(--color-neutral-700);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-input-action:hover {
+      background-color: var(--color-neutral-700);
+      color: var(--color-neutral-300);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Clear button functionality
+    const clearableInputs = document.querySelectorAll('.alc-input-wrapper:has(.alc-input-action[aria-label="Clear input"])');
+    
+    clearableInputs.forEach(wrapper => {
+      const input = wrapper.querySelector('.alc-form-input');
+      const clearBtn = wrapper.querySelector('.alc-input-action');
+      
+      // Show/hide clear button based on input content
+      const toggleClearButton = () => {
+        if (input.value) {
+          clearBtn.style.display = 'flex';
+        } else {
+          clearBtn.style.display = 'none';
+        }
+      };
+      
+      // Initialize
+      toggleClearButton();
+      
+      // Set up event listeners
+      input.addEventListener('input', toggleClearButton);
+      
+      clearBtn.addEventListener('click', () => {
+        input.value = '';
+        toggleClearButton();
+        input.focus();
+      });
+    });
+    
+    // Password visibility toggle
+    const passwordToggles = document.querySelectorAll('[data-toggle="password"]');
+    
+    passwordToggles.forEach(toggle => {
+      const input = toggle.closest('.alc-input-wrapper').querySelector('.alc-form-input');
+      const showIcon = toggle.querySelector('.icon-show');
+      const hideIcon = toggle.querySelector('.icon-hide');
+      
+      toggle.addEventListener('click', () => {
+        if (input.type === 'password') {
+          input.type = 'text';
+          showIcon.style.display = 'none';
+          hideIcon.style.display = 'block';
+          toggle.setAttribute('aria-label', 'Hide password');
+        } else {
+          input.type = 'password';
+          showIcon.style.display = 'block';
+          hideIcon.style.display = 'none';
+          toggle.setAttribute('aria-label', 'Show password');
+        }
+      });
+    });
+  });
+</script>

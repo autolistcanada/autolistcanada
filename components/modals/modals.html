@@ -1,0 +1,710 @@
+<!-- 
+  AutoList Canada - Modal Components
+  
+  Features:
+  - Standard, small, and large modals
+  - Modal variants (info, confirmation, form, fullscreen)
+  - Animation effects
+  - Accessibility features (focus trap, keyboard navigation, aria attributes)
+  - Responsive design
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Modal Components</h2>
+  
+  <!-- Modal Trigger Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Modal Examples</h3>
+    <div class="alc-component-demo">
+      <div class="alc-button-group">
+        <button class="alc-btn alc-btn-primary" data-modal-target="standard-modal">Standard Modal</button>
+        <button class="alc-btn alc-btn-secondary" data-modal-target="small-modal">Small Modal</button>
+        <button class="alc-btn alc-btn-secondary" data-modal-target="large-modal">Large Modal</button>
+        <button class="alc-btn alc-btn-primary" data-modal-target="form-modal">Form Modal</button>
+        <button class="alc-btn alc-btn-danger" data-modal-target="confirm-modal">Confirmation Modal</button>
+        <button class="alc-btn alc-btn-tertiary" data-modal-target="fullscreen-modal">Fullscreen Modal</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Standard Modal -->
+  <div id="standard-modal" class="alc-modal" aria-labelledby="standard-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="standard-modal-title" class="alc-modal-title">Standard Modal</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <p>This is a standard modal window for displaying content, alerts, or simple forms.</p>
+          <p>It's designed with the AutoList Canada abstract geometric nature theme and includes full keyboard navigation and focus management.</p>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-tertiary alc-modal-cancel">Cancel</button>
+          <button class="alc-btn alc-btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Small Modal -->
+  <div id="small-modal" class="alc-modal" aria-labelledby="small-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container alc-modal-sm">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="small-modal-title" class="alc-modal-title">Small Modal</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <p>This is a small modal window, ideal for quick notifications or simple actions.</p>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-primary alc-btn-block">Got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Large Modal -->
+  <div id="large-modal" class="alc-modal" aria-labelledby="large-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container alc-modal-lg">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="large-modal-title" class="alc-modal-title">Large Modal</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <p>This is a large modal window designed for displaying more complex content or larger forms.</p>
+          <p>The modal container has a maximum width but remains responsive on smaller screens.</p>
+          <div class="alc-placeholder" style="height: 200px; background-color: var(--color-neutral-100); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; margin: var(--space-4) 0;">
+            Content Area
+          </div>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-tertiary alc-modal-cancel">Cancel</button>
+          <button class="alc-btn alc-btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Form Modal -->
+  <div id="form-modal" class="alc-modal" aria-labelledby="form-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="form-modal-title" class="alc-modal-title">Add New Listing</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <form id="listing-form" class="alc-form">
+            <div class="alc-form-group">
+              <label for="listing-title" class="alc-form-label">Title</label>
+              <input type="text" id="listing-title" class="alc-form-input" placeholder="Enter listing title" required>
+            </div>
+            
+            <div class="alc-form-row">
+              <div class="alc-form-group alc-form-col">
+                <label for="listing-price" class="alc-form-label">Price</label>
+                <div class="alc-input-group">
+                  <span class="alc-input-addon">$</span>
+                  <input type="number" id="listing-price" class="alc-form-input" placeholder="0.00" step="0.01" min="0" required>
+                  <span class="alc-input-addon">CAD</span>
+                </div>
+              </div>
+              
+              <div class="alc-form-group alc-form-col">
+                <label for="listing-category" class="alc-form-label">Category</label>
+                <div class="alc-select-wrapper">
+                  <select id="listing-category" class="alc-select" required>
+                    <option value="">Select category</option>
+                    <option value="clothing">Clothing & Accessories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="home">Home & Garden</option>
+                    <option value="sports">Sports & Outdoors</option>
+                  </select>
+                  <div class="alc-select-arrow">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="alc-form-group">
+              <label for="listing-description" class="alc-form-label">Description</label>
+              <textarea id="listing-description" class="alc-form-input" rows="4" placeholder="Enter listing description"></textarea>
+            </div>
+            
+            <div class="alc-form-group">
+              <label class="alc-form-label">Marketplaces</label>
+              <div class="alc-check-cards alc-check-cards-sm">
+                <div class="alc-check-card">
+                  <input type="checkbox" id="marketplace-ebay" class="alc-card-check" name="marketplaces" value="ebay" checked>
+                  <label for="marketplace-ebay" class="alc-card-check-label">
+                    <div class="alc-card-check-content">
+                      <span class="alc-card-check-title">eBay</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="alc-check-card">
+                  <input type="checkbox" id="marketplace-amazon" class="alc-card-check" name="marketplaces" value="amazon">
+                  <label for="marketplace-amazon" class="alc-card-check-label">
+                    <div class="alc-card-check-content">
+                      <span class="alc-card-check-title">Amazon</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="alc-check-card">
+                  <input type="checkbox" id="marketplace-etsy" class="alc-card-check" name="marketplaces" value="etsy">
+                  <label for="marketplace-etsy" class="alc-card-check-label">
+                    <div class="alc-card-check-content">
+                      <span class="alc-card-check-title">Etsy</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="alc-check-card">
+                  <input type="checkbox" id="marketplace-kijiji" class="alc-card-check" name="marketplaces" value="kijiji">
+                  <label for="marketplace-kijiji" class="alc-card-check-label">
+                    <div class="alc-card-check-content">
+                      <span class="alc-card-check-title">Kijiji</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-tertiary alc-modal-cancel">Cancel</button>
+          <button class="alc-btn alc-btn-primary" form="listing-form">Create Listing</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Confirmation Modal -->
+  <div id="confirm-modal" class="alc-modal" aria-labelledby="confirm-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container alc-modal-sm">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="confirm-modal-title" class="alc-modal-title">Delete Listing</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <div class="alc-alert alc-alert-danger">
+            <div class="alc-alert-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="alc-alert-content">
+              <p><strong>This action cannot be undone.</strong></p>
+              <p>Are you sure you want to permanently delete this listing from all marketplaces?</p>
+            </div>
+          </div>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-tertiary alc-modal-cancel">Cancel</button>
+          <button class="alc-btn alc-btn-danger">Delete Permanently</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Fullscreen Modal -->
+  <div id="fullscreen-modal" class="alc-modal" aria-labelledby="fullscreen-modal-title" aria-hidden="true" role="dialog">
+    <div class="alc-modal-backdrop"></div>
+    <div class="alc-modal-container alc-modal-fullscreen">
+      <div class="alc-modal-content">
+        <div class="alc-modal-header">
+          <h3 id="fullscreen-modal-title" class="alc-modal-title">Bulk Edit Listings</h3>
+          <button class="alc-modal-close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="alc-modal-body">
+          <div class="alc-placeholder" style="height: 400px; background-color: var(--color-neutral-100); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center;">
+            Full-screen modal content area
+          </div>
+        </div>
+        <div class="alc-modal-footer">
+          <button class="alc-btn alc-btn-tertiary alc-modal-cancel">Cancel</button>
+          <button class="alc-btn alc-btn-primary">Apply to All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+  
+  .alc-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  
+  /* Modal Base Styles */
+  .alc-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+  }
+  
+  .alc-modal[aria-hidden="false"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .alc-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+  }
+  
+  .alc-modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: var(--space-4);
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform var(--transition-medium), opacity var(--transition-medium);
+  }
+  
+  .alc-modal[aria-hidden="false"] .alc-modal-container {
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+  /* Modal Size Variants */
+  .alc-modal-sm {
+    max-width: 400px;
+  }
+  
+  .alc-modal-lg {
+    max-width: 700px;
+  }
+  
+  .alc-modal-fullscreen {
+    max-width: none;
+    width: calc(100% - var(--space-8));
+    height: calc(100% - var(--space-8));
+    margin: var(--space-4);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Modal Content Structure */
+  .alc-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .alc-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+  
+  .alc-modal-title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-900);
+    font-weight: var(--font-weight-semibold);
+  }
+  
+  .alc-modal-close {
+    background: none;
+    border: none;
+    padding: var(--space-1);
+    margin: calc(-1 * var(--space-1));
+    color: var(--color-neutral-600);
+    cursor: pointer;
+    border-radius: var(--border-radius-full);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+  
+  .alc-modal-close:hover {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+  }
+  
+  .alc-modal-close:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+  
+  .alc-modal-body {
+    padding: var(--space-5);
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  .alc-modal-footer {
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--color-neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+  }
+  
+  /* Form Elements for Modal */
+  .alc-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .alc-form-row {
+    display: flex;
+    gap: var(--space-4);
+  }
+  
+  .alc-form-col {
+    flex: 1;
+    min-width: 0; /* Prevent flex item from overflowing */
+  }
+  
+  .alc-form-group {
+    margin-bottom: 0;
+  }
+  
+  /* Alert Component in Modal */
+  .alc-alert {
+    display: flex;
+    padding: var(--space-3);
+    border-radius: var(--border-radius-md);
+    gap: var(--space-3);
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+  }
+  
+  .alc-alert-danger {
+    background-color: var(--color-red-50);
+    color: var(--color-red-900);
+  }
+  
+  .alc-alert-icon {
+    flex-shrink: 0;
+    color: var(--color-red-700);
+  }
+  
+  .alc-alert-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .alc-alert-content p {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+  }
+  
+  .alc-alert-content p:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Checkbox Card Small Variant */
+  .alc-check-cards-sm {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+  
+  .alc-check-cards-sm .alc-card-check-label {
+    padding: var(--space-2);
+  }
+  
+  .alc-btn-block {
+    width: 100%;
+  }
+  
+  /* Animation for modals with transitions */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+  }
+  
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-modal-container {
+      background-color: var(--color-neutral-800);
+    }
+    
+    .alc-modal-title {
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-modal-close {
+      color: var(--color-neutral-400);
+    }
+    
+    .alc-modal-close:hover {
+      background-color: var(--color-neutral-700);
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-modal-header {
+      border-color: var(--color-neutral-700);
+    }
+    
+    .alc-modal-footer {
+      border-color: var(--color-neutral-700);
+    }
+    
+    .alc-alert {
+      background-color: var(--color-neutral-700);
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-alert-danger {
+      background-color: rgba(var(--color-red-rgb-900), 0.2);
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-alert-icon {
+      color: var(--color-red-400);
+    }
+    
+    .alc-placeholder {
+      background-color: var(--color-neutral-700) !important;
+      color: var(--color-neutral-300);
+    }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 640px) {
+    .alc-modal-container {
+      margin: var(--space-2);
+    }
+    
+    .alc-modal-fullscreen {
+      width: calc(100% - var(--space-4));
+      height: calc(100% - var(--space-4));
+      margin: var(--space-2);
+    }
+    
+    .alc-form-row {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Modal functionality
+    const modalTriggers = document.querySelectorAll('[data-modal-target]');
+    const modalCloseButtons = document.querySelectorAll('.alc-modal-close, .alc-modal-cancel');
+    const modals = document.querySelectorAll('.alc-modal');
+    
+    // Open modal
+    modalTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const modalId = trigger.dataset.modalTarget;
+        const modal = document.getElementById(modalId);
+        
+        if (modal) {
+          openModal(modal);
+        }
+      });
+    });
+    
+    // Close modal
+    modalCloseButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = button.closest('.alc-modal');
+        closeModal(modal);
+      });
+    });
+    
+    // Close when clicking outside
+    modals.forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target.classList.contains('alc-modal-backdrop')) {
+          closeModal(modal);
+        }
+      });
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const openModal = document.querySelector('.alc-modal[aria-hidden="false"]');
+        if (openModal) {
+          closeModal(openModal);
+        }
+      }
+    });
+    
+    // Open modal function
+    function openModal(modal) {
+      modal.setAttribute('aria-hidden', 'false');
+      
+      // Prevent body scrolling
+      document.body.style.overflow = 'hidden';
+      
+      // Focus trap
+      setupFocusTrap(modal);
+      
+      // Focus first focusable element
+      const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (focusableElements.length) {
+        setTimeout(() => {
+          focusableElements[0].focus();
+        }, 100);
+      }
+    }
+    
+    // Close modal function
+    function closeModal(modal) {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    
+    // Focus trap functionality
+    function setupFocusTrap(modal) {
+      const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      
+      if (focusableElements.length === 0) return;
+      
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+      
+      // Set up focus trap with event listener
+      modal.addEventListener('keydown', trapTabKey);
+      
+      function trapTabKey(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey && document.activeElement === firstFocusable) {
+            e.preventDefault();
+            lastFocusable.focus();
+          } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+            e.preventDefault();
+            firstFocusable.focus();
+          }
+        }
+      }
+    }
+    
+    // For demo only: automatically show each modal one by one
+    // Comment out this code in production
+    /*
+    let currentModalIndex = 0;
+    const modalIds = Array.from(modalTriggers).map(trigger => trigger.dataset.modalTarget);
+    
+    function showNextModal() {
+      const modal = document.getElementById(modalIds[currentModalIndex]);
+      
+      if (modal) {
+        openModal(modal);
+        currentModalIndex = (currentModalIndex + 1) % modalIds.length;
+        
+        setTimeout(() => {
+          closeModal(modal);
+          setTimeout(showNextModal, 500);
+        }, 2000);
+      }
+    }
+    
+    // Start the demo after page load
+    setTimeout(showNextModal, 1000);
+    */
+  });
+</script>

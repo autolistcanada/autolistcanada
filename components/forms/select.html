@@ -1,0 +1,714 @@
+<!-- 
+  AutoList Canada - Select & Dropdown Components
+  
+  Features:
+  - Custom styled select dropdowns
+  - Single and multi-select
+  - Various states (default, focus, disabled)
+  - Searchable select
+  - Custom option groups
+  - Accessibility features (aria attributes, keyboard navigation)
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Select & Dropdown Components</h2>
+  
+  <!-- Basic Select -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Basic Select</h3>
+    <div class="alc-component-demo">
+      <div class="alc-form-group">
+        <label for="basic-select" class="alc-form-label">Marketplace</label>
+        <div class="alc-select-wrapper">
+          <select id="basic-select" class="alc-select">
+            <option value="">Select a marketplace</option>
+            <option value="ebay">eBay Canada</option>
+            <option value="amazon">Amazon.ca</option>
+            <option value="etsy">Etsy</option>
+            <option value="kijiji">Kijiji</option>
+            <option value="facebook">Facebook Marketplace</option>
+          </select>
+          <div class="alc-select-arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+        <span class="alc-form-helper">Select your target marketplace</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Select States -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Select States</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Disabled Select -->
+      <div class="alc-form-group">
+        <label for="disabled-select" class="alc-form-label">Disabled Select</label>
+        <div class="alc-select-wrapper">
+          <select id="disabled-select" class="alc-select" disabled>
+            <option value="">Disabled select menu</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+          </select>
+          <div class="alc-select-arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Select with Option Groups -->
+      <div class="alc-form-group">
+        <label for="grouped-select" class="alc-form-label">Canadian Provinces & Territories</label>
+        <div class="alc-select-wrapper">
+          <select id="grouped-select" class="alc-select">
+            <option value="">Select a province/territory</option>
+            <optgroup label="Provinces">
+              <option value="ab">Alberta</option>
+              <option value="bc">British Columbia</option>
+              <option value="mb">Manitoba</option>
+              <option value="nb">New Brunswick</option>
+              <option value="nl">Newfoundland and Labrador</option>
+              <option value="ns">Nova Scotia</option>
+              <option value="on">Ontario</option>
+              <option value="pe">Prince Edward Island</option>
+              <option value="qc">Quebec</option>
+              <option value="sk">Saskatchewan</option>
+            </optgroup>
+            <optgroup label="Territories">
+              <option value="nt">Northwest Territories</option>
+              <option value="nu">Nunavut</option>
+              <option value="yt">Yukon</option>
+            </optgroup>
+          </select>
+          <div class="alc-select-arrow">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Select Sizes -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Select Sizes</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Small Select -->
+      <div class="alc-form-group">
+        <label for="small-select" class="alc-form-label">Small Select</label>
+        <div class="alc-select-wrapper">
+          <select id="small-select" class="alc-select alc-select-sm">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+          <div class="alc-select-arrow">
+            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Default Select (already shown above) -->
+      
+      <!-- Large Select -->
+      <div class="alc-form-group">
+        <label for="large-select" class="alc-form-label">Large Select</label>
+        <div class="alc-select-wrapper">
+          <select id="large-select" class="alc-select alc-select-lg">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
+          <div class="alc-select-arrow">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Custom Select (JavaScript Enhanced) -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Enhanced Select</h3>
+    <div class="alc-component-demo">
+      <div class="alc-form-group">
+        <label for="custom-select-container" class="alc-form-label">Categories</label>
+        <div class="alc-custom-select" id="custom-select-container">
+          <div class="alc-custom-select-header" tabindex="0" aria-haspopup="listbox" aria-expanded="false">
+            <span class="alc-custom-select-value">Select a category</span>
+            <div class="alc-custom-select-arrow">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="alc-custom-select-dropdown" role="listbox" hidden>
+            <div class="alc-custom-select-search">
+              <input type="text" class="alc-form-input" placeholder="Search categories..." aria-label="Search categories">
+            </div>
+            <div class="alc-custom-select-options">
+              <div class="alc-custom-select-option" role="option" data-value="clothing">Clothing & Accessories</div>
+              <div class="alc-custom-select-option" role="option" data-value="electronics">Electronics</div>
+              <div class="alc-custom-select-option" role="option" data-value="home">Home & Garden</div>
+              <div class="alc-custom-select-option" role="option" data-value="sports">Sports & Outdoors</div>
+              <div class="alc-custom-select-option" role="option" data-value="toys">Toys & Hobbies</div>
+              <div class="alc-custom-select-option" role="option" data-value="beauty">Health & Beauty</div>
+              <div class="alc-custom-select-option" role="option" data-value="automotive">Automotive</div>
+              <div class="alc-custom-select-option" role="option" data-value="books">Books, Movies & Music</div>
+            </div>
+          </div>
+          <input type="hidden" id="category-select" name="category" value="">
+        </div>
+        <span class="alc-form-helper">Searchable enhanced select with custom options</span>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Multi-select -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Multi-select</h3>
+    <div class="alc-component-demo">
+      <div class="alc-form-group">
+        <label for="multi-select-container" class="alc-form-label">Features</label>
+        <div class="alc-custom-select alc-multi-select" id="multi-select-container">
+          <div class="alc-custom-select-header" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-multiselectable="true">
+            <div class="alc-selected-tags">
+              <span class="alc-custom-select-value">Select features</span>
+            </div>
+            <div class="alc-custom-select-arrow">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="alc-custom-select-dropdown" role="listbox" aria-multiselectable="true" hidden>
+            <div class="alc-custom-select-options">
+              <div class="alc-custom-select-option" role="option" data-value="images">
+                <div class="alc-option-checkbox">
+                  <input type="checkbox" id="opt-images" class="alc-option-check">
+                  <label for="opt-images">Multiple Images (up to 30)</label>
+                </div>
+              </div>
+              <div class="alc-custom-select-option" role="option" data-value="templates">
+                <div class="alc-option-checkbox">
+                  <input type="checkbox" id="opt-templates" class="alc-option-check">
+                  <label for="opt-templates">Listing Templates</label>
+                </div>
+              </div>
+              <div class="alc-custom-select-option" role="option" data-value="ai">
+                <div class="alc-option-checkbox">
+                  <input type="checkbox" id="opt-ai" class="alc-option-check">
+                  <label for="opt-ai">AI Description Generator</label>
+                </div>
+              </div>
+              <div class="alc-custom-select-option" role="option" data-value="bulk">
+                <div class="alc-option-checkbox">
+                  <input type="checkbox" id="opt-bulk" class="alc-option-check">
+                  <label for="opt-bulk">Bulk Operations</label>
+                </div>
+              </div>
+              <div class="alc-custom-select-option" role="option" data-value="analytics">
+                <div class="alc-option-checkbox">
+                  <input type="checkbox" id="opt-analytics" class="alc-option-check">
+                  <label for="opt-analytics">Advanced Analytics</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="features-select" name="features" value="">
+        </div>
+        <span class="alc-form-helper">Select multiple features to include</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+
+  .alc-demo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Form Group */
+  .alc-form-group {
+    margin-bottom: var(--space-4);
+  }
+  
+  .alc-form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-800);
+  }
+  
+  .alc-form-helper {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-600);
+    margin-top: var(--space-1);
+  }
+  
+  /* Basic Select */
+  .alc-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .alc-select {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    padding-right: var(--space-8);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    color: var(--color-neutral-900);
+    background-color: white;
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--border-radius-md);
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+  }
+  
+  .alc-select:focus {
+    outline: none;
+    border-color: var(--color-green-500);
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+  
+  .alc-select:disabled {
+    background-color: var(--color-neutral-100);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .alc-select-arrow {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--color-neutral-500);
+    transition: transform var(--transition-fast);
+  }
+  
+  .alc-select:focus + .alc-select-arrow {
+    color: var(--color-green-600);
+  }
+  
+  /* Select Sizes */
+  .alc-select-sm {
+    padding: var(--space-1) var(--space-2);
+    padding-right: var(--space-7);
+    font-size: var(--font-size-xs);
+    height: calc(var(--space-6) + var(--space-2));
+  }
+  
+  .alc-select {
+    height: calc(var(--space-6) + var(--space-4));
+  }
+  
+  .alc-select-lg {
+    padding: var(--space-3) var(--space-4);
+    padding-right: var(--space-9);
+    font-size: var(--font-size-md);
+    height: calc(var(--space-6) + var(--space-6));
+  }
+  
+  /* Custom Enhanced Select */
+  .alc-custom-select {
+    position: relative;
+    width: 100%;
+  }
+  
+  .alc-custom-select-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--border-radius-md);
+    background-color: white;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-height: calc(var(--space-6) + var(--space-4));
+  }
+  
+  .alc-custom-select-header:focus {
+    outline: none;
+    border-color: var(--color-green-500);
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+  
+  .alc-custom-select-value {
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-sm);
+  }
+  
+  .alc-custom-select-header[aria-expanded="true"] .alc-custom-select-arrow {
+    transform: rotate(180deg);
+  }
+  
+  .alc-custom-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: var(--space-1);
+    background-color: white;
+    border: 1px solid var(--color-neutral-300);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  
+  .alc-custom-select-search {
+    padding: var(--space-2);
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+  
+  .alc-custom-select-search .alc-form-input {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-sm);
+  }
+  
+  .alc-custom-select-options {
+    padding: var(--space-1) 0;
+  }
+  
+  .alc-custom-select-option {
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-800);
+    transition: background-color var(--transition-fast);
+  }
+  
+  .alc-custom-select-option:hover,
+  .alc-custom-select-option:focus {
+    background-color: var(--color-green-50);
+  }
+  
+  .alc-custom-select-option[aria-selected="true"] {
+    background-color: var(--color-green-100);
+    color: var(--color-green-900);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  /* Multi-select */
+  .alc-selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .alc-tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--color-green-100);
+    color: var(--color-green-800);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    max-width: 100%;
+  }
+  
+  .alc-tag-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .alc-tag-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--space-1);
+    cursor: pointer;
+    color: var(--color-green-600);
+  }
+  
+  .alc-tag-remove:hover {
+    color: var(--color-red-600);
+  }
+  
+  .alc-multi-select .alc-custom-select-header {
+    min-height: calc(var(--space-6) + var(--space-4));
+    height: auto;
+  }
+  
+  .alc-option-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+  }
+  
+  .alc-option-check {
+    flex-shrink: 0;
+    margin: 0;
+  }
+  
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-form-label {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-form-helper {
+      color: var(--color-neutral-400);
+    }
+    
+    .alc-select {
+      color: var(--color-neutral-200);
+      background-color: var(--color-neutral-800);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-select:disabled {
+      background-color: var(--color-neutral-700);
+    }
+    
+    .alc-custom-select-header {
+      background-color: var(--color-neutral-800);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-custom-select-dropdown {
+      background-color: var(--color-neutral-800);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-custom-select-search {
+      border-color: var(--color-neutral-700);
+    }
+    
+    .alc-custom-select-option {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-custom-select-option:hover,
+    .alc-custom-select-option:focus {
+      background-color: var(--color-neutral-700);
+    }
+    
+    .alc-custom-select-option[aria-selected="true"] {
+      background-color: var(--color-green-900);
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-tag {
+      background-color: var(--color-green-900);
+      color: var(--color-neutral-200);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Custom Enhanced Select Implementation
+    const customSelects = document.querySelectorAll('.alc-custom-select');
+    
+    customSelects.forEach(select => {
+      const header = select.querySelector('.alc-custom-select-header');
+      const valueDisplay = select.querySelector('.alc-custom-select-value');
+      const dropdown = select.querySelector('.alc-custom-select-dropdown');
+      const options = select.querySelectorAll('.alc-custom-select-option');
+      const hiddenInput = select.querySelector('input[type="hidden"]');
+      const searchInput = select.querySelector('.alc-custom-select-search input');
+      const isMulti = select.classList.contains('alc-multi-select');
+      const selectedTags = select.querySelector('.alc-selected-tags');
+      
+      // Toggle dropdown
+      header.addEventListener('click', () => {
+        const expanded = header.getAttribute('aria-expanded') === 'true';
+        header.setAttribute('aria-expanded', !expanded);
+        dropdown.hidden = expanded;
+        
+        if (!expanded && searchInput) {
+          setTimeout(() => searchInput.focus(), 100);
+        }
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!select.contains(e.target) && !dropdown.hidden) {
+          header.setAttribute('aria-expanded', 'false');
+          dropdown.hidden = true;
+        }
+      });
+      
+      // Handle option selection
+      options.forEach(option => {
+        option.addEventListener('click', () => {
+          const value = option.dataset.value;
+          const text = option.textContent.trim();
+          
+          if (isMulti) {
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            
+            // Update the display and hidden input
+            updateMultiSelectDisplay();
+          } else {
+            // Single select
+            options.forEach(opt => opt.setAttribute('aria-selected', 'false'));
+            option.setAttribute('aria-selected', 'true');
+            valueDisplay.textContent = text;
+            hiddenInput.value = value;
+            
+            // Close dropdown after selection
+            header.setAttribute('aria-expanded', 'false');
+            dropdown.hidden = true;
+          }
+        });
+      });
+      
+      // Keyboard navigation
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        } else if (e.key === 'Escape' && !dropdown.hidden) {
+          header.setAttribute('aria-expanded', 'false');
+          dropdown.hidden = true;
+          header.focus();
+        }
+      });
+      
+      // Search functionality
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase();
+          
+          options.forEach(option => {
+            const text = option.textContent.toLowerCase();
+            if (text.includes(query)) {
+              option.style.display = '';
+            } else {
+              option.style.display = 'none';
+            }
+          });
+        });
+        
+        // Prevent dropdown close when clicking in search
+        searchInput.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      }
+      
+      // For multi-select, update display and hidden input
+      function updateMultiSelectDisplay() {
+        if (!isMulti) return;
+        
+        const checkboxes = select.querySelectorAll('.alc-option-check');
+        const selectedValues = [];
+        const selectedTexts = [];
+        
+        checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            const option = checkbox.closest('.alc-custom-select-option');
+            selectedValues.push(option.dataset.value);
+            selectedTexts.push(checkbox.nextElementSibling.textContent.trim());
+          }
+        });
+        
+        // Update hidden input
+        hiddenInput.value = selectedValues.join(',');
+        
+        // Update display
+        selectedTags.innerHTML = '';
+        
+        if (selectedTexts.length === 0) {
+          const placeholder = document.createElement('span');
+          placeholder.className = 'alc-custom-select-value';
+          placeholder.textContent = 'Select features';
+          selectedTags.appendChild(placeholder);
+        } else {
+          selectedTexts.forEach((text, index) => {
+            const tag = document.createElement('span');
+            tag.className = 'alc-tag';
+            
+            const tagText = document.createElement('span');
+            tagText.className = 'alc-tag-text';
+            tagText.textContent = text;
+            
+            const removeBtn = document.createElement('span');
+            removeBtn.className = 'alc-tag-remove';
+            removeBtn.innerHTML = `
+              <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            `;
+            
+            // Remove tag when clicking X
+            removeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const value = selectedValues[index];
+              const optionToUncheck = Array.from(options).find(opt => opt.dataset.value === value);
+              if (optionToUncheck) {
+                const checkbox = optionToUncheck.querySelector('input[type="checkbox"]');
+                checkbox.checked = false;
+                updateMultiSelectDisplay();
+              }
+            });
+            
+            tag.appendChild(tagText);
+            tag.appendChild(removeBtn);
+            selectedTags.appendChild(tag);
+          });
+        }
+      }
+    });
+  });
+</script>

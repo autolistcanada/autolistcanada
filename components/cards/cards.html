@@ -1,0 +1,673 @@
+<!-- 
+  AutoList Canada - Card Components
+  
+  Features:
+  - Standard, interactive, and featured card variants
+  - Product listing cards with image support
+  - Statistics/dashboard cards
+  - Alert/notification cards
+  - Accessibility features (semantic HTML, keyboard navigation)
+  - Micro-animations for hover/active states
+  - Support for dark mode
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Card Components</h2>
+  
+  <!-- Standard Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Standard Card</h3>
+    <div class="alc-component-demo">
+      <div class="alc-card">
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Card Title</h4>
+          <p class="alc-card-text">This is a standard card with basic styling. It can contain any content and adapts to different screen sizes.</p>
+        </div>
+        <div class="alc-card-footer">
+          <button class="alc-btn alc-btn-tertiary alc-btn-sm">Read More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Interactive Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Interactive Card</h3>
+    <div class="alc-component-demo">
+      <a href="#" class="alc-card alc-card-interactive">
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Interactive Card</h4>
+          <p class="alc-card-text">This entire card is clickable with hover effects. It's perfect for navigation or selection interfaces.</p>
+        </div>
+        <div class="alc-card-footer">
+          <span class="alc-link-text">View Details</span>
+          <svg class="alc-link-arrow" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </section>
+  
+  <!-- Featured Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Featured Card</h3>
+    <div class="alc-component-demo">
+      <div class="alc-card alc-card-featured">
+        <div class="alc-card-overlay">
+          <span class="alc-card-badge">Featured</span>
+        </div>
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Featured Item</h4>
+          <p class="alc-card-text">This card stands out with a gradient border and featured badge, ideal for highlighting important content.</p>
+        </div>
+        <div class="alc-card-footer">
+          <button class="alc-btn alc-btn-primary alc-btn-sm">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Product Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Product Card</h3>
+    <div class="alc-component-demo">
+      <div class="alc-card alc-card-product">
+        <div class="alc-card-image">
+          <img src="https://via.placeholder.com/300x200" alt="Product example" />
+          <span class="alc-card-status alc-status-active">Active</span>
+        </div>
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Vintage Camera Lens</h4>
+          <p class="alc-card-meta">
+            <span class="alc-card-price">$149.99 CAD</span>
+            <span class="alc-card-platform">eBay</span>
+          </p>
+          <p class="alc-card-text">Professional 50mm lens with leather case and original packaging.</p>
+        </div>
+        <div class="alc-card-footer alc-card-actions">
+          <button class="alc-btn alc-btn-secondary alc-btn-sm">Edit</button>
+          <button class="alc-btn alc-btn-primary alc-btn-sm">Cross-list</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Stats Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Statistics Card</h3>
+    <div class="alc-component-demo alc-demo-grid">
+      <div class="alc-card alc-card-stat">
+        <div class="alc-card-body">
+          <div class="alc-stat-icon alc-stat-green">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <path d="M12 20V10"></path>
+              <path d="M18 20V4"></path>
+              <path d="M6 20v-4"></path>
+            </svg>
+          </div>
+          <div class="alc-stat-content">
+            <h4 class="alc-stat-value">102</h4>
+            <p class="alc-stat-label">Total Listings</p>
+          </div>
+        </div>
+        <div class="alc-stat-trend alc-trend-up">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+          <span>12% increase</span>
+        </div>
+      </div>
+      
+      <div class="alc-card alc-card-stat">
+        <div class="alc-card-body">
+          <div class="alc-stat-icon alc-stat-orange">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="alc-stat-content">
+            <h4 class="alc-stat-value">4.2h</h4>
+            <p class="alc-stat-label">Avg. Time Saved</p>
+          </div>
+        </div>
+        <div class="alc-stat-trend alc-trend-up">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+            <polyline points="17 6 23 6 23 12"></polyline>
+          </svg>
+          <span>8% increase</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Alert/Notification Card -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Alert Cards</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <div class="alc-card alc-card-alert alc-alert-info">
+        <div class="alc-alert-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </div>
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Information</h4>
+          <p class="alc-card-text">New feature added! You can now cross-list to 5 new marketplaces.</p>
+        </div>
+        <button class="alc-alert-close" aria-label="Close alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="alc-card alc-card-alert alc-alert-success">
+        <div class="alc-alert-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Success</h4>
+          <p class="alc-card-text">Your listing has been successfully cross-posted to all platforms.</p>
+        </div>
+        <button class="alc-alert-close" aria-label="Close alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="alc-card alc-card-alert alc-alert-warning">
+        <div class="alc-alert-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="alc-card-body">
+          <h4 class="alc-card-title">Warning</h4>
+          <p class="alc-card-text">Your subscription will expire in 3 days. Please renew to continue using all features.</p>
+        </div>
+        <button class="alc-alert-close" aria-label="Close alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+
+  .alc-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .alc-demo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Card Base Styles */
+  .alc-card {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    position: relative;
+    width: 100%;
+  }
+  
+  .alc-card-body {
+    padding: var(--space-4);
+  }
+  
+  .alc-card-footer {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-neutral-100);
+    display: flex;
+    align-items: center;
+  }
+  
+  .alc-card-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-900);
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+  }
+  
+  .alc-card-text {
+    color: var(--color-neutral-700);
+    font-size: var(--font-size-sm);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Interactive Card */
+  .alc-card-interactive {
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+  }
+  
+  .alc-card-interactive:hover,
+  .alc-card-interactive:focus {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .alc-card-interactive:active {
+    transform: translateY(0);
+  }
+
+  .alc-card-interactive:focus {
+    outline: none;
+  }
+
+  .alc-card-interactive:focus-visible {
+    outline: 3px solid var(--color-green-200);
+    outline-offset: 2px;
+  }
+  
+  .alc-link-text {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-green-600);
+  }
+  
+  .alc-link-arrow {
+    margin-left: var(--space-2);
+    transition: transform var(--transition-fast);
+  }
+  
+  .alc-card-interactive:hover .alc-link-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Featured Card */
+  .alc-card-featured {
+    border: 1px solid transparent;
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(135deg, var(--color-green-500), var(--color-orange-500));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+  
+  .alc-card-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: var(--space-2);
+    z-index: 1;
+  }
+  
+  .alc-card-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: white;
+    background: linear-gradient(to right, var(--color-green-600), var(--color-orange-500));
+    border-radius: var(--border-radius-md);
+  }
+
+  /* Product Card */
+  .alc-card-product .alc-card-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .alc-card-product .alc-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .alc-card-product:hover .alc-card-image img {
+    transform: scale(1.05);
+  }
+  
+  .alc-card-status {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: 4px var(--space-2);
+    border-radius: var(--border-radius-md);
+    z-index: 1;
+  }
+  
+  .alc-status-active {
+    background-color: var(--color-green-600);
+    color: white;
+  }
+  
+  .alc-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+  
+  .alc-card-price {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-900);
+  }
+  
+  .alc-card-platform {
+    padding: 2px var(--space-2);
+    background-color: var(--color-neutral-100);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+  }
+  
+  .alc-card-actions {
+    justify-content: space-between;
+  }
+
+  /* Stats Card */
+  .alc-card-stat {
+    padding: var(--space-4);
+  }
+  
+  .alc-card-stat .alc-card-body {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  
+  .alc-stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-md);
+  }
+  
+  .alc-stat-green {
+    background-color: var(--color-green-100);
+    color: var(--color-green-700);
+  }
+  
+  .alc-stat-orange {
+    background-color: var(--color-orange-100);
+    color: var(--color-orange-700);
+  }
+  
+  .alc-stat-content {
+    flex: 1;
+  }
+  
+  .alc-stat-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    line-height: 1.2;
+    color: var(--color-neutral-900);
+  }
+  
+  .alc-stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-600);
+    margin: var(--space-1) 0 0;
+  }
+  
+  .alc-stat-trend {
+    margin-top: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--font-size-xs);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-neutral-100);
+  }
+  
+  .alc-trend-up {
+    color: var(--color-green-600);
+  }
+  
+  .alc-trend-down {
+    color: var(--color-red-500);
+  }
+
+  /* Alert Card */
+  .alc-card-alert {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-left: 4px solid;
+  }
+  
+  .alc-alert-info {
+    border-left-color: var(--color-blue-500);
+    background-color: var(--color-blue-50);
+  }
+  
+  .alc-alert-info .alc-alert-icon {
+    color: var(--color-blue-500);
+  }
+  
+  .alc-alert-success {
+    border-left-color: var(--color-green-500);
+    background-color: var(--color-green-50);
+  }
+  
+  .alc-alert-success .alc-alert-icon {
+    color: var(--color-green-500);
+  }
+  
+  .alc-alert-warning {
+    border-left-color: var(--color-yellow-500);
+    background-color: var(--color-yellow-50);
+  }
+  
+  .alc-alert-warning .alc-alert-icon {
+    color: var(--color-yellow-500);
+  }
+  
+  .alc-card-alert .alc-card-body {
+    flex: 1;
+    padding: var(--space-1) var(--space-3);
+  }
+  
+  .alc-alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .alc-alert-close {
+    background: none;
+    border: none;
+    padding: var(--space-1);
+    cursor: pointer;
+    color: var(--color-neutral-600);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+  
+  .alc-alert-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-neutral-900);
+  }
+
+  /* Dark mode overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-card {
+      background-color: var(--color-neutral-800);
+    }
+    
+    .alc-card-title {
+      color: var(--color-neutral-100);
+    }
+    
+    .alc-card-text {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-card-footer {
+      border-top-color: var(--color-neutral-700);
+    }
+    
+    .alc-card-featured {
+      background-image: linear-gradient(var(--color-neutral-800), var(--color-neutral-800)), 
+                        linear-gradient(135deg, var(--color-green-500), var(--color-orange-500));
+    }
+    
+    .alc-card-platform {
+      background-color: var(--color-neutral-700);
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-card-price {
+      color: var(--color-neutral-100);
+    }
+    
+    .alc-stat-value {
+      color: var(--color-neutral-100);
+    }
+    
+    .alc-stat-green {
+      background-color: rgba(var(--color-green-rgb-700), 0.2);
+      color: var(--color-green-400);
+    }
+    
+    .alc-stat-orange {
+      background-color: rgba(var(--color-orange-rgb-700), 0.2);
+      color: var(--color-orange-400);
+    }
+    
+    .alc-stat-trend {
+      border-top-color: var(--color-neutral-700);
+    }
+    
+    .alc-alert-info {
+      background-color: rgba(var(--color-blue-rgb-700), 0.2);
+    }
+    
+    .alc-alert-success {
+      background-color: rgba(var(--color-green-rgb-700), 0.2);
+    }
+    
+    .alc-alert-warning {
+      background-color: rgba(var(--color-yellow-rgb-700), 0.2);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Handle alert close buttons
+    const alertCloseButtons = document.querySelectorAll('.alc-alert-close');
+    
+    alertCloseButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const alert = button.closest('.alc-card-alert');
+        
+        // Add fade out animation
+        alert.style.transition = 'opacity 0.3s, height 0.3s, margin 0.3s, padding 0.3s';
+        alert.style.opacity = '0';
+        setTimeout(() => {
+          alert.style.height = '0';
+          alert.style.margin = '0';
+          alert.style.padding = '0';
+          alert.style.overflow = 'hidden';
+          
+          // Remove from DOM after animation completes
+          setTimeout(() => {
+            alert.remove();
+          }, 300);
+        }, 300);
+      });
+    });
+    
+    // Simulate stats animation for demo
+    const statValues = document.querySelectorAll('.alc-stat-value');
+    statValues.forEach(stat => {
+      const finalValue = stat.textContent;
+      stat.textContent = '0';
+      
+      let currentValue = 0;
+      const finalValueNum = parseFloat(finalValue);
+      const duration = 1000; // 1 second animation
+      const interval = 16; // ~60fps
+      const steps = duration / interval;
+      const increment = finalValueNum / steps;
+      const isTime = finalValue.includes('h');
+      
+      const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= finalValueNum) {
+          currentValue = finalValueNum;
+          clearInterval(timer);
+        }
+        
+        if (isTime) {
+          stat.textContent = currentValue.toFixed(1) + 'h';
+        } else {
+          stat.textContent = Math.round(currentValue);
+        }
+      }, interval);
+    });
+  });
+</script>

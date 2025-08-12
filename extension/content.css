@@ -1,0 +1,28 @@
+.autolist-btn {
+  background-color: #164734;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 12px 0;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.autolist-btn:hover {
+  background-color: #0d3021;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.autolist-btn.success {
+  background-color: #27ae60;
+}
+
+.autolist-btn.error {
+  background-color: #c0392b;
+}

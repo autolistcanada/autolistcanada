@@ -1,0 +1,507 @@
+<!-- 
+  AutoList Canada - Sidebar Component
+  
+  Features:
+  - Responsive design with collapsible sidebar
+  - Consistent branding with AutoList logo
+  - Active page highlighting
+  - Canadian badges/trust indicators
+  - Accessibility features (aria attributes, keyboard navigation)
+-->
+
+<aside class="alc-sidebar" id="alc-sidebar">
+  <div class="alc-sidebar-inner">
+    <!-- Sidebar Header with Logo -->
+    <div class="alc-sidebar-header">
+      <a href="index.html" class="alc-sidebar-logo">
+        <img src="/assets/autolist-title.png" alt="AutoList Canada" width="140">
+      </a>
+      <button class="alc-sidebar-toggle" id="alc-sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="alc-sidebar-nav" aria-label="Sidebar Navigation">
+      <ul class="alc-sidebar-nav-list">
+        <li class="alc-sidebar-nav-item">
+          <a href="dashboard.html" class="alc-sidebar-nav-link" data-page="dashboard">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="alc-sidebar-nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="listings.html" class="alc-sidebar-nav-link" data-page="listings">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span class="alc-sidebar-nav-text">Listings</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="templates.html" class="alc-sidebar-nav-link" data-page="templates">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <span class="alc-sidebar-nav-text">Templates</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="import.html" class="alc-sidebar-nav-link" data-page="import">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span class="alc-sidebar-nav-text">Import</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="analytics.html" class="alc-sidebar-nav-link" data-page="analytics">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span class="alc-sidebar-nav-text">Analytics</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="ai-tools.html" class="alc-sidebar-nav-link" data-page="ai-tools">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            <span class="alc-sidebar-nav-text">AI Tools</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="how-it-works.html" class="alc-sidebar-nav-link" data-page="how-it-works">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="10" r="1"></circle>
+              <path d="M12 14h0v4h0"></path>
+            </svg>
+            <span class="alc-sidebar-nav-text">How It Works</span>
+          </a>
+        </li>
+        <li class="alc-sidebar-nav-item">
+          <a href="faq.html" class="alc-sidebar-nav-link" data-page="faq">
+            <svg class="alc-sidebar-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none">
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span class="alc-sidebar-nav-text">FAQ</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="alc-sidebar-footer">
+      <!-- Language Toggle -->
+      <div class="alc-sidebar-lang">
+        <button class="alc-sidebar-lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="alc-sidebar-lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+
+      <!-- Badges -->
+      <div class="alc-sidebar-badges">
+        <img src="/assets/canadian-owned-badge.png" alt="Canadian Owned" class="alc-sidebar-badge" width="32" height="32">
+        <img src="/assets/ai-powered-tools-badge.png" alt="AI Powered Tools" class="alc-sidebar-badge" width="32" height="32">
+        <img src="/assets/privacy-first-badge.png" alt="Privacy First" class="alc-sidebar-badge" width="32" height="32">
+      </div>
+
+      <!-- Terms & Privacy Links -->
+      <div class="alc-sidebar-links">
+        <a href="terms.html" class="alc-sidebar-link">Terms</a>
+        <span class="alc-sidebar-link-divider">•</span>
+        <a href="privacy.html" class="alc-sidebar-link">Privacy</a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .alc-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background-image: url('../styles/svg/geo-pattern.svg'), linear-gradient(135deg, var(--color-green-700), var(--color-green-600));
+    background-blend-mode: overlay;
+    color: white;
+    z-index: var(--z-sidebar);
+    transition: transform 0.3s ease, width 0.3s ease;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+  }
+
+  .alc-sidebar.collapsed {
+    width: 72px;
+  }
+
+  .alc-sidebar.mobile-hidden {
+    transform: translateX(-100%);
+  }
+
+  .alc-sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--space-4);
+  }
+
+  .alc-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-6);
+    padding-top: var(--space-2);
+  }
+
+  .alc-sidebar-logo {
+    display: block;
+    transition: opacity 0.2s;
+  }
+
+  .alc-sidebar-logo img {
+    height: auto;
+    max-width: 140px;
+    transition: transform 0.3s;
+  }
+
+  .collapsed .alc-sidebar-logo img {
+    transform: scale(0.7) translateX(-20px);
+  }
+
+  .alc-sidebar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: var(--space-1);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+
+  .alc-sidebar-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .collapsed .alc-sidebar-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  .alc-sidebar-nav {
+    flex: 1;
+  }
+
+  .alc-sidebar-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .alc-sidebar-nav-item {
+    margin-bottom: var(--space-1);
+  }
+
+  .alc-sidebar-nav-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-3);
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    border-radius: var(--border-radius-md);
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .alc-sidebar-nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(2px);
+  }
+
+  .alc-sidebar-nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .alc-sidebar-icon {
+    margin-right: var(--space-3);
+    min-width: 20px;
+    stroke-width: 1.5;
+  }
+
+  .collapsed .alc-sidebar-icon {
+    margin-right: 0;
+  }
+
+  .collapsed .alc-sidebar-nav-text {
+    display: none;
+  }
+
+  .alc-sidebar-footer {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .alc-sidebar-lang {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .alc-sidebar-lang-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    border-radius: var(--border-radius-sm);
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .alc-sidebar-lang-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .alc-sidebar-lang-btn.active {
+    background-color: white;
+    color: var(--color-green-700);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .collapsed .alc-sidebar-lang-btn {
+    padding: 4px;
+  }
+
+  .alc-sidebar-badges {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .alc-sidebar-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius-full);
+    background-color: white;
+    padding: 2px;
+    transition: transform 0.2s;
+  }
+
+  .alc-sidebar-badge:hover {
+    transform: scale(1.1);
+  }
+
+  .alc-sidebar-links {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--font-size-xs);
+    justify-content: center;
+  }
+
+  .collapsed .alc-sidebar-links {
+    display: none;
+  }
+
+  .alc-sidebar-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+  }
+
+  .alc-sidebar-link:hover {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .alc-sidebar-link-divider {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Mobile styles */
+  @media (max-width: 992px) {
+    .alc-sidebar {
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .alc-sidebar.mobile-hidden {
+      transform: translateX(-100%);
+    }
+
+    .alc-sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: var(--z-header);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .alc-sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .alc-content-wrapper {
+      margin-left: 0 !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('alc-sidebar');
+    const sidebarToggle = document.getElementById('alc-sidebar-toggle');
+    
+    // Create overlay for mobile
+    const overlay = document.createElement('div');
+    overlay.className = 'alc-sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    // Function to handle sidebar toggle
+    const toggleSidebar = () => {
+      const isExpanded = sidebarToggle.getAttribute('aria-expanded') === 'true';
+      sidebarToggle.setAttribute('aria-expanded', !isExpanded);
+      sidebar.classList.toggle('collapsed');
+      
+      // Save preference to localStorage
+      localStorage.setItem('alc-sidebar-collapsed', sidebar.classList.contains('collapsed'));
+    };
+
+    // Toggle on button click
+    sidebarToggle?.addEventListener('click', toggleSidebar);
+
+    // Mobile toggle
+    const mobileToggleBtn = document.createElement('button');
+    mobileToggleBtn.className = 'alc-sidebar-mobile-toggle';
+    mobileToggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    `;
+    mobileToggleBtn.setAttribute('aria-label', 'Toggle sidebar');
+    
+    // If we're on mobile, append the toggle button to the body
+    if (window.innerWidth < 992) {
+      document.body.appendChild(mobileToggleBtn);
+      sidebar.classList.add('mobile-hidden');
+    }
+
+    mobileToggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('mobile-hidden');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('mobile-hidden');
+      overlay.classList.remove('active');
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 992) {
+        if (!document.querySelector('.alc-sidebar-mobile-toggle')) {
+          document.body.appendChild(mobileToggleBtn);
+        }
+      } else {
+        if (document.querySelector('.alc-sidebar-mobile-toggle')) {
+          document.body.removeChild(mobileToggleBtn);
+        }
+        sidebar.classList.remove('mobile-hidden');
+        overlay.classList.remove('active');
+      }
+    });
+
+    // Set active link based on current page
+    const currentPage = window.location.pathname.split('/').pop().split('.')[0];
+    const navLinks = document.querySelectorAll('.alc-sidebar-nav-link');
+    
+    navLinks.forEach(link => {
+      const page = link.getAttribute('data-page');
+      if (page === currentPage) {
+        link.classList.add('active');
+      }
+    });
+
+    // Language toggle
+    const langBtns = document.querySelectorAll('.alc-sidebar-lang-btn');
+    
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        
+        // Remove active class from all buttons
+        langBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        
+        // Set language in local storage for persistence
+        localStorage.setItem('alc-language', lang);
+        
+        // Trigger a language change event
+        const event = new CustomEvent('alc-language-change', { detail: { language: lang } });
+        document.dispatchEvent(event);
+      });
+    });
+
+    // Set initial language based on localStorage or default to English
+    const savedLang = localStorage.getItem('alc-language') || 'en';
+    const langBtn = document.querySelector(`.alc-sidebar-lang-btn[data-lang="${savedLang}"]`);
+    if (langBtn) {
+      langBtn.click();
+    }
+    
+    // Restore sidebar state from localStorage
+    const isCollapsed = localStorage.getItem('alc-sidebar-collapsed') === 'true';
+    if (isCollapsed) {
+      sidebar.classList.add('collapsed');
+      sidebarToggle?.setAttribute('aria-expanded', 'false');
+    }
+    
+    // Adjust content wrapper margin
+    const contentWrapper = document.querySelector('.alc-content-wrapper');
+    if (contentWrapper) {
+      contentWrapper.style.marginLeft = isCollapsed ? '72px' : '260px';
+      
+      // Update margin when sidebar state changes
+      sidebar.addEventListener('transitionend', () => {
+        if (sidebar.classList.contains('collapsed')) {
+          contentWrapper.style.marginLeft = '72px';
+        } else {
+          contentWrapper.style.marginLeft = '260px';
+        }
+      });
+    }
+  });
+</script>

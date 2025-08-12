@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoList Canada</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="extension-container">
+    <header>
+      <div class="logo">
+        <img src="icons/logo.png" alt="AutoList Canada" data-i18n-alt="autolist_canada">
+        <h1>AutoList <span>Canada</span></h1>
+      </div>
+      <button id="languageToggle" class="language-toggle" title="Toggle Language" data-i18n-title="toggle_language">
+        <span id="languageDisplay">EN</span>
+      </button>
+    </header>
+    
+    <div class="status-card">
+      <div class="status-indicator connected" id="connectionStatus"></div>
+      <p class="status-text" data-i18n="connection_status">Connected</p>
+    </div>
+
+    <div class="action-buttons">
+      <button id="captureBtn" class="primary-btn" data-i18n="capture_listing">Capture Listing</button>
+      <button id="viewListingsBtn" class="secondary-btn" data-i18n="view_listings">View Listings</button>
+    </div>
+
+    <div class="marketplace-section">
+      <h2 data-i18n="cross_list_to">Cross-list to</h2>
+      <div class="marketplace-grid">
+        <div class="marketplace-item">
+          <input type="checkbox" id="ebay" checked>
+          <label for="ebay">eBay.ca</label>
+        </div>
+        <div class="marketplace-item">
+          <input type="checkbox" id="amazon">
+          <label for="amazon">Amazon.ca</label>
+        </div>
+        <div class="marketplace-item">
+          <input type="checkbox" id="etsy">
+          <label for="etsy">Etsy</label>
+        </div>
+        <div class="marketplace-item">
+          <input type="checkbox" id="kijiji">
+          <label for="kijiji">Kijiji</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-activity">
+      <h2 data-i18n="recent_activity">Recent Activity</h2>
+      <ul id="activityList">
+        <!-- Activity items will be populated dynamically -->
+        <li class="activity-item empty-state" data-i18n="no_recent_activity">No recent activity</li>
+      </ul>
+    </div>
+
+    <footer>
+      <a href="https://autolistcanada.com/dashboard.html" target="_blank" data-i18n="go_to_dashboard">Go to Dashboard</a>
+      <a href="https://autolistcanada.com/settings.html" id="settingsLink" target="_blank" data-i18n="settings">Settings</a>
+    </footer>
+  </div>
+  
+  <script src="i18n.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

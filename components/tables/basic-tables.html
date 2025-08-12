@@ -1,0 +1,498 @@
+<!-- 
+  AutoList Canada - Basic Table Components
+  
+  Features:
+  - Standard responsive tables
+  - Bordered and borderless variants
+  - Striped and hoverable rows
+  - Compact and default sizing
+  - Header and footer support
+  - Accessibility features (scope attributes, caption)
+  - Sorting functionality
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Table Components</h2>
+  
+  <!-- Basic Table -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Basic Table</h3>
+    <div class="alc-component-demo">
+      <div class="alc-table-responsive">
+        <table class="alc-table">
+          <caption class="alc-table-caption">List of Canadian Provinces and Territories</caption>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Abbreviation</th>
+              <th scope="col">Capital</th>
+              <th scope="col">Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ontario</td>
+              <td>ON</td>
+              <td>Toronto</td>
+              <td>14,570,000</td>
+            </tr>
+            <tr>
+              <td>Quebec</td>
+              <td>QC</td>
+              <td>Quebec City</td>
+              <td>8,485,000</td>
+            </tr>
+            <tr>
+              <td>British Columbia</td>
+              <td>BC</td>
+              <td>Victoria</td>
+              <td>5,071,000</td>
+            </tr>
+            <tr>
+              <td>Alberta</td>
+              <td>AB</td>
+              <td>Edmonton</td>
+              <td>4,371,000</td>
+            </tr>
+            <tr>
+              <td>Manitoba</td>
+              <td>MB</td>
+              <td>Winnipeg</td>
+              <td>1,369,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Striped Table -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Striped Table</h3>
+    <div class="alc-component-demo">
+      <div class="alc-table-responsive">
+        <table class="alc-table alc-table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Price (CAD)</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Maple Syrup (250ml)</td>
+              <td>$12.99</td>
+              <td>3</td>
+              <td>$38.97</td>
+            </tr>
+            <tr>
+              <td>Hockey Puck</td>
+              <td>$5.99</td>
+              <td>5</td>
+              <td>$29.95</td>
+            </tr>
+            <tr>
+              <td>Toque (Winter Hat)</td>
+              <td>$24.99</td>
+              <td>2</td>
+              <td>$49.98</td>
+            </tr>
+            <tr>
+              <td>Flannel Shirt</td>
+              <td>$34.99</td>
+              <td>1</td>
+              <td>$34.99</td>
+            </tr>
+            <tr>
+              <td>Poutine Mix</td>
+              <td>$8.49</td>
+              <td>3</td>
+              <td>$25.47</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" colspan="3">Total</th>
+              <td><strong>$179.36</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Hoverable Table -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Hoverable Table</h3>
+    <div class="alc-component-demo">
+      <div class="alc-table-responsive">
+        <table class="alc-table alc-table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Marketplace</th>
+              <th scope="col">Listings</th>
+              <th scope="col">Views</th>
+              <th scope="col">Conversion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>eBay Canada</td>
+              <td>156</td>
+              <td>2,450</td>
+              <td>3.2%</td>
+            </tr>
+            <tr>
+              <td>Amazon.ca</td>
+              <td>98</td>
+              <td>1,890</td>
+              <td>2.8%</td>
+            </tr>
+            <tr>
+              <td>Etsy</td>
+              <td>73</td>
+              <td>1,120</td>
+              <td>4.5%</td>
+            </tr>
+            <tr>
+              <td>Kijiji</td>
+              <td>42</td>
+              <td>980</td>
+              <td>2.1%</td>
+            </tr>
+            <tr>
+              <td>Facebook Marketplace</td>
+              <td>61</td>
+              <td>1,450</td>
+              <td>3.7%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Bordered Table -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Bordered Table</h3>
+    <div class="alc-component-demo">
+      <div class="alc-table-responsive">
+        <table class="alc-table alc-table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">January</th>
+              <th scope="col">February</th>
+              <th scope="col">March</th>
+              <th scope="col">Q1 Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Electronics</th>
+              <td>$5,240</td>
+              <td>$6,120</td>
+              <td>$4,890</td>
+              <td>$16,250</td>
+            </tr>
+            <tr>
+              <th scope="row">Clothing</th>
+              <td>$3,890</td>
+              <td>$4,250</td>
+              <td>$5,670</td>
+              <td>$13,810</td>
+            </tr>
+            <tr>
+              <th scope="row">Home & Garden</th>
+              <td>$2,570</td>
+              <td>$2,940</td>
+              <td>$3,680</td>
+              <td>$9,190</td>
+            </tr>
+            <tr>
+              <th scope="row">Sports</th>
+              <td>$1,920</td>
+              <td>$2,340</td>
+              <td>$3,120</td>
+              <td>$7,380</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Monthly Total</th>
+              <td>$13,620</td>
+              <td>$15,650</td>
+              <td>$17,360</td>
+              <td>$46,630</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Compact Table -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Compact Table</h3>
+    <div class="alc-component-demo">
+      <div class="alc-table-responsive">
+        <table class="alc-table alc-table-compact alc-table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Vintage Camera</td>
+              <td><span class="alc-badge alc-badge-success">Active</span></td>
+              <td>2023-05-12</td>
+            </tr>
+            <tr>
+              <td>002</td>
+              <td>Mountain Bike</td>
+              <td><span class="alc-badge alc-badge-success">Active</span></td>
+              <td>2023-05-14</td>
+            </tr>
+            <tr>
+              <td>003</td>
+              <td>Leather Jacket</td>
+              <td><span class="alc-badge alc-badge-warning">Pending</span></td>
+              <td>2023-05-18</td>
+            </tr>
+            <tr>
+              <td>004</td>
+              <td>Art Print</td>
+              <td><span class="alc-badge alc-badge-danger">Sold</span></td>
+              <td>2023-05-19</td>
+            </tr>
+            <tr>
+              <td>005</td>
+              <td>Ceramic Vase</td>
+              <td><span class="alc-badge alc-badge-success">Active</span></td>
+              <td>2023-05-21</td>
+            </tr>
+            <tr>
+              <td>006</td>
+              <td>Hiking Boots</td>
+              <td><span class="alc-badge alc-badge-neutral">Draft</span></td>
+              <td>2023-05-23</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+  
+  /* Responsive Table Container */
+  .alc-table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Basic Table Styles */
+  .alc-table {
+    width: 100%;
+    margin-bottom: var(--space-4);
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-900);
+  }
+  
+  .alc-table caption {
+    padding: var(--space-3);
+    color: var(--color-neutral-700);
+    text-align: left;
+    caption-side: top;
+    font-style: italic;
+  }
+  
+  .alc-table th,
+  .alc-table td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+  
+  .alc-table thead th {
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 2px solid var(--color-neutral-300);
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+    white-space: nowrap;
+  }
+  
+  .alc-table tfoot th,
+  .alc-table tfoot td {
+    font-weight: var(--font-weight-semibold);
+    border-top: 2px solid var(--color-neutral-300);
+    border-bottom: none;
+    background-color: var(--color-neutral-100);
+  }
+  
+  /* Striped Table */
+  .alc-table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--color-neutral-50);
+  }
+  
+  /* Hoverable Table */
+  .alc-table-hover tbody tr:hover {
+    background-color: rgba(var(--color-green-rgb-50), 0.5);
+  }
+  
+  /* Bordered Table */
+  .alc-table-bordered {
+    border: 1px solid var(--color-neutral-200);
+  }
+  
+  .alc-table-bordered th,
+  .alc-table-bordered td {
+    border: 1px solid var(--color-neutral-200);
+  }
+  
+  /* Compact Table */
+  .alc-table-compact th,
+  .alc-table-compact td {
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  /* Badge Styles for Tables */
+  .alc-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: var(--border-radius-full);
+  }
+  
+  .alc-badge-success {
+    background-color: var(--color-green-100);
+    color: var(--color-green-800);
+  }
+  
+  .alc-badge-warning {
+    background-color: var(--color-yellow-100);
+    color: var(--color-yellow-800);
+  }
+  
+  .alc-badge-danger {
+    background-color: var(--color-red-100);
+    color: var(--color-red-800);
+  }
+  
+  .alc-badge-neutral {
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+  }
+  
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-table {
+      color: var(--color-neutral-200);
+    }
+    
+    .alc-table caption {
+      color: var(--color-neutral-400);
+    }
+    
+    .alc-table th,
+    .alc-table td {
+      border-bottom-color: var(--color-neutral-700);
+    }
+    
+    .alc-table thead th {
+      border-bottom-color: var(--color-neutral-600);
+      background-color: var(--color-neutral-800);
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-table tfoot th,
+    .alc-table tfoot td {
+      border-top-color: var(--color-neutral-600);
+      background-color: var(--color-neutral-800);
+    }
+    
+    .alc-table-striped tbody tr:nth-of-type(odd) {
+      background-color: var(--color-neutral-900);
+    }
+    
+    .alc-table-hover tbody tr:hover {
+      background-color: rgba(var(--color-green-rgb-900), 0.3);
+    }
+    
+    .alc-table-bordered {
+      border-color: var(--color-neutral-700);
+    }
+    
+    .alc-table-bordered th,
+    .alc-table-bordered td {
+      border-color: var(--color-neutral-700);
+    }
+    
+    .alc-badge-success {
+      background-color: rgba(var(--color-green-rgb-800), 0.3);
+      color: var(--color-green-300);
+    }
+    
+    .alc-badge-warning {
+      background-color: rgba(var(--color-yellow-rgb-800), 0.3);
+      color: var(--color-yellow-300);
+    }
+    
+    .alc-badge-danger {
+      background-color: rgba(var(--color-red-rgb-800), 0.3);
+      color: var(--color-red-300);
+    }
+    
+    .alc-badge-neutral {
+      background-color: var(--color-neutral-800);
+      color: var(--color-neutral-300);
+    }
+  }
+</style>

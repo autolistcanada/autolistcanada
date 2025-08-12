@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing Templates | AutoList Canada</title>
+  <link rel="stylesheet" href="./styles/theme.css">
+  <link rel="icon" href="/assets/autolist-title.png">
+  <script src="scripts/i18n.js" defer></script>
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* Template-specific styles */
+    .alc-template-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 2px solid transparent;
+    }
+    
+    .alc-template-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(var(--color-green-rgb-600), 0.15), 
+                  0 8px 10px -6px rgba(var(--color-green-rgb-600), 0.1);
+    }
+    
+    .alc-template-card.selected {
+      border-color: var(--color-green-600);
+      box-shadow: 0 0 0 4px rgba(var(--color-green-rgb-200), 0.5);
+    }
+    
+    .template-section-handle {
+      cursor: move;
+      touch-action: none;
+    }
+    
+    .template-section-dragging {
+      opacity: 0.5;
+      border: 2px dashed var(--color-green-500);
+      background-color: var(--color-green-50);
+    }
+    
+    /* Tags Input Styling */
+    .alc-tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 4px 8px;
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-neutral-200);
+      min-height: 40px;
+      align-items: center;
+    }
+    
+    .alc-tag {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--color-green-100);
+      color: var(--color-green-800);
+      border-radius: var(--border-radius-full);
+      padding: 2px 10px;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    .alc-tag-remove {
+      margin-left: 6px;
+      cursor: pointer;
+      font-weight: var(--font-weight-bold);
+    }
+    
+    .alc-tags-input {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      font-size: var(--font-size-sm);
+      min-width: 60px;
+      background: transparent;
+    }
+    
+    /* Preview Pane */
+    .template-preview {
+      border-left: 1px solid var(--color-neutral-200);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .alc-template-card.selected {
+        border-color: var(--color-green-500);
+        box-shadow: 0 0 0 4px rgba(var(--color-green-rgb-700), 0.5);
+      }
+      
+      .alc-tag {
+        background-color: var(--color-green-800);
+        color: var(--color-green-100);
+      }
+      
+      .template-preview {
+        border-left: 1px solid var(--color-neutral-700);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Import Header Component -->
+  <div id="header-placeholder"></div>
+  <!-- Language Toggle Button -->
+  <div class="fixed top-4 right-4 z-50">
+    <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
+  </div>
+
+  <div class="alc-container mx-auto py-6 px-4 md:px-6">
+    <div class="alc-page-header mb-8">
+      <h1 class="text-3xl font-bold mb-2" data-i18n="templates.title">Listing Templates</h1>
+      <p class="text-neutral-600 dark:text-neutral-400" data-i18n="templates.description">Create and manage reusable templates for your marketplace listings.</p>
+    </div>
+    
+    <div class="alc-content-wrapper flex flex-col lg:flex-row gap-8">
+      <!-- Templates List Column -->
+      <div class="lg:w-1/3">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold" data-i18n="templates.yourTemplates">Your Templates</h2>
+          <button class="alc-button alc-button-primary">
+            <i class="fas fa-plus mr-2"></i> <span data-i18n="templates.newTemplate">New Template</span>
+          </button>
+        </div>
+        
+        <!-- Template Cards -->
+        <div class="space-y-4">
+          <!-- Template Card 1 - Vintage Home Selected -->
+          <div class="alc-template-card selected bg-white dark:bg-neutral-800 rounded-lg p-5 shadow-md">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-lg mb-1" data-i18n="templates.vintageHomeGoods">Vintage Home Goods</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400"><span data-i18n="templates.listingsCount">7 listings using this template</span></p>
+              </div>
+              <div class="flex space-x-2">
+                <span class="alc-badge alc-badge-success">Default</span>
+              </div>
+            </div>
+            <div class="mt-4 space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Category:</span>
+                <span class="text-sm">Home & Garden</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Fields:</span>
+                <span class="text-sm">5 sections, 12 fields</span>
+              </div>
+            </div>
+            <div class="mt-4 flex space-x-2">
+              <button class="alc-button alc-button-outline-primary">Edit</button>
+              <button class="alc-button alc-button-outline-neutral">Duplicate</button>
+            </div>
+          </div>
+          
+          <!-- Template Card 2 - Handcrafted -->
+          <div class="alc-template-card bg-white dark:bg-neutral-800 rounded-lg p-5 shadow-md">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-lg mb-1">Handcrafted Items</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">5 listings using this template</p>
+              </div>
+            </div>
+            <div class="mt-4 space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Category:</span>
+                <span class="text-sm">Handcrafted</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Fields:</span>
+                <span class="text-sm">5 sections, 14 fields</span>
+              </div>
+            </div>
+            <div class="mt-4 flex space-x-2">
+              <button class="alc-button alc-button-outline-primary">Edit</button>
+              <button class="alc-button alc-button-outline-neutral">Duplicate</button>
+              <button class="alc-button alc-button-outline-neutral">Set Default</button>
+            </div>
+          </div>
+          
+          <!-- Template Card 3 - Vintage Camera -->
+          <div class="alc-template-card bg-white dark:bg-neutral-800 rounded-lg p-5 shadow-md">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-lg mb-1">Vintage Camera</h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-400">3 listings using this template</p>
+              </div>
+            </div>
+            <div class="mt-4 space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Category:</span>
+                <span class="text-sm">Electronics</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium">Fields:</span>
+                <span class="text-sm">5 sections, 10 fields</span>
+              </div>
+            </div>
+            <div class="mt-4 flex space-x-2">
+              <button class="alc-button alc-button-outline-primary">Edit</button>
+              <button class="alc-button alc-button-outline-neutral">Duplicate</button>
+              <button class="alc-button alc-button-outline-neutral">Set Default</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Template Editor Column -->
+      <div class="lg:w-2/3 bg-white dark:bg-neutral-800 rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold"><span data-i18n="templates.editTemplate">Edit Template</span>: <span data-i18n="templates.vintageHomeGoods">Vintage Home Goods</span></h2>
+          <button class="alc-button alc-button-success">
+            <i class="fas fa-save mr-2"></i> <span data-i18n="templates.saveChanges">Save Changes</span>
+          </button>
+        </div>
+        
+        <!-- Basic Template Info -->
+        <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="template-name" class="alc-label" data-i18n="templates.templateName">Template Name</label>
+            <input type="text" id="template-name" class="alc-input" value="Vintage Home Goods">
+          </div>
+          <div>
+            <label for="template-category" class="alc-label">Category</label>
+            <select id="template-category" class="alc-select">
+              <option value="home-garden" selected>Home & Garden</option>
+              <option value="electronics">Electronics</option>
+              <option value="handcrafted">Handcrafted</option>
+              <option value="clothing">Clothing & Accessories</option>
+              <option value="collectibles">Collectibles</option>
+              <option value="sporting">Sporting Goods</option>
+            </select>
+          </div>
+          <div>
+            <label class="alc-label">Make Default Template</label>
+            <div class="flex items-center mt-2">
+              <input type="checkbox" id="default-template" class="alc-checkbox" checked>
+              <label for="default-template" class="ml-2 cursor-pointer">Set as default template for this category</label>
+            </div>
+          </div>
+          <div>
+            <label class="alc-label">Tags</label>
+            <div class="alc-tags-container">
+              <span class="alc-tag">vintage<span class="alc-tag-remove">&times;</span></span>
+              <span class="alc-tag">home<span class="alc-tag-remove">&times;</span></span>
+              <span class="alc-tag">household<span class="alc-tag-remove">&times;</span></span>
+              <input type="text" class="alc-tags-input" placeholder="Add tags...">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Title Template -->
+        <div class="mb-6">
+          <label for="title-template" class="alc-label">Title Template</label>
+          <input type="text" id="title-template" class="alc-input" 
+                 value="Vintage {brand} {item} - {era} - {condition}">
+          <p class="text-xs text-neutral-500 mt-1">Use {placeholders} for variables that will be filled when creating listings.</p>
+        </div>
+        
+        <!-- Description Sections -->
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="font-medium">Description Sections</h3>
+            <button class="alc-button alc-button-neutral alc-button-sm">
+              <i class="fas fa-plus mr-1"></i> Add Section
+            </button>
+          </div>
+          
+          <div class="space-y-4">
+            <!-- Section 1 -->
+            <div class="border dark:border-neutral-700 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="template-section-handle px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700">
+                    <i class="fas fa-grip-vertical text-neutral-500"></i>
+                  </span>
+                  <h4 class="font-medium">Item History</h4>
+                </div>
+                <div>
+                  <button class="text-neutral-500 hover:text-red-500">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <textarea class="alc-textarea" rows="3" placeholder="Section content...">This section includes details about the item's history, provenance, era, and any interesting background information. Customers appreciate knowing the story behind vintage items.</textarea>
+                <div class="mt-2">
+                  <label class="flex items-center text-sm">
+                    <input type="checkbox" class="alc-checkbox mr-2"> Required for all listings
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section 2 -->
+            <div class="border dark:border-neutral-700 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="template-section-handle px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700">
+                    <i class="fas fa-grip-vertical text-neutral-500"></i>
+                  </span>
+                  <h4 class="font-medium">Condition Details</h4>
+                </div>
+                <div>
+                  <button class="text-neutral-500 hover:text-red-500">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <textarea class="alc-textarea" rows="3" placeholder="Section content...">Describe the condition thoroughly including any flaws, repairs, wear and tear, or patina consistent with age. Be detailed and honest about the item's current state.</textarea>
+                <div class="mt-2">
+                  <label class="flex items-center text-sm">
+                    <input type="checkbox" class="alc-checkbox mr-2" checked> Required for all listings
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section 3 -->
+            <div class="border dark:border-neutral-700 rounded-lg p-4">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="template-section-handle px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700">
+                    <i class="fas fa-grip-vertical text-neutral-500"></i>
+                  </span>
+                  <h4 class="font-medium">Dimensions</h4>
+                </div>
+                <div>
+                  <button class="text-neutral-500 hover:text-red-500">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <textarea class="alc-textarea" rows="3" placeholder="Section content...">Provide accurate measurements in both metric and imperial units. Include length, width, height, diameter, or other relevant dimensions.</textarea>
+                <div class="mt-2">
+                  <label class="flex items-center text-sm">
+                    <input type="checkbox" class="alc-checkbox mr-2" checked> Required for all listings
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Preview Button -->
+        <div class="border-t dark:border-neutral-700 pt-4 mt-4 flex justify-end">
+          <button class="alc-button alc-button-outline-primary mr-2">
+            <i class="fas fa-eye mr-2"></i> <span data-i18n="templates.previewTemplate">Preview Template</span>
+          </button>
+          <button class="alc-button alc-button-success">
+            <i class="fas fa-save mr-2"></i> <span data-i18n="templates.saveChanges">Save Changes</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer component placeholder -->
+  <div id="footer-placeholder"></div>
+  
+  <script src="./scripts/app.js"></script>
+  <script>
+    // Load header and footer components
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('./components/navigation/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-placeholder').innerHTML = data;
+        });
+      
+      // Tags input functionality
+      const tagsContainer = document.querySelector('.alc-tags-container');
+      const tagsInput = document.querySelector('.alc-tags-input');
+      
+      tagsInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+          e.preventDefault();
+          const tag = this.value.trim();
+          
+          if (tag) {
+            const tagElement = document.createElement('span');
+            tagElement.className = 'alc-tag';
+            tagElement.innerHTML = `${tag}<span class="alc-tag-remove">&times;</span>`;
+            
+            tagElement.querySelector('.alc-tag-remove').addEventListener('click', function() {
+              tagElement.remove();
+            });
+            
+            tagsContainer.insertBefore(tagElement, this);
+            this.value = '';
+          }
+        }
+      });
+      
+      document.querySelectorAll('.alc-tag-remove').forEach(button => {
+        button.addEventListener('click', function() {
+          this.parentElement.remove();
+        });
+      });
+      
+      // Template card selection
+      document.querySelectorAll('.alc-template-card').forEach(card => {
+        card.addEventListener('click', function() {
+          document.querySelectorAll('.alc-template-card').forEach(c => {
+            c.classList.remove('selected');
+          });
+          this.classList.add('selected');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

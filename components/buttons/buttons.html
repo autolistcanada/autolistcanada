@@ -1,0 +1,445 @@
+<!-- 
+  AutoList Canada - Button Components
+  
+  Features:
+  - Primary, secondary, tertiary, and danger button variants
+  - Various sizes (small, default, large)
+  - Icon support (leading and trailing)
+  - Loading state
+  - Disabled state
+  - Accessibility features (aria attributes, keyboard focus states)
+  - Micro-animations for hover/active states
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Button Components</h2>
+  
+  <!-- Primary Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Primary Buttons</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-primary">
+        Primary Button
+      </button>
+      
+      <button class="alc-btn alc-btn-primary" disabled>
+        Disabled
+      </button>
+      
+      <button class="alc-btn alc-btn-primary alc-btn-icon-left">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        With Icon
+      </button>
+      
+      <button class="alc-btn alc-btn-primary alc-btn-loading">
+        <span class="alc-btn-loader"></span>
+        Loading
+      </button>
+    </div>
+  </section>
+  
+  <!-- Secondary Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Secondary Buttons</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-secondary">
+        Secondary Button
+      </button>
+      
+      <button class="alc-btn alc-btn-secondary" disabled>
+        Disabled
+      </button>
+      
+      <button class="alc-btn alc-btn-secondary alc-btn-icon-right">
+        With Icon
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M5 12h14"></path>
+          <path d="M12 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+  </section>
+  
+  <!-- Tertiary Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Tertiary Buttons</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-tertiary">
+        Tertiary Button
+      </button>
+      
+      <button class="alc-btn alc-btn-tertiary" disabled>
+        Disabled
+      </button>
+      
+      <button class="alc-btn alc-btn-tertiary alc-btn-icon-left">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        Edit
+      </button>
+    </div>
+  </section>
+  
+  <!-- Danger Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Danger Buttons</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-danger">
+        Danger Button
+      </button>
+      
+      <button class="alc-btn alc-btn-danger" disabled>
+        Disabled
+      </button>
+      
+      <button class="alc-btn alc-btn-danger alc-btn-icon-left">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        Delete
+      </button>
+    </div>
+  </section>
+  
+  <!-- Button Sizes -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Button Sizes</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-primary alc-btn-sm">
+        Small
+      </button>
+      
+      <button class="alc-btn alc-btn-primary">
+        Default
+      </button>
+      
+      <button class="alc-btn alc-btn-primary alc-btn-lg">
+        Large
+      </button>
+    </div>
+  </section>
+  
+  <!-- Icon-only Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Icon Buttons</h3>
+    <div class="alc-component-demo">
+      <button class="alc-btn alc-btn-icon alc-btn-primary" aria-label="Add item">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M12 5v14"></path>
+          <path d="M5 12h14"></path>
+        </svg>
+      </button>
+      
+      <button class="alc-btn alc-btn-icon alc-btn-secondary" aria-label="Edit item">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+      </button>
+      
+      <button class="alc-btn alc-btn-icon alc-btn-tertiary" aria-label="Settings">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+      
+      <button class="alc-btn alc-btn-icon alc-btn-danger" aria-label="Delete item">
+        <svg class="alc-btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+      </button>
+    </div>
+  </section>
+  
+  <!-- Button Group -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Button Groups</h3>
+    <div class="alc-component-demo">
+      <div class="alc-btn-group" role="group" aria-label="Button group example">
+        <button class="alc-btn alc-btn-secondary">
+          Left
+        </button>
+        <button class="alc-btn alc-btn-secondary">
+          Middle
+        </button>
+        <button class="alc-btn alc-btn-secondary">
+          Right
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    align-items: center;
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+
+  /* Button Base Styles */
+  .alc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius-md);
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .alc-btn:focus {
+    outline: none;
+  }
+  
+  .alc-btn:focus-visible {
+    outline: 3px solid var(--color-green-200);
+    outline-offset: 2px;
+  }
+  
+  .alc-btn:active {
+    transform: translateY(1px);
+  }
+  
+  .alc-btn[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  /* Button Variants */
+  .alc-btn-primary {
+    background: linear-gradient(135deg, var(--color-green-600), var(--color-green-700));
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .alc-btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-green-700), var(--color-green-800));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+  
+  .alc-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.4s, opacity 0.3s;
+    pointer-events: none;
+  }
+  
+  .alc-btn-primary:active::before {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0s, opacity 0.1s;
+  }
+  
+  .alc-btn-secondary {
+    background-color: white;
+    border-color: var(--color-green-600);
+    color: var(--color-green-700);
+  }
+  
+  .alc-btn-secondary:hover {
+    background-color: var(--color-green-50);
+    border-color: var(--color-green-700);
+  }
+  
+  .alc-btn-tertiary {
+    background-color: transparent;
+    color: var(--color-green-700);
+  }
+  
+  .alc-btn-tertiary:hover {
+    background-color: var(--color-green-50);
+  }
+  
+  .alc-btn-danger {
+    background: linear-gradient(135deg, var(--color-red-500), var(--color-red-600));
+    color: white;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .alc-btn-danger:hover {
+    background: linear-gradient(135deg, var(--color-red-600), var(--color-red-700));
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Button Sizes */
+  .alc-btn-sm {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+  
+  .alc-btn-lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-md);
+  }
+  
+  /* Icon Button Styles */
+  .alc-btn-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    stroke-width: 2;
+    flex-shrink: 0;
+  }
+  
+  .alc-btn-icon-left .alc-btn-icon {
+    margin-right: var(--space-2);
+  }
+  
+  .alc-btn-icon-right .alc-btn-icon {
+    margin-left: var(--space-2);
+  }
+  
+  .alc-btn.alc-btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--border-radius-circle);
+  }
+  
+  /* Loading Button */
+  .alc-btn-loading {
+    cursor: progress;
+  }
+  
+  .alc-btn-loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: var(--border-radius-circle);
+    animation: alc-btn-spin 1s infinite linear;
+    margin-right: var(--space-2);
+  }
+  
+  .alc-btn-secondary .alc-btn-loader {
+    border: 2px solid rgba(var(--color-green-rgb-600), 0.3);
+    border-top-color: var(--color-green-600);
+  }
+  
+  @keyframes alc-btn-spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  /* Button Group */
+  .alc-btn-group {
+    display: inline-flex;
+  }
+  
+  .alc-btn-group .alc-btn {
+    border-radius: 0;
+  }
+  
+  .alc-btn-group .alc-btn:first-child {
+    border-top-left-radius: var(--border-radius-md);
+    border-bottom-left-radius: var(--border-radius-md);
+  }
+  
+  .alc-btn-group .alc-btn:last-child {
+    border-top-right-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
+  }
+  
+  .alc-btn-group .alc-btn + .alc-btn {
+    border-left-width: 1px;
+  }
+</style>
+
+<script>
+  // This script is for demo purposes to show the loading state
+  document.addEventListener('DOMContentLoaded', () => {
+    const loadingButton = document.querySelector('.alc-btn-loading');
+    
+    if (loadingButton) {
+      loadingButton.addEventListener('click', () => {
+        // Toggle loading state for demo purposes
+        const loader = loadingButton.querySelector('.alc-btn-loader');
+        if (loader) {
+          loader.remove();
+          loadingButton.textContent = 'Click to load';
+          loadingButton.classList.remove('alc-btn-loading');
+        } else {
+          loadingButton.textContent = '';
+          const loaderSpan = document.createElement('span');
+          loaderSpan.className = 'alc-btn-loader';
+          loadingButton.prepend(loaderSpan);
+          loadingButton.appendChild(document.createTextNode(' Loading'));
+          loadingButton.classList.add('alc-btn-loading');
+        }
+      });
+    }
+    
+    // Demo for dropdown buttons
+    const dropdownButtons = document.querySelectorAll('.alc-nav-dropdown-toggle');
+    
+    dropdownButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', !expanded);
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.alc-nav-dropdown')) {
+        dropdownButtons.forEach(button => {
+          button.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  });
+</script>

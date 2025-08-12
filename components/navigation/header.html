@@ -1,0 +1,438 @@
+<!-- 
+  AutoList Canada - Header Component
+  
+  Features:
+  - Responsive design with mobile toggle
+  - Language switcher (EN/FR)
+  - Consistent branding with AutoList logo
+  - Active page highlighting
+  - Accessibility features (aria attributes, keyboard navigation)
+-->
+
+<header class="alc-header">
+  <div class="container">
+    <div class="alc-header-inner">
+      <!-- Logo -->
+      <a href="index.html" class="alc-logo">
+        <img src="/assets/autolist-title.png" alt="AutoList Canada" width="140" height="32">
+      </a>
+
+      <!-- Mobile menu button -->
+      <button id="alc-mobile-toggle" class="alc-mobile-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+        <span class="alc-mobile-toggle-bar"></span>
+        <span class="alc-mobile-toggle-bar"></span>
+        <span class="alc-mobile-toggle-bar"></span>
+      </button>
+
+      <!-- Main navigation -->
+      <nav class="alc-nav" aria-label="Main Navigation">
+        <ul class="alc-nav-list">
+          <li class="alc-nav-item">
+            <a href="dashboard.html" class="alc-nav-link" data-page="dashboard">Dashboard</a>
+          </li>
+          <li class="alc-nav-item">
+            <a href="listings.html" class="alc-nav-link" data-page="listings">Listings</a>
+          </li>
+          <li class="alc-nav-item">
+            <a href="templates.html" class="alc-nav-link" data-page="templates">Templates</a>
+          </li>
+          <li class="alc-nav-item">
+            <a href="import.html" class="alc-nav-link" data-page="import">Import</a>
+          </li>
+          <li class="alc-nav-item">
+            <a href="analytics.html" class="alc-nav-link" data-page="analytics">Analytics</a>
+          </li>
+          <li class="alc-nav-item">
+            <a href="ai-tools.html" class="alc-nav-link" data-page="ai-tools">AI Tools</a>
+          </li>
+          <li class="alc-nav-item alc-nav-dropdown">
+            <button class="alc-nav-dropdown-toggle" aria-expanded="false">
+              More
+              <svg class="alc-dropdown-icon" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <ul class="alc-dropdown-menu">
+              <li>
+                <a href="how-it-works.html" class="alc-dropdown-item" data-page="how-it-works">How It Works</a>
+              </li>
+              <li>
+                <a href="faq.html" class="alc-dropdown-item" data-page="faq">FAQ</a>
+              </li>
+              <li>
+                <a href="terms.html" class="alc-dropdown-item" data-page="terms">Terms</a>
+              </li>
+              <li>
+                <a href="privacy.html" class="alc-dropdown-item" data-page="privacy">Privacy</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Language toggle -->
+        <div class="alc-lang-toggle" aria-label="Language Selection">
+          <button class="alc-lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+          <button class="alc-lang-btn" data-lang="fr" aria-pressed="false">FR</button>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .alc-header {
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .alc-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) 0;
+    flex-wrap: wrap;
+  }
+
+  .alc-logo {
+    display: block;
+    margin-right: var(--space-6);
+  }
+
+  .alc-logo img {
+    height: 32px;
+    width: auto;
+  }
+
+  .alc-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .alc-mobile-toggle-bar {
+    height: 2px;
+    width: 100%;
+    background-color: var(--color-neutral-800);
+    transition: transform 0.3s, opacity 0.2s;
+  }
+
+  .alc-nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .alc-nav-list {
+    display: flex;
+    gap: var(--space-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .alc-nav-link {
+    color: var(--color-neutral-700);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    padding: var(--space-2) 0;
+    position: relative;
+    transition: color var(--transition-fast);
+  }
+
+  .alc-nav-link:hover,
+  .alc-nav-link:focus {
+    color: var(--color-green-600);
+    text-decoration: none;
+  }
+
+  .alc-nav-link.active {
+    color: var(--color-green-600);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .alc-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-green-500), var(--color-orange-500));
+    border-radius: var(--border-radius-full);
+  }
+
+  .alc-nav-dropdown {
+    position: relative;
+  }
+
+  .alc-nav-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-neutral-700);
+    font-weight: var(--font-weight-medium);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2) 0;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  .alc-nav-dropdown-toggle:hover,
+  .alc-nav-dropdown-toggle:focus {
+    color: var(--color-green-600);
+  }
+
+  .alc-dropdown-icon {
+    transition: transform 0.2s;
+  }
+
+  .alc-nav-dropdown-toggle[aria-expanded="true"] .alc-dropdown-icon {
+    transform: rotate(180deg);
+  }
+
+  .alc-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 160px;
+    background: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-2);
+    list-style: none;
+    margin: var(--space-1) 0 0;
+    z-index: var(--z-dropdown);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .alc-nav-dropdown-toggle[aria-expanded="true"] + .alc-dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .alc-dropdown-item {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-neutral-800);
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.15s;
+  }
+
+  .alc-dropdown-item:hover,
+  .alc-dropdown-item:focus {
+    background-color: var(--color-neutral-50);
+    color: var(--color-green-600);
+    text-decoration: none;
+  }
+
+  .alc-dropdown-item.active {
+    color: var(--color-green-600);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .alc-lang-toggle {
+    display: flex;
+    gap: 4px;
+  }
+
+  .alc-lang-btn {
+    font-size: var(--font-size-xs);
+    padding: 4px 8px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid transparent;
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .alc-lang-btn:hover,
+  .alc-lang-btn:focus {
+    background: var(--color-neutral-200);
+  }
+
+  .alc-lang-btn.active {
+    background: var(--color-green-600);
+    color: white;
+  }
+
+  /* Mobile styles */
+  @media (max-width: 992px) {
+    .alc-mobile-toggle {
+      display: flex;
+      order: 1;
+    }
+
+    .alc-logo {
+      order: 0;
+    }
+
+    .alc-nav {
+      order: 2;
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease-in-out, opacity 0.2s, padding 0.3s;
+      padding: 0;
+      margin: 0;
+    }
+
+    .alc-header.menu-open .alc-nav {
+      max-height: 500px;
+      opacity: 1;
+      padding: var(--space-4) 0;
+    }
+
+    .alc-nav-list {
+      flex-direction: column;
+      gap: var(--space-1);
+      width: 100%;
+    }
+
+    .alc-nav-item {
+      width: 100%;
+    }
+
+    .alc-nav-link,
+    .alc-nav-dropdown-toggle {
+      padding: var(--space-2);
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+
+    .alc-dropdown-menu {
+      position: static;
+      box-shadow: none;
+      margin-left: var(--space-4);
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 1;
+      transform: none;
+      transition: max-height 0.2s;
+    }
+
+    .alc-nav-dropdown-toggle[aria-expanded="true"] + .alc-dropdown-menu {
+      max-height: 200px;
+    }
+
+    .alc-header.menu-open .alc-mobile-toggle-bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .alc-header.menu-open .alc-mobile-toggle-bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .alc-header.menu-open .alc-mobile-toggle-bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .alc-lang-toggle {
+      margin-left: var(--space-2);
+    }
+  }
+</style>
+
+<script>
+  // Add active class to current page link
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = window.location.pathname.split('/').pop().split('.')[0];
+    const navLinks = document.querySelectorAll('.alc-nav-link, .alc-dropdown-item');
+    
+    navLinks.forEach(link => {
+      const page = link.getAttribute('data-page');
+      if (page === currentPage) {
+        link.classList.add('active');
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('alc-mobile-toggle');
+    const header = document.querySelector('.alc-header');
+    
+    mobileToggle?.addEventListener('click', () => {
+      const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+      mobileToggle.setAttribute('aria-expanded', !isExpanded);
+      header.classList.toggle('menu-open');
+    });
+
+    // Dropdown toggle
+    const dropdownToggles = document.querySelectorAll('.alc-nav-dropdown-toggle');
+    
+    dropdownToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', !isExpanded);
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.alc-nav-dropdown')) {
+        dropdownToggles.forEach(toggle => {
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+
+    // Language toggle
+    const langBtns = document.querySelectorAll('.alc-lang-btn');
+    
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        
+        // Remove active class from all buttons
+        langBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        
+        // Set language in local storage for persistence
+        localStorage.setItem('alc-language', lang);
+        
+        // Trigger a language change event
+        const event = new CustomEvent('alc-language-change', { detail: { language: lang } });
+        document.dispatchEvent(event);
+      });
+    });
+
+    // Set initial language based on localStorage or default to English
+    const savedLang = localStorage.getItem('alc-language') || 'en';
+    const langBtn = document.querySelector(`.alc-lang-btn[data-lang="${savedLang}"]`);
+    if (langBtn) {
+      langBtn.click();
+    }
+  });
+</script>

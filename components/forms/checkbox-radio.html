@@ -1,0 +1,592 @@
+<!-- 
+  AutoList Canada - Checkbox and Radio Components
+  
+  Features:
+  - Custom styled checkbox and radio inputs
+  - Toggle switches
+  - Various states (default, checked, disabled)
+  - Accessibility features (aria attributes, keyboard navigation)
+  - Consistent branding with AutoList theme
+-->
+
+<div class="alc-component-container">
+  <h2 class="alc-component-title">Checkbox & Radio Components</h2>
+  
+  <!-- Checkboxes -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Checkboxes</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Default Checkbox -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="default-checkbox" class="alc-checkbox">
+        <label for="default-checkbox" class="alc-check-label">Default checkbox</label>
+      </div>
+      
+      <!-- Checked Checkbox -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="checked-checkbox" class="alc-checkbox" checked>
+        <label for="checked-checkbox" class="alc-check-label">Checked checkbox</label>
+      </div>
+      
+      <!-- Disabled Checkbox -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="disabled-checkbox" class="alc-checkbox" disabled>
+        <label for="disabled-checkbox" class="alc-check-label">Disabled checkbox</label>
+      </div>
+      
+      <!-- Disabled Checked Checkbox -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="disabled-checked-checkbox" class="alc-checkbox" checked disabled>
+        <label for="disabled-checked-checkbox" class="alc-check-label">Disabled checked checkbox</label>
+      </div>
+      
+      <!-- Checkbox with Helper Text -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="helper-checkbox" class="alc-checkbox">
+        <div>
+          <label for="helper-checkbox" class="alc-check-label">Checkbox with helper text</label>
+          <span class="alc-form-helper">Additional information about this option</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Radio Buttons -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Radio Buttons</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <fieldset class="alc-fieldset">
+        <legend class="alc-legend">Select an option</legend>
+        
+        <!-- Radio Option 1 -->
+        <div class="alc-form-check">
+          <input type="radio" id="radio-option1" name="radio-group" class="alc-radio" checked>
+          <label for="radio-option1" class="alc-check-label">Option 1</label>
+        </div>
+        
+        <!-- Radio Option 2 -->
+        <div class="alc-form-check">
+          <input type="radio" id="radio-option2" name="radio-group" class="alc-radio">
+          <label for="radio-option2" class="alc-check-label">Option 2</label>
+        </div>
+        
+        <!-- Radio Option 3 (Disabled) -->
+        <div class="alc-form-check">
+          <input type="radio" id="radio-option3" name="radio-group" class="alc-radio" disabled>
+          <label for="radio-option3" class="alc-check-label">Option 3 (disabled)</label>
+        </div>
+      </fieldset>
+    </div>
+  </section>
+  
+  <!-- Toggle Switches -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Toggle Switches</h3>
+    <div class="alc-component-demo alc-demo-stack">
+      <!-- Default Toggle -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="default-toggle" class="alc-toggle" role="switch">
+        <label for="default-toggle" class="alc-check-label">Default toggle</label>
+      </div>
+      
+      <!-- Checked Toggle -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="checked-toggle" class="alc-toggle" role="switch" checked>
+        <label for="checked-toggle" class="alc-check-label">Enabled toggle</label>
+      </div>
+      
+      <!-- Disabled Toggle -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="disabled-toggle" class="alc-toggle" role="switch" disabled>
+        <label for="disabled-toggle" class="alc-check-label">Disabled toggle</label>
+      </div>
+      
+      <!-- Toggle with Description -->
+      <div class="alc-form-check">
+        <input type="checkbox" id="desc-toggle" class="alc-toggle" role="switch">
+        <div>
+          <label for="desc-toggle" class="alc-check-label">Dark mode</label>
+          <span class="alc-form-helper">Enable dark theme across the application</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Checkbox Cards -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Checkbox Cards</h3>
+    <div class="alc-component-demo">
+      <div class="alc-check-cards">
+        <!-- Card Option 1 -->
+        <div class="alc-check-card">
+          <input type="checkbox" id="card-check1" class="alc-card-check" name="card-options">
+          <label for="card-check1" class="alc-card-check-label">
+            <div class="alc-card-check-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="alc-card-check-content">
+              <span class="alc-card-check-title">Standard</span>
+              <span class="alc-card-check-desc">Basic cross-listing features</span>
+            </div>
+          </label>
+        </div>
+        
+        <!-- Card Option 2 -->
+        <div class="alc-check-card">
+          <input type="checkbox" id="card-check2" class="alc-card-check" name="card-options" checked>
+          <label for="card-check2" class="alc-card-check-label">
+            <div class="alc-card-check-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="alc-card-check-content">
+              <span class="alc-card-check-title">Premium</span>
+              <span class="alc-card-check-desc">Advanced features and AI tools</span>
+            </div>
+          </label>
+        </div>
+        
+        <!-- Card Option 3 -->
+        <div class="alc-check-card">
+          <input type="checkbox" id="card-check3" class="alc-card-check" name="card-options">
+          <label for="card-check3" class="alc-card-check-label">
+            <div class="alc-card-check-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <div class="alc-card-check-content">
+              <span class="alc-card-check-title">Enterprise</span>
+              <span class="alc-card-check-desc">Custom solutions for large sellers</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Radio Cards -->
+  <section class="alc-component-section">
+    <h3 class="alc-component-subtitle">Radio Cards</h3>
+    <div class="alc-component-demo">
+      <div class="alc-check-cards">
+        <!-- Card Radio 1 -->
+        <div class="alc-check-card">
+          <input type="radio" id="card-radio1" class="alc-card-check" name="card-radios" checked>
+          <label for="card-radio1" class="alc-card-check-label">
+            <div class="alc-card-check-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="alc-card-check-content">
+              <span class="alc-card-check-title">Single Image</span>
+              <span class="alc-card-check-desc">Upload one main product photo</span>
+            </div>
+          </label>
+        </div>
+        
+        <!-- Card Radio 2 -->
+        <div class="alc-check-card">
+          <input type="radio" id="card-radio2" class="alc-card-check" name="card-radios">
+          <label for="card-radio2" class="alc-card-check-label">
+            <div class="alc-card-check-icon">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </div>
+            <div class="alc-card-check-content">
+              <span class="alc-card-check-title">Gallery</span>
+              <span class="alc-card-check-desc">Upload multiple product photos</span>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  /* Component Demo Container Styles */
+  .alc-component-container {
+    padding: var(--space-6);
+    max-width: 800px;
+  }
+  
+  .alc-component-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-6);
+    color: var(--color-neutral-900);
+    border-bottom: 2px solid var(--color-green-600);
+    padding-bottom: var(--space-3);
+    display: inline-block;
+  }
+  
+  .alc-component-section {
+    margin-bottom: var(--space-8);
+  }
+  
+  .alc-component-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-neutral-700);
+  }
+  
+  .alc-component-demo {
+    padding: var(--space-4);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-neutral-50);
+  }
+
+  .alc-demo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Form Elements */
+  .alc-form-helper {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-600);
+    margin-top: var(--space-1);
+  }
+
+  .alc-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .alc-legend {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-800);
+    margin-bottom: var(--space-3);
+  }
+
+  /* Checkbox & Radio Styles */
+  .alc-form-check {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    position: relative;
+  }
+
+  .alc-check-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-800);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Base styles for checkbox and radio */
+  .alc-checkbox,
+  .alc-radio {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-neutral-400);
+    background-color: white;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all var(--transition-fast);
+  }
+
+  .alc-checkbox:focus,
+  .alc-radio:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+
+  .alc-checkbox {
+    border-radius: var(--border-radius-sm);
+  }
+
+  .alc-radio {
+    border-radius: var(--border-radius-full);
+  }
+
+  /* Checked state */
+  .alc-checkbox:checked,
+  .alc-radio:checked {
+    background-color: var(--color-green-600);
+    border-color: var(--color-green-600);
+  }
+
+  .alc-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .alc-radio:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: var(--border-radius-full);
+    background-color: white;
+  }
+
+  /* Disabled state */
+  .alc-checkbox:disabled,
+  .alc-radio:disabled {
+    background-color: var(--color-neutral-200);
+    border-color: var(--color-neutral-300);
+    cursor: not-allowed;
+  }
+
+  .alc-checkbox:checked:disabled,
+  .alc-radio:checked:disabled {
+    background-color: var(--color-neutral-400);
+    border-color: var(--color-neutral-400);
+  }
+
+  .alc-checkbox:disabled + .alc-check-label,
+  .alc-radio:disabled + .alc-check-label,
+  .alc-checkbox:disabled ~ div .alc-check-label,
+  .alc-radio:disabled ~ div .alc-check-label,
+  .alc-toggle:disabled + .alc-check-label,
+  .alc-toggle:disabled ~ div .alc-check-label {
+    color: var(--color-neutral-500);
+    cursor: not-allowed;
+  }
+
+  /* Toggle Switch */
+  .alc-toggle {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 20px;
+    border-radius: var(--border-radius-full);
+    background-color: var(--color-neutral-300);
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .alc-toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--border-radius-full);
+    background-color: white;
+    transition: transform var(--transition-fast);
+  }
+
+  .alc-toggle:checked {
+    background-color: var(--color-green-600);
+  }
+
+  .alc-toggle:checked::after {
+    transform: translateX(16px);
+  }
+
+  .alc-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+
+  .alc-toggle:disabled {
+    background-color: var(--color-neutral-200);
+    cursor: not-allowed;
+  }
+
+  .alc-toggle:checked:disabled {
+    background-color: var(--color-neutral-400);
+  }
+
+  /* Checkbox/Radio Cards */
+  .alc-check-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .alc-check-card {
+    position: relative;
+  }
+
+  .alc-card-check {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .alc-card-check-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-4);
+    border: 2px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background-color: white;
+    text-align: center;
+    height: 100%;
+  }
+
+  .alc-card-check:checked + .alc-card-check-label {
+    border-color: var(--color-green-600);
+    background-color: var(--color-green-50);
+  }
+
+  .alc-card-check:focus + .alc-card-check-label {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-green-rgb-500), 0.2);
+  }
+
+  .alc-card-check-icon {
+    margin-bottom: var(--space-3);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-500);
+    transition: color var(--transition-fast);
+  }
+
+  .alc-card-check:checked + .alc-card-check-label .alc-card-check-icon {
+    color: var(--color-green-600);
+  }
+
+  .alc-card-check-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .alc-card-check-title {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--space-1);
+    color: var(--color-neutral-900);
+  }
+
+  .alc-card-check-desc {
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-600);
+  }
+
+  /* Dark Mode Overrides */
+  @media (prefers-color-scheme: dark) {
+    .alc-check-label {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-legend {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-checkbox,
+    .alc-radio {
+      border-color: var(--color-neutral-600);
+      background-color: var(--color-neutral-800);
+    }
+    
+    .alc-checkbox:disabled,
+    .alc-radio:disabled {
+      background-color: var(--color-neutral-700);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-checkbox:checked:disabled,
+    .alc-radio:checked:disabled {
+      background-color: var(--color-neutral-600);
+      border-color: var(--color-neutral-600);
+    }
+    
+    .alc-toggle {
+      background-color: var(--color-neutral-600);
+    }
+    
+    .alc-toggle:disabled {
+      background-color: var(--color-neutral-700);
+    }
+    
+    .alc-toggle:checked:disabled {
+      background-color: var(--color-neutral-600);
+    }
+    
+    .alc-card-check-label {
+      border-color: var(--color-neutral-700);
+      background-color: var(--color-neutral-800);
+    }
+    
+    .alc-card-check:checked + .alc-card-check-label {
+      border-color: var(--color-green-600);
+      background-color: rgba(var(--color-green-rgb-700), 0.2);
+    }
+    
+    .alc-card-check-title {
+      color: var(--color-neutral-300);
+    }
+    
+    .alc-card-check-desc {
+      color: var(--color-neutral-500);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // For demo purposes, attach event listeners to show selection state
+    const checkboxes = document.querySelectorAll('.alc-checkbox:not([disabled]), .alc-toggle:not([disabled])');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const label = checkbox.nextElementSibling.tagName === 'LABEL' 
+          ? checkbox.nextElementSibling
+          : checkbox.nextElementSibling.querySelector('label');
+          
+        if (checkbox.checked) {
+          label.textContent = label.textContent.replace(' (unchecked)', ' (checked)');
+        } else {
+          label.textContent = label.textContent.replace(' (checked)', ' (unchecked)');
+        }
+      });
+    });
+    
+    // Prevent default behavior of label clicks for card checkboxes in demo
+    const cardLabels = document.querySelectorAll('.alc-card-check-label');
+    cardLabels.forEach(label => {
+      label.addEventListener('click', (e) => {
+        // This is just to prevent default behavior in a demo environment
+        // where multiple examples might interfere with each other
+      });
+    });
+  });
+</script>

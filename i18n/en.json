@@ -1,0 +1,155 @@
+{
+  "general": {
+    "language": "English",
+    "languageCode": "en"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "listings": "Listings",
+    "aiTools": "AI Tools",
+    "howItWorks": "How It Works",
+    "faq": "FAQ",
+    "import": "Import",
+    "templates": "Templates",
+    "analytics": "Analytics",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "import": "Import",
+    "export": "Export",
+    "sync": "Sync",
+    "addNew": "Add New",
+    "getStarted": "Get Started Now",
+    "learnMore": "Learn More",
+    "seeAll": "See All"
+  },
+  "listings": {
+    "title": "My Listings",
+    "all": "All",
+    "active": "Active",
+    "draft": "Draft",
+    "sold": "Sold",
+    "error": "Error",
+    "bulkActions": "Bulk Actions",
+    "noListings": "No listings found",
+    "addListing": "Add Listing",
+    "importListings": "Import Listings",
+    "price": "Price",
+    "status": "Status",
+    "platforms": "Platforms",
+    "lastUpdated": "Last Updated",
+    "title_label": "Title",
+    "description_label": "Description"
+  },
+  "templates": {
+    "title": "Templates",
+    "myTemplates": "My Templates",
+    "createTemplate": "Create Template",
+    "editTemplate": "Edit Template",
+    "defaultTemplate": "Default Template",
+    "name": "Template Name",
+    "category": "Category",
+    "usageCount": "Usage",
+    "tags": "Tags",
+    "fields": "Fields",
+    "titleTemplate": "Title Template",
+    "descriptionTemplate": "Description Template",
+    "placeholders": "Placeholders",
+    "required": "Required",
+    "optional": "Optional",
+    "addTag": "Add Tag",
+    "setDefault": "Set as Default"
+  },
+  "import": {
+    "title": "Import",
+    "chooseMethod": "Choose Import Method",
+    "marketplace": "From Marketplace",
+    "spreadsheet": "From Spreadsheet",
+    "manual": "Manual Entry",
+    "selectConnections": "Select Marketplace Connections",
+    "selectListings": "Select Listings to Import",
+    "mapTemplates": "Map to Templates",
+    "importOptions": "Import Options",
+    "autoMatchTemplate": "Auto-match with AI",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "continue": "Continue",
+    "back": "Back",
+    "finish": "Finish Import"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "summary": "Summary",
+    "totalRevenue": "Total Revenue",
+    "orders": "Orders",
+    "conversionRate": "Conversion Rate",
+    "totalViews": "Total Views",
+    "salesByPlatform": "Sales by Platform",
+    "revenueTrends": "Revenue Trends",
+    "seasonalSales": "Seasonal Sales",
+    "topPerforming": "Top Performing Listings",
+    "regionalInsights": "Canadian Market Insights",
+    "aiInsights": "AI-Powered Insights"
+  },
+  "aiTools": {
+    "title": "AI Tools",
+    "titleGenerator": "Title Generator",
+    "descriptionComposer": "Description Composer",
+    "tagAssistant": "Tag Assistant",
+    "priceSuggestion": "Price Suggestion",
+    "listingFusion": "Listing Fusion",
+    "toneSettings": "Tone Settings",
+    "minimal": "Minimal",
+    "luxury": "Luxury",
+    "cozy": "Cozy",
+    "clarity": "Clarity",
+    "generate": "Generate",
+    "optimize": "Optimize",
+    "fuse": "Fuse"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "preferences": "Preferences",
+    "marketplaces": "Marketplaces",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "privacy": "Privacy",
+    "billing": "Billing",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  },
+  "errors": {
+    "general": "An error occurred",
+    "notFound": "Not found",
+    "unauthorized": "Unauthorized access",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "tryAgain": "Please try again"
+  },
+  "homepage": {
+    "hero": {
+      "heading": "List Once, Sell Everywhere",
+      "subheading": "AutoList Canada is the first crosslisting platform built exclusively for Canadian sellers — with privacy, psychology, and performance at its core.",
+      "tagline": "This isn't about shortcuts. It's about smarter selling — backed by real systems."
+    },
+    "whyAutoList": {
+      "heading": "Why AutoList Canada Exists",
+      "content": "We built this because we're tired of watching Canadian sellers waste time on manual tasks and unclear listings. Every feature was designed with one goal: to help you sell more items with less work."
+    },
+    "aiTools": {
+      "heading": "Explore AI Tools",
+      "content": "These aren't just writing tools — they're business intelligence systems for sellers who want to grow with precision."
+    }
+  }
+}

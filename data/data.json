@@ -1,0 +1,620 @@
+{
+  "listings": [
+    {
+      "id": "eb-ca-23456789012",
+      "user_id": "usr-12345",
+      "title": {
+        "en": "Vintage Nikon F2 Film Camera with 50mm f/1.4 Lens",
+        "fr": "Appareil photo argentique Nikon F2 vintage avec objectif 50mm f/1.4"
+      },
+      "description": {
+        "en": "Classic Nikon F2 35mm film camera in excellent working condition. Comes with a sharp Nikkor 50mm f/1.4 lens. This professional-grade camera features a mechanical shutter that works without batteries, a clear viewfinder, and smooth film advance. Perfect for photography enthusiasts or collectors. Includes original leather case and strap.",
+        "fr": "Appareil photo argentique classique Nikon F2 35mm en excellent état de fonctionnement. Livré avec un objectif Nikkor 50mm f/1.4 net. Cet appareil photo de qualité professionnelle dispose d'un obturateur mécanique qui fonctionne sans piles, d'un viseur clair et d'une avance de film fluide. Parfait pour les passionnés de photographie ou les collectionneurs. Inclut l'étui en cuir et la sangle d'origine."
+      },
+      "price": {
+        "amount": 499.99,
+        "currency": "CAD",
+        "original_amount": 549.99
+      },
+      "quantity": 1,
+      "condition": "used",
+      "sku": "VNF2-50MM-001",
+      "brand": "Nikon",
+      "weight": {
+        "value": 0.9,
+        "unit": "kg"
+      },
+      "dimensions": {
+        "length": 15,
+        "width": 10,
+        "height": 8,
+        "unit": "cm"
+      },
+      "category": {
+        "primary": "Electronics",
+        "secondary": "Cameras & Photo",
+        "tertiary": "Film Cameras"
+      },
+      "images": [
+        {
+          "id": "img-12345",
+          "listing_id": "eb-ca-23456789012",
+          "url": "https://images.example.com/nikon-f2-main.jpg",
+          "thumbnail_url": "https://images.example.com/nikon-f2-thumb.jpg",
+          "alt_text": {
+            "en": "Nikon F2 Film Camera front view",
+            "fr": "Vue de face de l'appareil photo argentique Nikon F2"
+          },
+          "position": 1,
+          "is_main": true
+        },
+        {
+          "id": "img-12346",
+          "listing_id": "eb-ca-23456789012",
+          "url": "https://images.example.com/nikon-f2-angle.jpg",
+          "thumbnail_url": "https://images.example.com/nikon-f2-angle-thumb.jpg",
+          "alt_text": {
+            "en": "Nikon F2 Film Camera angle view",
+            "fr": "Vue en angle de l'appareil photo argentique Nikon F2"
+          },
+          "position": 2,
+          "is_main": false
+        }
+      ],
+      "shipping": {
+        "free_shipping": false,
+        "calculated": true,
+        "flat_rate": null,
+        "services": ["canada_post_expedited", "canada_post_xpresspost"],
+        "handling_time": 2,
+        "domestic_only": true
+      },
+      "tax": {
+        "apply_tax": true,
+        "gst": true,
+        "pst": true,
+        "hst": false,
+        "province": "BC"
+      },
+      "marketplaces": [
+        {
+          "marketplace": "ebay_ca",
+          "external_id": "154982736541",
+          "url": "https://www.ebay.ca/itm/154982736541",
+          "status": "active"
+        }
+      ],
+      "template_id": "tmpl-vintage-camera",
+      "status": "active",
+      "created_at": "2025-07-15T14:23:10.000Z",
+      "updated_at": "2025-08-01T09:12:55.000Z",
+      "published_at": "2025-07-15T15:30:22.000Z"
+    },
+    {
+      "id": "eb-ca-34567890123",
+      "user_id": "usr-12345",
+      "title": {
+        "en": "Handmade Cedar Canoe Paddle - Traditional Canadian Craftsmanship",
+        "fr": "Pagaie de canoë en cèdre faite à la main - Artisanat canadien traditionnel"
+      },
+      "description": {
+        "en": "Beautiful handcrafted cedar canoe paddle made in Quebec. Features a classic beavertail blade design, perfect for traditional paddling techniques. Made from 100% Canadian western red cedar with a cherry grip and maple shaft accent. Finished with multiple coats of marine varnish for durability. Each paddle is unique with natural wood grain variations. Length: 147cm (58 inches).",
+        "fr": "Belle pagaie de canoë en cèdre fabriquée artisanalement au Québec. Présente un design classique de lame en queue de castor, parfait pour les techniques de pagayage traditionnelles. Fabriquée à partir de 100% de cèdre rouge de l'Ouest canadien avec une poignée en cerisier et un accent en érable sur la hampe. Finie avec plusieurs couches de vernis marin pour la durabilité. Chaque pagaie est unique avec des variations naturelles de grain de bois. Longueur : 147cm (58 pouces)."
+      },
+      "price": {
+        "amount": 189.99,
+        "currency": "CAD",
+        "original_amount": 189.99
+      },
+      "quantity": 3,
+      "condition": "new",
+      "sku": "CEDAR-PADDLE-001",
+      "brand": "Northern Woodcraft",
+      "weight": {
+        "value": 0.65,
+        "unit": "kg"
+      },
+      "dimensions": {
+        "length": 147,
+        "width": 15,
+        "height": 2,
+        "unit": "cm"
+      },
+      "category": {
+        "primary": "Sporting Goods",
+        "secondary": "Water Sports",
+        "tertiary": "Paddlesports"
+      },
+      "images": [
+        {
+          "id": "img-23456",
+          "listing_id": "eb-ca-34567890123",
+          "url": "https://images.example.com/cedar-paddle-main.jpg",
+          "thumbnail_url": "https://images.example.com/cedar-paddle-thumb.jpg",
+          "alt_text": {
+            "en": "Handmade cedar canoe paddle full view",
+            "fr": "Vue complète de la pagaie de canoë en cèdre faite à la main"
+          },
+          "position": 1,
+          "is_main": true
+        },
+        {
+          "id": "img-23457",
+          "listing_id": "eb-ca-34567890123",
+          "url": "https://images.example.com/cedar-paddle-grip.jpg",
+          "thumbnail_url": "https://images.example.com/cedar-paddle-grip-thumb.jpg",
+          "alt_text": {
+            "en": "Cedar paddle cherry wood grip detail",
+            "fr": "Détail de la poignée en bois de cerisier de la pagaie en cèdre"
+          },
+          "position": 2,
+          "is_main": false
+        }
+      ],
+      "shipping": {
+        "free_shipping": true,
+        "calculated": false,
+        "flat_rate": 0,
+        "services": ["canada_post_expedited"],
+        "handling_time": 1,
+        "domestic_only": false
+      },
+      "tax": {
+        "apply_tax": true,
+        "gst": false,
+        "pst": false,
+        "hst": true,
+        "province": "ON"
+      },
+      "marketplaces": [
+        {
+          "marketplace": "ebay_ca",
+          "external_id": "154876543219",
+          "url": "https://www.ebay.ca/itm/154876543219",
+          "status": "active"
+        },
+        {
+          "marketplace": "etsy",
+          "external_id": "987654321098",
+          "url": "https://www.etsy.com/listing/987654321098",
+          "status": "active"
+        }
+      ],
+      "template_id": "tmpl-handcrafted",
+      "status": "active",
+      "created_at": "2025-07-20T10:15:33.000Z",
+      "updated_at": "2025-07-20T10:45:12.000Z",
+      "published_at": "2025-07-20T11:02:48.000Z"
+    },
+    {
+      "id": "eb-ca-45678901234",
+      "user_id": "usr-12345",
+      "title": {
+        "en": "Vintage Hudson's Bay Point Blanket - 4 Point - Multi Stripe",
+        "fr": "Couverture à points de la Baie d'Hudson vintage - 4 points - Rayures multicolores"
+      },
+      "description": {
+        "en": "Authentic vintage Hudson's Bay point blanket in excellent condition. This is a 4-point blanket (approximately Queen size) featuring the iconic multi-colored stripes on white wool background. Made of 100% wool, these blankets are known for their exceptional warmth and durability. A true Canadian heritage piece, perfect for your home or cottage. Minor signs of use consistent with age, no major flaws or damage.",
+        "fr": "Authentique couverture à points vintage de la Baie d'Hudson en excellent état. Il s'agit d'une couverture à 4 points (environ taille Queen) avec les emblématiques rayures multicolores sur fond de laine blanche. Fabriquée en 100% laine, ces couvertures sont connues pour leur chaleur et leur durabilité exceptionnelles. Une véritable pièce du patrimoine canadien, parfaite pour votre maison ou chalet. Légers signes d'utilisation correspondant à l'âge, sans défauts ou dommages majeurs."
+      },
+      "price": {
+        "amount": 329.99,
+        "currency": "CAD",
+        "original_amount": 399.99
+      },
+      "quantity": 1,
+      "condition": "used",
+      "sku": "HBC-4PT-001",
+      "brand": "Hudson's Bay Company",
+      "weight": {
+        "value": 2.3,
+        "unit": "kg"
+      },
+      "dimensions": {
+        "length": 250,
+        "width": 230,
+        "height": 5,
+        "unit": "cm"
+      },
+      "category": {
+        "primary": "Home & Garden",
+        "secondary": "Bedding",
+        "tertiary": "Blankets & Throws"
+      },
+      "images": [
+        {
+          "id": "img-34567",
+          "listing_id": "eb-ca-45678901234",
+          "url": "https://images.example.com/hbc-blanket-main.jpg",
+          "thumbnail_url": "https://images.example.com/hbc-blanket-thumb.jpg",
+          "alt_text": {
+            "en": "Hudson's Bay Point Blanket full view",
+            "fr": "Vue complète de la couverture à points de la Baie d'Hudson"
+          },
+          "position": 1,
+          "is_main": true
+        },
+        {
+          "id": "img-34568",
+          "listing_id": "eb-ca-45678901234",
+          "url": "https://images.example.com/hbc-blanket-label.jpg",
+          "thumbnail_url": "https://images.example.com/hbc-blanket-label-thumb.jpg",
+          "alt_text": {
+            "en": "Hudson's Bay label detail",
+            "fr": "Détail de l'étiquette de la Baie d'Hudson"
+          },
+          "position": 2,
+          "is_main": false
+        }
+      ],
+      "shipping": {
+        "free_shipping": false,
+        "calculated": true,
+        "flat_rate": null,
+        "services": ["canada_post_expedited", "canada_post_xpresspost"],
+        "handling_time": 3,
+        "domestic_only": false
+      },
+      "tax": {
+        "apply_tax": true,
+        "gst": false,
+        "pst": false,
+        "hst": true,
+        "province": "ON"
+      },
+      "marketplaces": [
+        {
+          "marketplace": "ebay_ca",
+          "external_id": "154789012345",
+          "url": "https://www.ebay.ca/itm/154789012345",
+          "status": "active"
+        }
+      ],
+      "template_id": "tmpl-vintage-home",
+      "status": "active",
+      "created_at": "2025-08-01T16:20:45.000Z",
+      "updated_at": "2025-08-05T14:15:22.000Z",
+      "published_at": "2025-08-01T17:05:33.000Z"
+    },
+    {
+      "id": "eb-ca-56789012345",
+      "user_id": "usr-12345",
+      "title": {
+        "en": "Maple Syrup Gift Set - 100% Pure Canadian Maple Syrup - 3 Varieties",
+        "fr": "Coffret cadeau de sirop d'érable - Sirop d'érable 100% pur canadien - 3 variétés"
+      },
+      "description": {
+        "en": "Delight in the authentic taste of Canada with our premium maple syrup gift set. Includes three 250ml bottles of 100% pure Canadian maple syrup: Golden Delicate (light, delicate taste), Amber Rich (pure maple flavor), and Dark Robust (stronger taste). All syrup is harvested and produced in Quebec, Canada's premier maple syrup region. Beautifully packaged in a wooden gift box with maple leaf design, perfect for gift-giving or as a special treat for yourself.",
+        "fr": "Délectez-vous du goût authentique du Canada avec notre coffret cadeau de sirop d'érable premium. Comprend trois bouteilles de 250ml de sirop d'érable 100% pur canadien : Doré Délicat (goût léger et délicat), Ambré Riche (saveur d'érable pure) et Foncé Robuste (goût plus prononcé). Tout le sirop est récolté et produit au Québec, la principale région productrice de sirop d'érable du Canada. Magnifiquement emballé dans une boîte cadeau en bois avec motif de feuille d'érable, parfait pour offrir ou comme gourmandise spéciale pour vous-même."
+      },
+      "price": {
+        "amount": 59.99,
+        "currency": "CAD",
+        "original_amount": 59.99
+      },
+      "quantity": 15,
+      "condition": "new",
+      "sku": "MAPLE-GIFT-001",
+      "brand": "Quebec Maple Farms",
+      "weight": {
+        "value": 1.8,
+        "unit": "kg"
+      },
+      "dimensions": {
+        "length": 30,
+        "width": 20,
+        "height": 10,
+        "unit": "cm"
+      },
+      "category": {
+        "primary": "Food & Beverages",
+        "secondary": "Pantry Food",
+        "tertiary": "Syrups & Sweeteners"
+      },
+      "images": [
+        {
+          "id": "img-45678",
+          "listing_id": "eb-ca-56789012345",
+          "url": "https://images.example.com/maple-gift-main.jpg",
+          "thumbnail_url": "https://images.example.com/maple-gift-thumb.jpg",
+          "alt_text": {
+            "en": "Maple syrup gift set in wooden box",
+            "fr": "Coffret cadeau de sirop d'érable dans une boîte en bois"
+          },
+          "position": 1,
+          "is_main": true
+        },
+        {
+          "id": "img-45679",
+          "listing_id": "eb-ca-56789012345",
+          "url": "https://images.example.com/maple-bottles.jpg",
+          "thumbnail_url": "https://images.example.com/maple-bottles-thumb.jpg",
+          "alt_text": {
+            "en": "Three maple syrup bottles showing color variations",
+            "fr": "Trois bouteilles de sirop d'érable montrant les variations de couleur"
+          },
+          "position": 2,
+          "is_main": false
+        }
+      ],
+      "shipping": {
+        "free_shipping": true,
+        "calculated": false,
+        "flat_rate": 0,
+        "services": ["canada_post_expedited"],
+        "handling_time": 1,
+        "domestic_only": false
+      },
+      "tax": {
+        "apply_tax": true,
+        "gst": false,
+        "pst": false,
+        "hst": true,
+        "province": "QC"
+      },
+      "marketplaces": [
+        {
+          "marketplace": "ebay_ca",
+          "external_id": "155678901234",
+          "url": "https://www.ebay.ca/itm/155678901234",
+          "status": "active"
+        },
+        {
+          "marketplace": "amazon_ca",
+          "external_id": "B07ABCDEFG",
+          "url": "https://www.amazon.ca/dp/B07ABCDEFG",
+          "status": "active"
+        }
+      ],
+      "template_id": "tmpl-food-gifts",
+      "status": "active",
+      "created_at": "2025-07-25T09:45:18.000Z",
+      "updated_at": "2025-08-10T11:22:36.000Z",
+      "published_at": "2025-07-25T10:30:42.000Z"
+    },
+    {
+      "id": "eb-ca-67890123456",
+      "user_id": "usr-12345",
+      "title": {
+        "en": "Vintage CCM Super Tacks Hockey Skates - Size 9 - Excellent Condition",
+        "fr": "Patins de hockey CCM Super Tacks vintage - Taille 9 - Excellent état"
+      },
+      "description": {
+        "en": "Classic CCM Super Tacks hockey skates in excellent pre-owned condition. These are vintage skates from the early 1990s, size 9 men's. Features include traditional black leather boots with reinforced ankle support, CCM carbon steel blades that have been professionally sharpened and have plenty of life left. Perfect for collectors or players who appreciate classic hockey equipment. Some minor scuffs consistent with light use, but overall in exceptional vintage condition.",
+        "fr": "Patins de hockey classiques CCM Super Tacks en excellent état d'occasion. Ce sont des patins vintage du début des années 1990, taille 9 hommes. Les caractéristiques comprennent des bottines traditionnelles en cuir noir avec support de cheville renforcé, des lames CCM en acier au carbone qui ont été professionnellement affûtées et qui ont encore une longue durée de vie. Parfait pour les collectionneurs ou les joueurs qui apprécient l'équipement de hockey classique. Quelques légères éraflures compatibles avec une utilisation légère, mais globalement dans un état vintage exceptionnel."
+      },
+      "price": {
+        "amount": 149.99,
+        "currency": "CAD",
+        "original_amount": 179.99
+      },
+      "quantity": 1,
+      "condition": "used",
+      "sku": "CCM-TACKS-9",
+      "brand": "CCM",
+      "weight": {
+        "value": 1.2,
+        "unit": "kg"
+      },
+      "dimensions": {
+        "length": 35,
+        "width": 15,
+        "height": 25,
+        "unit": "cm"
+      },
+      "category": {
+        "primary": "Sporting Goods",
+        "secondary": "Winter Sports",
+        "tertiary": "Ice Hockey"
+      },
+      "images": [
+        {
+          "id": "img-56789",
+          "listing_id": "eb-ca-67890123456",
+          "url": "https://images.example.com/ccm-skates-main.jpg",
+          "thumbnail_url": "https://images.example.com/ccm-skates-thumb.jpg",
+          "alt_text": {
+            "en": "CCM Super Tacks hockey skates side view",
+            "fr": "Vue latérale des patins de hockey CCM Super Tacks"
+          },
+          "position": 1,
+          "is_main": true
+        },
+        {
+          "id": "img-56790",
+          "listing_id": "eb-ca-67890123456",
+          "url": "https://images.example.com/ccm-skates-blades.jpg",
+          "thumbnail_url": "https://images.example.com/ccm-skates-blades-thumb.jpg",
+          "alt_text": {
+            "en": "CCM skate blades close-up",
+            "fr": "Gros plan des lames de patin CCM"
+          },
+          "position": 2,
+          "is_main": false
+        }
+      ],
+      "shipping": {
+        "free_shipping": false,
+        "calculated": true,
+        "flat_rate": null,
+        "services": ["canada_post_expedited", "canada_post_xpresspost"],
+        "handling_time": 2,
+        "domestic_only": true
+      },
+      "tax": {
+        "apply_tax": true,
+        "gst": true,
+        "pst": true,
+        "hst": false,
+        "province": "BC"
+      },
+      "marketplaces": [
+        {
+          "marketplace": "ebay_ca",
+          "external_id": "156789012345",
+          "url": "https://www.ebay.ca/itm/156789012345",
+          "status": "active"
+        },
+        {
+          "marketplace": "facebook_marketplace",
+          "external_id": "fb-123456789",
+          "url": "https://www.facebook.com/marketplace/item/123456789",
+          "status": "active"
+        }
+      ],
+      "template_id": "tmpl-hockey-gear",
+      "status": "active",
+      "created_at": "2025-08-08T13:12:55.000Z",
+      "updated_at": "2025-08-08T14:30:22.000Z",
+      "published_at": "2025-08-08T14:45:08.000Z"
+    }
+  ],
+  "templates": [
+    {
+      "id": "tmpl-vintage-camera",
+      "user_id": "usr-12345",
+      "name": "Vintage Camera Template",
+      "description": "Template for vintage and collectible cameras",
+      "category": "Electronics",
+      "structure": {
+        "title_template": "{brand} {model} {type} Camera with {lens}",
+        "description_sections": [
+          "Condition Overview",
+          "Technical Features",
+          "Lens Details",
+          "Included Accessories",
+          "Shipping Information"
+        ]
+      },
+      "is_default": false,
+      "created_at": "2025-07-01T10:15:22.000Z",
+      "updated_at": "2025-07-01T10:15:22.000Z",
+      "usage_count": 3
+    },
+    {
+      "id": "tmpl-handcrafted",
+      "user_id": "usr-12345",
+      "name": "Handcrafted Items Template",
+      "description": "Template for handmade and artisanal products",
+      "category": "Handcrafted",
+      "structure": {
+        "title_template": "Handmade {material} {item} - {style}",
+        "description_sections": [
+          "Craftsmanship Details",
+          "Materials Used",
+          "Dimensions",
+          "Care Instructions",
+          "Shipping Information"
+        ]
+      },
+      "is_default": false,
+      "created_at": "2025-07-05T15:30:45.000Z",
+      "updated_at": "2025-07-05T15:30:45.000Z",
+      "usage_count": 5
+    },
+    {
+      "id": "tmpl-vintage-home",
+      "user_id": "usr-12345",
+      "name": "Vintage Home Goods Template",
+      "description": "Template for vintage household items",
+      "category": "Home & Garden",
+      "structure": {
+        "title_template": "Vintage {brand} {item} - {era} - {condition}",
+        "description_sections": [
+          "Item History",
+          "Condition Details",
+          "Dimensions",
+          "Authenticity Information",
+          "Shipping Information"
+        ]
+      },
+      "is_default": true,
+      "created_at": "2025-07-10T09:22:18.000Z",
+      "updated_at": "2025-07-10T09:22:18.000Z",
+      "usage_count": 7
+    }
+  ],
+  "user_profile": {
+    "id": "usr-12345",
+    "email": "seller@example.com",
+    "name": "Jane Smith",
+    "company": "Vintage Treasures Canada",
+    "address": {
+      "street": "123 Maple Street",
+      "city": "Toronto",
+      "province": "ON",
+      "postal_code": "M5V 2K7",
+      "country": "CA"
+    },
+    "phone": "416-555-1234",
+    "language_preference": "en",
+    "settings": {
+      "default_template_id": "tmpl-vintage-home",
+      "default_tax_settings": {
+        "apply_tax": true,
+        "province": "ON"
+      },
+      "default_shipping_settings": {
+        "handling_time": 2,
+        "preferred_service": "canada_post_expedited"
+      }
+    }
+  },
+  "marketplace_connections": [
+    {
+      "id": "conn-ebay-1",
+      "user_id": "usr-12345",
+      "marketplace": "ebay_ca",
+      "connected_at": "2025-06-15T14:22:33.000Z",
+      "status": "active",
+      "settings": {
+        "store_name": "VintageTreasuresCA",
+        "store_url": "https://www.ebay.ca/str/vintagetreasuresca"
+      }
+    },
+    {
+      "id": "conn-amazon-1",
+      "user_id": "usr-12345",
+      "marketplace": "amazon_ca",
+      "connected_at": "2025-07-02T11:15:47.000Z",
+      "status": "active",
+      "settings": {
+        "store_name": "Vintage Treasures Canada",
+        "store_url": "https://www.amazon.ca/shops/vintagetreasurescanada"
+      }
+    },
+    {
+      "id": "conn-etsy-1",
+      "user_id": "usr-12345",
+      "marketplace": "etsy",
+      "connected_at": "2025-07-10T16:30:22.000Z",
+      "status": "active",
+      "settings": {
+        "store_name": "VintageTreasuresCanada",
+        "store_url": "https://www.etsy.com/shop/vintagetreasurescanada"
+      }
+    }
+  ],
+  "analytics_summary": {
+    "last_30_days": {
+      "views": {
+        "total": 3560,
+        "by_marketplace": {
+          "ebay_ca": 2150,
+          "amazon_ca": 850,
+          "etsy": 560
+        }
+      },
+      "sales": {
+        "total": 2789.94,
+        "count": 12,
+        "by_marketplace": {
+          "ebay_ca": 1649.95,
+          "amazon_ca": 719.99,
+          "etsy": 419.99
+        }
+      },
+      "conversion_rate": 0.0034
+    }
+  }
+}

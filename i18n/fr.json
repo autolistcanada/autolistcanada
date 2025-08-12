@@ -1,0 +1,155 @@
+{
+  "general": {
+    "language": "Français",
+    "languageCode": "fr"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "listings": "Annonces",
+    "aiTools": "Outils IA",
+    "howItWorks": "Comment ça marche",
+    "faq": "FAQ",
+    "import": "Importer",
+    "templates": "Modèles",
+    "analytics": "Analyses",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité"
+  },
+  "actions": {
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "create": "Créer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "import": "Importer",
+    "export": "Exporter",
+    "sync": "Synchroniser",
+    "addNew": "Ajouter",
+    "getStarted": "Commencer maintenant",
+    "learnMore": "En savoir plus",
+    "seeAll": "Voir tout"
+  },
+  "listings": {
+    "title": "Mes annonces",
+    "all": "Toutes",
+    "active": "Actives",
+    "draft": "Brouillons",
+    "sold": "Vendues",
+    "error": "Erreur",
+    "bulkActions": "Actions groupées",
+    "noListings": "Aucune annonce trouvée",
+    "addListing": "Ajouter une annonce",
+    "importListings": "Importer des annonces",
+    "price": "Prix",
+    "status": "Statut",
+    "platforms": "Plateformes",
+    "lastUpdated": "Dernière mise à jour",
+    "title_label": "Titre",
+    "description_label": "Description"
+  },
+  "templates": {
+    "title": "Modèles",
+    "myTemplates": "Mes modèles",
+    "createTemplate": "Créer un modèle",
+    "editTemplate": "Modifier le modèle",
+    "defaultTemplate": "Modèle par défaut",
+    "name": "Nom du modèle",
+    "category": "Catégorie",
+    "usageCount": "Utilisation",
+    "tags": "Tags",
+    "fields": "Champs",
+    "titleTemplate": "Modèle de titre",
+    "descriptionTemplate": "Modèle de description",
+    "placeholders": "Espaces réservés",
+    "required": "Obligatoire",
+    "optional": "Facultatif",
+    "addTag": "Ajouter un tag",
+    "setDefault": "Définir par défaut"
+  },
+  "import": {
+    "title": "Importer",
+    "chooseMethod": "Choisir la méthode d'importation",
+    "marketplace": "Depuis une place de marché",
+    "spreadsheet": "Depuis un tableur",
+    "manual": "Saisie manuelle",
+    "selectConnections": "Sélectionner les connexions",
+    "selectListings": "Sélectionner les annonces à importer",
+    "mapTemplates": "Associer aux modèles",
+    "importOptions": "Options d'importation",
+    "autoMatchTemplate": "Correspondance auto avec l'IA",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner",
+    "continue": "Continuer",
+    "back": "Retour",
+    "finish": "Terminer l'importation"
+  },
+  "analytics": {
+    "title": "Analyses",
+    "summary": "Résumé",
+    "totalRevenue": "Revenu total",
+    "orders": "Commandes",
+    "conversionRate": "Taux de conversion",
+    "totalViews": "Vues totales",
+    "salesByPlatform": "Ventes par plateforme",
+    "revenueTrends": "Tendances des revenus",
+    "seasonalSales": "Ventes saisonnières",
+    "topPerforming": "Meilleures annonces",
+    "regionalInsights": "Aperçu du marché canadien",
+    "aiInsights": "Analyses propulsées par l'IA"
+  },
+  "aiTools": {
+    "title": "Outils IA",
+    "titleGenerator": "Générateur de titres",
+    "descriptionComposer": "Compositeur de descriptions",
+    "tagAssistant": "Assistant de tags",
+    "priceSuggestion": "Suggestion de prix",
+    "listingFusion": "Fusion d'annonces",
+    "toneSettings": "Paramètres de ton",
+    "minimal": "Minimaliste",
+    "luxury": "Luxe",
+    "cozy": "Chaleureux",
+    "clarity": "Clarté",
+    "generate": "Générer",
+    "optimize": "Optimiser",
+    "fuse": "Fusionner"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "account": "Compte",
+    "preferences": "Préférences",
+    "marketplaces": "Places de marché",
+    "notifications": "Notifications",
+    "language": "Langue",
+    "theme": "Thème",
+    "privacy": "Confidentialité",
+    "billing": "Facturation",
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode clair"
+  },
+  "errors": {
+    "general": "Une erreur est survenue",
+    "notFound": "Non trouvé",
+    "unauthorized": "Accès non autorisé",
+    "serverError": "Erreur serveur",
+    "networkError": "Erreur réseau",
+    "tryAgain": "Veuillez réessayer"
+  },
+  "homepage": {
+    "hero": {
+      "heading": "Publiez une fois, vendez partout",
+      "subheading": "AutoList Canada est la première plateforme de publication multiple conçue exclusivement pour les vendeurs canadiens — avec la confidentialité, la psychologie et la performance au cœur de son fonctionnement.",
+      "tagline": "Il ne s'agit pas de raccourcis. Il s'agit de vendre plus intelligemment — soutenu par des systèmes réels."
+    },
+    "whyAutoList": {
+      "heading": "Pourquoi AutoList Canada existe",
+      "content": "Nous avons créé cette plateforme parce que nous en avons assez de voir les vendeurs canadiens perdre leur temps sur des tâches manuelles et des annonces peu claires. Chaque fonctionnalité a été conçue avec un objectif : vous aider à vendre plus d'articles avec moins de travail."
+    },
+    "aiTools": {
+      "heading": "Explorez les outils IA",
+      "content": "Ce ne sont pas simplement des outils d'écriture — ce sont des systèmes d'intelligence d'affaires pour les vendeurs qui veulent se développer avec précision."
+    }
+  }
+}
