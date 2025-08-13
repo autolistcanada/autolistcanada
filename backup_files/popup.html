@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoList Extension</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --alc-teal: #2dcfc5;
+      --alc-orange: #ff9335;
+      --alc-bg: #f8fbfa;
+      --alc-shadow: 0 4px 28px 0 rgba(45, 207, 197, 0.11), 0 1.5px 8px #ff933522;
+      --alc-radius: 22px;
+      --alc-btn-radius: 999px;
+      --alc-btn-shadow: 0 2px 12px 0 #2dcfc522;
+    }
+    html, body {
+      padding: 0;
+      margin: 0;
+      background: var(--alc-bg);
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #18322a;
+      min-width: 280px;
+      min-height: 100px;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #f8fbfa 70%, #2dcfc510 100%);
+    }
+    .alc-popup-container {
+      background: #fff;
+      max-width: 400px;
+      width: 100vw;
+      border-radius: var(--alc-radius);
+      box-shadow: var(--alc-shadow);
+      padding: 2.2em 1.8em 2em 1.8em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.3em;
+      margin: 0.8em 0.3em;
+      border: 1.5px solid #e7f5ee;
+      animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .alc-popup-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, #2dcfc5 60%, #ff9335 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.3em;
+      box-shadow: 0 2px 12px #2dcfc522;
+    }
+    .alc-popup-logo img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+    .alc-popup-header {
+      font-size: 1.22em;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--alc-teal);
+      margin-bottom: 0.6em;
+      text-align: center;
+    }
+    .alc-popup-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      margin-top: 0.3em;
+    }
+    .alc-popup-btn {
+      width: 100%;
+      padding: 1em 0;
+      background: linear-gradient(90deg, #2dcfc5 65%, #ff9335 100%);
+      color: #fff;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.08em;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--alc-btn-radius);
+      box-shadow: var(--alc-btn-shadow);
+      cursor: pointer;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
+      outline: none;
+      letter-spacing: 0.03em;
+      margin: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    .alc-popup-btn:focus-visible {
+      box-shadow: 0 0 0 4px #2dcfc555, var(--alc-btn-shadow);
+      outline: none;
+      z-index: 2;
+    }
+    .alc-popup-btn:hover, .alc-popup-btn:focus {
+      background: linear-gradient(90deg, #2dcfc5 55%, #ff9335 100%);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 22px 0 #2dcfc544, 0 2px 14px #ff933522;
+    }
+    @media (max-width: 440px) {
+      .alc-popup-container {
+        padding: 1.2em 0.6em 1.2em 0.6em;
+        max-width: 98vw;
+      }
+      .alc-popup-header { font-size: 1.07em; }
+      .alc-popup-btn { font-size: 0.98em; padding: 0.85em 0; }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(24px); }
+      100% { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="alc-popup-container">
+    <div class="alc-popup-logo">
+      <!-- Placeholder logo, replace src with your real logo if available -->
+      <img src="https://placehold.co/54x54/2dcfc5/fff?text=AL" alt="AutoList Canada Logo" />
+    </div>
+    <div class="alc-popup-header">AutoList Extension</div>
+    <div class="alc-popup-actions">
+      <button class="alc-popup-btn">Sync This Listing</button>
+      <button class="alc-popup-btn">Generate AI Title</button>
+      <button class="alc-popup-btn">Generate AI Tags</button>
+      <button class="alc-popup-btn">Crosslist Now</button>
+      <button class="alc-popup-btn">Open Dashboard</button>
+    </div>
+  </div>
+</body>
+</html>
