@@ -1,0 +1,364 @@
+/**
+ * AutoList Canada - Flow Animations
+ * 
+ * This file contains animation utilities for creating smooth, 
+ * organic motion effects throughout the website.
+ */
+
+/* Base Animation Properties */
+[data-animate] {
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.5, 0, 0.15, 1.35);
+}
+
+[data-animate].animated {
+  opacity: 1;
+}
+
+/* Fade In Animations */
+[data-animate="fade-in"] {
+  transition-duration: 800ms;
+}
+
+/* Slide Animations */
+[data-animate="slide-up"] {
+  transform: translateY(30px);
+  transition-duration: 800ms;
+}
+
+[data-animate="slide-up"].animated {
+  transform: translateY(0);
+}
+
+[data-animate="slide-down"] {
+  transform: translateY(-30px);
+  transition-duration: 800ms;
+}
+
+[data-animate="slide-down"].animated {
+  transform: translateY(0);
+}
+
+[data-animate="slide-left"] {
+  transform: translateX(30px);
+  transition-duration: 800ms;
+}
+
+[data-animate="slide-left"].animated {
+  transform: translateX(0);
+}
+
+[data-animate="slide-right"] {
+  transform: translateX(-30px);
+  transition-duration: 800ms;
+}
+
+[data-animate="slide-right"].animated {
+  transform: translateX(0);
+}
+
+/* Scale Animations */
+[data-animate="zoom-in"] {
+  transform: scale(0.9);
+  transition-duration: 800ms;
+}
+
+[data-animate="zoom-in"].animated {
+  transform: scale(1);
+}
+
+[data-animate="zoom-out"] {
+  transform: scale(1.1);
+  transition-duration: 800ms;
+}
+
+[data-animate="zoom-out"].animated {
+  transform: scale(1);
+}
+
+/* Staggered Animations */
+[data-animate-stagger] > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 800ms cubic-bezier(0.5, 0, 0.15, 1.35),
+              transform 800ms cubic-bezier(0.5, 0, 0.15, 1.35);
+}
+
+[data-animate-stagger].animated > *:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-stagger].animated > *:nth-child(2) {
+  transition-delay: 100ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-stagger].animated > *:nth-child(3) {
+  transition-delay: 200ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-stagger].animated > *:nth-child(4) {
+  transition-delay: 300ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-stagger].animated > *:nth-child(5) {
+  transition-delay: 400ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-animate-stagger].animated > *:nth-child(n+6) {
+  transition-delay: 500ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating Animation */
+.float {
+  animation: floating 6s ease-in-out infinite;
+}
+
+.float-delay-1 {
+  animation-delay: 1s;
+}
+
+.float-delay-2 {
+  animation-delay: 2s;
+}
+
+.float-delay-3 {
+  animation-delay: 3s;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Pulse Animation */
+.pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Gentle Rotation */
+.rotate {
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Background Gradient Shifts */
+.bg-gradient-shift {
+  background: linear-gradient(
+    45deg,
+    rgba(45, 207, 197, 0.2),
+    rgba(255, 147, 53, 0.2),
+    rgba(246, 109, 44, 0.2),
+    rgba(255, 218, 61, 0.2),
+    rgba(45, 207, 197, 0.2)
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Entrance Animation for Sections */
+.section-entrance {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.section-entrance.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Mouse Movement Parallax */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  transition: transform 0.1s ease-out;
+}
+
+/* Button Animation Effects */
+.btn-pulse {
+  position: relative;
+}
+
+.btn-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(255, 147, 53, 0.7);
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 147, 53, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 147, 53, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 147, 53, 0);
+  }
+}
+
+/* Scroll-Triggered Animation Utility */
+.reveal-on-scroll {
+  opacity: 0;
+  transition: all 1s;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+}
+
+/* IntersectionObserver JavaScript to be added */
+
+/* Initialize animation system */
+document.addEventListener('DOMContentLoaded', () => {
+  // Scroll animation handler
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('[data-animate]');
+    const staggerElements = document.querySelectorAll('[data-animate-stagger]');
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const sectionElements = document.querySelectorAll('.section-entrance');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          entry.target.classList.add('active');
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    elements.forEach(el => observer.observe(el));
+    staggerElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => observer.observe(el));
+    sectionElements.forEach(el => observer.observe(el));
+  };
+  
+  // Mouse parallax effect
+  const handleMouseMove = (e) => {
+    const parallaxContainers = document.querySelectorAll('.parallax-container');
+    
+    parallaxContainers.forEach(container => {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const moveX = (e.clientX - centerX) / 20;
+      const moveY = (e.clientY - centerY) / 20;
+      
+      const layers = container.querySelectorAll('.parallax-layer');
+      layers.forEach((layer, index) => {
+        const depth = (index + 1) * 0.5;
+        layer.style.transform = `translate3d(${moveX * depth}px, ${moveY * depth}px, 0)`;
+      });
+    });
+  };
+  
+  document.addEventListener('mousemove', handleMouseMove);
+  animateOnScroll();
+});

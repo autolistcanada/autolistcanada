@@ -2,10 +2,14 @@
  * AutoList Canada - Theme Styles
  * 
  * Main theme stylesheet for the AutoList Canada platform.
- * Implements the abstract geometric nature/vibrant design system.
+ * Implements the modern, vibrant, organic, and geometric-inspired design system.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import 'organic-shapes.css';
+@import 'flow-animations.css';
+@import 'depth-effects.css';
+@import 'geometric-accents.css';
 @import 'tokens.css';
 
 /* Reset and Base Styles */
@@ -27,6 +31,7 @@ body {
   line-height: 1.5;
   overflow-x: hidden;
   min-height: 100vh;
+  letter-spacing: 0.01em;
 }
 
 /* Typography */
@@ -36,6 +41,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-neutral-900);
   line-height: 1.2;
   margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
 }
 
 h1 {
@@ -89,12 +95,14 @@ a:hover, a:focus {
   color: var(--color-neutral-900);
   background-color: var(--color-neutral-100);
   border: 1px solid var(--color-neutral-200);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-xl);
   cursor: pointer;
   transition: all var(--transition-normal);
   text-align: center;
   text-decoration: none;
-  min-height: 40px;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover {
@@ -108,26 +116,28 @@ a:hover, a:focus {
 
 /* Primary Button */
 .btn-primary {
-  background-color: var(--color-green-600);
-  border-color: var(--color-green-700);
+  background: linear-gradient(135deg, var(--color-green-600), var(--color-green-500));
+  border: none;
   color: white;
+  box-shadow: var(--shadow-green);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-green-700);
-  border-color: var(--color-green-800);
+  background: linear-gradient(135deg, var(--color-green-700), var(--color-green-600));
+  transform: translateY(-2px);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background-color: var(--color-orange-500);
-  border-color: var(--color-orange-600);
+  background: linear-gradient(135deg, var(--color-orange-500), var(--color-rust-500));
+  border: none;
   color: white;
+  box-shadow: var(--shadow-orange);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-orange-600);
-  border-color: var(--color-orange-700);
+  background: linear-gradient(135deg, var(--color-orange-600), var(--color-rust-600));
+  transform: translateY(-2px);
 }
 
 /* Containers */
@@ -143,16 +153,19 @@ a:hover, a:focus {
 /* Cards */
 .card {
   background-color: white;
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-md);
   padding: var(--space-6);
   margin-bottom: var(--space-6);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-accent {
   position: relative;
+  border: none;
+  overflow: hidden;
 }
 
 .card-accent::before {
@@ -161,9 +174,9 @@ a:hover, a:focus {
   left: 0;
   top: 0;
   height: 100%;
-  width: 4px;
-  background: linear-gradient(to bottom, var(--color-green-500), var(--color-orange-500));
-  border-radius: 4px 0 0 4px;
+  width: 6px;
+  background: linear-gradient(to bottom, var(--color-green-500), var(--color-orange-500), var(--color-rust-500));
+  border-radius: 6px 0 0 6px;
 }
 
 /* Layout */
@@ -463,6 +476,7 @@ a:hover, a:focus {
   .card {
     background-color: var(--color-neutral-800);
     color: var(--color-neutral-100);
+    box-shadow: var(--shadow-lg);
   }
   
   .table th {
@@ -484,6 +498,16 @@ a:hover, a:focus {
     background-color: var(--color-neutral-800);
     color: var(--color-neutral-100);
     border-color: var(--color-neutral-600);
+  }
+  
+  .glass {
+    background: rgba(24, 50, 42, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-dark {
+    background: rgba(15, 35, 29, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 }
 

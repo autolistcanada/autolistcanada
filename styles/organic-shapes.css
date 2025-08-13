@@ -1,0 +1,276 @@
+/**
+ * AutoList Canada - Organic Shapes
+ * 
+ * This file contains SVG-based organic shape dividers, backgrounds,
+ * and decorative elements to create a flowing, natural aesthetic
+ * combined with geometric precision.
+ */
+
+/* Flowing Dividers */
+.divider-wave {
+  position: relative;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.divider-wave::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C150,120 350,0 500,100 C650,200 750,0 900,100 C1050,200 1150,80 1200,80 L1200,120 L0,120 Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.divider-wave.inverted::before {
+  transform: rotate(180deg);
+}
+
+/* Curved divider styles */
+.divider-curve {
+  position: relative;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.divider-curve::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,120 C400,60 800,110 1200,80 L1200,120 L0,120 Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.divider-curve.inverted::before {
+  transform: rotate(180deg);
+}
+
+/* Layered divider with dual colors */
+.divider-layers {
+  position: relative;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.divider-layers::before,
+.divider-layers::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+.divider-layers::before {
+  height: 70px;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C300,80 600,0 900,80 C1000,120 1100,100 1200,80 L1200,120 L0,120 Z' fill='%23FFFFFF' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+
+.divider-layers::after {
+  height: 100px;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C200,100 400,30 600,90 C800,150 1000,30 1200,70 L1200,120 L0,120 Z' fill='%23FFFFFF' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: cover;
+}
+
+/* Organic Shapes as Section Backgrounds */
+.shape-blob-bg {
+  position: relative;
+}
+
+.shape-blob-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cpath fill='%232DCFC5' fill-opacity='0.08' d='M435.7,201.9c72.7,35.9,144.3,78.3,184.8,140.5c40.5,62.2,49.9,144.3,19.4,210.1c-30.5,65.9-100.8,115.7-178.7,148.5c-77.9,32.9-163.3,49-230.9,15.9c-67.5-33-117.1-114.9-127.3-198.5c-10.2-83.6,18.8-169,67.9-233.7C220.1,219,289.1,173.8,359.4,174C429.7,174.2,363,166,435.7,201.9z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.shape-waves-bg {
+  position: relative;
+}
+
+.shape-waves-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900' viewBox='0 0 1600 900'%3E%3Cpath fill='%23FF9335' fill-opacity='0.08' d='M0,288L48,256C96,224,192,160,288,149.3C384,139,480,181,576,197.3C672,213,768,203,864,170.7C960,139,1056,85,1152,96C1248,107,1344,181,1392,218.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.shape-circuit-bg {
+  position: relative;
+}
+
+.shape-circuit-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23F66D2C' fill-opacity='0.08'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* Shaped Containers */
+.container-organic {
+  border-radius: 60px 20px 80px 40px;
+  overflow: hidden;
+}
+
+.container-asymmetrical {
+  border-radius: 0 40px 0 80px;
+  overflow: hidden;
+}
+
+.container-flowing {
+  border-radius: 80px 20px 60px 35px;
+  overflow: hidden;
+}
+
+/* Decorative Elements */
+.decor-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(45, 207, 197, 0.2), rgba(255, 147, 53, 0.2));
+  z-index: -1;
+}
+
+.decor-circle-sm {
+  width: 150px;
+  height: 150px;
+}
+
+.decor-circle-md {
+  width: 250px;
+  height: 250px;
+}
+
+.decor-circle-lg {
+  width: 400px;
+  height: 400px;
+}
+
+.decor-circle-top-right {
+  top: -100px;
+  right: -100px;
+}
+
+.decor-circle-bottom-left {
+  bottom: -100px;
+  left: -100px;
+}
+
+/* Animated Blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  z-index: -1;
+  animation: float 8s ease-in-out infinite alternate;
+}
+
+.blob-teal {
+  background-color: var(--color-green-500);
+}
+
+.blob-orange {
+  background-color: var(--color-orange-500);
+}
+
+.blob-gold {
+  background-color: var(--color-gold-500);
+}
+
+.blob-rust {
+  background-color: var(--color-rust-500);
+}
+
+.blob-sm {
+  width: 150px;
+  height: 150px;
+}
+
+.blob-md {
+  width: 300px;
+  height: 300px;
+}
+
+.blob-lg {
+  width: 500px;
+  height: 500px;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, -15px) scale(1.05);
+  }
+  100% {
+    transform: translate(-15px, 15px) scale(0.95);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .divider-wave,
+  .divider-curve {
+    height: 50px;
+  }
+  
+  .divider-layers {
+    height: 70px;
+  }
+  
+  .divider-layers::before {
+    height: 40px;
+  }
+  
+  .divider-layers::after {
+    height: 70px;
+  }
+  
+  .container-organic,
+  .container-flowing,
+  .container-asymmetrical {
+    border-radius: 30px 10px 40px 20px;
+  }
+  
+  .blob-md,
+  .blob-lg {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .decor-circle-md,
+  .decor-circle-lg {
+    width: 150px;
+    height: 150px;
+  }
+}

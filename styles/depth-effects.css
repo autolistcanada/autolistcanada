@@ -1,0 +1,321 @@
+/**
+ * AutoList Canada - Depth Effects
+ * 
+ * This file contains layered shadow and transparency utilities
+ * to create depth and dimension in the UI.
+ */
+
+/* Glass Effect Containers */
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-dark {
+  background: rgba(24, 50, 42, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.glass-brand {
+  background: rgba(45, 207, 197, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(45, 207, 197, 0.3);
+}
+
+.glass-orange {
+  background: rgba(255, 147, 53, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 147, 53, 0.3);
+}
+
+/* Enhanced Shadows */
+.shadow-float {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-float-brand {
+  box-shadow: 
+    0 10px 30px -3px rgba(45, 207, 197, 0.2),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-float-orange {
+  box-shadow: 
+    0 10px 30px -3px rgba(255, 147, 53, 0.2),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-float-gold {
+  box-shadow: 
+    0 10px 30px -3px rgba(255, 218, 61, 0.2),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-float-rust {
+  box-shadow: 
+    0 10px 30px -3px rgba(246, 109, 44, 0.2),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Layered Card Effect */
+.card-layered {
+  position: relative;
+}
+
+.card-layered::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.card-layered::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: inherit;
+  z-index: -2;
+}
+
+/* Multiple Background Layers */
+.bg-layered-waves {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-layered-waves::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%232DCFC5' fill-opacity='0.2' d='M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.bg-layered-waves::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23FF9335' fill-opacity='0.1' d='M0,96L48,128C96,160,192,224,288,213.3C384,203,480,117,576,101.3C672,85,768,139,864,160C960,181,1056,171,1152,154.7C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+/* Depth Gradients */
+.depth-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+.depth-gradient-brand {
+  background: linear-gradient(
+    180deg,
+    rgba(45, 207, 197, 0.15) 0%,
+    rgba(45, 207, 197, 0.05) 100%
+  );
+}
+
+.depth-gradient-orange {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 147, 53, 0.15) 0%,
+    rgba(255, 147, 53, 0.05) 100%
+  );
+}
+
+/* Inner Shadows */
+.inner-shadow {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.inner-shadow-lg {
+  box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Elevated Cards with Hover Effects */
+.card-elevated {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.card-elevated:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Multi-Layered Cards */
+.card-multi-layer {
+  position: relative;
+}
+
+.card-multi-layer-1 {
+  position: relative;
+  z-index: 3;
+}
+
+.card-multi-layer-2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  opacity: 0.7;
+}
+
+.card-multi-layer-3 {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* Blur Effects */
+.blur-bg {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.blur-bg-strong {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Nested Shadow Effects */
+.shadow-nested {
+  position: relative;
+}
+
+.shadow-nested::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.shadow-nested::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: inherit;
+  z-index: -2;
+}
+
+/* Overlay Effects */
+.overlay-gradient {
+  position: relative;
+}
+
+.overlay-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.overlay-brand {
+  position: relative;
+}
+
+.overlay-brand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(45, 207, 197, 0.3) 0%,
+    rgba(255, 147, 53, 0.3) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .card-layered::before {
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+  }
+  
+  .card-layered::after {
+    top: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+  }
+  
+  .card-multi-layer-2 {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
+  
+  .card-multi-layer-3 {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+}

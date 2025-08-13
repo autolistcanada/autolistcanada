@@ -1,0 +1,308 @@
+/**
+ * AutoList Canada - Geometric Accents
+ * 
+ * This file contains geometric patterns and accent shapes
+ * to enhance the modern, vibrant design aesthetic.
+ */
+
+/* Dot Grid Patterns */
+.pattern-dots {
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-dots::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%232DCFC5' fill-opacity='0.3'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.pattern-dots-orange::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23FF9335' fill-opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.pattern-dots-gold::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23FFDA3D' fill-opacity='0.3'/%3E%3C/svg%3E");
+}
+
+/* Triangle Patterns */
+.pattern-triangles {
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-triangles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10L50 10L30 50Z' stroke='%232DCFC5' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.pattern-triangles-orange::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10L50 10L30 50Z' stroke='%23FF9335' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.pattern-triangles-gold::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10L50 10L30 50Z' stroke='%23FFDA3D' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+/* Line Patterns */
+.pattern-lines {
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-lines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='40' y2='40' stroke='%232DCFC5' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.pattern-lines-orange::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='40' y2='40' stroke='%23FF9335' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.pattern-lines-gold::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='40' y2='40' stroke='%23FFDA3D' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+/* Hexagon Patterns */
+.pattern-hexagons {
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-hexagons::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10L50 25L50 45L30 60L10 45L10 25Z' stroke='%232DCFC5' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.pattern-hexagons-orange::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10L50 25L50 45L30 60L10 45L10 25Z' stroke='%23FF9335' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+.pattern-hexagons-gold::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10L50 25L50 45L30 60L10 45L10 25Z' stroke='%23FFDA3D' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E");
+}
+
+/* Abstract Geometric Accent Elements */
+.accent-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(45, 207, 197, 0.3);
+  width: 100px;
+  height: 100px;
+  z-index: -1;
+}
+
+.accent-circle-orange {
+  border-color: rgba(255, 147, 53, 0.3);
+}
+
+.accent-circle-gold {
+  border-color: rgba(255, 218, 61, 0.3);
+}
+
+.accent-circle-rust {
+  border-color: rgba(246, 109, 44, 0.3);
+}
+
+.accent-square {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid rgba(45, 207, 197, 0.3);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.accent-square-orange {
+  border-color: rgba(255, 147, 53, 0.3);
+}
+
+.accent-square-gold {
+  border-color: rgba(255, 218, 61, 0.3);
+}
+
+.accent-square-rust {
+  border-color: rgba(246, 109, 44, 0.3);
+}
+
+/* Corner Accent Elements */
+.accent-corner-tl {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+}
+
+.accent-corner-tr {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+}
+
+.accent-corner-bl {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+}
+
+.accent-corner-br {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+}
+
+/* Geometric Background Accents */
+.bg-geo-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-geo-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='100' cy='100' r='50' stroke='%232DCFC5' stroke-width='1' fill='none' opacity='0.2'/%3E%3Crect x='75' y='75' width='50' height='50' stroke='%23FF9335' stroke-width='1' fill='none' opacity='0.2'/%3E%3Cpath d='M60 120L100 60L140 120Z' stroke='%23FFDA3D' stroke-width='1' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* Geometric Dividers */
+.divider-geo {
+  position: relative;
+  height: 60px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.divider-geo::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpolygon points='0,0 300,120 600,0 900,120 1200,0 1200,120 0,120' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.divider-geo.inverted::before {
+  transform: rotate(180deg);
+}
+
+/* Size Variations */
+.accent-sm {
+  width: 50px;
+  height: 50px;
+}
+
+.accent-md {
+  width: 80px;
+  height: 80px;
+}
+
+.accent-lg {
+  width: 120px;
+  height: 120px;
+}
+
+.accent-xl {
+  width: 200px;
+  height: 200px;
+}
+
+/* Animating Accents */
+.accent-rotate {
+  animation: accent-rotate 30s linear infinite;
+}
+
+@keyframes accent-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.accent-pulse {
+  animation: accent-pulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes accent-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .accent-circle,
+  .accent-square {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .accent-corner-tl,
+  .accent-corner-tr,
+  .accent-corner-bl,
+  .accent-corner-br {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .divider-geo {
+    height: 40px;
+  }
+  
+  .accent-lg {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .accent-xl {
+    width: 120px;
+    height: 120px;
+  }
+}
