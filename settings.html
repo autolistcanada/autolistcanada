@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="settings_title">Settings - AutoList Canada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles/theme.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="bg-primary w-64 h-screen fixed left-0 overflow-y-auto shadow-lg hidden md:block">
+      <div class="p-6">
+        <div class="flex items-center mb-8">
+          <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-10 h-10">
+          <h1 class="text-white text-xl font-bold ml-2">AutoList <span class="text-secondary">Canada</span></h1>
+        </div>
+        
+        <nav>
+          <ul class="space-y-2">
+            <li>
+              <a href="index.html" class="flex items-center text-gray-300 hover:text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                <span class="material-icons mr-3">home</span>
+                <span data-i18n="nav_home">Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="dashboard.html" class="flex items-center text-gray-300 hover:text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                <span class="material-icons mr-3">dashboard</span>
+                <span data-i18n="nav_dashboard">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="listings.html" class="flex items-center text-gray-300 hover:text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                <span class="material-icons mr-3">list</span>
+                <span data-i18n="nav_listings">Listings</span>
+              </a>
+            </li>
+            <li>
+              <a href="templates.html" class="flex items-center text-gray-300 hover:text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                <span class="material-icons mr-3">description</span>
+                <span data-i18n="nav_templates">Templates</span>
+              </a>
+            </li>
+            <li>
+              <a href="ai-tools.html" class="flex items-center text-gray-300 hover:text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                <span class="material-icons mr-3">smart_toy</span>
+                <span data-i18n="nav_ai_tools">AI Tools</span>
+              </a>
+            </li>
+            <li>
+              <a href="settings.html" class="flex items-center text-white bg-primary-dark py-2 px-4 rounded transition-colors">
+                <span class="material-icons mr-3">settings</span>
+                <span data-i18n="nav_settings">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 p-6 w-full">
+      <div class="container mx-auto">
+        <!-- Header with language toggle -->
+        <header class="flex justify-between items-center mb-8">
+          <h1 class="text-2xl font-bold text-gray-800" data-i18n="settings_heading">Settings</h1>
+          
+          <button id="languageToggle" class="bg-secondary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-105 transition-transform">
+            <span id="languageDisplay">EN</span>
+          </button>
+        </header>
+
+        <!-- Settings Content -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800" data-i18n="account_settings">Account Settings</h2>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-gray-700 mb-2" data-i18n="email_label">Email Address</label>
+              <input type="email" class="w-full p-2 border rounded" value="user@example.com">
+            </div>
+            
+            <div>
+              <label class="block text-gray-700 mb-2" data-i18n="name_label">Full Name</label>
+              <input type="text" class="w-full p-2 border rounded" value="John Smith">
+            </div>
+            
+            <div>
+              <label class="block text-gray-700 mb-2" data-i18n="password_label">Password</label>
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded" data-i18n="change_password">Change Password</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800" data-i18n="marketplace_connections">Marketplace Connections</h2>
+          
+          <div class="space-y-4">
+            <div class="flex justify-between items-center p-3 border rounded">
+              <div class="flex items-center">
+                <span class="text-gray-800" data-i18n="ebay_ca">eBay Canada</span>
+              </div>
+              <button id="ebay-connect" class="text-blue-500 hover:text-blue-700" data-i18n="connect">Connect</button>
+            </div>
+            
+            <div class="flex justify-between items-center p-3 border rounded">
+              <div class="flex items-center">
+                <span class="text-gray-800" data-i18n="amazon_ca">Amazon Canada</span>
+              </div>
+              <button id="amazon-connect" class="text-blue-500 hover:text-blue-700" data-i18n="connect">Connect</button>
+            </div>
+            
+            <div class="flex justify-between items-center p-3 border rounded">
+              <div class="flex items-center">
+                <span class="text-gray-800" data-i18n="etsy">Etsy</span>
+              </div>
+              <button id="etsy-connect" class="text-blue-500 hover:text-blue-700" data-i18n="connect">Connect</button>
+            </div>
+            
+            <div id="connected-status" class="mt-4 p-3 bg-green-50 text-green-800 rounded hidden">
+              <p data-i18n="marketplace_connected_success">Marketplace successfully connected!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800" data-i18n="preferences">Preferences</h2>
+          
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <input type="checkbox" id="notificationsEnabled" class="mr-2" checked>
+              <label for="notificationsEnabled" class="text-gray-800" data-i18n="enable_notifications">Enable Email Notifications</label>
+            </div>
+            
+            <div>
+              <label class="block text-gray-700 mb-2" data-i18n="default_language">Default Language</label>
+              <select class="w-full p-2 border rounded">
+                <option value="en" data-i18n="english">English</option>
+                <option value="fr" data-i18n="french">French</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-gray-700 mb-2" data-i18n="time_zone">Time Zone</label>
+              <select class="w-full p-2 border rounded">
+                <option value="America/Toronto">Eastern Time (ET)</option>
+                <option value="America/Edmonton">Mountain Time (MT)</option>
+                <option value="America/Vancouver">Pacific Time (PT)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800" data-i18n="subscription">Subscription</h2>
+          
+          <div class="p-4 bg-gray-100 rounded mb-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="font-semibold" data-i18n="current_plan">Current Plan:</p>
+                <p class="text-primary text-lg font-bold">Professional</p>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold" data-i18n="next_billing">Next Billing Date:</p>
+                <p>September 12, 2025</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex space-x-4">
+            <button class="bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded" data-i18n="manage_plan">Manage Plan</button>
+            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded" data-i18n="billing_history">Billing History</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Include necessary scripts -->
+  <script src="scripts/i18n.js" defer></script>
+  <script src="scripts/services/marketplace-service.js" defer></script>
+  <script src="scripts/services/ebay-service.js" defer></script>
+  <script src="scripts/services/amazon-service.js" defer></script>
+  <script src="scripts/services/etsy-service.js" defer></script>
+  <script src="scripts/services/services-loader.js" defer></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize language toggle
+      const languageToggle = document.getElementById('languageToggle');
+      const languageDisplay = document.getElementById('languageDisplay');
+      
+      // Check if we have a saved language preference
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      languageDisplay.textContent = savedLanguage.toUpperCase();
+      
+      // Apply translations on page load
+      changeLanguage(savedLanguage);
+      
+      // Add event listener for language toggle
+      languageToggle.addEventListener('click', function() {
+        const currentLang = localStorage.getItem('language') || 'en';
+        const newLang = currentLang === 'en' ? 'fr' : 'en';
+        
+        // Update display
+        languageDisplay.textContent = newLang.toUpperCase();
+        
+        // Change language
+        changeLanguage(newLang);
+      });
+      
+      // Initialize marketplace connections
+      const ebayConnectBtn = document.getElementById('ebay-connect');
+      const amazonConnectBtn = document.getElementById('amazon-connect');
+      const etsyConnectBtn = document.getElementById('etsy-connect');
+      const connectedStatus = document.getElementById('connected-status');
+      
+      // Check for connected marketplaces
+      setTimeout(() => {
+        if (window.AutoList && window.AutoList.servicesManager) {
+          updateMarketplaceConnectionUI();
+        }
+      }, 1000);
+      
+      function updateMarketplaceConnectionUI() {
+        try {
+          const servicesManager = window.AutoList.servicesManager;
+          const services = servicesManager.getAllServices();
+          
+          // Check eBay connection
+          if (services['ebay-ca'] && services['ebay-ca'].isMarketplaceConnected('ebay-ca')) {
+            ebayConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+            ebayConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+            ebayConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+          }
+          
+          // Check Amazon connection
+          if (services['amazon-ca'] && services['amazon-ca'].isMarketplaceConnected('amazon-ca')) {
+            amazonConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+            amazonConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+            amazonConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+          }
+          
+          // Check Etsy connection
+          if (services['etsy'] && services['etsy'].isMarketplaceConnected('etsy')) {
+            etsyConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+            etsyConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+            etsyConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+          }
+        } catch (error) {
+          console.error('Error updating marketplace UI:', error);
+        }
+      }
+      
+      // Add event listeners for marketplace connections
+      ebayConnectBtn.addEventListener('click', async function() {
+        try {
+          if (!window.AutoList || !window.AutoList.servicesManager) {
+            console.error('Services manager not initialized');
+            return;
+          }
+          
+          const servicesManager = window.AutoList.servicesManager;
+          const ebayService = servicesManager.getService('ebay-ca');
+          
+          if (!ebayService) {
+            console.error('eBay service not found');
+            return;
+          }
+          
+          // Check if already connected
+          if (ebayService.isMarketplaceConnected('ebay-ca')) {
+            // Disconnect
+            const result = ebayService.disconnectMarketplace('ebay-ca');
+            if (result.success) {
+              ebayConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Connecter' : 'Connect';
+              ebayConnectBtn.classList.remove('text-red-500', 'hover:text-red-700');
+              ebayConnectBtn.classList.add('text-blue-500', 'hover:text-blue-700');
+            }
+          } else {
+            // Connect - simulate OAuth flow
+            // In a real app, this would redirect to eBay auth page
+            await ebayService.initialize({
+              clientId: 'demo-client-id',
+              clientSecret: 'demo-client-secret',
+              redirectUri: 'https://www.autolistcanada.ca/callback'
+            });
+            
+            const result = await ebayService.exchangeCodeForToken('simulated_auth_code');
+            
+            if (result.success) {
+              // Show success message
+              connectedStatus.classList.remove('hidden');
+              setTimeout(() => connectedStatus.classList.add('hidden'), 3000);
+              
+              // Update UI
+              ebayConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+              ebayConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+              ebayConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+            }
+          }
+        } catch (error) {
+          console.error('Error connecting to eBay:', error);
+        }
+      });
+      
+      // Similar handlers for Amazon and Etsy
+      amazonConnectBtn.addEventListener('click', async function() {
+        try {
+          if (!window.AutoList || !window.AutoList.servicesManager) return;
+          
+          const servicesManager = window.AutoList.servicesManager;
+          const amazonService = servicesManager.getService('amazon-ca');
+          
+          if (!amazonService) return;
+          
+          if (amazonService.isMarketplaceConnected('amazon-ca')) {
+            // Disconnect
+            const result = amazonService.disconnectMarketplace('amazon-ca');
+            if (result.success) {
+              amazonConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Connecter' : 'Connect';
+              amazonConnectBtn.classList.remove('text-red-500', 'hover:text-red-700');
+              amazonConnectBtn.classList.add('text-blue-500', 'hover:text-blue-700');
+            }
+          } else {
+            // Connect - simulate connection
+            const result = await amazonService.connect({
+              sellerId: 'demo-seller-id',
+              accessKey: 'demo-access-key',
+              secretKey: 'demo-secret-key'
+            });
+            
+            if (result.success) {
+              connectedStatus.classList.remove('hidden');
+              setTimeout(() => connectedStatus.classList.add('hidden'), 3000);
+              
+              amazonConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+              amazonConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+              amazonConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+            }
+          }
+        } catch (error) {
+          console.error('Error connecting to Amazon:', error);
+        }
+      });
+      
+      etsyConnectBtn.addEventListener('click', async function() {
+        try {
+          if (!window.AutoList || !window.AutoList.servicesManager) return;
+          
+          const servicesManager = window.AutoList.servicesManager;
+          const etsyService = servicesManager.getService('etsy');
+          
+          if (!etsyService) return;
+          
+          if (etsyService.isMarketplaceConnected('etsy')) {
+            // Disconnect
+            const result = etsyService.disconnectMarketplace('etsy');
+            if (result.success) {
+              etsyConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Connecter' : 'Connect';
+              etsyConnectBtn.classList.remove('text-red-500', 'hover:text-red-700');
+              etsyConnectBtn.classList.add('text-blue-500', 'hover:text-blue-700');
+            }
+          } else {
+            // Connect - simulate OAuth flow
+            await etsyService.initialize({
+              apiKey: 'demo-api-key',
+              clientId: 'demo-client-id',
+              clientSecret: 'demo-client-secret',
+              redirectUri: 'https://www.autolistcanada.ca/callback'
+            });
+            
+            const result = await etsyService.exchangeCodeForToken('simulated_auth_code');
+            
+            if (result.success) {
+              connectedStatus.classList.remove('hidden');
+              setTimeout(() => connectedStatus.classList.add('hidden'), 3000);
+              
+              etsyConnectBtn.textContent = document.documentElement.lang === 'fr' ? 'Déconnecter' : 'Disconnect';
+              etsyConnectBtn.classList.remove('text-blue-500', 'hover:text-blue-700');
+              etsyConnectBtn.classList.add('text-red-500', 'hover:text-red-700');
+            }
+          }
+        } catch (error) {
+          console.error('Error connecting to Etsy:', error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

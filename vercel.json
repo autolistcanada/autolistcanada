@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "github": {
+    "silent": true,
+    "autoAlias": true
+  },
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "http://autolistcanada.ca/:path*",
+      "destination": "https://www.autolistcanada.ca/:path*",
+      "permanent": true
+    },
+    {
+      "source": "https://autolistcanada.ca/:path*",
+      "destination": "https://www.autolistcanada.ca/:path*",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(js|css|json|svg|png|jpg|jpeg|gif|webp)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}
