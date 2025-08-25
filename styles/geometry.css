@@ -1,0 +1,29 @@
+.geom-host{position:relative;isolation:isolate;background:var(--cloud-100)}
+.geom-proc,.geom-statement{position:absolute;inset:0}
+.geom-statement{pointer-events:none;opacity:var(--brand-alpha)}
+.btn-primary {
+    background: color-mix(in srgb, var(--brand-primary-600) calc(100% * var(--brand-sat)), #fff 0%);
+    color: #fff;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-soft);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: color-mix(in srgb, var(--brand-primary-600) 92%, #000 8%);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--brand-primary-600);
+    color: var(--brand-primary-600);
+    border-radius: var(--r-lg);
+}
+
+.btn-outline:hover {
+    background-color: color-mix(in srgb, var(--brand-primary-600), transparent 90%);
+    border-color: color-mix(in srgb, var(--brand-primary-600) 92%, #000 8%);
+}
+.badge-accent{background:color-mix(in srgb,var(--brand-accent-500) 92%,#fff 8%);color:#fff;border-radius:12px;padding:4px 10px;font-weight:700}
+.on-dark{color:#fff}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }

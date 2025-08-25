@@ -1,174 +1,49 @@
-/**
- * AutoList Canada - Design Tokens
- * 
- * This file contains all the base design tokens for the AutoList Canada platform.
- * Theme: Abstract geometric nature/vibrant
- * Colors: Deep green, gold, orange, rust, vibrant accents
- */
+:root{
+  /* Core brand ramps (500 = canonical) */
+  --teal-700:#0B7F88; --teal-600:#0D9199; --teal-500:#0FA3B1; --teal-400:#34B7C2; --teal-300:#66CAD1;
+  --sage-700:#6B8F71; --sage-600:#7F9F80; --sage-500:#A3B18A; --sage-400:#B7C2A2; --sage-300:#CCD3BA;
+  --mustard-800:#A78611; --mustard-700:#B99114; --mustard-600:#C99A16; --mustard-500:#D4A017; --mustard-300:#FFC933;
+  --orange-700:#C45721; --orange-600:#D45F25; --orange-500:#E26A2C; --orange-400:#F2793D; --orange-300:#FF955F;
+  --burgundy-800:#8A1538; --burgundy-700:#9D1C3F; --burgundy-600:#A91E45; --burgundy-500:#B11226; --burgundy-300:#D44551;
 
-:root {
-  /* Color Palette */
-  --color-green-900: #012B27; /* Deep green - primary */
-  --color-green-800: #0D3E38;
-  --color-green-700: #1E5E4B;
-  --color-green-600: #178E80;
-  --color-green-500: #2DCFC5; /* Vibrant teal - accent */
-  --color-green-400: #68E6DF;
-  --color-green-300: #9AF0EA;
-  --color-green-200: #C5F7F3;
-  --color-green-100: #E8FCF9;
-  
-  --color-gold-900: #705700; /* Deep gold */
-  --color-gold-800: #8C7400;
-  --color-gold-700: #B89D00;
-  --color-gold-600: #E3C000;
-  --color-gold-500: #FFDA3D; /* Vibrant gold - accent */
-  --color-gold-400: #FFE469;
-  --color-gold-300: #FFED94;
-  --color-gold-200: #FFF5C0;
-  --color-gold-100: #FFFBE6;
-  
-  --color-orange-900: #803400; /* Deep orange */
-  --color-orange-800: #A64D00;
-  --color-orange-700: #CC6200;
-  --color-orange-600: #F17900;
-  --color-orange-500: #FF9335; /* Vibrant orange - accent */
-  --color-orange-400: #FFA95E;
-  --color-orange-300: #FFBF87;
-  --color-orange-200: #FFD7B1;
-  --color-orange-100: #FFECE0;
-  
-  --color-rust-900: #6D2C15; /* Deep rust */
-  --color-rust-800: #863922;
-  --color-rust-700: #A34528;
-  --color-rust-600: #C65332;
-  --color-rust-500: #F66D2C; /* Vibrant rust - accent */
-  --color-rust-400: #F88E5C;
-  --color-rust-300: #FAAE8B;
-  --color-rust-200: #FCCEBC;
-  --color-rust-100: #FDEEE6;
+  /* Semantic mappings */
+  --brand-primary-600: var(--teal-600);
+  --brand-primary-500: var(--teal-500);
+  --brand-accent-500:  var(--orange-500);
+  --brand-success-500: var(--sage-600);
+  --brand-warning-500: var(--mustard-600);
+  --brand-danger-500:  var(--burgundy-600);
 
-  /* Neutral Colors */
-  --color-neutral-900: #18322A; /* Deep green-gray */
-  --color-neutral-800: #2A4840;
-  --color-neutral-700: #3D5F56;
-  --color-neutral-600: #4F766C;
-  --color-neutral-500: #628D82;
-  --color-neutral-400: #8AADA5;
-  --color-neutral-300: #B2CCC7;
-  --color-neutral-200: #D9EBEA;
-  --color-neutral-100: #F2F8F8;
-  --color-neutral-50: #FBFEFE;
-  
-  /* Status Colors */
-  --color-success: #2DCF8E;
-  --color-error: #E64A33;
-  --color-warning: #FFBB38;
-  --color-info: #3D8CFF;
-  
-  /* Typography */
-  --font-family-primary: 'Outfit', sans-serif;
-  --font-family-secondary: 'Manrope', sans-serif;
-  
-  --font-size-xs: 0.75rem;  /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-base: 1rem;   /* 16px */
-  --font-size-md: 1.125rem; /* 18px */
-  --font-size-lg: 1.25rem;  /* 20px */
-  --font-size-xl: 1.5rem;   /* 24px */
-  --font-size-2xl: 1.875rem;/* 30px */
-  --font-size-3xl: 2.25rem; /* 36px */
-  --font-size-4xl: 3rem;    /* 48px */
-  
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  
-  /* Spacing */
-  --space-1: 0.25rem;  /* 4px */
-  --space-2: 0.5rem;   /* 8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-5: 1.25rem;  /* 20px */
-  --space-6: 1.5rem;   /* 24px */
-  --space-8: 2rem;     /* 32px */
-  --space-10: 2.5rem;  /* 40px */
-  --space-12: 3rem;    /* 48px */
-  --space-16: 4rem;    /* 64px */
-  --space-20: 5rem;    /* 80px */
-  --space-24: 6rem;    /* 96px */
-  
-  /* Borders */
-  --border-radius-sm: 0.25rem;    /* 4px */
-  --border-radius-md: 0.5rem;     /* 8px */
-  --border-radius-lg: 1rem;       /* 16px */
-  --border-radius-xl: 1.5rem;     /* 24px */
-  --border-radius-2xl: 2rem;      /* 32px */
-  --border-radius-full: 9999px;   /* Circle/Pill */
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  
-  /* Brand Shadows */
-  --shadow-green: 0 4px 14px rgba(45, 207, 197, 0.3);
-  --shadow-orange: 0 4px 14px rgba(255, 147, 53, 0.3);
-  --shadow-rust: 0 4px 14px rgba(246, 109, 44, 0.3);
-  --shadow-gold: 0 4px 14px rgba(255, 218, 61, 0.3);
-  
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 300ms ease;
-  --transition-slow: 500ms ease;
-  
-  /* Z-index layers */
-  --z-behind: -1;
-  --z-normal: 0;
-  --z-above: 1;
-  --z-header: 10;
-  --z-dropdown: 20;
-  --z-sticky: 30;
-  --z-modal: 40;
-  --z-toast: 50;
-  --z-tooltip: 60;
-  
-  /* Containers */
-  --container-sm: 640px;
-  --container-md: 768px;
-  --container-lg: 1024px;
-  --container-xl: 1280px;
-  --container-2xl: 1536px;
-  
-  /* Animation Durations */
-  --animation-fast: 200ms;
-  --animation-normal: 350ms;
-  --animation-slow: 500ms;
+  /* Surfaces / text */
+  --surface-0:#FFFFFF; --surface-1:#F7FAF9; --surface-2:#ECF4F0;
+  --ink-900:#0B1512; --ink-800:#123025; --ink-700:#23463C; --ink-600:#2C4F45;
+  --muted-500:#5B6D66;
+
+  /* Radii / shadow / spacing */
+  --r-lg:14px; --r-xl:20px; --r-2xl:28px;
+  --shadow-soft:0 14px 40px rgba(11,21,18,.14), 0 2px 10px rgba(11,21,18,.08);
+  --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px;
+
+  /* Brand dials for quick tuning */
+  --brand-sat:1;      /* 0.85..1.15 */
+  --brand-alpha:.92;  /* 0.65..1  */
+
+  /* Background default */
+  --cloud-100:#F6F8F7;
+
+  /* Gradients used in backgrounds/hero */
+  --grad-aurora: linear-gradient(135deg,
+    color-mix(in srgb, var(--teal-500) calc(100%*var(--brand-sat)), #fff 0%) 0%,
+    color-mix(in srgb, var(--sage-500) calc(100%*var(--brand-sat)), #fff 0%) 45%,
+    color-mix(in srgb, var(--orange-500) calc(100%*var(--brand-sat)), #fff 0%) 75%,
+    color-mix(in srgb, var(--burgundy-500) calc(100%*var(--brand-sat)), #fff 0%) 100%
+  );
+  --grad-maple: linear-gradient(135deg,var(--orange-500),var(--burgundy-600));
 }
-
-/* Media Queries Tokens */
-:root {
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-}
-
-/* Dark Mode Overrides */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-neutral-900: #F2F8F8;
-    --color-neutral-800: #D9EBEA;
-    --color-neutral-700: #B2CCC7;
-    --color-neutral-600: #8AADA5;
-    --color-neutral-500: #628D82;
-    --color-neutral-400: #4F766C;
-    --color-neutral-300: #3D5F56;
-    --color-neutral-200: #2A4840;
-    --color-neutral-100: #18322A;
-    --color-neutral-50: #0F231D;
+@media (prefers-color-scheme: dark){
+  :root{
+    --surface-0:#0E1512; --surface-1:#0B1210; --surface-2:#0C1814;
+    --ink-900:#E9F3EF; --ink-700:#BCD3CB; --muted-500:#8AA098;
+    --cloud-100:#0F1512;
   }
 }

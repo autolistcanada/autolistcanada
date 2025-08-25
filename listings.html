@@ -11,29 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tailwind Config -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              'sans': ['Outfit', 'sans-serif'],
-              'display': ['Manrope', 'sans-serif']
-            }
-          }
-        }
-      }
-    </script>
     <!-- Alpine.js -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Custom Stylesheets -->
-    <link rel="stylesheet" href="styles/organic-shapes.css">
-    <link rel="stylesheet" href="styles/flow-animations.css">
-    <link rel="stylesheet" href="styles/depth-effects.css">
-    <link rel="stylesheet" href="styles/geometric-accents.css">
     <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/geometry.css">
     <link href="./styles/sidebar.css" rel="stylesheet">
     <link href="./styles/listings.css" rel="stylesheet">
     <meta name="description" content="AutoList Canada: Psychology-Driven Crosslisting Dashboard for Vintage & Resale Sellers" />
@@ -52,7 +34,7 @@
     <div id="sidebar-container"></div>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col min-h-screen bg-slate-900 text-white">
+    <main class="flex-1 flex flex-col min-h-screen bg-slate-900 text-white geom-host" data-bg="veins">
       <!-- Header -->
       <header class="relative py-24 px-6 md:px-12 text-center organic-wash-dark">
         <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pineGreen via-spruce to-cedar" data-i18n="listings.header.title">My Listings</h1>
@@ -385,5 +367,8 @@
         }
       });
     </script>
+    <script src="./scripts/bg/penrose.js" defer></script>
+    <script src="./scripts/bg/boids.js" defer></script>
+    <script src="./scripts/bg/veins.js" defer></script>
   </body>
 </html>

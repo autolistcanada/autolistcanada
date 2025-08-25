@@ -5,30 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoList Canada | AI-Powered Car Selling Platform</title>
   <link href="./styles/theme.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            mapleRed: '#D12B2B',
-            pineGreen: '#1F4D3A',
-            spruce: '#2C6B52',
-            cedar: '#7B5C45',
-            glacier: '#E7F0EC',
-            slate: '#0F172A',
-          },
-          fontFamily: {
-            sans: ['Inter', '"DM Sans"', 'system-ui', 'sans-serif'],
-          },
-          boxShadow: {
-            'soft-glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
-          },
-        },
-      },
-    };
-  </script>
-  <link href="./styles/geometric-accents.css" rel="stylesheet">
+  <link href="./styles/geometry.css" rel="stylesheet">
   <link href="./styles/sidebar.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
   <script>
@@ -53,10 +30,13 @@
 
     <!-- Main Content -->
   <main class="flex-1">
+    <script src="./scripts/bg/penrose.js" defer></script>
+    <script src="./scripts/bg/boids.js" defer></script>
+    <script src="./scripts/bg/veins.js" defer></script>
     <!-- =================================== -->
     <!-- Hero Section (Abstract Nature)      -->
     <!-- =================================== -->
-    <section class="relative bg-glacier organic-wash geo-grid overflow-hidden">
+    <section class="geom-host" data-bg="penrose">
       <!-- Top Divider -->
       <div class="absolute top-0 left-0 w-full h-[100px] z-10">
         <img src="./assets/img/dividers/maple-wave-top.svg" class="w-full h-full object-cover" alt=""/>

@@ -50,4 +50,28 @@ test.describe('Dashboard Page', () => {
     const calendarGrid = page.locator('.grid.grid-cols-7');
     await expect(calendarGrid.nth(1)).toBeVisible(); // The second grid is the days
   });
+
+  test('should display paywall modal when trying a featured AI tool', async ({ page }) => {
+    // Find the "Try Now" button for the first featured tool
+    const tryNowButton = page.locator('button:has-text("Try Now")').first();
+    await expect(tryNowButton).toBeVisible();
+
+    // Click the button to trigger the paywall
+    await tryNowButton.click();
+
+    // The paywall modal should become visible
+    const paywallModal = page.locator('#paywallModal');
+    await expect(paywallModal).toBeVisible();
+
+    // Verify the content of the paywall modal
+    const modalHeading = paywallModal.locator('h2:has-text("Unlock Premium AI Tools")');
+    await expect(modalHeading).toBeVisible();
+
+    // Close the modal by clicking the close button
+    const closeModalButton = paywallModal.locator('button:has-text("×")');
+    await closeModalButton.click();
+
+    // The paywall modal should now be hidden
+    await expect(paywallModal).toBeHidden();
+  });
 });

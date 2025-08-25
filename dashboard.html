@@ -10,319 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        fontFamily: {
-          'display': ['Outfit', 'sans-serif'],
-          'body': ['Manrope', 'sans-serif'],
-        },
-        extend: {
-          colors: {
-            accent: {
-              orange: '#ea7113',
-              teal: '#34616a',
-              blue: '#3b82f6',
-              green: '#4ade80'  
-            },
-            neutral: {
-              light: '#f9fafb',
-              dark: '#334155'  
-            }
-          }
-        }
-      }
-    }
-  </script>
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
   <!-- Custom CSS Modules -->
-  <link rel="stylesheet" href="styles/organic-shapes.css">
-  <link rel="stylesheet" href="styles/flow-animations.css">
   <link href="./styles/theme.css" rel="stylesheet">
+  <link href="./styles/geometry.css" rel="stylesheet">
   <link href="./styles/sidebar.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles/depth-effects.css">
-  <link rel="stylesheet" href="styles/geometric-accents.css">
   <script src="./scripts/ui/sidebar.js" defer></script>
   <script src="js/main.js" defer></script>
-  <style>
-    /* Base Styles */
-    body {
-      font-family: 'Manrope', sans-serif;
-      background-color: #f9fafb;
-      color: #334155;
-      overflow-x: hidden;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Outfit', sans-serif;
-    }
-    
-    /* Glassmorphism */
-    .glass-card {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .glass-card:hover {
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-      transform: translateY(-2px);
-    }
-    
-    .glass-card-purple {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(237, 233, 254, 0.7));
-    }
-    
-    .glass {
-      backdrop-filter: blur(6px);
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .glass:hover {
-      background: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.15);
-    }
-    
-    /* Enhanced Pulse Animation */
-    .region-pulse {
-      animation: pulse 3s infinite;
-      filter: drop-shadow(0 0 3px rgba(234, 113, 19, 0.3));
-    }
-    
-    /* Enhanced Shimmer Animation */
-    .shimmer {
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-      background-size: 200% 100%;
-      animation: shimmer 2s infinite;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* Premium Glow Effects */
-    .glow-tile {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    .glow-tile:after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(234, 113, 19, 0.2), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-    
-    .glow-tile:hover {
-      box-shadow: 0 0 20px rgba(234, 113, 19, 0.4);
-      transform: scale(1.05) translateY(-5px);
-    }
-    
-    .glow-tile:hover:after {
-      opacity: 1;
-    }
-    
-    /* Enhanced Layered Cards */
-    .layered {
-      position: relative;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 1;
-    }
-    
-    .layered:before {
-      content: '';
-      position: absolute;
-      inset: 4px 4px -4px -4px;
-      background: linear-gradient(135deg, rgba(234, 113, 19, 0.1), rgba(59, 130, 246, 0.1));
-      border-radius: 1.5rem;
-      z-index: -1;
-      transition: all 0.4s ease;
-    }
-    
-    .layered:hover:before {
-      inset: 8px 8px -8px -8px;
-      background: linear-gradient(135deg, rgba(234, 113, 19, 0.2), rgba(59, 130, 246, 0.2));
-    }
-    
-    /* Enhanced Pulse Border */
-    .pulse-border {
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    .pulse-border:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
-    }
-    
-    .pulse-border:after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 2px solid transparent;
-      border-radius: 1rem;
-      background: linear-gradient(90deg, #f97316, #2563eb, #f97316) border-box;
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor; 
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    
-    .pulse-border:hover:after {
-      opacity: 1;
-      animation: border-pulse 2s infinite;
-    }
-    
-    /* Button Styles */
-    button.gradient-btn {
-      background: linear-gradient(90deg, #ea7113, #f97316);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    button.gradient-btn:hover {
-      background: linear-gradient(90deg, #f97316, #ea7113);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px -3px rgba(234, 113, 19, 0.4);
-    }
-    
-    button.gradient-btn:before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      z-index: -1;
-      background: linear-gradient(90deg, #f97316, #3b82f6, #f97316);
-      background-size: 200%;
-      border-radius: 0.5rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    button.gradient-btn:hover:before {
-      opacity: 1;
-      animation: gradient-shift 2s infinite;
-    }
-    
-    /* Organic Background Decorations */
-    .bg-organic {
-      position: fixed;
-      pointer-events: none;
-      z-index: -1;
-    }
-    
-    .bg-organic-top {
-      top: -30vh;
-      right: -10vw;
-      width: 80vw;
-      height: 80vh;
-      background: radial-gradient(circle at center, rgba(234, 113, 19, 0.06), transparent 70%);
-      border-radius: 50%;
-      animation: float 20s infinite alternate ease-in-out;
-    }
-    
-    .bg-organic-bottom {
-      bottom: -30vh;
-      left: -10vw;
-      width: 80vw;
-      height: 80vh;
-      background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent 70%);
-      border-radius: 50%;
-      animation: float 25s infinite alternate-reverse ease-in-out;
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      .flex-col-mobile {
-        flex-direction: column;
-      }
-      
-      .w-full-mobile {
-        width: 100%;
-      }
-      
-      .overflow-x-scroll {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
-      }
-      
-      .scroll-item {
-        scroll-snap-align: start;
-      }
-    }
-    
-    /* Enhanced Animations */
-    @keyframes pulse {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 5px rgba(234, 113, 19, 0.5)); }
-    }
-    
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    
-    @keyframes border-pulse {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(2deg); }
-      100% { transform: translateY(5px) rotate(-2deg); }
-    }
-    
-    @keyframes gradient-shift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
-    /* Scroll Enhancements */
-    .smooth-scroll {
-      scroll-behavior: smooth;
-    }
-    
-    /* Focus States */
-    button:focus, a:focus, input:focus {
-      outline: 2px solid rgba(234, 113, 19, 0.4);
-      outline-offset: 2px;
-    }
-    
-    /* Accessibility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-  </style>
 </head>
 
 <body class="font-body text-slate-800 overflow-x-hidden">
@@ -331,7 +26,7 @@
     <div id="sidebar-container"></div>
 
     <!-- Main content -->
-    <div class="flex-1 flex flex-col overflow-hidden relative isolate">
+    <div class="flex-1 flex flex-col overflow-hidden relative isolate geom-host" data-bg="boids">
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
             <div class="relative w-full"> 
                 <!-- BEGIN: Page Content -->
@@ -541,7 +236,7 @@
                                     <h4 class="ml-4 font-bold text-lg text-white">Description Composer</h4>
                                 </div>
                                 <p class="text-slate-300 text-sm mb-4">Generate persuasive, SEO-friendly product descriptions in seconds.</p>
-                                <button onclick="openAiToolModal('Description Composer', 'desc-composer', 'Compose a description for a vintage leather jacket.')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
                             </div>
                             <!-- AI Tool Card 2 -->
                             <div class="glass-card-dark p-6 rounded-2xl depth-effect-2 glow-on-hover" style="animation-delay: 150ms;"> 
@@ -552,7 +247,7 @@
                                     <h4 class="ml-4 font-bold text-lg text-white">Pricing Analyst</h4>
                                 </div>
                                 <p class="text-slate-300 text-sm mb-4">Analyze market data to find the optimal price for your items.</p>
-                                <button onclick="openAiToolModal('Pricing Analyst', 'price-analyst', 'Analyze pricing for a 1980s rock band t-shirt.')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
                             </div>
                             <!-- AI Tool Card 3 -->
                             <div class="glass-card-dark p-6 rounded-2xl depth-effect-2 glow-on-hover" style="animation-delay: 300ms;"> 
@@ -563,7 +258,7 @@
                                     <h4 class="ml-4 font-bold text-lg text-white">Photo Enhancer</h4>
                                 </div>
                                 <p class="text-slate-300 text-sm mb-4">Automatically improve lighting, color, and sharpness in your photos.</p>
-                                <button onclick="openAiToolModal('Photo Enhancer', 'photo-enhancer', 'Enhance photo of a wooden handcrafted bowl.')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
                             </div>
                         </div>
                     </div>
@@ -706,6 +401,21 @@ const userData = {
     <span id="motivationText"></span>
     <button class="ml-2 text-xs text-neutral-400 hover:text-orange-400" onclick="document.getElementById('motivation').style.display='none'">✕</button>
   </div>
+</div>
+
+<!-- Paywall Modal -->
+<div id="paywallModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm" x-data="{ show: false }" x-show="show" @open-paywall.window="show = true" @close-paywall.window="show = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 w-[95vw] max-w-md shadow-2xl relative border border-slate-700 text-white transform scale-95" x-show="show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"> 
+        <button @click="$dispatch('close-paywall')" class="absolute top-4 right-4 text-2xl text-slate-500 hover:text-white transition">&times;</button>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-mapleRed to-orange-400 rounded-full flex items-center justify-center">
+                <span class="material-icons text-white text-4xl">workspace_premium</span>
+            </div>
+            <h2 class="text-3xl font-bold font-display mb-2">Unlock Premium AI Tools</h2>
+            <p class="text-slate-300 mb-6">Upgrade your plan to access powerful features like the Description Composer, Pricing Analyst, and more.</p>
+            <button class="w-full py-3 rounded-lg bg-gradient-to-r from-mapleRed to-orange-500 text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-transform">Upgrade to Pro</button>
+        </div>
+    </div>
 </div>
 
 <!-- AI Tool Modal -->
@@ -1922,5 +1632,8 @@ document.querySelectorAll('.RhythmCalendar-day').forEach(day=>{
   });
 });
 </script>
+<script src="./scripts/bg/penrose.js" defer></script>
+<script src="./scripts/bg/boids.js" defer></script>
+<script src="./scripts/bg/veins.js" defer></script>
 </body>
 </html>
