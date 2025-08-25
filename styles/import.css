@@ -1,0 +1,49 @@
+/**
+ * AutoList Canada - Import Page Styles
+ */
+
+#preview-area .preview-item {
+    background-color: var(--color-background-muted);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    border-left: 3px solid var(--color-brand-green-default);
+}
+
+#preview-area .preview-item h3 {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+#preview-area .preview-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-mono);
+}
+
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--border-radius-md);
+    color: white;
+    font-weight: var(--font-weight-medium);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast-notification.success {
+    background-color: var(--color-background-success-strong);
+}
+
+.toast-notification.error {
+    background-color: var(--color-background-danger-strong);
+}
+
+.toast-notification.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

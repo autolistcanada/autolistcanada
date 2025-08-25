@@ -306,3 +306,102 @@
     height: 120px;
   }
 }
+
+/**
+ * Abstract Nature × Geometric Theme Additions
+ */
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Subtle Geometric Grid Background */
+.geo-grid {
+  background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+}
+
+/* Soft Organic Gradient Wash */
+.organic-wash {
+  background: radial-gradient(ellipse at top, #E7F0EC, transparent),
+              radial-gradient(ellipse at bottom, #E7F0EC, transparent);
+}
+
+/* Section Overlap Utilities */
+.section-overlap-top {
+  margin-top: -8rem; /* Adjust as needed */
+  padding-top: 8rem;
+}
+
+.section-overlap-bottom {
+  margin-bottom: -8rem; /* Adjust as needed */
+  padding-bottom: 8rem;
+}
+
+/**
+ * AI Tools Page - Visual Group Styles
+ */
+
+/* Momentum Trail */
+.momentum-trail-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.momentum-trail-card:hover {
+  transform: translateY(-5px);
+}
+.momentum-trail-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+.momentum-trail-card:hover::before {
+  left: 100%;
+}
+
+/* Layered Cards */
+.layered-card-container {
+  position: relative;
+  height: 250px; /* Give container a fixed height */
+}
+.layered-card {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  backface-visibility: hidden;
+}
+.layered-card:nth-child(1) { transform: translateY(0px) scale(1); z-index: 3; }
+.layered-card:nth-child(2) { transform: translateY(20px) scale(0.95); z-index: 2; opacity: 0.8; }
+.layered-card:nth-child(3) { transform: translateY(40px) scale(0.9); z-index: 1; opacity: 0.6; }
+
+.layered-card-container:hover .layered-card:nth-child(1) { transform: translateY(-100%) rotate(-5deg); }
+.layered-card-container:hover .layered-card:nth-child(2) { transform: translateY(0) scale(1); z-index: 3; opacity: 1; }
+.layered-card-container:hover .layered-card:nth-child(3) { transform: translateY(20px) scale(0.95); z-index: 2; opacity: 0.8; }
+
+/* Glow Tiles */
+.glow-tile {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.glow-tile:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px 3px var(--glow-color, #D12B2B);
+}
+

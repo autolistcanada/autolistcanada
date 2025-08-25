@@ -1,101 +1,93 @@
-// Background service worker for AutoList Canada Chrome Extension
-// Handles communication between content scripts and popup
+// AutoList Canada Background Service Worker (Manifest V3)
+console.log("[AutoList] Background Script Initialized");
 
-// Listen for installation
-chrome.runtime.onInstalled.addListener(function(details) {
-  if (details.reason === 'install') {
-    // First-time installation - set default settings
-    chrome.storage.sync.set({
-      language: 'en',
-      marketplaces: {
-        ebay: true,
-        amazon: true,
-        etsy: true,
-        kijiji: true
-      },
-      notifications: true
-    });
-    
-    // Open welcome page
-    chrome.tabs.create({
-      url: 'https://autolistcanada.com/welcome.html'
-    });
+// Define target marketplaces for content script injection
+const TARGET_MARKETPLACES = [
+  { hostSuffix: 'ebay.ca' },
+  { hostSuffix: 'etsy.com' },
+  { hostSuffix: 'poshmark.ca' },
+  { hostSuffix: 'poshmark.com' },
+];
+
+// Inject content script programmatically when a tab is updated
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.url) {
+    const url = new URL(tab.url);
+    const shouldInject = TARGET_MARKETPLACES.some(site => url.hostname.endsWith(site.hostSuffix));
+
+    if (shouldInject) {
+      chrome.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ['content.js']
+      }).catch(err => console.error('[AutoList] Failed to inject content script:', err));
+    }
   }
 });
 
-// Listen for messages from content scripts or popup
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  // Handle listing data received from content scripts
-  if (message.action === 'listingCaptured') {
-    // Store the listing data
-    chrome.storage.local.get(['capturedListings'], function(result) {
-      let listings = result.capturedListings || [];
+// Main message listener for events from content scripts or popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  // Handles the CAPTURE_LISTING action from content.js
+  if (request.type === 'CAPTURE_LISTING') {
+    console.log('[AutoList] Listing captured:', request.payload);
+    const listingData = request.payload;
+
+    chrome.storage.local.get({ capturedListings: [] }, (result) => {
+      const listings = result.capturedListings;
+      const newListing = {
+        ...listingData,
+        id: `al-${Date.now()}`,
+        capturedAt: new Date().toISOString(),
+      };
       
-      // Add timestamp and source info
-      message.data.capturedAt = new Date().toISOString();
-      message.data.sourceUrl = sender.tab.url;
-      
-      listings.unshift(message.data); // Add to beginning
-      listings = listings.slice(0, 50); // Keep last 50 listings
-      
-      chrome.storage.local.set({ capturedListings: listings });
-      
-      // Show notification
-      chrome.storage.sync.get(['notifications'], function(settings) {
-        if (settings.notifications) {
-          chrome.notifications.create({
-            type: 'basic',
-            iconUrl: 'icons/icon128.png',
-            title: 'AutoList Canada',
-            message: 'Listing captured successfully!',
-            priority: 1
-          });
-        }
+      // Add new listing to the front and keep the list size manageable
+      listings.unshift(newListing);
+      chrome.storage.local.set({ capturedListings: listings.slice(0, 50) }, () => {
+        updateBadge();
+        sendResponse({ success: true, message: 'Listing saved.' });
       });
-      
-      sendResponse({ success: true });
     });
-    
-    return true; // Indicates we will send a response asynchronously
+    return true; // Indicates an async response
+  }
+
+  // Handles requests for data from the popup
+  if (request.type === 'GET_CAPTURED_LISTINGS') {
+    chrome.storage.local.get({ capturedListings: [] }, (result) => {
+      sendResponse({ listings: result.capturedListings });
+    });
+    return true; // Indicates an async response
   }
   
-  // Handle marketplace button injection
-  if (message.action === 'checkForInjection') {
-    // Check if we should inject the AutoList button on this page
-    const url = sender.tab.url;
-    
-    // Marketplace detection logic
-    const marketplacePatterns = {
-      ebay: /ebay\.ca\/itm/i,
-      amazon: /amazon\.ca\/.+\/dp/i,
-      etsy: /etsy\.com\/ca\/listing/i,
-      kijiji: /kijiji\.ca\/v-/i,
-      facebook: /facebook\.com\/marketplace\/item/i
-    };
-    
-    let shouldInject = false;
-    let marketplace = '';
-    
-    // Check which marketplace this is
-    for (const [name, pattern] of Object.entries(marketplacePatterns)) {
-      if (pattern.test(url)) {
-        shouldInject = true;
-        marketplace = name;
-        break;
-      }
-    }
-    
-    sendResponse({
-      inject: shouldInject,
-      marketplace: marketplace
-    });
-    
-    return true;
+  // Handles requests to delete a listing from the popup
+  if (request.type === 'DELETE_LISTING') {
+      chrome.storage.local.get({ capturedListings: [] }, (result) => {
+          const filteredListings = result.capturedListings.filter(l => l.id !== request.payload.id);
+          chrome.storage.local.set({ capturedListings: filteredListings }, () => {
+              updateBadge();
+              sendResponse({ success: true, listings: filteredListings });
+          });
+      });
+      return true; // Indicates an async response
   }
 });
 
-// Handle browser action click (toolbar icon)
-chrome.action.onClicked.addListener(function(tab) {
-  // This won't trigger if we have a popup, but keeping for potential future use
-  chrome.action.openPopup();
-});
+// Function to update the extension's badge
+const updateBadge = async () => {
+  try {
+    const { capturedListings } = await chrome.storage.local.get({ capturedListings: [] });
+    const count = capturedListings.length;
+
+    await chrome.action.setBadgeText({
+      text: count > 0 ? count.toString() : ''
+    });
+
+    await chrome.action.setBadgeBackgroundColor({
+      color: '#164734' // Theme: pineGreen
+    });
+  } catch (error) {
+    console.error('[AutoList] Failed to update badge:', error);
+  }
+};
+
+// Initialize badge on startup and install
+chrome.runtime.onStartup.addListener(updateBadge);
+chrome.runtime.onInstalled.addListener(updateBadge);

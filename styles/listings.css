@@ -1,0 +1,120 @@
+/**
+ * AutoList Canada - Listings Page Styles
+ * Styles for the upgraded listings table, filters, and bulk actions.
+ */
+
+/* --- General Table Styling --- */
+.listings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+}
+
+.listings-table th,
+.listings-table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+}
+
+.listings-table th {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  background-color: var(--color-background-muted);
+}
+
+.listings-table tr:hover {
+  background-color: var(--color-background-hover);
+}
+
+/* --- Selection & Checkboxes --- */
+.listings-table tr.selected {
+    background-color: var(--color-background-selected);
+    box-shadow: inset 3px 0 0 0 var(--color-brand-orange-default);
+}
+
+.cell-checkbox {
+  width: 40px;
+  text-align: center;
+}
+
+/* --- Cell Content --- */
+.cell-image {
+    width: 80px;
+}
+
+.listing-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-background-muted);
+}
+
+.cell-title {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+.cell-price {
+    font-family: var(--font-family-mono);
+}
+
+/* --- Status Badges --- */
+.status-badge {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
+}
+
+.status-badge.draft {
+    background-color: var(--color-background-neutral);
+    color: var(--color-text-neutral);
+    border-color: var(--color-border-neutral);
+}
+
+.status-badge.listed {
+    background-color: var(--color-background-success);
+    color: var(--color-text-success);
+    border-color: var(--color-border-success);
+}
+
+.status-badge.error {
+    background-color: var(--color-background-danger);
+    color: var(--color-text-danger);
+    border-color: var(--color-border-danger);
+}
+
+/* --- Bulk Actions Toolbar --- */
+.bulk-actions-toolbar {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-background-elevated);
+    border-top: 1px solid var(--color-border-default);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(100%);
+    transition: transform var(--transition-duration-default) var(--transition-timing-default);
+    z-index: 100;
+}
+
+.bulk-actions-toolbar.visible {
+    transform: translateY(0);
+}
+
+.bulk-actions-toolbar .button {
+    min-width: 120px;
+}

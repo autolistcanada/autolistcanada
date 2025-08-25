@@ -22,27 +22,12 @@
     "scripting"
   ],
   "host_permissions": [
-    "*://*.ebay.ca/*",
-    "*://*.amazon.ca/*",
-    "*://*.etsy.com/*",
-    "*://*.kijiji.ca/*",
-    "*://*.facebook.com/marketplace/*"
+    "*://www.ebay.ca/*",
+    "*://www.etsy.com/*",
+    "*://poshmark.ca/*",
+    "*://poshmark.com/*"
   ],
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.ebay.ca/itm/*",
-        "*://*.amazon.ca/*/dp/*",
-        "*://*.etsy.com/ca/listing/*",
-        "*://*.kijiji.ca/v-*/*",
-        "*://*.facebook.com/marketplace/item/*"
-      ],
-      "js": ["content.js"],
-      "css": ["content.css"]
-    }
-  ]
+    "service_worker": "background.js"
+  }
 }

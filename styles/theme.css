@@ -337,6 +337,59 @@ a:hover, a:focus {
   background-color: var(--color-neutral-50);
 }
 
+/* Color Utilities */
+.text-green { color: var(--color-green-600); }
+.text-orange { color: var(--color-orange-500); }
+.text-rust { color: var(--color-rust-500); }
+.text-gold { color: var(--color-gold-500); }
+.text-info { color: var(--color-info); }
+.text-neutral-700 { color: var(--color-neutral-700); }
+.text-neutral-900 { color: var(--color-neutral-900); }
+.dark .dark\:text-neutral-300 { color: var(--color-neutral-300); }
+
+.hover\:bg-orange-400:hover {
+  background-color: var(--color-orange-400);
+}
+
+.hover\:bg-rust-600:hover {
+  background-color: var(--color-rust-600);
+}
+
+.hover\:bg-gold-400:hover {
+  background-color: var(--color-gold-400);
+}
+
+.hover\:bg-green-700:hover {
+  background-color: var(--color-green-700);
+}
+
+.focus\:ring-green-500:focus {
+  --tw-ring-color: var(--color-green-500);
+}
+
+.focus\:ring-orange-500:focus {
+  --tw-ring-color: var(--color-orange-500);
+}
+
+.focus\:ring-rust-700:focus {
+  --tw-ring-color: var(--color-rust-700);
+}
+
+.focus\:ring-gold-500:focus {
+  --tw-ring-color: var(--color-gold-500);
+}
+
+.focus\:ring-green-700:focus {
+  --tw-ring-color: var(--color-green-700);
+}
+
+.bg-green-100 { background-color: var(--color-green-100); }
+.bg-orange-100 { background-color: var(--color-orange-100); }
+.bg-rust-100 { background-color: var(--color-rust-100); }
+.bg-gold-100 { background-color: var(--color-gold-100); }
+.bg-neutral-50 { background-color: var(--color-neutral-50); }
+
+
 /* Utilities */
 .text-center {
   text-align: center;

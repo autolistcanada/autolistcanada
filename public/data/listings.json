@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "title": "2022 Honda Civic Sport - Low Mileage",
+    "price": 28500,
+    "platforms": ["Kijiji", "AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1617469723560-c38363336658?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-15"
+  },
+  {
+    "id": 2,
+    "title": "2019 Toyota RAV4 LE AWD",
+    "price": 26000,
+    "platforms": ["Facebook Marketplace"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1631293323983-a2e7a3f88753?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-14"
+  },
+  {
+    "id": 3,
+    "title": "2023 Ford F-150 XLT SuperCrew",
+    "price": 55000,
+    "platforms": ["AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1628754941159-78a6353854f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Sold",
+    "dateAdded": "2025-07-20"
+  },
+  {
+    "id": 4,
+    "title": "2021 Hyundai Elantra Preferred",
+    "price": 21000,
+    "platforms": ["Kijiji", "Facebook Marketplace"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1619409839678-5c8b3f404b8e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-12"
+  },
+  {
+    "id": 5,
+    "title": "2020 Tesla Model 3 Standard Range Plus",
+    "price": 45000,
+    "platforms": ["AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1621993209973-328b293a55a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Draft",
+    "dateAdded": "2025-08-10"
+  },
+  {
+    "id": 6,
+    "title": "2018 Subaru Outback 2.5i Touring",
+    "price": 24500,
+    "platforms": ["Kijiji"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1603551577954-897e043952da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-09"
+  },
+  {
+    "id": 7,
+    "title": "2022 BMW 330i xDrive Sedan",
+    "price": 49000,
+    "platforms": ["AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1616421233882-1f273435c5e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Sold",
+    "dateAdded": "2025-07-15"
+  },
+  {
+    "id": 8,
+    "title": "2021 Jeep Wrangler Unlimited Sahara",
+    "price": 47500,
+    "platforms": ["Facebook Marketplace"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1600442644855-4d7c62252c80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-05"
+  },
+  {
+    "id": 9,
+    "title": "2017 Audi A4 Technik quattro",
+    "price": 29500,
+    "platforms": ["Kijiji", "AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1612740789851-f1513d36a55a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Draft",
+    "dateAdded": "2025-08-02"
+  },
+  {
+    "id": 10,
+    "title": "2023 Kia Telluride SX Limited",
+    "price": 52000,
+    "platforms": ["AutoTrader"],
+    "url": "#",
+    "image": "https://images.unsplash.com/photo-1670491386628-981a511693e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "status": "Active",
+    "dateAdded": "2025-08-01"
+  }
+]
