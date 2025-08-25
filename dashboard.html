@@ -1,100 +1,324 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#fcf8f5] min-h-full">
+<html lang="en" class="bg-gradient-to-br from-[#fcf8f5] to-[#f5f0e8] min-h-full">
 <head>
   <meta charset="UTF-8">
-  <title>AutoList Canada Seller Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="scripts/i18n.js" defer></script>
-  <style>
-    /* Custom pulse for map */
-    .region-pulse {
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255,153,51,0.4);}
-      70% { box-shadow: 0 0 0 12px rgba(255,153,51,0.05);}
-      100% { box-shadow: 0 0 0 0 rgba(255,153,51,0.0);}
-    }
-    /* Glow tile effect */
-    .glow-tile {
-      box-shadow: 0 4px 24px 4px rgba(255,153,51,0.12),0 1.5px 8px 0 rgba(34,197,94,0.09);
-      transition: box-shadow .2s;
-    }
-    .glow-tile:hover {
-      box-shadow: 0 6px 32px 8px rgba(255,153,51,0.18),0 2px 12px 0 rgba(34,197,94,0.13);
-    }
-    /* Glass search effect */
-    .glass {
-      background: rgba(255,255,255,0.7);
-      backdrop-filter: blur(6px);
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.03);
-      box-shadow: 0 1px 6px 0 rgba(34,197,94,0.04);
-    }
-    /* Modal backdrop */
-    .modal-bg {
-      background: rgba(0,0,0,0.19);
-    }
-    /* Shimmer for cards */
-    .shimmer {
-      background: linear-gradient(90deg, #f5e9d9 25%, #fff6ed 50%, #f5e9d9 75%);
-      background-size: 200% 100%;
-      animation: shimmer 2s linear infinite;
-    }
-    @keyframes shimmer {
-      0% { background-position: -150% 0; }
-      100% { background-position: 350% 0; }
-    }
-    /* Layered card effect */
-    .layered {
-      position: relative;
-      z-index: 1;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .layered::before {
-      content: "";
-      position: absolute;
-      left: 15px; top: 15px; right: -15px; bottom: -15px;
-      border-radius: 20px;
-      background: #fff6ed;
-      z-index: -1;
-      filter: blur(4px);
-      opacity: .4;
-      transition: opacity .2s;
-    }
-    .layered:hover { transform: translateY(-3px) scale(1.04); }
-    .layered:hover::before { opacity: .7; }
-    /* Animated border pulse */
-    .pulse-border {
-      position: relative;
-      z-index: 1;
-    }
-    .pulse-border::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 15px;
-      border: 2px solid #fdba74;
-      opacity: .45;
-      animation: border-pulse 1.8s infinite;
-      z-index: -1;
-      pointer-events: none;
-    }
-    @keyframes border-pulse {
-      0% { opacity: .45; }
-      60% { opacity: .1;}
-      100% { opacity: .45;}
-    }
-  </style>
+  <title>AutoList Canada Seller Dashboard</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
+  <!-- Custom CSS Modules -->
+  <link href="./styles/theme.css" rel="stylesheet">
+  <link href="./styles/geometry.css" rel="stylesheet">
+  <link href="./styles/sidebar.css" rel="stylesheet">
+  <script src="./scripts/ui/sidebar.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 
-<body class="font-sans text-[#28323a] bg-[#fcf8f5] min-h-screen relative">
-<!-- Language Toggle Button -->
-<div class="fixed top-4 right-4 z-50">
-  <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
+<body class="font-body text-slate-800 overflow-x-hidden">
+
+<div class="relative min-h-screen flex">
+    <div id="sidebar-container"></div>
+
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col overflow-hidden relative isolate geom-host" data-bg="boids">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full"> 
+                <!-- BEGIN: Page Content -->
+                <!-- Welcome Header -->
+                <section class="relative px-6 py-12 md:py-16 lg:py-20 text-center text-white overflow-hidden"> 
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-spruce via-pineGreen to-teal-600 z-0"></div>
+                    <div class="absolute inset-0 w-full h-full bg-cover bg-center z-10" style="background-image: url('assets/images/geo-grid-light.svg'); opacity: 0.1;"></div>
+                    <div class="relative z-20"> 
+                        <h1 class="text-4xl md:text-5xl font-display font-bold mb-2 animate-fade-in-down" data-lang-key="dashboard.welcome_title">Welcome Back, Sage</h1>
+                        <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto animate-fade-in-up" data-lang-key="dashboard.welcome_subtitle">Here’s your AI-powered snapshot for today.</p>
+                    </div>
+                </section>
+
+                <!-- Stats Cards -->
+                <section class="relative px-4 sm:px-6 lg:px-8 py-12 md:py-16 -mt-16 z-30"> 
+                    <div class="max-w-7xl mx-auto"> 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"> 
+                            <!-- Card 1: Listings -->
+                            <div class="glass-card-purple p-6 rounded-2xl shadow-lg depth-effect-1 animate-slide-in-left"> 
+                                <div class="flex items-center"> 
+                                    <div class="p-3 bg-white/30 rounded-full"> 
+                                        <span class="material-icons text-pineGreen">inventory_2</span>
+                                    </div>
+                                    <div class="ml-4"> 
+                                        <p class="text-sm text-slate-600" data-lang-key="dashboard.stat_active_listings">Active Listings</p>
+                                        <p class="text-2xl font-bold text-slate-800">142</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 2: Sales -->
+                            <div class="glass-card-purple p-6 rounded-2xl shadow-lg depth-effect-1 animate-slide-in-left" style="animation-delay: 100ms;"> 
+                                <div class="flex items-center"> 
+                                    <div class="p-3 bg-white/30 rounded-full"> 
+                                        <span class="material-icons text-mapleRed">trending_up</span>
+                                    </div>
+                                    <div class="ml-4"> 
+                                        <p class="text-sm text-slate-600" data-lang-key="dashboard.stat_monthly_sales">Sales (Month)</p>
+                                        <p class="text-2xl font-bold text-slate-800">$4,820</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 3: New Leads -->
+                            <div class="glass-card-purple p-6 rounded-2xl shadow-lg depth-effect-1 animate-slide-in-right" style="animation-delay: 100ms;"> 
+                                <div class="flex items-center"> 
+                                    <div class="p-3 bg-white/30 rounded-full"> 
+                                        <span class="material-icons text-glacier">person_add</span>
+                                    </div>
+                                    <div class="ml-4"> 
+                                        <p class="text-sm text-slate-600" data-lang-key="dashboard.stat_new_leads">New Leads</p>
+                                        <p class="text-2xl font-bold text-slate-800">31</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 4: Sync Status -->
+                            <div class="glass-card-purple p-6 rounded-2xl shadow-lg depth-effect-1 animate-slide-in-right"> 
+                                <div class="flex items-center"> 
+                                    <div class="p-3 bg-white/30 rounded-full"> 
+                                        <span class="material-icons text-cedar">sync</span>
+                                    </div>
+                                    <div class="ml-4"> 
+                                        <p class="text-sm text-slate-600" data-lang-key="dashboard.stat_platforms_synced">Platforms Synced</p>
+                                        <p class="text-2xl font-bold text-slate-800">4 / 5</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Maple Wave Divider -->
+                <div class="maple-wave-divider-bottom-light -mt-12"></div>
+
+                <!-- Main Dashboard Grid -->
+                <div class="px-4 sm:px-6 lg:px-8 py-12 md:py-16 bg-white"> 
+                    <div class="max-w-7xl mx-auto"> 
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12"> 
+                            
+                            <!-- Left Column -->
+                            <div class="lg:col-span-2 space-y-8 lg:space-y-12"> 
+                                
+                                <!-- Rhythm Calendar -->
+                                <section class="p-6 lg:p-8 bg-slate-50/50 rounded-3xl organic-border-1"> 
+                                    <h3 class="text-2xl font-bold font-display text-slate-800 mb-4" data-lang-key="dashboard.calendar_title">Rhythm Calendar</h3>
+                                    <div x-data="calendar()" class="bg-white p-4 rounded-2xl shadow-inner-soft"> 
+                                        <div class="flex items-center justify-between mb-4"> 
+                                            <button @click="prevMonth()" class="p-2 rounded-full hover:bg-slate-100 transition-colors"> 
+                                                <span class="material-icons">chevron_left</span>
+                                            </button>
+                                            <h4 class="font-bold text-lg" x-text="monthNames[month] + ' ' + year"></h4>
+                                            <button @click="nextMonth()" class="p-2 rounded-full hover:bg-slate-100 transition-colors"> 
+                                                <span class="material-icons">chevron_right</span>
+                                            </button>
+                                        </div>
+                                        <div class="grid grid-cols-7 gap-1 text-center text-sm text-slate-500 mb-2"> 
+                                            <template x-for="day in dayNames" :key="day"> 
+                                                <div x-text="day"></div>
+                                            </template>
+                                        </div>
+                                        <div class="grid grid-cols-7 gap-1"> 
+                                            <template x-for="blankday in blankdays"> 
+                                                <div></div>
+                                            </template>
+                                            <template x-for="date in no_of_days" :key="date"> 
+                                                <div class="h-10 w-10 flex items-center justify-center rounded-full cursor-pointer transition-colors" 
+                                                     :class="{'bg-pineGreen text-white font-bold': isToday(date)}" 
+                                                     x-text="date">
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                                <!-- Buyer Psychology Map -->
+                                <section class="relative p-6 lg:p-8 rounded-3xl overflow-hidden"> 
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-800 to-slate-900 z-0"></div>
+                                    <div class="absolute inset-0 bg-cover bg-center z-10" style="background-image: url('assets/images/geo-grid-dark.svg'); opacity: 0.1;"></div>
+                                    <div class="relative z-20"> 
+                                        <h3 class="text-2xl font-bold font-display text-white mb-4" data-lang-key="dashboard.psychology_map_title">Buyer Psychology Map</h3>
+                                        <div class="relative h-64 md:h-80 rounded-2xl glass-card-dark p-4"> 
+                                            <img src="assets/images/canada-map-light.svg" alt="Canada Map with highlighted regions" class="absolute inset-0 w-full h-full object-contain opacity-40"> 
+                                            <!-- Data points would be rendered here -->
+                                            <div class="absolute top-1/2 left-1/4 animate-pulse"> 
+                                                <div class="w-3 h-3 bg-mapleRed rounded-full shadow-lg"></div>
+                                            </div>
+                                            <div class="absolute top-1/3 right-1/3 animate-pulse" style="animation-delay: 0.5s;"> 
+                                                <div class="w-4 h-4 bg-glacier rounded-full shadow-lg"></div>
+                                            </div>
+                                            <div class="absolute bottom-1/4 left-1/2 animate-pulse" style="animation-delay: 1s;"> 
+                                                <div class="w-3 h-3 bg-pineGreen rounded-full shadow-lg"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                            </div>
+                            
+                            <!-- Right Column -->
+                            <div class="space-y-8 lg:space-y-12"> 
+                                
+                                <!-- Daily Change Feed -->
+                                <section class="p-6 bg-slate-50/50 rounded-3xl organic-border-1"> 
+                                    <h3 class="text-xl font-bold font-display text-slate-800 mb-4" data-lang-key="dashboard.change_feed_title">Daily Change Feed</h3>
+                                    <div class="space-y-4"> 
+                                        <div class="flex items-start p-3 bg-white rounded-xl shadow-sm"> 
+                                            <span class="material-icons text-green-500 mt-1">add_circle</span>
+                                            <p class="ml-3 text-sm text-slate-600"><strong class="font-semibold text-slate-700">New Listing:</strong> Vintage Maple Leafs Jersey just went live.</p>
+                                        </div>
+                                        <div class="flex items-start p-3 bg-white rounded-xl shadow-sm"> 
+                                            <span class="material-icons text-blue-500 mt-1">comment</span>
+                                            <p class="ml-3 text-sm text-slate-600"><strong class="font-semibold text-slate-700">New Message:</strong> Inquiry about the 'Hand-carved Wooden Bear'.</p>
+                                        </div>
+                                        <div class="flex items-start p-3 bg-white rounded-xl shadow-sm"> 
+                                            <span class="material-icons text-red-500 mt-1">warning</span>
+                                            <p class="ml-3 text-sm text-slate-600"><strong class="font-semibold text-slate-700">Sync Error:</strong> Poshmark sync requires re-authentication.</p>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                                <!-- Milestone Tracker -->
+                                <section class="p-6 bg-slate-50/50 rounded-3xl organic-border-1"> 
+                                    <h3 class="text-xl font-bold font-display text-slate-800 mb-4" data-lang-key="dashboard.milestone_tracker_title">Milestone Tracker</h3>
+                                    <div class="space-y-5"> 
+                                        <div> 
+                                            <div class="flex justify-between items-center mb-1"> 
+                                                <p class="text-sm font-semibold text-slate-700">Monthly Sales Goal</p>
+                                                <p class="text-sm font-bold text-pineGreen">85%</p>
+                                            </div>
+                                            <div class="w-full bg-slate-200 rounded-full h-2.5"> 
+                                                <div class="bg-gradient-to-r from-pineGreen to-teal-500 h-2.5 rounded-full" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                        <div> 
+                                            <div class="flex justify-between items-center mb-1"> 
+                                                <p class="text-sm font-semibold text-slate-700">New Listings Goal</p>
+                                                <p class="text-sm font-bold text-mapleRed">60%</p>
+                                            </div>
+                                            <div class="w-full bg-slate-200 rounded-full h-2.5"> 
+                                                <div class="bg-gradient-to-r from-mapleRed to-orange-400 h-2.5 rounded-full" style="width: 60%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geo Diag Divider -->
+                <div class="geo-diag-divider-top-dark"></div>
+
+                <!-- Featured AI Tools Section -->
+                <section class="relative px-4 sm:px-6 lg:px-8 py-16 md:py-20 bg-slate-900 overflow-hidden"> 
+                    <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('assets/images/organic-wash-dark.svg'); opacity: 0.5;"></div>
+                    <div class="relative z-10 max-w-7xl mx-auto"> 
+                        <div class="text-center"> 
+                            <h2 class="text-4xl md:text-5xl font-display font-extrabold text-white mb-4 animate-fade-in-down" data-lang-key="dashboard.ai_tools_title">Featured AI Tools</h2>
+                            <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto animate-fade-in-up" data-lang-key="dashboard.ai_tools_subtitle">Supercharge your workflow with these top-performing tools.</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> 
+                            <!-- AI Tool Card 1 -->
+                            <div class="glass-card-dark p-6 rounded-2xl depth-effect-2 glow-on-hover"> 
+                                <div class="flex items-center mb-4"> 
+                                    <div class="p-3 bg-slate-700/50 rounded-lg"> 
+                                        <span class="material-icons text-mapleRed">description</span>
+                                    </div>
+                                    <h4 class="ml-4 font-bold text-lg text-white">Description Composer</h4>
+                                </div>
+                                <p class="text-slate-300 text-sm mb-4">Generate persuasive, SEO-friendly product descriptions in seconds.</p>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                            </div>
+                            <!-- AI Tool Card 2 -->
+                            <div class="glass-card-dark p-6 rounded-2xl depth-effect-2 glow-on-hover" style="animation-delay: 150ms;"> 
+                                <div class="flex items-center mb-4"> 
+                                    <div class="p-3 bg-slate-700/50 rounded-lg"> 
+                                        <span class="material-icons text-pineGreen">price_change</span>
+                                    </div>
+                                    <h4 class="ml-4 font-bold text-lg text-white">Pricing Analyst</h4>
+                                </div>
+                                <p class="text-slate-300 text-sm mb-4">Analyze market data to find the optimal price for your items.</p>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                            </div>
+                            <!-- AI Tool Card 3 -->
+                            <div class="glass-card-dark p-6 rounded-2xl depth-effect-2 glow-on-hover" style="animation-delay: 300ms;"> 
+                                <div class="flex items-center mb-4"> 
+                                    <div class="p-3 bg-slate-700/50 rounded-lg"> 
+                                        <span class="material-icons text-glacier">photo_camera</span>
+                                    </div>
+                                    <h4 class="ml-4 font-bold text-lg text-white">Photo Enhancer</h4>
+                                </div>
+                                <p class="text-slate-300 text-sm mb-4">Automatically improve lighting, color, and sharpness in your photos.</p>
+                                <button @click="$dispatch('open-paywall')" class="gradient-btn-animated font-semibold text-white px-4 py-2 rounded-lg w-full">Try Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
 </div>
+
+<script>
+function calendar() {
+    return {
+        month: new Date().getMonth(),
+        year: new Date().getFullYear(),
+        dayNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        no_of_days: [],
+        blankdays: [],
+        initDate() {
+            let today = new Date();
+            this.month = today.getMonth();
+            this.year = today.getFullYear();
+            this.getNoOfDays();
+        },
+        isToday(date) {
+            const today = new Date();
+            const d = new Date(this.year, this.month, date);
+            return today.toDateString() === d.toDateString();
+        },
+        getNoOfDays() {
+            let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+            let dayOfWeek = new Date(this.year, this.month).getDay();
+            this.blankdays = Array.from({ length: dayOfWeek }, (_, i) => i + 1);
+            this.no_of_days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+        },
+        prevMonth() {
+            if (this.month == 0) {
+                this.month = 11;
+                this.year--;
+            } else {
+                this.month--;
+            }
+            this.getNoOfDays();
+        },
+        nextMonth() {
+            if (this.month == 11) {
+                this.month = 0;
+                this.year++;
+            } else {
+                this.month++;
+            }
+            this.getNoOfDays();
+        }
+    }
+}
+</script>
+</body>
+<!-- Language Toggle Button -->
+
 <!-- Placeholder user data for demo logic -->
 <script>
 const userData = {
@@ -179,107 +403,248 @@ const userData = {
   </div>
 </div>
 
+<!-- Paywall Modal -->
+<div id="paywallModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm" x-data="{ show: false }" x-show="show" @open-paywall.window="show = true" @close-paywall.window="show = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 w-[95vw] max-w-md shadow-2xl relative border border-slate-700 text-white transform scale-95" x-show="show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"> 
+        <button @click="$dispatch('close-paywall')" class="absolute top-4 right-4 text-2xl text-slate-500 hover:text-white transition">&times;</button>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-mapleRed to-orange-400 rounded-full flex items-center justify-center">
+                <span class="material-icons text-white text-4xl">workspace_premium</span>
+            </div>
+            <h2 class="text-3xl font-bold font-display mb-2">Unlock Premium AI Tools</h2>
+            <p class="text-slate-300 mb-6">Upgrade your plan to access powerful features like the Description Composer, Pricing Analyst, and more.</p>
+            <button class="w-full py-3 rounded-lg bg-gradient-to-r from-mapleRed to-orange-500 text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-transform">Upgrade to Pro</button>
+        </div>
+    </div>
+</div>
+
+<!-- AI Tool Modal -->
+<div id="aiToolModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl p-8 w-[95vw] max-w-lg shadow-2xl relative transform transition-all scale-95 opacity-0" id="aiToolModalContent">
+    <button onclick="closeAiToolModal()" class="absolute top-3 right-4 text-2xl text-slate-400 hover:text-accent-orange transition">&times;</button>
+    <h2 id="aiToolModalTitle" class="text-2xl font-bold font-display text-slate-800 mb-4">AI Tool</h2>
+    <p class="text-slate-600 mb-4">Enter your text below and let our AI work its magic.</p>
+    <form id="aiToolForm" onsubmit="generateAIResult(event)">
+        <textarea id="aiToolTextarea" name="input" required class="w-full h-32 px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-accent-orange mb-4 bg-slate-50" placeholder="Enter text here..."></textarea>
+        <button type="submit" class="gradient-btn font-semibold text-white px-6 py-3 rounded-lg w-full">Generate Result</button>
+    </form>
+    <div id="aiToolResult" class="mt-4 p-4 rounded-lg bg-slate-100 min-h-[6rem] text-slate-700"></div>
+  </div>
+</div>
+
+<script>
+  const aiToolModal = document.getElementById('aiToolModal');
+  const aiToolModalContent = document.getElementById('aiToolModalContent');
+  const aiToolForm = document.getElementById('aiToolForm');
+  let currentToolId = null;
+
+  const aiSimulations = {
+    'desc-composer': () => ['This authentic vintage piece is carefully inspected for quality. Note the minor, honest wear on the cuff, a testament to its journey. We believe in transparency so you can buy with confidence.'],
+    'price-analyst': () => ['Prediction: Demand for vintage t-shirts increases 25% on weekends. Buyers are searching for unique graphics and soft, worn-in materials.'],
+    'photo-enhancer': () => ['Enhancement complete: Brightness increased by 15%, contrast by 20%, and sharpness by 10%. The wood grain is now much more prominent.']
+  };
+
+  function openAiToolModal(title, toolId, placeholder) {
+    document.getElementById('aiToolModalTitle').textContent = title;
+    document.getElementById('aiToolTextarea').placeholder = placeholder;
+    currentToolId = toolId;
+    aiToolModal.classList.remove('hidden');
+    setTimeout(() => {
+        aiToolModalContent.classList.remove('scale-95', 'opacity-0');
+    }, 10);
+  }
+
+  function closeAiToolModal() {
+    aiToolModalContent.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        aiToolModal.classList.add('hidden');
+        document.getElementById('aiToolResult').innerHTML = '';
+        document.getElementById('aiToolTextarea').value = '';
+    }, 200);
+  }
+
+  function generateAIResult(event) {
+    event.preventDefault();
+    const resultDiv = document.getElementById('aiToolResult');
+    const button = aiToolForm.querySelector('button');
+    const originalButtonText = button.textContent;
+
+    resultDiv.innerHTML = '<div class="flex items-center"><div class="w-3 h-3 bg-teal-500 rounded-full animate-ping"></div><span class="ml-2 text-gray-500">AI is thinking...</span></div>';
+    button.disabled = true;
+    button.textContent = 'Generating...';
+
+    setTimeout(() => {
+        const simulation = aiSimulations[currentToolId];
+        const resultText = simulation ? simulation()[0] : 'No simulation for this tool yet.';
+        resultDiv.textContent = resultText;
+        button.disabled = false;
+        button.textContent = originalButtonText;
+    }, 1200);
+  }
+
+  // Close modal on escape key
+  window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !aiToolModal.classList.contains('hidden')) {
+          closeAiToolModal();
+      }
+  });
+
+</script>
+
+<!-- Background organic shapes -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+  <div class="organic-blob organic-blob-purple opacity-10 -top-1/4 -right-1/4 w-[800px] h-[800px]"></div>
+  <div class="organic-blob organic-blob-orange opacity-10 bottom-0 -left-1/3 w-[700px] h-[700px]"></div>
+  <div class="geometric-pattern geometric-dots opacity-5 top-1/2 left-1/2 w-full h-full transform -translate-x-1/2 -translate-y-1/2"></div>
+</div>
+
 <!-- Main container -->
-<div class="mx-auto max-w-[1600px] px-4 py-4 lg:py-8 flex flex-col lg:flex-row gap-10">
+<div class="mx-auto max-w-[1600px] px-4 py-4 lg:py-8 flex flex-col lg:flex-row gap-10 relative z-10">
 
   <!-- Sidebar: Rhythm Calendar + Quick Stats -->
-  <aside class="w-full lg:w-64 flex-shrink-0 flex flex-col gap-6">
+  <aside class="w-full lg:w-72 flex-shrink-0 flex flex-col gap-6">
+    <div id="sidebar-container"></div>
     <!-- Welcome + Stats -->
-    <section class="bg-white rounded-2xl shadow p-6 mb-3 flex flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-extrabold text-[#ea7113]" data-i18n="dashboard.welcome">Welcome, Seller 🌿</h1>
-          <span class="text-xs text-[#64748b] block mt-1" data-i18n="dashboard.commandCenter">Your command centre</span>
-        </div>
-        <!-- Glass search bar -->
-        <div class="glass flex items-center px-2 py-1 ml-2">
-          <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-width="2" d="M21 21l-2-2"/>
+    <header class="relative py-24 px-6 md:px-12 text-center organic-wash">
+      <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pineGreen via-spruce to-cedar">Dashboard</h1>
+      <p id="welcome-message" class="text-slate-700 text-lg mt-2">Welcome back!</p>
+      <div class="absolute bottom-0 left-0 w-full h-[100px]" style="margin-bottom: -1px;">
+        <img src="./assets/img/dividers/maple-wave-bottom.svg" class="w-full h-full object-cover" alt=""/>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="relative px-6 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-3 gap-8 bg-slate geo-grid">
+      <!-- Left Column -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Key Stats -->
+        <section>
+          <h2 class="text-3xl font-bold text-white mb-6">Key Stats</h2>
+          <div id="stats-container" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Stats will be injected by JS -->
+          </div>
+        </section>
+
+        <!-- Performance Graph -->
+        <section>
+          <h2 class="text-3xl font-bold text-white mb-6">Listing Performance</h2>
+          <div class="glass p-6 rounded-xl">
+            <svg id="mini-graph" viewBox="0 0 400 150" class="w-full h-auto">
+              <defs>
+                <linearGradient id="line-gradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2C6B52" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#2C6B52" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polyline fill="url(#line-gradient)" stroke="#2C6B52" stroke-width="2" points="0,120 50,100 100,110 150,80 200,90 250,60 300,75 350,50 400,60"/>
+            <circle cx="350" cy="50" r="4" fill="#D12B2B"/>
           </svg>
-          <input type="text" placeholder="Search listings..." data-i18n-placeholder="dashboard.search.placeholder" class="ml-2 bg-transparent border-none outline-none text-sm w-24 focus:w-44 transition-all"/>
         </div>
-      </div>
-      <div class="flex justify-between mt-4 gap-2">
-        <div class="flex flex-col items-center">
-          <span class="text-orange-500 text-lg font-bold">42</span>
-          <span class="text-xs text-[#4b5763]" data-i18n="dashboard.stats.listings">Listings</span>
+      </section>
+
+      <!-- Regional Heatmap -->
+      <section>
+        <h2 class="text-3xl font-bold text-white mb-6">Regional Pulse</h2>
+        <div class="glass p-2 sm:p-6 rounded-xl">
+          <svg id="canada-heatmap" viewBox="0 0 1000 600" class="w-full h-auto stroke-glacier/20 stroke-2 fill-pineGreen/20">
+            <path d="M100,100 L150,50 L250,80 L300,150 L200,200 Z" class="hover:fill-mapleRed/50 transition-colors" id="region-BC"><title>British Columbia</title></path>
+            <path d="M310,150 L350,100 L450,130 L500,200 L400,250 Z" class="hover:fill-mapleRed/50 transition-colors" id="region-AB"><title>Alberta</title></path>
+            <path d="M510,200 L550,150 L650,180 L700,250 L600,300 Z" class="hover:fill-mapleRed/50 transition-colors" id="region-ON"><title>Ontario</title></path>
+            <path d="M710,250 L750,200 L850,230 L900,300 L800,350 Z" class="hover:fill-mapleRed/50 transition-colors" id="region-QC"><title>Quebec</title></path>
+          </svg>
         </div>
-        <div class="flex flex-col items-center">
-          <span class="text-green-500 text-lg font-bold">17</span>
-          <span class="text-xs text-[#4b5763]" data-i18n="dashboard.stats.aiCredits">AI Credits</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <span class="text-blue-500 text-lg font-bold">88%</span>
-          <span class="text-xs text-[#4b5763]" data-i18n="dashboard.stats.confidence">Confidence</span>
-        </div>
-      </div>
-      <!-- AI Feedback Engine -->
-      <div class="mt-4 bg-[#fff6ed] rounded-lg px-3 py-2 text-orange-600 text-sm font-medium flex items-center gap-2 shadow-sm" id="aiFeedbackBar">
-        <svg class="w-5 h-5 inline text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        <span id="aiFeedbackText" data-i18n="dashboard.aiFeedback.cozy"> Cozy listings had 2x clicks this week</span>
-      </div>
-    </section>
+      </section>
+    </div>
+
     <!-- Rhythm Calendar -->
-    <section class="bg-white rounded-2xl shadow p-6 flex flex-col items-center mb-3">
+    <section class="glass-card p-6 flex flex-col items-center mb-3 overflow-hidden relative">
+      <!-- Decorative elements -->
+      <div class="geometric-accent geometric-accent-dots absolute -top-12 -right-12 w-48 h-48 opacity-10 transform rotate-12"></div>
+      <div class="organic-blob organic-blob-green absolute -bottom-16 -left-16 w-40 h-40 opacity-8"></div>
+      
       <div class="flex items-center justify-between w-full mb-3">
-        <h2 class="text-lg font-semibold text-[#34616a]" data-i18n="dashboard.rhythmCalendar.title">Rhythm Calendar</h2>
-        <span class="text-xs bg-orange-100 text-orange-500 px-2 py-0.5 rounded font-medium" data-i18n="dashboard.rhythmCalendar.behavioral">Behavioral</span>
+        <h2 class="text-lg font-semibold text-[#34616a] flex items-center" data-i18n="dashboard.rhythmCalendar.title">
+          <span class="mr-2 text-orange-400 text-xl">🗓️</span>Rhythm Calendar
+        </h2>
+        <span class="text-xs bg-gradient-to-r from-orange-100 to-orange-200 text-orange-500 px-3 py-1 rounded-full font-medium shadow-sm" data-i18n="dashboard.rhythmCalendar.behavioral">Behavioral</span>
       </div>
-      <div class="grid grid-cols-7 gap-2 w-full">
+      
+      <div class="grid grid-cols-7 sm:gap-2 gap-1 w-full overflow-x-auto py-1 px-0.5 rhythm-calendar">
         <!-- Calendar days -->
         <template id="calendarDayTemplate">
-          <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+          <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
             <span class="font-bold text-[#ea7113] text-sm day-label"></span>
             <span class="text-xs text-[#64748b] rhythm-label"></span>
             <span class="hidden group-hover:block text-[10px] text-green-600 tip-label"></span>
           </div>
         </template>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Mon</span>
           <span class="text-xs text-[#64748b]">Browsing</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Calm tone</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Suggest Calm tone</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Tue</span>
           <span class="text-xs text-[#64748b]">Budget</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Value tone</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Suggest Value tone</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Wed</span>
           <span class="text-xs text-[#64748b]">Impulse</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Bold tone</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Suggest Bold tone</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg bg-orange-50 shadow-inner cursor-pointer transition group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg bg-gradient-to-br from-orange-50 to-orange-100 shadow cursor-pointer transition group relative">
+          <span class="absolute inset-0 bg-orange-300 opacity-10 rounded-lg pulse-slow"></span>
           <span class="font-bold text-[#ea7113] text-sm">Thu</span>
           <span class="text-xs text-[#ea7113] font-bold">Impulse</span>
-          <span class="block group-hover:text-orange-500 text-[10px] text-green-600"> Best for quick sales</span>
+          <span class="block group-hover:text-orange-500 text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Best for quick sales</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Fri</span>
           <span class="text-xs text-[#64748b]">Luxury</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Premium tone</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Suggest Premium tone</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Sat</span>
           <span class="text-xs text-[#64748b]">Browsing</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">High traffic</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">High traffic</span>
         </div>
-        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition hover:bg-orange-50 group">
+        
+        <div class="flex flex-col items-center py-2 px-1 rounded-lg cursor-pointer transition transform hover:scale-105 hover:bg-orange-50 group">
           <span class="font-bold text-[#ea7113] text-sm">Sun</span>
           <span class="text-xs text-[#64748b]">Budget</span>
-          <span class="hidden group-hover:block text-[10px] text-green-600">Suggest Soft tone</span>
+          <span class="hidden group-hover:block text-[10px] text-green-600 px-1.5 py-0.5 bg-green-50 rounded-full">Suggest Soft tone</span>
         </div>
       </div>
-      <div class="mt-2 text-xs text-[#34616a] text-center" data-i18n="dashboard.rhythmCalendar.tip">Tip: Tap a day to see ideal tone &amp; crosslist time.</div>
+      
+      <div class="mt-2 text-xs text-[#34616a] text-center bg-orange-50/50 px-3 py-1.5 rounded-full" data-i18n="dashboard.rhythmCalendar.tip">
+        <span class="text-orange-500">💡</span> Tap a day to see ideal tone &amp; crosslist time.
+      </div>
     </section>
     <!-- Daily Change Feed -->
-    <section class="bg-white rounded-2xl shadow p-5 flex flex-col gap-1">
-      <h2 class="text-base font-semibold text-[#34616a] mb-2" data-i18n="dashboard.dailyChangeFeed.title">Daily Change Feed</h2>
-      <ul class="text-xs text-[#64748b] space-y-1">
-        <li>Yesterday: 2 prices updated, 1 listing boosted, 4 viewed by Cozy buyers</li>
-        <li>Today: 1 draft published, 2 listings crosslisted</li>
+    <section class="glass-card p-5 flex flex-col gap-1 relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="geometric-accent geometric-accent-circles absolute -bottom-16 -right-16 w-36 h-36 opacity-10 transform -rotate-12"></div>
+      
+      <h2 class="text-base font-semibold text-[#34616a] mb-2 flex items-center" data-i18n="dashboard.dailyChangeFeed.title">
+        <span class="mr-2 text-orange-400 text-xl">📊</span>Daily Change Feed
+      </h2>
+      
+      <ul class="text-xs text-[#64748b] space-y-2">
+        <li class="pl-3 border-l-2 border-orange-200 py-1 hover:bg-orange-50/50 transition rounded">
+          <span class="font-medium text-orange-500">Yesterday:</span> 2 prices updated, 1 listing boosted, 
+          <span class="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full text-[10px]">4 viewed by Cozy buyers</span>
+        </li>
+        <li class="pl-3 border-l-2 border-green-200 py-1 hover:bg-green-50/50 transition rounded">
+          <span class="font-medium text-green-500">Today:</span> 1 draft published, 
+          <span class="bg-orange-50 text-orange-600 px-1.5 py-0.5 rounded-full text-[10px]">2 listings crosslisted</span>
+        </li>
       </ul>
     </section>
   </aside>
@@ -290,216 +655,826 @@ const userData = {
       <!-- Buyer Psychology Map + Milestone Tracker -->
       <div class="w-full flex flex-col lg:flex-row gap-8">
         <!-- Buyer Psychology Map -->
-        <section class="w-full lg:w-2/3 bg-white rounded-2xl shadow px-6 py-5 relative flex flex-col items-center justify-center">
-          <h2 class="text-xl font-semibold text-[#34616a] mb-1" data-i18n="dashboard.buyerMap.title">Buyer Psychology Map</h2>
-          <p class="text-xs text-[#64748b] mb-3" data-i18n="dashboard.buyerMap.instructions">Hover a region to see buyer tone, click to filter listings</p>
+        <section class="w-full lg:w-2/3 glass-card px-6 py-5 relative flex flex-col items-center justify-center overflow-hidden">
+          <!-- Decorative elements -->
+          <div class="geometric-accent geometric-accent-grid absolute -top-20 -left-20 w-64 h-64 opacity-10 transform rotate-12"></div>
+          <div class="organic-blob organic-blob-orange absolute -bottom-40 -right-20 w-64 h-64 opacity-8 animate-blob-slow"></div>
+          
+          <h2 class="text-xl font-semibold text-[#34616a] mb-1 flex items-center relative z-10" data-i18n="dashboard.buyerMap.title">
+            <span class="mr-2 text-orange-500 text-xl">🗺️</span>Buyer Psychology Map
+          </h2>
+          <p class="text-xs text-[#64748b] mb-3 bg-blue-50/50 px-3 py-1 rounded-full" data-i18n="dashboard.buyerMap.instructions">
+            <span class="text-blue-500">👁️</span> Hover a region to see buyer tone, click to filter listings
+          </p>
+          
           <!-- Canada SVG Map (simplified regions for demo) -->
-          <div class="relative w-full max-w-[420px] h-[250px] mx-auto">
+          <div class="relative w-full max-w-[420px] h-[250px] mx-auto mt-2 psychology-map-container">
+            <!-- Map background element -->
+            <div class="absolute inset-0 bg-gradient-to-br from-white/40 to-blue-50/40 rounded-xl"></div>
+            
             <!-- Regions: BC, AB, ON, QC, ATL -->
-            <svg viewBox="0 0 400 220" class="w-full h-[220px]">
+            <svg viewBox="0 0 400 220" class="w-full h-[220px] relative z-10">
+              <!-- Decorative grid lines -->
+              <path d="M0,40 L400,40 M0,80 L400,80 M0,120 L400,120 M0,160 L400,160 M0,200 L400,200" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4 4"/>
+              <path d="M80,0 L80,220 M160,0 L160,220 M240,0 L240,220 M320,0 L320,220" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4 4"/>
+              
               <!-- BC -->
-              <circle id="region-BC" cx="50" cy="120" r="38" class="fill-[#e0f2fe] hover:fill-orange-200 transition cursor-pointer" data-region="BC"/>
+              <circle id="region-BC" cx="50" cy="120" r="38" class="fill-[#e0f2fe] hover:fill-orange-200 transition cursor-pointer transform hover:scale-105" data-region="BC"/>
               <!-- AB -->
-              <circle id="region-AB" cx="120" cy="90" r="30" class="fill-[#f1f5f9] hover:fill-orange-100 transition cursor-pointer" data-region="AB"/>
+              <circle id="region-AB" cx="120" cy="90" r="30" class="fill-[#f1f5f9] hover:fill-orange-100 transition cursor-pointer transform hover:scale-105" data-region="AB"/>
               <!-- ON (most active, pulse) -->
-              <circle id="region-ON" cx="260" cy="90" r="45" class="fill-[#ffedd5] region-pulse hover:fill-orange-300 cursor-pointer" data-region="ON"/>
+              <circle id="region-ON" cx="260" cy="90" r="45" class="fill-[#ffedd5] hover:fill-orange-300 cursor-pointer transform hover:scale-105" data-region="ON"/>
+              <circle id="region-ON-pulse" cx="260" cy="90" r="45" class="fill-orange-300 opacity-30 pulse-slow" data-region="ON"/>
               <!-- QC -->
-              <circle id="region-QC" cx="320" cy="160" r="34" class="fill-[#ede9fe] hover:fill-orange-100 transition cursor-pointer" data-region="QC"/>
+              <circle id="region-QC" cx="320" cy="160" r="34" class="fill-[#ede9fe] hover:fill-orange-100 transition cursor-pointer transform hover:scale-105" data-region="QC"/>
               <!-- ATL -->
-              <circle id="region-ATL" cx="350" cy="40" r="22" class="fill-[#dcfce7] hover:fill-orange-100 transition cursor-pointer" data-region="ATL"/>
-              <!-- Dots for city clusters (visual effect only) -->
-              <circle cx="60" cy="110" r="5" class="fill-orange-300 opacity-60"/>
-              <circle cx="120" cy="110" r="4" class="fill-orange-300 opacity-60"/>
-              <circle cx="235" cy="75" r="6" class="fill-orange-300 opacity-70"/>
-              <circle cx="285" cy="110" r="4" class="fill-orange-300 opacity-50"/>
-              <circle cx="320" cy="130" r="3" class="fill-orange-300 opacity-40"/>
+              <circle id="region-ATL" cx="350" cy="40" r="22" class="fill-[#dcfce7] hover:fill-orange-100 transition cursor-pointer transform hover:scale-105" data-region="ATL"/>
+              
+              <!-- Region labels -->
+              <text x="50" y="120" text-anchor="middle" class="text-xs font-medium fill-[#34616a]">BC</text>
+              <text x="120" y="90" text-anchor="middle" class="text-xs font-medium fill-[#34616a]">AB</text>
+              <text x="260" y="90" text-anchor="middle" class="text-xs font-medium fill-[#34616a]">ON</text>
+              <text x="320" y="160" text-anchor="middle" class="text-xs font-medium fill-[#34616a]">QC</text>
+              <text x="350" y="40" text-anchor="middle" class="text-xs font-medium fill-[#34616a]">ATL</text>
+              
+              <!-- Dots for city clusters with glow effect -->
+              <circle cx="60" cy="110" r="5" class="fill-orange-300 opacity-60 glow-dot"/>
+              <circle cx="120" cy="110" r="4" class="fill-orange-300 opacity-60 glow-dot"/>
+              <circle cx="235" cy="75" r="6" class="fill-orange-300 opacity-70 glow-dot"/>
+              <circle cx="285" cy="110" r="4" class="fill-orange-300 opacity-50 glow-dot"/>
+              <circle cx="320" cy="130" r="3" class="fill-orange-300 opacity-40 glow-dot"/>
+              
+              <!-- Connection lines -->
+              <path d="M60,110 Q140,70 235,75" stroke="#fdba74" stroke-width="1" stroke-dasharray="3 3" class="opacity-40"/>
+              <path d="M235,75 Q260,100 285,110" stroke="#fdba74" stroke-width="1" stroke-dasharray="3 3" class="opacity-40"/>
+              <path d="M285,110 Q300,120 320,130" stroke="#fdba74" stroke-width="1" stroke-dasharray="3 3" class="opacity-40"/>
             </svg>
-            <!-- Tooltip for region tone -->
-            <div id="regionTooltip" class="hidden absolute left-1/2 -translate-x-1/2 top-6 bg-white border border-orange-100 px-4 py-2 rounded-lg text-xs shadow text-[#34616a] pointer-events-none transition z-30"></div>
+            
+            <!-- Enhanced tooltip for region tone -->
+            <div id="regionTooltip" class="hidden absolute left-1/2 -translate-x-1/2 top-6 glass-tooltip px-4 py-2 rounded-lg text-xs pointer-events-none transition z-30 shadow-lg">
+              <div class="font-medium text-[#34616a] mb-1 flex items-center justify-between">
+                <span class="region-name">Region</span>
+                <span class="text-orange-500 text-xs px-1.5 py-0.5 bg-orange-50 rounded-full ml-2">Active</span>
+              </div>
+              <div class="text-[#64748b] region-tone">Preferred tone: Bold</div>
+              <div class="text-[#64748b] region-time">Best time: Weekends</div>
+              <div class="mt-1 text-green-600 text-[10px] font-medium">Click to filter listings</div>
+            </div>
+          </div>
+          
+          <!-- Legend -->
+          <div class="flex items-center justify-center gap-4 mt-3">
+            <div class="flex items-center text-xs text-[#64748b]">
+              <span class="inline-block w-3 h-3 rounded-full bg-[#ffedd5] mr-1"></span>
+              Active
+            </div>
+            <div class="flex items-center text-xs text-[#64748b]">
+              <span class="inline-block w-3 h-3 rounded-full bg-[#e0f2fe] mr-1"></span>
+              Moderate
+            </div>
+            <div class="flex items-center text-xs text-[#64748b]">
+              <span class="inline-block w-3 h-3 rounded-full bg-[#dcfce7] mr-1"></span>
+              Growing
+            </div>
           </div>
         </section>
-        <!-- Milestone Tracker -->
-        <section class="w-full lg:w-1/3 bg-white rounded-2xl shadow px-6 py-5 flex flex-col items-center justify-center">
-          <h2 class="text-lg font-semibold text-[#34616a] mb-1" data-i18n="dashboard.milestones.title">Monthly Milestones</h2>
-          <div class="w-full mt-2">
-            <!-- Progress bar -->
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs text-[#64748b]" data-i18n="dashboard.milestones.totalListings">Total Listings</span>
-              <span class="text-xs text-orange-500">42</span>
-            </div>
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs text-[#64748b]" data-i18n="dashboard.milestones.crosslisted">% Crosslisted</span>
-              <span class="text-xs text-green-500">86%</span>
-            </div>
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs text-[#64748b]" data-i18n="dashboard.milestones.revenueGoal">Revenue Goal</span>
-              <span class="text-xs text-blue-500">$2,100 / $3,000</span>
-            </div>
-            <div class="my-4">
-              <div class="h-4 w-full bg-orange-100 rounded-full relative overflow-hidden cursor-pointer" onclick="openModal()">
-                <div class="h-4 bg-orange-400 rounded-full transition-all" style="width: 70%;"></div>
-                <div class="absolute inset-0 flex items-center justify-center text-xs text-white font-semibold select-none" data-i18n="dashboard.milestones.clickBreakdown">Click for breakdown</div>
+      </aside>
+    </div>
+                  <div class="absolute right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full opacity-70"></div>
+                  <div class="absolute right-3 top-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full opacity-50"></div>
+                </div>
+                
+                <!-- Button text with hover effect -->
+                <div class="absolute inset-0 flex items-center justify-center text-xs text-white font-semibold select-none group-hover:scale-110 transition" data-i18n="dashboard.milestones.clickBreakdown">
+                  Click for breakdown
+                </div>
+                
+                <!-- Hover tooltip -->
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-white px-3 py-1 rounded shadow-md text-xs text-[#34616a] hidden group-hover:block transition">
+                  <span class="text-orange-500 font-medium">70%</span> toward monthly target
+                </div>
               </div>
+            </div>
+            
+            <!-- Quick stats badges -->
+            <div class="flex justify-center gap-2 mt-2">
+              <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full">10 days left</span>
+              <span class="text-[10px] bg-green-50 text-green-600 px-2 py-1 rounded-full">+12% from last month</span>
             </div>
           </div>
         </section>
       </div>
 
       <!-- AI Tools Summary Zone -->
-      <section class="w-full bg-white rounded-2xl shadow px-7 pt-6 pb-8 flex flex-col gap-6">
-        <h2 class="text-lg font-semibold text-[#34616a] mb-2" data-i18n="dashboard.aiTools.title">AI Tools</h2>
-        <!-- a. Glow Tiles -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-4">
-          <!-- Example Glow Tiles -->
-          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"></div>
-            <span class="font-semibold text-[#ea7113]" data-i18n="dashboard.aiTools.titleGenerator">Title Generator</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Used 23x</span>
-            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500" data-i18n="dashboard.aiTools.launch">Launch</button>
+      <section class="w-full glass-card px-7 pt-6 pb-8 flex flex-col gap-6 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="geometric-accent geometric-accent-grid absolute -top-40 -left-40 w-96 h-96 opacity-5 transform rotate-12"></div>
+        <div class="organic-blob organic-blob-blue absolute -bottom-40 -right-40 w-80 h-80 opacity-5 animate-blob-slow"></div>
+        <div class="organic-blob organic-blob-orange absolute -top-40 right-1/3 w-40 h-40 opacity-5 animate-blob-slow"></div>
+        
+        <h2 class="text-lg font-semibold text-[#34616a] mb-3 flex items-center relative z-10" data-i18n="dashboard.aiTools.title">
+          <span class="mr-2 text-orange-500 text-xl">🤖</span>AI Tools
+          <span class="ml-2 text-xs bg-blue-50 text-blue-500 px-2 py-0.5 rounded-full">5 Tools Available</span>
+        </h2>
+        
+        <!-- a. Enhanced Glow Tiles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-4 relative z-10">
+          <!-- Title Generator Tile -->
+          <div class="premium-card bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-4 flex flex-col items-center transform hover:scale-105 transition-all cursor-pointer group overflow-hidden relative">
+            <!-- Glow effect container -->
+            <div class="absolute inset-0 bg-orange-300 opacity-0 group-hover:opacity-10 transition-opacity duration-300 glow-pulse"></div>
+            
+            <!-- Icon with enhanced styling -->
+            <div class="bg-gradient-to-br from-white to-orange-50 rounded-full w-12 h-12 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow-md border border-orange-100 group-hover:border-orange-200 transition-all">
+              📝
+            </div>
+            
+            <!-- Tool name with enhanced typography -->
+            <span class="font-semibold text-[#ea7113] group-hover:text-orange-600 transition-colors" data-i18n="dashboard.aiTools.titleGenerator">Title Generator</span>
+            
+            <!-- Usage stats with badges -->
+            <div class="flex items-center mt-1 mb-1">
+              <span class="text-[10px] text-[#64748b] bg-white/70 px-1.5 py-0.5 rounded-full">Used 23x</span>
+              <span class="text-[10px] text-green-600 bg-green-50/70 px-1.5 py-0.5 rounded-full ml-1">High impact</span>
+            </div>
+            
+            <!-- Enhanced button with gradient and hover effect -->
+            <button class="mt-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-all flex items-center gap-1" data-i18n="dashboard.aiTools.launch">
+              <span>Launch</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"></div>
-            <span class="font-semibold text-[#ea7113]" data-i18n="dashboard.aiTools.priceTool">Price Tool</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Avg +14% sales</span>
-            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500" data-i18n="dashboard.aiTools.launch">Launch</button>
+          
+          <!-- Price Tool Tile -->
+          <div class="premium-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 flex flex-col items-center transform hover:scale-105 transition-all cursor-pointer group overflow-hidden relative">
+            <!-- Glow effect container -->
+            <div class="absolute inset-0 bg-blue-300 opacity-0 group-hover:opacity-10 transition-opacity duration-300 glow-pulse"></div>
+            
+            <!-- Icon with enhanced styling -->
+            <div class="bg-gradient-to-br from-white to-blue-50 rounded-full w-12 h-12 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow-md border border-blue-100 group-hover:border-blue-200 transition-all">
+              💲
+            </div>
+            
+            <!-- Tool name with enhanced typography -->
+            <span class="font-semibold text-[#3b82f6] group-hover:text-blue-600 transition-colors" data-i18n="dashboard.aiTools.priceTool">Price Tool</span>
+            
+            <!-- Usage stats with badges -->
+            <div class="flex items-center mt-1 mb-1">
+              <span class="text-[10px] text-[#64748b] bg-white/70 px-1.5 py-0.5 rounded-full">Avg +14% sales</span>
+              <span class="text-[10px] text-blue-600 bg-blue-50/70 px-1.5 py-0.5 rounded-full ml-1">Popular</span>
+            </div>
+            
+            <!-- Enhanced button with gradient and hover effect -->
+            <button class="mt-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-all flex items-center gap-1" data-i18n="dashboard.aiTools.launch">
+              <span>Launch</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"></div>
-            <span class="font-semibold text-[#ea7113]" data-i18n="dashboard.aiTools.tagOptimizer">Tag Optimizer</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Next: Cozy tags</span>
-            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500" data-i18n="dashboard.aiTools.launch">Launch</button>
+          
+          <!-- Tag Optimizer Tile -->
+          <div class="premium-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-4 flex flex-col items-center transform hover:scale-105 transition-all cursor-pointer group overflow-hidden relative">
+            <!-- Glow effect container -->
+            <div class="absolute inset-0 bg-purple-300 opacity-0 group-hover:opacity-10 transition-opacity duration-300 glow-pulse"></div>
+            
+            <!-- Icon with enhanced styling -->
+            <div class="bg-gradient-to-br from-white to-purple-50 rounded-full w-12 h-12 flex items-center justify-center text-purple-400 text-2xl mb-2 shadow-md border border-purple-100 group-hover:border-purple-200 transition-all">
+              🌌
+            </div>
+            
+            <!-- Tool name with enhanced typography -->
+            <span class="font-semibold text-[#9333ea] group-hover:text-purple-600 transition-colors" data-i18n="dashboard.aiTools.tagOptimizer">Tag Optimizer</span>
+            
+            <!-- Usage stats with badges -->
+            <div class="flex items-center mt-1 mb-1">
+              <span class="text-[10px] text-[#64748b] bg-white/70 px-1.5 py-0.5 rounded-full">Next: Cozy tags</span>
+              <span class="text-[10px] text-purple-600 bg-purple-50/70 px-1.5 py-0.5 rounded-full ml-1">New</span>
+            </div>
+            
+            <!-- Enhanced button with gradient and hover effect -->
+            <button class="mt-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-400 to-purple-500 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-all flex items-center gap-1" data-i18n="dashboard.aiTools.launch">
+              <span>Launch</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"></div>
-            <span class="font-semibold text-[#ea7113]" data-i18n="dashboard.aiTools.toneAnalyzer">Tone Analyzer</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Try Cozy today</span>
-            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500" data-i18n="dashboard.aiTools.launch">Launch</button>
+          
+          <!-- Tone Analyzer Tile -->
+          <div class="premium-card bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4 flex flex-col items-center transform hover:scale-105 transition-all cursor-pointer group overflow-hidden relative">
+            <!-- Glow effect container -->
+            <div class="absolute inset-0 bg-green-300 opacity-0 group-hover:opacity-10 transition-opacity duration-300 glow-pulse"></div>
+            
+            <!-- Icon with enhanced styling -->
+            <div class="bg-gradient-to-br from-white to-green-50 rounded-full w-12 h-12 flex items-center justify-center text-green-400 text-2xl mb-2 shadow-md border border-green-100 group-hover:border-green-200 transition-all">
+              🎤
+            </div>
+            
+            <!-- Tool name with enhanced typography -->
+            <span class="font-semibold text-[#22c55e] group-hover:text-green-600 transition-colors" data-i18n="dashboard.aiTools.toneAnalyzer">Tone Analyzer</span>
+            
+            <!-- Usage stats with badges -->
+            <div class="flex items-center mt-1 mb-1">
+              <span class="text-[10px] text-[#64748b] bg-white/70 px-1.5 py-0.5 rounded-full">Try Cozy today</span>
+              <span class="text-[10px] text-orange-600 bg-orange-50/70 px-1.5 py-0.5 rounded-full ml-1">Recommended</span>
+            </div>
+            
+            <!-- Enhanced button with gradient and hover effect -->
+            <button class="mt-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-green-400 to-green-500 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-all flex items-center gap-1" data-i18n="dashboard.aiTools.launch">
+              <span>Launch</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-          <div class="glow-tile bg-orange-50 rounded-2xl p-4 flex flex-col items-center shadow hover:scale-105 transition cursor-pointer group">
-            <div class="bg-white rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow"></div>
-            <span class="font-semibold text-[#ea7113]" data-i18n="dashboard.aiTools.salesPredictor">Sales Predictor</span>
-            <span class="text-[10px] text-[#64748b] mt-1">High Sat traffic</span>
-            <button class="mt-2 px-3 py-1 rounded bg-orange-400 text-white text-xs font-medium shadow group-hover:bg-orange-500" data-i18n="dashboard.aiTools.launch">Launch</button>
+          
+          <!-- Sales Predictor Tile -->
+          <div class="premium-card bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-4 flex flex-col items-center transform hover:scale-105 transition-all cursor-pointer group overflow-hidden relative">
+            <!-- Glow effect container -->
+            <div class="absolute inset-0 bg-amber-300 opacity-0 group-hover:opacity-10 transition-opacity duration-300 glow-pulse"></div>
+            
+            <!-- Icon with enhanced styling -->
+            <div class="bg-gradient-to-br from-white to-amber-50 rounded-full w-12 h-12 flex items-center justify-center text-amber-400 text-2xl mb-2 shadow-md border border-amber-100 group-hover:border-amber-200 transition-all">
+              📈
+            </div>
+            
+            <!-- Tool name with enhanced typography -->
+            <span class="font-semibold text-[#f59e0b] group-hover:text-amber-600 transition-colors" data-i18n="dashboard.aiTools.salesPredictor">Sales Predictor</span>
+            
+            <!-- Usage stats with badges -->
+            <div class="flex items-center mt-1 mb-1">
+              <span class="text-[10px] text-[#64748b] bg-white/70 px-1.5 py-0.5 rounded-full">High Sat traffic</span>
+              <span class="text-[10px] text-amber-600 bg-amber-50/70 px-1.5 py-0.5 rounded-full ml-1">Trending</span>
+            </div>
+            
+            <!-- Enhanced button with gradient and hover effect -->
+            <button class="mt-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-all flex items-center gap-1" data-i18n="dashboard.aiTools.launch">
+              <span>Launch</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
         <!-- b. Momentum Trail Cards -->
-        <div class="flex gap-4 mb-4 overflow-x-auto">
-          <div class="bg-gradient-to-r from-orange-100 via-orange-50 to-blue-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b]">Fusion Composer</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-bold">+2</span>
-              <span class="text-xs text-[#64748b]">last hour</span>
+        <div class="relative z-10">
+          <!-- Trail Explainer -->
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-semibold text-[#34616a] flex items-center" data-i18n="dashboard.aiTools.momentumTrail">
+              <span class="mr-2 text-orange-500">🚩</span>Momentum Trail
+            </h3>
+            <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full flex items-center" data-i18n="dashboard.aiTools.nextCheckpoint">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Next checkpoint: 3 days
+            </span>
+          </div>
+          
+          <!-- Trail Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+            <!-- Suggested Action Card -->
+            <div class="glass-card-subtle bg-gradient-to-br from-blue-50/80 to-blue-100/60 rounded-2xl p-4 flex flex-col hover:shadow-lg transition-shadow transform hover:scale-[1.01] overflow-hidden relative group">
+              <!-- Decorative elements -->
+              <div class="absolute -top-8 -right-8 w-16 h-16 bg-blue-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-4 -left-4 w-10 h-10 bg-blue-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Card header -->
+              <div class="flex justify-between mb-2">
+                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full" data-i18n="dashboard.aiTools.suggestedAction">Suggested Action</span>
+                <span class="text-[10px] text-[#64748b] bg-white/70 px-2 py-0.5 rounded-full">Today</span>
+              </div>
+              
+              <!-- Card content -->
+              <p class="text-sm text-[#374151] font-medium mb-3 flex items-center" data-i18n="dashboard.aiTools.completeToolExplanation">
+                <span class="mr-2 text-blue-500">📚</span>Complete tool explanation tour
+              </p>
+              
+              <div class="text-xs text-[#64748b] mb-3 pl-2 border-l-2 border-blue-200" data-i18n="dashboard.aiTools.completeToolExplanationDesc">See how AI tools can automate 80% of your listing work.</div>
+              
+              <!-- Progress indicator -->
+              <div class="w-full bg-white/50 h-1 rounded-full mb-3">
+                <div class="bg-blue-400 h-1 rounded-full shimmer-bar" style="width: 25%"></div>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="flex mt-auto">
+                <button class="px-3 py-1 bg-white text-[#34616a] text-xs rounded-full shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all" data-i18n="dashboard.aiTools.skip">Skip</button>
+                <button class="ml-2 px-4 py-1 bg-gradient-to-r from-blue-400 to-blue-500 text-white text-xs rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-1 group-hover:shadow-blue-200" data-i18n="dashboard.aiTools.start">
+                  <span>Start</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 70%"></div>
+            
+            <!-- Next Step Card -->
+            <div class="glass-card-subtle bg-gradient-to-br from-purple-50/80 to-purple-100/60 rounded-2xl p-4 flex flex-col hover:shadow-lg transition-shadow transform hover:scale-[1.01] overflow-hidden relative group">
+              <!-- Decorative elements -->
+              <div class="absolute -top-8 -right-8 w-16 h-16 bg-purple-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-4 -left-4 w-10 h-10 bg-purple-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Card header -->
+              <div class="flex justify-between mb-2">
+                <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full" data-i18n="dashboard.aiTools.nextStep">Next Step</span>
+                <span class="text-[10px] text-[#64748b] bg-white/70 px-2 py-0.5 rounded-full">Tomorrow</span>
+              </div>
+              
+              <!-- Card content -->
+              <p class="text-sm text-[#374151] font-medium mb-3 flex items-center" data-i18n="dashboard.aiTools.optimizeTags">
+                <span class="mr-2 text-purple-500">🌌</span>Optimize tags for winter items
+              </p>
+              
+              <div class="text-xs text-[#64748b] mb-3 pl-2 border-l-2 border-purple-200" data-i18n="dashboard.aiTools.optimizeTagsDesc">Winter search volume increasing. Update 12+ items.</div>
+              
+              <!-- Priority badge -->
+              <div class="mb-3">
+                <span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-0.5 rounded-full">High priority</span>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="flex mt-auto">
+                <button class="px-3 py-1 bg-white text-[#34616a] text-xs rounded-full shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all" data-i18n="dashboard.aiTools.reminder">Reminder</button>
+                <button class="ml-2 px-4 py-1 bg-gradient-to-r from-purple-400 to-purple-500 text-white text-xs rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-1 group-hover:shadow-purple-200" data-i18n="dashboard.aiTools.tagNow">
+                  <span>Tag Now</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Data Point Card -->
+            <div class="glass-card-subtle bg-gradient-to-br from-green-50/80 to-green-100/60 rounded-2xl p-4 flex flex-col hover:shadow-lg transition-shadow transform hover:scale-[1.01] overflow-hidden relative group">
+              <!-- Decorative elements -->
+              <div class="absolute -top-8 -right-8 w-16 h-16 bg-green-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-4 -left-4 w-10 h-10 bg-green-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Card header -->
+              <div class="flex justify-between mb-2">
+                <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full" data-i18n="dashboard.aiTools.dataPoint">Data Point</span>
+                <span class="text-[10px] text-[#64748b] bg-white/70 px-2 py-0.5 rounded-full">2 days ago</span>
+              </div>
+              
+              <!-- Card content -->
+              <p class="text-sm text-[#374151] font-medium mb-3 flex items-center" data-i18n="dashboard.aiTools.priceImpact">
+                <span class="mr-2 text-green-500">📈</span>Price impact analysis
+              </p>
+              
+              <div class="text-xs text-[#64748b] mb-3 pl-2 border-l-2 border-green-200" data-i18n="dashboard.aiTools.priceImpactDesc">Your AI-adjusted prices are +18% more effective than market.</div>
+              
+              <!-- Chart mini visualization -->
+              <div class="flex items-end h-6 mb-3 gap-1">
+                <div class="w-[10%] h-2 bg-green-200 rounded-sm"></div>
+                <div class="w-[10%] h-3 bg-green-300 rounded-sm"></div>
+                <div class="w-[10%] h-4 bg-green-400 rounded-sm"></div>
+                <div class="w-[10%] h-5 bg-green-500 rounded-sm"></div>
+                <div class="w-[10%] h-6 bg-green-600 rounded-sm"></div>
+                <span class="text-[10px] text-green-600 ml-1">+18%</span>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="flex mt-auto">
+                <button class="px-3 py-1 bg-white text-[#34616a] text-xs rounded-full shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all" data-i18n="dashboard.aiTools.details">Details</button>
+                <button class="ml-2 px-4 py-1 bg-gradient-to-r from-green-400 to-green-500 text-white text-xs rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-1 group-hover:shadow-green-200" data-i18n="dashboard.aiTools.share">
+                  <span>Share</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Efficiency Card -->
+            <div class="glass-card-subtle bg-gradient-to-br from-amber-50/80 to-amber-100/60 rounded-2xl p-4 flex flex-col hover:shadow-lg transition-shadow transform hover:scale-[1.01] overflow-hidden relative group">
+              <!-- Decorative elements -->
+              <div class="absolute -top-8 -right-8 w-16 h-16 bg-amber-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-4 -left-4 w-10 h-10 bg-amber-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Card header -->
+              <div class="flex justify-between mb-2">
+                <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full" data-i18n="dashboard.aiTools.efficiency">Efficiency</span>
+                <span class="text-[10px] text-[#64748b] bg-white/70 px-2 py-0.5 rounded-full">Last week</span>
+              </div>
+              
+              <!-- Card content -->
+              <p class="text-sm text-[#374151] font-medium mb-3 flex items-center" data-i18n="dashboard.aiTools.timeTracker">
+                <span class="mr-2 text-amber-500">⏰</span>Time tracker summary
+              </p>
+              
+              <div class="text-xs text-[#64748b] mb-3 pl-2 border-l-2 border-amber-200" data-i18n="dashboard.aiTools.timeTrackerDesc">You saved 4.2 hours this week using AI tools vs manual.</div>
+              
+              <!-- Time saved visualization -->
+              <div class="flex items-center mb-3">
+                <div class="w-full bg-white/50 h-1 rounded-full flex-grow">
+                  <div class="bg-amber-400 h-1 rounded-full shimmer-bar" style="width: 75%"></div>
+                </div>
+                <span class="text-[10px] text-amber-600 ml-2 font-semibold">4.2h</span>
+              </div>
+              
+              <!-- Action buttons -->
+              <div class="flex mt-auto">
+                <button class="px-3 py-1 bg-white text-[#34616a] text-xs rounded-full shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all" data-i18n="dashboard.aiTools.breakdown">Breakdown</button>
+                <button class="ml-2 px-4 py-1 bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs rounded-full shadow-sm hover:shadow-md transition-all flex items-center gap-1 group-hover:shadow-amber-200" data-i18n="dashboard.aiTools.yay">
+                  <span>Yay!</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="bg-gradient-to-r from-blue-50 via-orange-50 to-green-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b]">Pattern Predictor</span>
-            <div class="flex items-center gap-2">
-              <span class="text-orange-500 text-lg font-bold">+1</span>
-              <span class="text-xs text-[#64748b]">today</span>
-            </div>
-            <div class="h-1 w-full bg-blue-200 rounded-full mt-2">
-              <div class="h-1 bg-blue-400 rounded-full" style="width: 20%"></div>
-            </div>
+          
+          <!-- Trail Dots Navigation -->
+          <div class="flex justify-center gap-1 mt-2">
+            <button class="w-8 h-1 bg-orange-400 rounded-full"></button>
+            <button class="w-4 h-1 bg-gray-200 rounded-full hover:bg-orange-200 transition"></button>
+            <button class="w-4 h-1 bg-gray-200 rounded-full hover:bg-orange-200 transition"></button>
           </div>
-          <div class="bg-gradient-to-r from-green-50 via-orange-50 to-orange-100 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b]">Trust Builder</span>
-            <div class="flex items-center gap-2">
-              <span class="text-orange-500 text-lg font-bold">Try me!</span>
-              <span class="text-xs text-[#64748b]">+ Trust</span>
-            </div>
-            <div class="h-1 w-full bg-green-200 rounded-full mt-2">
-              <div class="h-1 bg-green-400 rounded-full shimmer" style="width: 10%"></div>
-            </div>
+        </div>
+        <!-- c. Animated Layer Cards - Core AI Tools -->
+        <div class="relative z-10 mt-6 mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-semibold text-[#34616a] flex items-center" data-i18n="dashboard.aiTools.coreTools">
+              <span class="mr-2 text-blue-500">🔹</span>Core AI Tools
+            </h3>
+            <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span data-i18n="dashboard.aiTools.essentialTools">Essential tools</span>
+            </span>
           </div>
-          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b]">Photo Enhancer</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-bold">+4</span>
-              <span class="text-xs text-[#64748b]">this week</span>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-2">
+            <!-- Fusion Composer Card -->
+            <div class="glass-card bg-gradient-to-br from-blue-50/80 to-blue-100/60 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group transform hover:scale-[1.02] transition-all hover:shadow-blue-200/30 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-16 h-16 bg-blue-200/30 -rotate-45 transform origin-bottom-left"></div>
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-blue-300/20 rounded-full"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative z-10">
+                <div class="bg-gradient-to-br from-white to-blue-50 rounded-full w-14 h-14 flex items-center justify-center text-blue-500 text-2xl mb-3 shadow-md border border-blue-100 group-hover:border-blue-200 transition-all">
+                  <span class="animate-pulse-slow">🧬</span>
+                </div>
+              </div>
+              
+              <!-- Tool name and description -->
+              <span class="font-semibold text-blue-700 group-hover:text-blue-800 transition-colors text-center z-10" data-i18n="dashboard.aiTools.fusionComposer">Fusion Composer</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full z-10">Blend titles + tags</span>
+              
+              <!-- Usage indicator -->
+              <div class="w-full mt-3 px-2">
+                <div class="h-1 w-full bg-white/50 rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-400 rounded-full shimmer-bar" style="width: 65%"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[9px] text-blue-600/70">
+                  <span>Usage</span>
+                  <span>65%</span>
+                </div>
+              </div>
             </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 50%"></div>
+            
+            <!-- Listing Timer Card -->
+            <div class="glass-card bg-gradient-to-br from-green-50/80 to-green-100/60 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group transform hover:scale-[1.02] transition-all hover:shadow-green-200/30 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-16 h-16 bg-green-200/30 -rotate-45 transform origin-bottom-left"></div>
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-green-300/20 rounded-full"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative z-10">
+                <div class="bg-gradient-to-br from-white to-green-50 rounded-full w-14 h-14 flex items-center justify-center text-green-500 text-2xl mb-3 shadow-md border border-green-100 group-hover:border-green-200 transition-all">
+                  <span class="animate-pulse-slow">⏱️</span>
+                </div>
+              </div>
+              
+              <!-- Tool name and description -->
+              <span class="font-semibold text-green-700 group-hover:text-green-800 transition-colors text-center z-10" data-i18n="dashboard.aiTools.listingTimer">Listing Timer</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full z-10">Suggest best hour</span>
+              
+              <!-- Usage indicator -->
+              <div class="w-full mt-3 px-2">
+                <div class="h-1 w-full bg-white/50 rounded-full overflow-hidden">
+                  <div class="h-full bg-green-400 rounded-full shimmer-bar" style="width: 80%"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[9px] text-green-600/70">
+                  <span>Usage</span>
+                  <span>80%</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b] font-medium" data-i18n="dashboard.milestoneTracker.monthlyGoal">Monthly Goal</span>
-            <div class="text-xl font-bold text-[#34616a]">$2,100 <span class="text-sm font-normal text-[#64748b]">/ $3,000</span></div>
-            <span class="text-xs text-[#64748b]">this week</span>
-          </div>
-          <div class="bg-gradient-to-r from-orange-100 via-blue-50 to-orange-50 rounded-xl p-3 min-w-[150px] shadow flex flex-col justify-between">
-            <span class="text-xs text-[#64748b]">Buyer Persona</span>
-            <div class="flex items-center gap-2">
-              <span class="text-green-500 text-lg font-bold">+3</span>
-              <span class="text-xs text-[#64748b]">this week</span>
+            
+            <!-- Pattern Predictor Card -->
+            <div class="glass-card bg-gradient-to-br from-orange-50/80 to-orange-100/60 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group transform hover:scale-[1.02] transition-all hover:shadow-orange-200/30 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-16 h-16 bg-orange-200/30 -rotate-45 transform origin-bottom-left"></div>
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-orange-300/20 rounded-full"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative z-10">
+                <div class="bg-gradient-to-br from-white to-orange-50 rounded-full w-14 h-14 flex items-center justify-center text-orange-500 text-2xl mb-3 shadow-md border border-orange-100 group-hover:border-orange-200 transition-all">
+                  <span class="animate-pulse-slow">🔮</span>
+                </div>
+              </div>
+              
+              <!-- Tool name and description -->
+              <span class="font-semibold text-orange-700 group-hover:text-orange-800 transition-colors text-center z-10" data-i18n="dashboard.aiTools.patternPredictor">Pattern Predictor</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full z-10">Trend finder</span>
+              
+              <!-- Usage indicator -->
+              <div class="w-full mt-3 px-2">
+                <div class="h-1 w-full bg-white/50 rounded-full overflow-hidden">
+                  <div class="h-full bg-orange-400 rounded-full shimmer-bar" style="width: 45%"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[9px] text-orange-600/70">
+                  <span>Usage</span>
+                  <span>45%</span>
+                </div>
+              </div>
+              
+              <!-- New feature badge -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-orange-400 to-orange-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.updated">Updated</span>
+              </div>
             </div>
-            <div class="h-1 w-full bg-orange-200 rounded-full mt-2">
-              <div class="h-1 bg-orange-400 rounded-full" style="width: 30%"></div>
+            
+            <!-- Platform Sync Card -->
+            <div class="glass-card bg-gradient-to-br from-purple-50/80 to-purple-100/60 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group transform hover:scale-[1.02] transition-all hover:shadow-purple-200/30 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-16 h-16 bg-purple-200/30 -rotate-45 transform origin-bottom-left"></div>
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-300/20 rounded-full"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative z-10">
+                <div class="bg-gradient-to-br from-white to-purple-50 rounded-full w-14 h-14 flex items-center justify-center text-purple-500 text-2xl mb-3 shadow-md border border-purple-100 group-hover:border-purple-200 transition-all">
+                  <span class="animate-pulse-slow">🔗</span>
+                </div>
+              </div>
+              
+              <!-- Tool name and description -->
+              <span class="font-semibold text-purple-700 group-hover:text-purple-800 transition-colors text-center z-10" data-i18n="dashboard.aiTools.platformSync">Platform Sync</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full z-10">Real-time updates</span>
+              
+              <!-- Usage indicator -->
+              <div class="w-full mt-3 px-2">
+                <div class="h-1 w-full bg-white/50 rounded-full overflow-hidden">
+                  <div class="h-full bg-purple-400 rounded-full shimmer-bar" style="width: 92%"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[9px] text-purple-600/70">
+                  <span>Usage</span>
+                  <span>92%</span>
+                </div>
+              </div>
+              
+              <!-- Most used badge -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-purple-400 to-purple-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.mostUsed">Most used</span>
+              </div>
+            </div>
+            
+            <!-- Inventory Helper Card -->
+            <div class="glass-card bg-gradient-to-br from-amber-50/80 to-amber-100/60 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group transform hover:scale-[1.02] transition-all hover:shadow-amber-200/30 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-0 right-0 w-16 h-16 bg-amber-200/30 -rotate-45 transform origin-bottom-left"></div>
+              <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-amber-300/20 rounded-full"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative z-10">
+                <div class="bg-gradient-to-br from-white to-amber-50 rounded-full w-14 h-14 flex items-center justify-center text-amber-500 text-2xl mb-3 shadow-md border border-amber-100 group-hover:border-amber-200 transition-all">
+                  <span class="animate-pulse-slow">📦</span>
+                </div>
+              </div>
+              
+              <!-- Tool name and description -->
+              <span class="font-semibold text-amber-700 group-hover:text-amber-800 transition-colors text-center z-10" data-i18n="dashboard.aiTools.inventoryHelper">Inventory Helper</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full z-10">Stock alerts</span>
+              
+              <!-- Usage indicator -->
+              <div class="w-full mt-3 px-2">
+                <div class="h-1 w-full bg-white/50 rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-400 rounded-full shimmer-bar" style="width: 60%"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[9px] text-amber-600/70">
+                  <span>Usage</span>
+                  <span>60%</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- c. Animated Layer Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-2">
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
-            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">🧬</div>
-            <span class="font-semibold text-[#34616a]" data-i18n="dashboard.aiTools.fusionComposer">Fusion Composer</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Blend titles + tags</span>
+        <!-- d. Visual Effect Cards - Featured AI Tools -->
+        <div class="relative z-10 mt-6">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="text-sm font-semibold text-[#34616a] flex items-center" data-i18n="dashboard.aiTools.featuredTools">
+              <span class="mr-2 text-orange-500">✨</span>Featured AI Tools
+            </h3>
+            <span class="text-[10px] bg-orange-50 text-orange-600 px-2 py-1 rounded-full flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              <span data-i18n="dashboard.aiTools.swipeMore">Swipe for more</span>
+            </span>
           </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
-            <div class="bg-green-50 rounded-full w-10 h-10 flex items-center justify-center text-green-400 text-2xl mb-2 shadow">⏱️</div>
-            <span class="font-semibold text-[#34616a]" data-i18n="dashboard.aiTools.listingTimer">Listing Timer</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Suggest best hour</span>
+          
+          <div class="flex gap-4 mb-4 overflow-x-auto pb-2 snap-x">
+            <!-- Trust Builder Card -->
+            <div class="premium-card-glow bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-orange-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-orange-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-orange-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-orange-50 rounded-full w-14 h-14 flex items-center justify-center text-orange-400 text-3xl mb-3 shadow-md border border-orange-100 group-hover:border-orange-200 transition-all z-10">
+                  🔐
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-orange-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-orange-600 group-hover:text-orange-700 transition-colors text-center" data-i18n="dashboard.aiTools.trustBuilder">Trust Builder</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full">Not used lately</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-orange-400 to-orange-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1 animate-pulse">
+                <span>+</span>
+                <span class="font-semibold" data-i18n="dashboard.aiTools.trust">Trust</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-orange-600 mb-1" data-i18n="dashboard.aiTools.trustBuilder">Trust Builder</p>
+                <p data-i18n="dashboard.aiTools.trustBuilderDesc">Increase buyer confidence with AI-optimized trust signals</p>
+              </div>
+            </div>
+            
+            <!-- Photo Enhancer Card -->
+            <div class="premium-card-glow bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-green-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-green-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-green-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-green-50 rounded-full w-14 h-14 flex items-center justify-center text-green-400 text-3xl mb-3 shadow-md border border-green-100 group-hover:border-green-200 transition-all z-10">
+                  🖼️
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-green-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-green-600 group-hover:text-green-700 transition-colors text-center" data-i18n="dashboard.aiTools.photoEnhancer">Photo Enhancer</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full">Last used: 5d</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-green-400 to-green-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.popular">Popular</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-green-600 mb-1" data-i18n="dashboard.aiTools.photoEnhancer">Photo Enhancer</p>
+                <p data-i18n="dashboard.aiTools.photoEnhancerDesc">AI photo enhancement for professional product shots</p>
+              </div>
+            </div>
+            
+            <!-- Bulk Lister Card -->
+            <div class="premium-card-glow bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-blue-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-blue-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-blue-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-blue-50 rounded-full w-14 h-14 flex items-center justify-center text-blue-400 text-3xl mb-3 shadow-md border border-blue-100 group-hover:border-blue-200 transition-all z-10">
+                  🗂️
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-blue-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-blue-600 group-hover:text-blue-700 transition-colors text-center" data-i18n="dashboard.aiTools.bulkLister">Bulk Lister</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full">Try it</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-blue-400 to-blue-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.new">New</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-blue-600 mb-1" data-i18n="dashboard.aiTools.bulkLister">Bulk Lister</p>
+                <p data-i18n="dashboard.aiTools.bulkListerDesc">List multiple items at once with AI-optimized templates</p>
+              </div>
+            </div>
+            
+            <!-- Inventory Health Card -->
+            <div class="premium-card-glow bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-amber-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-amber-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-amber-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-amber-50 rounded-full w-14 h-14 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-md border border-amber-100 group-hover:border-amber-200 transition-all z-10">
+                  📦
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-amber-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-amber-600 group-hover:text-amber-700 transition-colors text-center" data-i18n="dashboard.aiTools.inventoryHealth">Inventory Health</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full">Needs review</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-amber-400 to-amber-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.alert">Alert</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-amber-600 mb-1" data-i18n="dashboard.aiTools.inventoryHealth">Inventory Health</p>
+                <p data-i18n="dashboard.aiTools.inventoryHealthDesc">AI-powered insights to optimize your inventory turnover</p>
+              </div>
+            </div>
+            
+            <!-- AI Notes Card -->
+            <div class="premium-card-glow bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-purple-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-purple-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-purple-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-purple-50 rounded-full w-14 h-14 flex items-center justify-center text-purple-400 text-3xl mb-3 shadow-md border border-purple-100 group-hover:border-purple-200 transition-all z-10">
+                  💬
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-purple-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-purple-600 group-hover:text-purple-700 transition-colors text-center" data-i18n="dashboard.aiTools.aiNotes">AI Notes</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full">Motivation off?</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-purple-400 to-purple-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.tryMe">Try me</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-purple-600 mb-1" data-i18n="dashboard.aiTools.aiNotes">AI Notes</p>
+                <p data-i18n="dashboard.aiTools.aiNotesDesc">AI-powered notes to track buyer psychology and trends</p>
+              </div>
+            </div>
+            
+            <!-- Content Repurposer Card (New) -->
+            <div class="premium-card-glow bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 flex flex-col items-center shadow-lg cursor-pointer relative group min-w-[180px] snap-start transform hover:scale-105 transition-all hover:shadow-pink-200/50 overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute -top-12 -right-12 w-24 h-24 bg-pink-200 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-pink-300 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+              
+              <!-- Icon with premium styling -->
+              <div class="relative">
+                <div class="bg-gradient-to-br from-white to-pink-50 rounded-full w-14 h-14 flex items-center justify-center text-pink-400 text-3xl mb-3 shadow-md border border-pink-100 group-hover:border-pink-200 transition-all z-10">
+                  🔄
+                </div>
+                <!-- Glow effect behind icon -->
+                <div class="absolute -inset-1 bg-pink-400 rounded-full opacity-10 blur-md group-hover:opacity-20 group-hover:blur-lg transition-all"></div>
+              </div>
+              
+              <!-- Tool name with enhanced typography -->
+              <span class="font-semibold text-pink-600 group-hover:text-pink-700 transition-colors text-center" data-i18n="dashboard.aiTools.contentRepurposer">Content Repurposer</span>
+              <span class="text-[10px] text-[#64748b] mt-1 bg-white/70 px-2 py-0.5 rounded-full" data-i18n="dashboard.aiTools.comingSoon">Coming Soon</span>
+              
+              <!-- Status badges -->
+              <div class="absolute -top-1 -right-1 bg-gradient-to-r from-pink-400 to-pink-500 text-xs text-white px-2 py-0.5 rounded-lg shadow-sm flex items-center gap-1">
+                <span class="font-semibold" data-i18n="dashboard.aiTools.beta">Beta</span>
+              </div>
+              
+              <!-- Tool description tooltip -->
+              <div class="absolute left-1/2 -bottom-20 group-hover:-bottom-2 -translate-x-1/2 transition-all duration-300 bg-white glass-card px-3 py-2 rounded-lg shadow-lg text-xs text-[#34616a] w-40 text-center pointer-events-none z-20">
+                <p class="font-semibold text-pink-600 mb-1" data-i18n="dashboard.aiTools.contentRepurposer">Content Repurposer</p>
+                <p data-i18n="dashboard.aiTools.contentRepurposerDesc">Automatically repurpose listing content across multiple platforms</p>
+              </div>
+            </div>
           </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔮</div>
-            <span class="font-semibold text-[#34616a]" data-i18n="dashboard.aiTools.patternPredictor">Pattern Predictor</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Trend finder</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔗</div>
-            <span class="font-semibold text-[#34616a]" data-i18n="dashboard.aiTools.platformSync">Platform Sync</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Real-time updates</span>
-          </div>
-          <div class="layered bg-white border border-orange-100 rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer transition group hover:scale-105">
-            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📦</div>
-            <span class="font-semibold text-[#34616a]" data-i18n="dashboard.aiTools.inventoryHelper">Inventory Helper</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Stock alerts</span>
-          </div>
-        </div>
-        <!-- d. Visual Effect Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
-            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">🔐</div>
-            <span class="font-semibold text-[#ea7113]">Trust Builder</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Not used lately</span>
-            <span class="absolute -top-2 right-2 text-xs text-orange-400 shimmer px-2 py-0.5 rounded bg-orange-50">+ Trust</span>
-            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-3 py-1 rounded shadow text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
-            <div class="bg-green-50 rounded-full w-10 h-10 flex items-center justify-center text-green-400 text-2xl mb-2 shadow">🖼️</div>
-            <span class="font-semibold text-[#34616a]">Photo Enhancer</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Last used: 5d</span>
-            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-green-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
-            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">🗂️</div>
-            <span class="font-semibold text-[#34616a]">Bulk Lister</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Unused</span>
-            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
-            <div class="bg-orange-50 rounded-full w-10 h-10 flex items-center justify-center text-orange-400 text-2xl mb-2 shadow">📦</div>
-            <span class="font-semibold text-[#ea7113]">Inventory Health</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Needs review</span>
-            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-orange-100 px-3 py-1 rounded shadow text-xs text-[#ea7113] pointer-events-none">Try me to increase your trust score 🔐</div>
-          </div>
-          <div class="pulse-border bg-white rounded-2xl p-4 flex flex-col items-center shadow cursor-pointer relative group">
-            <div class="bg-blue-50 rounded-full w-10 h-10 flex items-center justify-center text-blue-400 text-2xl mb-2 shadow">💬</div>
-            <span class="font-semibold text-[#34616a]">AI Notes</span>
-            <span class="text-[10px] text-[#64748b] mt-1">Motivation off?</span>
-            <div class="absolute left-1/2 top-14 -translate-x-1/2 hidden group-hover:block bg-white/90 border border-blue-100 px-3 py-1 rounded shadow text-xs text-[#34616a] pointer-events-none">Try me to increase your trust score 🔐</div>
+          
+          <!-- Scroll indicator dots -->
+          <div class="flex justify-center gap-1 mt-1">
+            <button class="w-5 h-1 bg-orange-400 rounded-full"></button>
+            <button class="w-2 h-1 bg-gray-200 rounded-full hover:bg-orange-200 transition"></button>
+            <button class="w-2 h-1 bg-gray-200 rounded-full hover:bg-orange-200 transition"></button>
           </div>
         </div>
       </section>
@@ -657,5 +1632,8 @@ document.querySelectorAll('.RhythmCalendar-day').forEach(day=>{
   });
 });
 </script>
+<script src="./scripts/bg/penrose.js" defer></script>
+<script src="./scripts/bg/boids.js" defer></script>
+<script src="./scripts/bg/veins.js" defer></script>
 </body>
 </html>

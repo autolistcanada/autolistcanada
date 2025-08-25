@@ -1,70 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoList Canada</title>
-  <link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoList Captures</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="extension-container">
-    <header>
-      <div class="logo">
-        <img src="icons/logo.png" alt="AutoList Canada" data-i18n-alt="autolist_canada">
-        <h1>AutoList <span>Canada</span></h1>
-      </div>
-      <button id="languageToggle" class="language-toggle" title="Toggle Language" data-i18n-title="toggle_language">
-        <span id="languageDisplay">EN</span>
-      </button>
-    </header>
-    
-    <div class="status-card">
-      <div class="status-indicator connected" id="connectionStatus"></div>
-      <p class="status-text" data-i18n="connection_status">Connected</p>
+    <div class="popup-container">
+        <header class="popup-header">
+            <img src="icons/icon48.png" alt="AutoList Logo" class="logo">
+            <div class="header-text">
+                <h2>Captured Listings</h2>
+                <p>Ready to cross-post</p>
+            </div>
+        </header>
+
+        <main id="listings-container" class="listings-container">
+            <!-- Captured listings will be dynamically inserted here -->
+            <div id="empty-state" class="empty-state">
+                <p>No listings captured yet. Go to a marketplace and click the AutoList button!</p>
+            </div>
+        </main>
     </div>
 
-    <div class="action-buttons">
-      <button id="captureBtn" class="primary-btn" data-i18n="capture_listing">Capture Listing</button>
-      <button id="viewListingsBtn" class="secondary-btn" data-i18n="view_listings">View Listings</button>
-    </div>
+    <template id="listing-card-template">
+        <div class="listing-card">
+            <img class="listing-image" src="" alt="Listing Image">
+            <div class="listing-info">
+                <p class="listing-title"></p>
+                <span class="listing-price"></span>
+                <span class="listing-marketplace"></span>
+            </div>
+            <button class="delete-btn" title="Delete Listing">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </button>
+        </div>
+    </template>
 
-    <div class="marketplace-section">
-      <h2 data-i18n="cross_list_to">Cross-list to</h2>
-      <div class="marketplace-grid">
-        <div class="marketplace-item">
-          <input type="checkbox" id="ebay" checked>
-          <label for="ebay">eBay.ca</label>
-        </div>
-        <div class="marketplace-item">
-          <input type="checkbox" id="amazon">
-          <label for="amazon">Amazon.ca</label>
-        </div>
-        <div class="marketplace-item">
-          <input type="checkbox" id="etsy">
-          <label for="etsy">Etsy</label>
-        </div>
-        <div class="marketplace-item">
-          <input type="checkbox" id="kijiji">
-          <label for="kijiji">Kijiji</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="recent-activity">
-      <h2 data-i18n="recent_activity">Recent Activity</h2>
-      <ul id="activityList">
-        <!-- Activity items will be populated dynamically -->
-        <li class="activity-item empty-state" data-i18n="no_recent_activity">No recent activity</li>
-      </ul>
-    </div>
-
-    <footer>
-      <a href="https://autolistcanada.com/dashboard.html" target="_blank" data-i18n="go_to_dashboard">Go to Dashboard</a>
-      <a href="https://autolistcanada.com/settings.html" id="settingsLink" target="_blank" data-i18n="settings">Settings</a>
-    </footer>
-  </div>
-  
-  <script src="i18n.js"></script>
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 </body>
 </html>

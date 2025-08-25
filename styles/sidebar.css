@@ -1,0 +1,148 @@
+/**
+ * AutoList Canada - Universal Sidebar Styles
+ */
+
+:root {
+  --sidebar-width: 320px;
+  --sidebar-padding: var(--space-6);
+  --sidebar-bg: var(--color-neutral-100);
+  --sidebar-border-color: var(--color-neutral-300);
+  --sidebar-backdrop-bg: rgba(1, 43, 39, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sidebar-bg: var(--color-neutral-900);
+    --sidebar-border-color: var(--color-neutral-700);
+  }
+}
+
+.autolist-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  transform: translateX(100%);
+  background-color: var(--sidebar-bg);
+  border-left: 1px solid var(--sidebar-border-color);
+  box-shadow: var(--shadow-xl);
+  z-index: var(--z-modal);
+  transition: transform var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.autolist-sidebar.is-open {
+  transform: translateX(0);
+}
+
+.autolist-sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--sidebar-backdrop-bg);
+  z-index: calc(var(--z-modal) - 1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.autolist-sidebar-backdrop.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .autolist-sidebar,
+  .autolist-sidebar-backdrop {
+    transition: none;
+  }
+}
+
+.autolist-sidebar__header {
+  padding: var(--sidebar-padding);
+  border-bottom: 1px solid var(--sidebar-border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.autolist-sidebar__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-900);
+}
+
+.autolist-sidebar__close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  color: var(--color-neutral-600);
+}
+
+.autolist-sidebar__close-btn:hover {
+  color: var(--color-neutral-900);
+}
+
+.autolist-sidebar__content {
+  padding: var(--sidebar-padding);
+  flex-grow: 1;
+}
+
+.autolist-sidebar__section {
+  margin-bottom: var(--space-8);
+}
+
+.autolist-sidebar__section-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+}
+
+.autolist-sidebar__selection-info {
+  font-size: var(--font-size-base);
+  color: var(--color-neutral-700);
+}
+
+.autolist-sidebar__actions .btn {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  text-align: center;
+}
+
+.autolist-sidebar__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.autolist-sidebar__link-item a {
+  display: block;
+  padding: var(--space-3) 0;
+  color: var(--color-neutral-800);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  border-bottom: 1px solid var(--sidebar-border-color);
+  transition: color var(--transition-fast);
+}
+
+.autolist-sidebar__link-item a:hover {
+  color: var(--color-green-500);
+}
+
+.autolist-sidebar__footer {
+  padding: var(--sidebar-padding);
+  border-top: 1px solid var(--sidebar-border-color);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+  text-align: center;
+}

@@ -4,702 +4,414 @@
   <meta charset="UTF-8">
   <title>AI Tools | AutoList Canada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- TailwindCSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles/theme.css">
+  <link rel="stylesheet" href="styles/geometry.css">
   <script src="scripts/i18n.js" defer></script>
-  <style>
-    body { font-family: 'Inter', 'ui-rounded', 'system-ui', sans-serif; }
-    /* ========== EARTHY ORGANIC BACKGROUND ========== */
-    body {
-      position: relative;
-      z-index: 1;
-      background: #f9f5f0;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      z-index: 0;
-      top: -120px;
-      left: -200px;
-      width: 140vw;
-      height: 120vh;
-      pointer-events: none;
-      background: url('data:image/svg+xml;utf8,<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg"><ellipse cx="300" cy="200" rx="340" ry="160" fill="%23166534" fill-opacity="0.08"/><ellipse cx="1200" cy="600" rx="400" ry="180" fill="%23ea580c" fill-opacity="0.06"/><ellipse cx="850" cy="300" rx="260" ry="120" fill="%230d9488" fill-opacity="0.09"/><ellipse cx="1450" cy="110" rx="190" ry="80" fill="%237f1d1d" fill-opacity="0.07"/></svg>')
-        no-repeat top left/cover;
-      filter: blur(1.5px);
-      opacity: 0.82;
-    }
-    .page-bg-accent {
-      position: fixed;
-      z-index: 1;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      opacity: 0.21;
-      transition: opacity 0.5s;
-      display: none;
-    }
-    .page-bg-accent.active { display: block; }
-    main {
-      position: relative;
-      z-index: 3;
-    }
-
-    /* ========== TONE ACCENT BLOBS ========== */
-    .tone-accent-blob {
-      position: absolute;
-      top: -38px; right: -60px; z-index: 10;
-      width: 220px; height: 100px;
-      pointer-events: none;
-      opacity: 0.17;
-      transition: opacity 0.5s;
-      display: none;
-    }
-    .tone-accent-blob.active { display: block; }
-
-    /* ========== SIDEBAR GLASS + BG IMAGE ========== */
-    #sidebar {
-      background-image: url('sidebar-background.png') !important;
-      background-size: cover !important;
-      background-position: center !important;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 16px 48px 0 rgba(8,145,178,0.11), 0 1.5px 12px 0 rgba(122,29,29,0.08);
-    }
-    .sidebar-animated-bg {
-      background: linear-gradient(135deg, #166534 0%, #0d9488 45%, #facc15 100%);
-      background-size: 200% 200%;
-      animation: gradientMove 7s ease-in-out infinite;
-    }
-    @keyframes gradientMove {
-      0%,100% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-    }
-    .sidebar-shadow { box-shadow: 0 16px 48px 0 rgba(8,145,178,0.13), 0 1.5px 12px 0 rgba(22,101,52,0.09);}
-    
-    /* ========== NAV PILL BUTTONS ========== */
-    .nav-link {
-      border-radius: 9999px;
-      padding: 0.6rem 1.3rem !important;
-      margin-right: 0.5rem;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(3px);
-      transition: all 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
-      box-shadow: 0 2px 10px 0 rgba(250,204,21,0.06);
-      color: #fef9c3;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      border-left: 0 solid transparent;
-    }
-    .nav-link:hover {
-      transform: scale(1.08) translateX(6px);
-      box-shadow: 0 2px 16px 0 #facc1588, 0 1.5px 12px 0 #0d948833;
-      background: linear-gradient(90deg,#facc15 15%,#ea580c 85%);
-      color: #7f1d1d !important;
-      filter: brightness(1.05);
-    }
-    .nav-active {
-      border-left: 6px solid #facc15 !important;
-      background: rgba(255,255,255,0.25);
-      color: #7f1d1d !important;
-      font-weight: bold;
-      box-shadow: 0 0 18px 3px #facc1577;
-      filter: brightness(1.11);
-    }
-
-    /* ========== TONE PRESET BUTTONS ========== */
-    .tone-btn { transition: all 0.17s; box-shadow: none; border-width: 2px; }
-    .tone-btn.tone-active[data-tone="cozy"] {
-      background: #facc15 !important; color: #7f1d1d !important; border-color: #eab308 !important; box-shadow: 0 0 0 3px #facc15aa;
-    }
-    .tone-btn.tone-active[data-tone="luxury"] {
-      background: #e9d5ff !important; color: #7c3aed !important; border-color: #c4b5fd !important; box-shadow: 0 0 0 3px #a78bfa99;
-    }
-    .tone-btn.tone-active[data-tone="minimal"] {
-      background: #d1fae5 !important; color: #0d9488 !important; border-color: #34d399 !important; box-shadow: 0 0 0 3px #5eead499;
-    }
-
-    /* ========== GLASSMORPHISM CARDS ENHANCEMENT ========== */
-    .glass, .glass-dark {
-      border: 1px solid rgba(250,204,21,0.16);
-      box-shadow: 0 4px 24px 0 rgba(22,101,52,0.08);
-    }
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .glow-tile {
-      box-shadow: 0 0 0 0 #facc1555;
-      transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1);
-    }
-    .glow-tile:hover {
-      box-shadow: 0 0 32px 4px #facc1588, 0 2px 24px 0 #ea580c33;
-    }
-    .momentum-dot {
-      width: 12px; height: 12px;
-      border-radius: 9999px;
-      background: #0d9488;
-      margin: 0 10px;
-      box-shadow: 0 0 16px 0 #0d9488cc;
-      animation: trail-pulse 2s infinite;
-    }
-    @keyframes trail-pulse {
-      0%,100% {opacity: 1;}
-      50% {opacity: 0.3;}
-    }
-    .section-divider {
-      width: 100%;
-      height: 56px;
-      display: block;
-      margin-top: -2px;
-    }
-    .sim-result {
-      min-height: 2.2em;
-      transition: box-shadow 0.4s;
-    }
-    .sim-result.animated {
-      box-shadow: 0 0 16px 0 #facc1580;
-      animation: fadeGrow 0.7s;
-    }
-    @keyframes fadeGrow {
-      from { opacity: 0; transform: scale(0.96);}
-      to { opacity: 1; transform: scale(1);}
-    }
-    @media (max-width: 1024px) {
-      .tools-section { grid-template-columns: 1fr; }
-      .sidebar-expanded { width: 100% !important; }
-    }
-    /* SIDEBAR LOGO/TITLE UPGRADE */
-    .sidebar-header-flex {
-      min-height: 172px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .sidebar-header-logo {
-      width: 6.5rem; height: 6.5rem;
-      max-width: 110px; max-height: 110px;
-    }
-    .sidebar-header-title {
-      width: 12rem; max-width: 95vw;
-      margin-bottom: 1.2rem;
-    }
-    @media (max-width: 640px) {
-      .sidebar-header-flex { min-height: 110px; }
-      .sidebar-header-logo { width: 4.5rem; height: 4.5rem; }
-      .sidebar-header-title { width: 8.5rem; margin-bottom: 1rem; }
-    }
-
-    /* ================== THEME ART BACKGROUNDS ================== */
-    .theme-bg {
-      position: fixed;
-      z-index: -1;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      transition: background 0.6s, opacity 0.6s;
-      opacity: 1;
-      background: #fafaf9;
-      overflow: hidden;
-    }
-    /* ====== CREATIVE SPARK ====== */
-    body[data-theme="creative"] .theme-bg {
-      background: linear-gradient(120deg, #FF66B2 0%, #FF7043 55%, #40C4FF 80%, #FFEB3B 100%);
-    }
-    body[data-theme="creative"] .theme-bg::before,
-    body[data-theme="creative"] .theme-bg::after {
-      content: '';
-      position: absolute;
-      width: 120vw; height: 100vh;
-      left: -10vw; top: -6vh;
-      pointer-events: none;
-    }
-    body[data-theme="creative"] .theme-bg::before {
-      background: linear-gradient(105deg, transparent 60%, #FFEB3B55 100%);
-      clip-path: polygon(50% 0, 100% 0, 100% 100%, 20% 100%);
-      opacity: 0.22;
-      animation: creative-shimmer 8s linear infinite;
-    }
-    body[data-theme="creative"] .theme-bg::after {
-      background: linear-gradient(145deg, #40C4FF33 30%, transparent 80%);
-      clip-path: polygon(0 0, 70% 0, 100% 100%, 0 100%);
-      opacity: 0.20;
-    }
-    @keyframes creative-shimmer {
-      0% { filter: brightness(1) blur(0.5px);}
-      50% { filter: brightness(1.08) blur(1px);}
-      100% { filter: brightness(1) blur(0.5px);}
-    }
-    /* ====== ROOTED ====== */
-    body[data-theme="rooted"] .theme-bg {
-      background: linear-gradient(135deg, #A3B18A 15%, #D2691E 60%, #F4A259 100%);
-    }
-    body[data-theme="rooted"] .theme-bg::before,
-    body[data-theme="rooted"] .theme-bg::after {
-      content: '';
-      position: absolute;
-      width: 110vw; height: 100vh;
-      left: -5vw; top: 0;
-      pointer-events: none;
-    }
-    body[data-theme="rooted"] .theme-bg::before {
-      background: url('data:image/svg+xml;utf8,<svg width="1600" height="900" xmlns="http://www.w3.org/2000/svg"><path d="M0,700 C400,650 1200,850 1600,700 L1600,900 L0,900Z" fill="%237B2D26" fill-opacity="0.19"/><path d="M0,800 C450,740 1150,1000 1600,800 L1600,900 L0,900Z" fill="%2335635A" fill-opacity="0.18"/><ellipse cx="900" cy="150" rx="380" ry="50" fill="%23F4A259" fill-opacity="0.11"/><ellipse cx="400" cy="400" rx="200" ry="60" fill="%23A3B18A" fill-opacity="0.17"/></svg>');
-      background-size: cover;
-      background-repeat: no-repeat;
-      opacity: 0.97;
-      filter: blur(0.7px);
-    }
-    body[data-theme="rooted"] .theme-bg::after {
-      background: repeating-linear-gradient(120deg, #A3B18A11 0 8px, transparent 10px 32px), 
-                  repeating-linear-gradient(-70deg, #D2691E15 0 6px, transparent 10px 40px);
-      opacity: 0.16;
-    }
-    /* ====== HYPERCLARITY ====== */
-    body[data-theme="clarity"] .theme-bg {
-      background: linear-gradient(120deg, #EDEDED 0%, #F8F8F8 100%);
-    }
-    body[data-theme="clarity"] .theme-bg::before {
-      content: '';
-      position: absolute;
-      width: 100vw; height: 100vh; left: 0; top: 0;
-      pointer-events: none;
-      background: 
-        linear-gradient(135deg, #ADE8F433 0 35%, transparent 65% 100%),
-        linear-gradient(90deg, #00BFA688 60%, transparent 100%);
-      opacity: 0.19;
-    }
-    body[data-theme="clarity"] .theme-bg::after {
-      content: '';
-      position: absolute;
-      width: 100vw; height: 100vh; left: 0; top: 0;
-      pointer-events: none;
-      background: 
-        repeating-linear-gradient(0deg, #b6e3f822 0 1px, transparent 3px 30px),
-        repeating-linear-gradient(90deg, #b6e3f822 0 1px, transparent 3px 30px),
-        radial-gradient(circle at 80% 40%, #ADE8F4 0 7px, transparent 14px 100%);
-      opacity: 0.16;
-    }
-    @media (max-width: 900px) {
-      .theme-bg, 
-      .theme-bg::before, 
-      .theme-bg::after {
-        width: 100vw !important;
-        left: 0 !important;
-      }
-    }
-  </style>
+  <script src="./scripts/ui/sidebar.js" defer></script>
+  <script src="./js/main.js" defer></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"></script>
 </head>
 <body>
 <div class="theme-bg" aria-hidden="true"></div>
 <!-- BRAND BACKGROUND ACCENT SVGs -->
 <svg class="page-bg-accent page-bg-accent-cozy" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="200" cy="110" rx="170" ry="60" fill="#facc15" fill-opacity="0.26"/><ellipse cx="500" cy="220" rx="80" ry="40" fill="#ea580c" fill-opacity="0.19"/></svg>
 <svg class="page-bg-accent page-bg-accent-luxury" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="150" cy="120" rx="130" ry="62" fill="#e9d5ff" fill-opacity="0.23"/><ellipse cx="480" cy="70" rx="100" ry="40" fill="#7c3aed" fill-opacity="0.14"/></svg>
-<svg class="page-bg-accent page-bg-accent-minimal active" style="z-index:1" viewBox="0 0 600 280"><ellipse cx="160" cy="100" rx="150" ry="60" fill="#d1fae5" fill-opacity="0.22"/><ellipse cx="480" cy="180" rx="90" ry="36" fill="#0d9488" fill-opacity="0.18"/></svg>
 <div class="flex min-h-screen relative z-10">
   <!-- ========== SIDEBAR ========== -->
-  <aside id="sidebar" class="sidebar-expanded w-64 min-h-screen sidebar-animated-bg sidebar-shadow flex flex-col justify-between"
-    style="background-image: url('sidebar-background.png'); background-size: cover; background-position: center;">
-    <div>
-      <div class="p-4 flex flex-col items-center space-y-4">
-        <div class="w-full flex justify-end mb-2">
-          <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
-        </div>
-        <img src="autolist-logo.png" alt="AutoList Canada Logo" class="w-32 h-32 drop-shadow-xl">
-        <img src="autolist-title.png" alt="AutoList Canada" class="w-44 mx-auto">
-        <nav class="flex flex-col gap-3 text-sm font-semibold text-white w-full">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="dashboard.html" class="nav-link">Dashboard</a>
-          <a href="listings.html" class="nav-link">Listings</a>
-          <a href="ai-tools.html" class="nav-link nav-active">AI Tools</a>
-          <a href="faq.html" class="nav-link" data-i18n="navigation.faq">FAQ</a>
-          <a href="terms.html" class="nav-link" data-i18n="navigation.terms">Terms</a>
-        </nav>
-      </div>
-    </div>
-    <!-- AI Tip & Einstein Quote -->
-    <div class="w-full p-4 pb-8">
-      <div class="bg-white/90 rounded-3xl shadow-xl px-4 py-4 flex items-start gap-3 glass dark:glass-dark">
-        <div class="flex-shrink-0 mt-1">
-          <span class="inline-block w-9 h-9 rounded-full bg-teal-600 text-white flex items-center justify-center text-xl">🤖</span>
-        </div>
-        <div>
-          <div class="text-xs font-bold text-teal-700 mb-1" data-i18n="aiTools.tip">AI Tip of the Day</div>
-          <div class="text-xs text-gray-800 dark:text-gray-100">“Short, specific titles boost clicks. Try adding a unique feature!”</div>
-        </div>
-      </div>
-      <div id="einstein-quote" class="text-xs text-center mt-4 text-teal-900 italic dark:text-teal-200"></div>
-    </div>
-  </aside>
+  <div id="sidebar-container"></div>
   <!-- ========== MAIN CONTENT ========== -->
-  <main id="main" class="flex-1 bg-transparent py-10 px-6 md:px-12 relative">
+  <main id="main" class="flex-1 bg-slate py-10 px-6 md:px-12 relative geom-host" data-bg="penrose">
     <!-- Language Toggle Button -->
-    <button id="language-toggle" class="fixed top-4 right-4 z-50 flex items-center justify-center bg-[#ea580c] text-white w-12 h-12 rounded-full shadow-lg hover:bg-[#ff7722] transition-all transform hover:scale-110" aria-label="Toggle language" title="Toggle language">
-      <span class="font-bold">EN/FR</span>
-    </button>
+
     <!-- ==== HERO HEADER ==== -->
     <header class="mb-10 flex flex-col items-start relative">
       <!-- TONE BLOBS -->
       <svg class="tone-accent-blob tone-accent-blob-cozy" viewBox="0 0 220 100"><ellipse cx="110" cy="50" rx="100" ry="40" fill="#facc15" fill-opacity="0.52"/><ellipse cx="180" cy="80" rx="30" ry="15" fill="#ea580c" fill-opacity="0.34"/></svg>
       <svg class="tone-accent-blob tone-accent-blob-luxury" viewBox="0 0 220 100"><ellipse cx="80" cy="40" rx="60" ry="28" fill="#e9d5ff" fill-opacity="0.58"/><ellipse cx="180" cy="30" rx="32" ry="16" fill="#7c3aed" fill-opacity="0.27"/></svg>
       <svg class="tone-accent-blob tone-accent-blob-minimal active" viewBox="0 0 220 100"><ellipse cx="120" cy="40" rx="70" ry="28" fill="#d1fae5" fill-opacity="0.43"/><ellipse cx="50" cy="70" rx="28" ry="12" fill="#0d9488" fill-opacity="0.27"/></svg>
-      <h1 class="text-4xl font-extrabold text-[#ea580c] mb-2 drop-shadow-lg" data-i18n="aiTools.title">AutoList Canada – AI Tools</h1>
-      <p class="text-gray-700 max-w-xl dark:text-gray-200" data-i18n="aiTools.description">The most advanced AI toolkit for vintage sellers. Psychology, tone science, and GPT-powered. Unlock listing clarity, trust, and conversion.</p>
+      <h1 class="text-4xl font-extrabold text-orange mb-2 drop-shadow-lg" data-i18n="aiTools.title">AutoList Canada – AI Tools</h1>
+      <p class="text-neutral-700 max-w-xl" data-i18n="aiTools.description">The most advanced AI toolkit for vintage sellers. Psychology, tone science, and GPT-powered. Unlock listing clarity, trust, and conversion.</p>
       <!-- Tone Preset Toggle -->
       <div class="mt-5 flex gap-3 items-center">
-        <span class="text-sm font-semibold text-gray-500" data-i18n="aiTools.tonePreset">Tone Preset:</span>
+        <span class="text-sm font-semibold text-neutral-700" data-i18n="aiTools.tonePreset">Tone Preset:</span>
         <div class="flex gap-2">
-          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="cozy" style="background-color: #FEF9C3; color: #92400E; border-color: #FDE68A;" data-i18n="aiTools.cozy">Cozy</button>
-          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="luxury" style="background-color: #F3E8FF; color: #7C3AED; border-color: #DDD6FE;" data-i18n="aiTools.luxury">Luxury</button>
-          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="minimal" style="background-color: #F1F5F9; color: #0F172A; border-color: #E0E7EF;" data-i18n="aiTools.minimal">Minimal</button>
+          <button type="button" onclick="setTone('cozy')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="cozy" style="background-color: var(--color-gold-100); color: var(--color-rust-700); border-color: var(--color-gold-300);" data-i18n="aiTools.cozy">Cozy</button>
+          <button type="button" onclick="setTone('luxury')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="luxury" style="background-color: var(--color-purple-100); color: var(--color-purple-600); border-color: var(--color-purple-300);" data-i18n="aiTools.luxury">Luxury</button>
+          <button type="button" onclick="setTone('minimal')" class="tone-btn px-3 py-1 rounded-full text-xs font-semibold border" data-tone="minimal" style="background-color: var(--color-neutral-100); color: var(--color-neutral-900); border-color: var(--color-neutral-300);" data-i18n="aiTools.minimal">Minimal</button>
         </div>
       </div>
     </header>
     <!-- ==== SECTION 1: STANDARD TOOLS ==== -->
-    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="#facc15" opacity="0.13"/></svg>
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q720,70 1440,20 L1440,56 L0,56 Z" fill="var(--color-gold-400)" opacity="0.13"/></svg>
     <section class="mb-12">
-      <h2 class="text-2xl font-bold text-[#facc15] mb-4 flex items-center gap-2"><span class="text-lg">1.</span> <span data-i18n="aiTools.standardTools">Standard Tools</span></h2>
+      <h2 class="text-2xl font-bold text-gold mb-4 flex items-center gap-2"><span class="text-lg">1.</span> <span data-i18n="aiTools.standardTools">Standard Tools</span></h2>
       <div class="grid md:grid-cols-2 gap-7 tools-section">
         <!-- Tool 1 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,1)">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">1</span>
-            <h2 class="text-2xl font-bold mb-4" data-i18n="aiTools.titleGenerator">Title Generator</h2>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3" data-i18n="aiTools.titleGeneratorDesc">Get a catchy, customer-friendly title for your listing.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" data-i18n-placeholder="aiTools.enterProductKeywords" placeholder="Enter product keywords..."></textarea>
-          <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition" data-i18n="aiTools.generate">Generate</button>
-          <div class="sim-result mt-3 text-[#166534]"></div>
+        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-gold-500 fade-up" onsubmit="event.preventDefault();generateAIResult(this,1)">
+          <h3 class="font-bold text-lg" data-i18n="aiTools.adCopyGenerator">Ad Copy Generator</h3>
+          <p class="text-neutral-700 mb-3">Generate compelling ad copy from a simple description.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-gold-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Enter product details..."></textarea>
+          <button class="btn btn-primary bg-gold-500 hover:bg-gold-600 text-rust-700 font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.generate">Generate</button>
+          <div class="sim-result mt-3 text-gold-600"></div>
         </form>
-        <!-- Tool 2 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#166534] fade-up" onsubmit="event.preventDefault();generateAIResult(this,2)">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#166534] text-white font-black px-3 py-1 text-xs rounded-full">2</span>
-            <h2 class="text-2xl font-bold mb-4" data-i18n="aiTools.descriptionComposer">Description Composer</h2>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3" data-i18n="aiTools.descriptionComposerDesc">Crafts a friendly, 3-sentence description for your listing.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#166534] mb-2 bg-white/60 dark:bg-white/10" data-i18n-placeholder="aiTools.describeYourProduct" placeholder="Describe your product..."></textarea>
-          <button class="bg-[#166534] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#14532d] transition" data-i18n="aiTools.generate">Generate</button>
-          <div class="sim-result mt-3 text-[#166534]"></div>
-        </form>
-        <!-- Tool 3 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,3)">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">3</span>
-            <h3 class="font-bold text-lg" data-i18n="aiTools.tagGenerator">Tag Generator</h3>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3" data-i18n="aiTools.tagGeneratorDesc">Get 5 smart hashtags to boost your reach.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" data-i18n-placeholder="aiTools.enterKeywordsOrType" placeholder="Enter keywords or product type..."></textarea>
-          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.generate">Generate</button>
-          <div class="sim-result mt-3 text-[#ea580c]"></div>
-        </form>
-        <!-- Tool 4 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,4)">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">4</span>
-            <h3 class="font-bold text-lg" data-i18n="aiTools.priceSuggestion">Price Suggestion</h3>
-          </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">Suggests a competitive price in CAD.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Product type & details..."></textarea>
-          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition" data-i18n="aiTools.generate">Generate</button>
-          <div class="sim-result mt-3 text-[#0d9488]"></div>
-        </form>
-      </div>
-    </section>
-    <!-- ==== SECTION 2: SCIENCE-BACKED TOOLS ==== -->
-    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,36 Q720,-16 1440,36 L1440,56 L0,56 Z" fill="#0d9488" opacity="0.07"/></svg>
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold text-[#0d9488] mb-4 flex items-center gap-2"><span class="text-lg">2.</span> Science-Backed Tools</h2>
-      <div class="grid md:grid-cols-2 gap-7">
         <!-- Tool 5 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,5)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-green-500 fade-up" onsubmit="event.preventDefault();generateAIResult(this,5)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">5</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.buyerPsychology">Buyer Psychology Panel</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">See what psychological triggers your listing activates.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing description..."></textarea>
-          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition" data-i18n="aiTools.analyze">Analyze</button>
-          <div class="sim-result mt-3 text-[#0d9488]"></div>
+          <p class="text-neutral-700 mb-3">See what psychological triggers your listing activates.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-green-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing description..."></textarea>
+          <button class="btn btn-primary bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.generate">Generate</button>
+          <div class="sim-result mt-3 text-green-600"></div>
         </form>
         <!-- Tool 6 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,6)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-orange-500 fade-up" onsubmit="event.preventDefault();generateAIResult(this,6)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">6</span>
+            <span class="bg-orange-500 text-white font-black px-3 py-1 text-xs rounded-full">6</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.crosslistSync">Crosslist + Sync Visualizer</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">See where and how your listing can sync across platforms.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing or keywords..."></textarea>
-          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.visualize">Visualize</button>
-          <div class="sim-result mt-3 text-[#ea580c]"></div>
+          <p class="text-neutral-700 mb-3">See where and how your listing can sync across platforms.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-orange-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing or keywords..."></textarea>
+          <button class="btn btn-primary bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.generate">Generate</button>
+          <div class="sim-result mt-3 text-orange"></div>
         </form>
         <!-- Tool 7 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#7f1d1d] fade-up" onsubmit="event.preventDefault();generateAIResult(this,7)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-rust-700 fade-up" onsubmit="event.preventDefault();generateAIResult(this,7)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">7</span>
+            <span class="bg-rust-700 text-white font-black px-3 py-1 text-xs rounded-full">7</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.smartDefaults">Smart Defaults Engine</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">Detects and suggests the best default fields for your item.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Enter product info..."></textarea>
-          <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ea580c] transition" data-i18n="aiTools.suggest">Suggest</button>
-          <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+          <p class="text-neutral-700 mb-3">Detects and suggests the best default fields for your item.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-rust-700 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Enter product info..."></textarea>
+          <button class="btn btn-primary bg-rust-700 hover:bg-rust-700 text-white font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.generate">Generate</button>
+          <div class="sim-result mt-3 text-rust"></div>
         </form>
         <!-- Tool 8 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,8)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-gold-500 fade-up" onsubmit="event.preventDefault();generateAIResult(this,8)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">8</span>
+            <span class="bg-gold-500 text-rust-700 font-black px-3 py-1 text-xs rounded-full">8</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.trustFirstDescription">Trust-First Description Composer</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">Writes a description focused on trust and transparency.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your item..."></textarea>
-          <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition" data-i18n="aiTools.compose">Compose</button>
-          <div class="sim-result mt-3 text-[#facc15]"></div>
+          <p class="text-neutral-700 mb-3">Writes a description focused on trust and transparency.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-gold-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Describe your item..."></textarea>
+          <button class="btn btn-primary bg-gold-500 hover:bg-gold-500 text-rust-700 font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.generate">Generate</button>
+          <div class="sim-result mt-3 text-gold"></div>
         </form>
         <!-- Tool 9 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,9)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-green-600 fade-up" onsubmit="event.preventDefault();generateAIResult(this,9)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">9</span>
+{{ ... }}
+            <span class="bg-green-600 text-white font-black px-3 py-1 text-xs rounded-full">9</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.aiTagDisqualifier">AI Tag Disqualifier</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">Checks which tags or keywords may be hurting your reach.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your tags..."></textarea>
-          <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition" data-i18n="aiTools.check">Check</button>
-          <div class="sim-result mt-3 text-[#0d9488]"></div>
+          <p class="text-neutral-700 mb-3">Checks which tags or keywords may be hurting your reach.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-green-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your tags..."></textarea>
+          <button class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-green-700 transition" data-i18n="aiTools.check">Check</button>
+          <div class="sim-result mt-3 text-green"></div>
         </form>
         <!-- Tool 10 -->
-        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-[#ea580c] fade-up" onsubmit="event.preventDefault();generateAIResult(this,10)">
+        <form class="glass dark:glass-dark rounded-2xl p-6 glow-tile border-l-4 border-orange-500 fade-up" onsubmit="event.preventDefault();generateAIResult(this,10)">
           <div class="flex items-center gap-2 mb-2">
-            <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">10</span>
+            <span class="bg-orange-500 text-white font-black px-3 py-1 text-xs rounded-full">10</span>
             <h3 class="font-bold text-lg" data-i18n="aiTools.toneTraining">Tone Training Tool</h3>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-3">Preview your listing in different buyer-focused tones.</p>
-          <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
-          <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.preview">Preview</button>
-          <div class="sim-result mt-3 text-[#ea580c]"></div>
+          <p class="text-neutral-700 mb-3">Preview your listing in different buyer-focused tones.</p>
+          <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-orange-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your description..."></textarea>
+          <button class="bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition" data-i18n="aiTools.preview">Preview</button>
+          <div class="sim-result mt-3 text-orange"></div>
         </form>
       </div>
     </section>
     <!-- ==== SECTION 3: ADVANCED STRATEGY TOOLS ==== -->
-    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 Q720,70 1440,30 L1440,56 L0,56 Z" fill="#ea580c" opacity="0.08"/></svg>
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 Q720,70 1440,30 L1440,56 L0,56 Z" fill="var(--color-orange-500)" opacity="0.08"/></svg>
     <section class="mb-12">
-      <h2 class="text-2xl font-bold text-[#ea580c] mb-4 flex items-center gap-2"><span class="text-lg">3.</span> Advanced Strategy Tools</h2>
+      <h2 class="text-2xl font-bold text-orange mb-4 flex items-center gap-2"><span class="text-lg">3.</span> Advanced Strategy Tools</h2>
       <div class="flex flex-col gap-10">
         <div class="flex flex-wrap gap-7 items-stretch">
           <!-- Tool 11 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,11)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-orange-500 flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,11)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">11</span>
+              <span class="bg-orange-500 text-white font-black px-3 py-1 text-xs rounded-full">11</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.aiPatternPredictor">AI Pattern Predictor</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Predicts buyer and sales trends for your item.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your listing or market..."></textarea>
-            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.predict">Predict</button>
-            <div class="sim-result mt-3 text-[#ea580c]"></div>
+            <p class="text-neutral-700 mb-3">Predicts buyer and sales trends for your item.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-orange-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Describe your listing or market..."></textarea>
+            <button class="bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition" data-i18n="aiTools.predict">Predict</button>
+            <div class="sim-result mt-3 text-orange"></div>
           </form>
-          <div class="momentum-dot" style="background:#ea580c"></div>
+          <div class="momentum-dot" style="background: var(--color-orange-500)"></div>
           <!-- Tool 12 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#7f1d1d] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,12)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-rust-700 flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,12)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">12</span>
+              <span class="bg-rust-700 text-white font-black px-3 py-1 text-xs rounded-full">12</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.launchTimingOptimizer">Launch Timing Optimizer</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Find the best time to launch your listing for maximum impact.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your item and audience..."></textarea>
-            <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ea580c] transition" data-i18n="aiTools.optimize">Optimize</button>
-            <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+            <p class="text-neutral-700 mb-3">Find the best time to launch your listing for maximum impact.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-rust-700 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Describe your item and audience..."></textarea>
+            <button class="bg-rust-700 text-white font-semibold px-5 py-2 rounded-lg hover:bg-rust-700 transition" data-i18n="aiTools.optimize">Optimize</button>
+            <div class="sim-result mt-3 text-rust"></div>
           </form>
-          <div class="momentum-dot" style="background:#7f1d1d"></div>
+          <div class="momentum-dot" style="background: var(--color-rust-700)"></div>
           <!-- Tool 13 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#facc15] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,13)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-gold-400 flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,13)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">13</span>
+              <span class="bg-gold-400 text-rust-700 font-black px-3 py-1 text-xs rounded-full">13</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.copyConsistencyScanner">Copy Consistency Scanner</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Finds inconsistencies in your listing copy and suggests fixes.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
-            <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition" data-i18n="aiTools.scan">Scan</button>
-            <div class="sim-result mt-3 text-[#facc15]"></div>
+            <p class="text-neutral-700 mb-3">Finds inconsistencies in your listing copy and suggests fixes.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-gold-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-gold-500 text-rust-700 font-semibold px-5 py-2 rounded-lg hover:bg-gold-500 transition" data-i18n="aiTools.scan">Scan</button>
+            <div class="sim-result mt-3 text-gold"></div>
           </form>
         </div>
         <div class="flex flex-wrap gap-7 items-stretch">
           <!-- Tool 14 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#0d9488] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,14)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-green-600 flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,14)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">14</span>
+              <span class="bg-green-600 text-white font-black px-3 py-1 text-xs rounded-full">14</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.moodBasedDescriptionConverter">Mood-Based Description Converter</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Changes your listing description to match a chosen buyer mood.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
-            <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition" data-i18n="aiTools.convert">Convert</button>
-            <div class="sim-result mt-3 text-[#0d9488]"></div>
+            <p class="text-neutral-700 mb-3">Changes your listing description to match a chosen buyer mood.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-green-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your description..."></textarea>
+            <button class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-green-700 transition" data-i18n="aiTools.convert">Convert</button>
+            <div class="sim-result mt-3 text-green"></div>
           </form>
-          <div class="momentum-dot" style="background:#0d9488"></div>
+          <div class="momentum-dot" style="background: var(--color-green-600)"></div>
           <!-- Tool 15 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-[#ea580c] flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,15)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-md border-l-4 border-orange-500 flex-1 min-w-[310px] fade-up" onsubmit="event.preventDefault();generateAIResult(this,15)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">15</span>
+              <span class="bg-orange-500 text-white font-black px-3 py-1 text-xs rounded-full">15</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.conversionConfidenceScore">Conversion Confidence Score</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Rates how likely your listing is to convert a buyer.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
-            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.score">Score</button>
-            <div class="sim-result mt-3 text-[#ea580c]"></div>
+            <p class="text-neutral-700 mb-3">Rates how likely your listing is to convert a buyer.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-orange-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition" data-i18n="aiTools.score">Score</button>
+            <div class="sim-result mt-3 text-orange"></div>
           </form>
         </div>
       </div>
     </section>
     <!-- ==== SECTION 4: INTELLIGENT AI WRITERS ==== -->
-    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 Q720,9 1440,45 L1440,56 L0,56 Z" fill="#7f1d1d" opacity="0.09"/></svg>
+    <svg class="section-divider" viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,45 Q720,9 1440,45 L1440,56 L0,56 Z" fill="var(--color-rust-700)" opacity="0.09"/></svg>
     <section class="mb-14">
-      <h2 class="text-2xl font-bold text-[#7f1d1d] mb-4 flex items-center gap-2"><span class="text-lg">4.</span> Intelligent AI Writers</h2>
+      <h2 class="text-2xl font-bold text-rust mb-4 flex items-center gap-2"><span class="text-lg">4.</span> Intelligent AI Writers</h2>
       <div class="relative">
-        <svg class="absolute -top-12 left-0 w-full h-20 pointer-events-none" viewBox="0 0 1440 64" fill="none"><path d="M0,24 Q720,54 1440,24 L1440,64 L0,64 Z" fill="#7f1d1d" opacity="0.07"/></svg>
+        <svg class="absolute -top-12 left-0 w-full h-20 pointer-events-none" viewBox="0 0 1440 64" fill="none"><path d="M0,24 Q720,54 1440,24 L1440,64 L0,64 Z" fill="var(--color-rust-700)" opacity="0.07"/></svg>
         <div class="relative z-10 grid md:grid-cols-2 gap-7">
           <!-- Tool 16 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#7f1d1d] fade-up" onsubmit="event.preventDefault();generateAIResult(this,16)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-rust-700 fade-up" onsubmit="event.preventDefault();generateAIResult(this,16)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#7f1d1d] text-white font-black px-3 py-1 text-xs rounded-full">16</span>
+              <span class="bg-rust-700 text-white font-black px-3 py-1 text-xs rounded-full">16</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.listingLogicExplainer">Listing Logic Explainer</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Explains the logic behind a successful listing.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#7f1d1d] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing or draft..."></textarea>
-            <button class="bg-[#7f1d1d] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#c2410c] transition" data-i18n="aiTools.explain">Explain</button>
-            <div class="sim-result mt-3 text-[#7f1d1d]"></div>
+            <p class="text-neutral-700 mb-3">Explains the logic behind a successful listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-rust-700 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing or draft..."></textarea>
+            <button class="bg-rust-700 text-white font-semibold px-5 py-2 rounded-lg hover:bg-rust-700 transition" data-i18n="aiTools.explain">Explain</button>
+            <div class="sim-result mt-3 text-rust"></div>
           </form>
           <!-- Tool 17 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#0d9488] fade-up" onsubmit="event.preventDefault();generateAIResult(this,17)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-green-600 fade-up" onsubmit="event.preventDefault();generateAIResult(this,17)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#0d9488] text-white font-black px-3 py-1 text-xs rounded-full">17</span>
+              <span class="bg-green-600 text-white font-black px-3 py-1 text-xs rounded-full">17</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.buyerEmotionForecast">Buyer Emotion Forecast</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Predicts the emotions your listing may trigger in buyers.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#0d9488] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your listing copy..."></textarea>
-            <button class="bg-[#0d9488] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#166534] transition" data-i18n="aiTools.forecast">Forecast</button>
-            <div class="sim-result mt-3 text-[#0d9488]"></div>
+            <p class="text-neutral-700 mb-3">Predicts the emotions your listing may trigger in buyers.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-green-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your listing copy..."></textarea>
+            <button class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-green-700 transition" data-i18n="aiTools.forecast">Forecast</button>
+            <div class="sim-result mt-3 text-green"></div>
           </form>
           <!-- Tool 18 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#facc15] fade-up" onsubmit="event.preventDefault();generateAIResult(this,18)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-gold-400 fade-up" onsubmit="event.preventDefault();generateAIResult(this,18)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#facc15] text-[#7f1d1d] font-black px-3 py-1 text-xs rounded-full">18</span>
+              <span class="bg-gold-400 text-rust-700 font-black px-3 py-1 text-xs rounded-full">18</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.salesPlateauAnalyzer">Sales Plateau Analyzer</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Diagnoses why listings may have stopped selling.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#facc15] mb-2 bg-white/60 dark:bg-white/10" placeholder="Describe your listing or plateau..."></textarea>
-            <button class="bg-[#facc15] text-[#7f1d1d] font-semibold px-5 py-2 rounded-lg hover:bg-[#ffe066] transition" data-i18n="aiTools.analyze">Analyze</button>
-            <div class="sim-result mt-3 text-[#facc15]"></div>
+            <p class="text-neutral-700 mb-3">Diagnoses why listings may have stopped selling.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-gold-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Describe your listing or plateau..."></textarea>
+            <button class="bg-gold-500 text-rust-700 font-semibold px-5 py-2 rounded-lg hover:bg-gold-500 transition" data-i18n="aiTools.analyze">Analyze</button>
+            <div class="sim-result mt-3 text-gold"></div>
           </form>
           <!-- Tool 19 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#166534] fade-up" onsubmit="event.preventDefault();generateAIResult(this,19)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-green-800 fade-up" onsubmit="event.preventDefault();generateAIResult(this,19)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#166534] text-white font-black px-3 py-1 text-xs rounded-full">19</span>
+              <span class="bg-green-800 text-white font-black px-3 py-1 text-xs rounded-full">19</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.flowThroughOptimizer">Flow-Through Optimizer</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Suggests edits to keep buyers moving through your listing.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#166534] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste your description..."></textarea>
-            <button class="bg-[#166534] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#0d9488] transition" data-i18n="aiTools.optimize">Optimize</button>
-            <div class="sim-result mt-3 text-[#166534]"></div>
+            <p class="text-neutral-700 mb-3">Suggests edits to keep buyers moving through your listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-green-700 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste your description..."></textarea>
+            <button class="btn btn-primary bg-green-800 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg transition" data-i18n="aiTools.optimize">Optimize</button>
+            <div class="sim-result mt-3 text-green-800"></div>
           </form>
           <!-- Tool 20 -->
-          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-[#ea580c] fade-up md:col-span-2" onsubmit="event.preventDefault();generateAIResult(this,20)">
+          <form class="glass dark:glass-dark rounded-2xl p-6 shadow-lg border-l-4 border-orange-500 fade-up md:col-span-2" onsubmit="event.preventDefault();generateAIResult(this,20)">
             <div class="flex items-center gap-2 mb-2">
-              <span class="bg-[#ea580c] text-white font-black px-3 py-1 text-xs rounded-full">20</span>
+              <span class="bg-orange-500 text-white font-black px-3 py-1 text-xs rounded-full">20</span>
               <h3 class="font-bold text-lg" data-i18n="aiTools.listingFusionComposer">Listing Fusion Composer</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-300 mb-3">Combines multiple listings or drafts into one optimized super-listing.</p>
-            <textarea name="input" required class="w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-[#ea580c] mb-2 bg-white/60 dark:bg-white/10" placeholder="Paste drafts or product blurbs..."></textarea>
-            <button class="bg-[#ea580c] text-white font-semibold px-5 py-2 rounded-lg hover:bg-[#ff7722] transition" data-i18n="aiTools.fuse">Fuse</button>
-            <div class="sim-result mt-3 text-[#ea580c]"></div>
+            <p class="text-neutral-700 mb-3">Combines multiple listings or drafts into one optimized super-listing.</p>
+            <textarea name="input" required class="w-full px-4 py-2 rounded border border-neutral-300 focus:ring-2 focus:ring-orange-500 mb-2 bg-neutral-100/60 dark:bg-neutral-900/10" placeholder="Paste drafts or product blurbs..."></textarea>
+            <button class="bg-orange-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition" data-i18n="aiTools.fuse">Fuse</button>
+            <div class="sim-result mt-3 text-orange"></div>
           </form>
         </div>
       </div>
     </section>
     <!-- ==== FOOTER ==== -->
-    <footer class="mt-10 text-center text-gray-400 text-sm">
-      &copy; 2025 AutoList Canada — <span data-i18n="aiTools.title">AI Tools</span>. <span class="italic" data-i18n="aiTools.tagline">Clarity. Trust. Conversion.</span>
+    <script src="./scripts/bg/penrose.js" defer></script>
+    <script src="./scripts/bg/boids.js" defer></script>
+    <script src="./scripts/bg/veins.js" defer></script>
+    <footer class="mt-10 text-neutral-500 text-sm">
+      &copy; 2025 AutoList Canada — <span data-i18n="aiTools.title" class="text-green-700">AI Tools</span>. <span class="italic" data-i18n="aiTools.tagline">Clarity. Trust. Conversion.</span>
     </footer>
   </main>
 </div>
-<!-- ==== JS: ANIMATION, EINSTEIN, TONE, AI HANDLER ==== -->
-<script>
-  // Animate fade-up elements on scroll
-  function revealOnScroll() {
-    document.querySelectorAll('.fade-up').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 40) el.classList.add('visible');
-    });
-  }
-  document.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('DOMContentLoaded', revealOnScroll);
+<!-- Paywall Modal -->
+<div id="paywallModal" class="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm" x-data="{ show: false }" x-show="show" @open-paywall.window="show = true" @keydown.escape.window="show = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
+    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 w-[95vw] max-w-md shadow-2xl relative border border-slate-700 text-white transform" @click.outside="show = false" x-show="show" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100">
+        <button @click="show = false" class="absolute top-4 right-4 text-2xl text-slate-500 hover:text-white transition">&times;</button>
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-mapleRed to-orange-400 rounded-full flex items-center justify-center">
+                <span class="material-icons text-white text-4xl">workspace_premium</span>
+            </div>
+            <h2 class="text-3xl font-bold font-display mb-2">Unlock Premium AI Tools</h2>
+            <p class="text-slate-300 mb-6">Upgrade your plan to access powerful features like the Description Composer, Pricing Analyst, and more.</p>
+            <button class="w-full py-3 rounded-lg bg-gradient-to-r from-mapleRed to-orange-500 text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-transform">Upgrade to Pro</button>
+        </div>
+    </div>
+</div>
 
-  // Einstein Rotating Quote
-    // Einstein quotes (will be displayed in current language)
-    const einsteinQuotes = [
-    "Imagination is more important than knowledge.",
-    "The true sign of intelligence is not knowledge but imagination.",
-    "Life is like riding a bicycle. To keep your balance you must keep moving.",
-    "AI today, history tomorrow!",
-    "Logic will get you from A to B. Imagination will take you everywhere."
-  ];
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // --- User Status Simulation ---
+    const isPremiumUser = false; // Set to true to simulate a premium user
+
+    // --- AI Tool Simulation ---
+    window.generateAIResult = function(form, toolId) {
+      if (!isPremiumUser) {
+          window.dispatchEvent(new CustomEvent('open-paywall'));
+          return; // Stop execution if user is not premium
+      }
+
+      const resultDiv = form.querySelector('.sim-result');
+      const button = form.querySelector('button');
+      
+      resultDiv.innerHTML = '<div class="flex items-center"><div class="w-3 h-3 bg-teal-500 rounded-full animate-ping"></div><span class="ml-2 text-gray-500">AI is thinking...</span></div>';
+      button.disabled = true;
+      button.classList.add('opacity-50', 'cursor-not-allowed');
+
+      setTimeout(() => {
+          const responses = {
+              1: 'This is a simulated response for Ad Copy Generator.',
+              5: 'Psychology Panel: Activates trust and scarcity triggers.',
+              6: 'Sync Visualizer: Ready to sync to Etsy, eBay, and Shopify.',
+              7: 'Smart Defaults: Category set to \'Apparel\', Material to \'Cotton\'.',
+              8: 'Trust-First Description: \'This vintage jacket is in excellent, carefully-preserved condition...\'',
+              9: 'Tag Disqualifier: Removed \'cheap\', added \'collectible\'.',
+              10: 'Tone Preview: In \'Cozy\' tone, this sounds warmer and more inviting.',
+              default: 'This is a generic AI response.'
+          };
+          resultDiv.textContent = responses[toolId] || responses.default;
+          resultDiv.classList.add('animated');
+
+          button.disabled = false;
+          button.classList.remove('opacity-50', 'cursor-not-allowed');
+          
+          setTimeout(() => resultDiv.classList.remove('animated'), 700);
+      }, 1500);
+    }
+
+    // --- Tone Presets ---
+    window.setTone = function(tone) {
+      document.querySelectorAll('.tone-btn').forEach(btn => btn.classList.remove('tone-active'));
+      document.querySelector(`.tone-btn[data-tone='${tone}']`).classList.add('tone-active');
+      document.querySelectorAll('.tone-accent-blob').forEach(blob => blob.classList.remove('active'));
+      const activeBlob = document.querySelector(`.tone-accent-blob-${tone}`);
+      if(activeBlob) activeBlob.classList.add('active');
+    }
+    setTone('minimal'); // Set initial tone
+
+    // --- Scroll Animations ---
+    const revealOnScroll = () => {
+      document.querySelectorAll('.fade-up').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 40) el.classList.add('visible');
+      });
+    }
+    document.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Initial check
+
+  });
+</script>
   let quoteIdx = 0;
   function showQuote() {
-    document.getElementById('einstein-quote').textContent = document.documentElement.lang === 'fr' ? 'Einstein dit : "'+einsteinQuotes[quoteIdx]+'"' : 'Einstein says: "'+einsteinQuotes[quoteIdx]+'"';
-    quoteIdx = (quoteIdx + 1) % einsteinQuotes.length;
+    const quoteEl = document.getElementById('einstein-quote');
+    if (quoteEl) {
+        quoteEl.textContent = document.documentElement.lang === 'fr' ? 'Einstein dit : "' + einsteinQuotes[quoteIdx] + '"' : 'Einstein says: "' + einsteinQuotes[quoteIdx] + '"';
+        quoteIdx = (quoteIdx + 1) % einsteinQuotes.length;
+    }
   }
-  window.onload = function() {
-    showQuote();
-    setInterval(showQuote, 7000);
-    revealOnScroll();
+  if (document.getElementById('einstein-quote')) {
+      setInterval(showQuote, 4000);
+      showQuote();
+  }
+
+  // AI Result Simulation
+  const aiSimulations = {
+    5: () => ['Triggers: Scarcity (vintage item), Social Proof (if reviews mentioned), Authority (if expertise is shown).'],
+    6: () => ['Syncs with: Etsy (auto-categorized), Poshmark (description adapted), eBay (title optimized).'],
+    7: () => ['Suggested Defaults: Category: Apparel > Jackets, Material: Denim, Style: 80s.'],
+    8: () => ['Composed: "This authentic vintage piece is carefully inspected for quality. Note the minor, honest wear on the cuff, a testament to its journey. We believe in transparency so you can buy with confidence."'],
+    9: () => ['Disqualified: #vintagefinds (too broad), #cool (subjective), #80sfashion (good). Suggestion: #80sdenimjacket, #canadianvintage.'],
+    10: () => ['Cozy Tone: "Snuggle up in this classic denim jacket...", Luxury Tone: "An iconic statement piece, curated from the 80s...", Minimal Tone: "Clean lines, classic fit. A versatile denim essential."'],
+    11: () => ['Prediction: Demand for denim jackets increases 15% in Fall. Buyers are looking for durability and unique wear patterns.'],
+    12: () => ['Optimal Timing: Thursday, 7 PM EST. This is peak browsing time for your target demographic on Etsy and Poshmark.'],
+    13: () => ['Inconsistency: Title says "80s jacket", description says "1990s style". Suggestion: Unify to "80s" based on other cues.'],
+    14: () => ['Mood (Nostalgic): "Remember the days of mixtapes and high-top sneakers? This jacket is a piece of that history..."'],
+    15: () => ['Confidence Score: 88/100. Strong photos and detailed measurements build high trust. Could improve by adding a sentence about your shop\'s mission.'],
+    16: () => ['Logic: The listing succeeds by using high-quality photos to establish trust, specific keywords like "Levi\'s" for search, and a story-based description to create an emotional connection.'],
+    17: () => ['Emotion Forecast: Nostalgia (70%), Confidence (85%), Excitement (60%). The mention of "like new" condition boosts confidence.'],
+    18: () => ['Plateau Analysis: Your listing may have plateaued due to increased competition for the keyword "denim jacket". Suggestion: Refresh photos and target a niche keyword like "acid wash denim jacket".'],
+    19: () => ['Flow Optimizer: The description is strong, but the call-to-action is weak. Suggestion: Add "Have a question? Send a message!" at the end to encourage engagement.'],
+    20: () => ['Fused Listing: "Presenting a curated 80s acid-wash denim jacket. This iconic Levi\'s piece features a classic fit and unique vintage character. Perfect for adding a touch of nostalgia and confidence to any outfit. Inspected for quality and ready for its next chapter."']
   };
 
-  // Tone preset logic + accent switching
+  function generateAIResult(form, toolId) {
+    const resultDiv = form.querySelector('.sim-result');
+    const button = form.querySelector('button');
+    const originalButtonText = button.textContent;
+    resultDiv.innerHTML = '<div class="flex items-center"><div class="w-3 h-3 bg-teal-500 rounded-full animate-ping"></div><span class="ml-2 text-gray-500">AI is thinking...</span></div>';
+    button.disabled = true;
+    button.textContent = 'Analyzing...';
+
+    setTimeout(() => {
+        const simulation = aiSimulations[toolId];
+        const resultText = simulation ? simulation()[0] : 'No simulation for this tool yet.';
+        resultDiv.textContent = resultText;
+        resultDiv.classList.add('animated');
+        button.disabled = false;
+        button.textContent = originalButtonText;
+        setTimeout(() => resultDiv.classList.remove('animated'), 800);
+    }, 1200);
+  }
+
+  // Tone Selection Logic
   let currentTone = 'minimal';
   function setTone(tone) {
     currentTone = tone;
-    document.querySelectorAll('.tone-btn').forEach(btn => {
-      btn.classList.toggle('tone-active', btn.dataset.tone === tone);
-    });
-    document.querySelectorAll('.tone-accent-blob').forEach(blob => {
-      blob.classList.toggle('active', blob.classList.contains('tone-accent-blob-' + tone));
-    });
-    document.querySelectorAll('.page-bg-accent').forEach(bg => {
-      bg.classList.toggle('active', bg.classList.contains('page-bg-accent-' + tone));
-    });
+      const buttons = document.querySelectorAll('.tone-btn');
+      buttons.forEach(btn => btn.classList.remove('tone-active'));
+      const activeButton = document.querySelector(`.tone-btn[data-tone="${tone}"]`);
+      if (activeButton) activeButton.classList.add('tone-active');
+      
+      const blobs = document.querySelectorAll('.tone-accent-blob');
+      blobs.forEach(blob => blob.classList.remove('active'));
+      const activeBlob = document.querySelector(`.tone-accent-blob-${tone}`);
+      if(activeBlob) activeBlob.classList.add('active');
   }
-  setTone('minimal');
 
-  // AI Tool Handler
-  async function generateAIResult(form, idx) {
-    const input = form.input.value.trim();
-    const resultDiv = form.querySelector('.sim-result');
-    if (!input) return;
-    resultDiv.innerHTML = '<span class="text-gray-400 animate-pulse">⏳ Thinking...</span>';
-    try {
-      const res = await fetch('/api/ai-tool', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ tool: idx, input, tone: currentTone })
-      });
-      if (!res.ok) throw new Error('AI backend error');
-      const data = await res.json();
-      resultDiv.textContent = data.result || 'AI did not return a result.';
-      resultDiv.classList.add('animated');
-      setTimeout(()=>resultDiv.classList.remove('animated'), 1000);
-    } catch (e) {
-      resultDiv.innerHTML = '<span class="text-red-500">⚠️ Error: AI service unavailable.</span>';
-    }
-  }
-  
-  // Language Toggle Event Listener
-  document.getElementById('language-toggle').addEventListener('click', function() {
-    const currentLang = document.documentElement.lang;
-    const newLang = currentLang === 'fr' ? 'en' : 'fr';
-    changeLanguage(newLang);
-  });
+  // Set initial tone
+  window.addEventListener('DOMContentLoaded', () => setTone('minimal'));
+
 </script>
 </body>
 </html>

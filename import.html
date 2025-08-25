@@ -1,587 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gradient-to-br from-[#fcf8f5] to-[#f5f0e8] min-h-full">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Import Listings | AutoList Canada</title>
-  <link rel="stylesheet" href="./styles/theme.css">
-  <link rel="icon" href="/assets/autolist-title.png">
-  <script src="scripts/i18n.js" defer></script>
-  
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
-  <style>
-    /* Import page specific styles */
-    .import-step {
-      position: relative;
-      padding-left: 30px;
-    }
-    
-    .import-step:before {
-      content: "";
-      position: absolute;
-      left: 10px;
-      top: 30px;
-      bottom: -10px;
-      width: 2px;
-      background-color: var(--color-neutral-200);
-    }
-    
-    .import-step:last-child:before {
-      display: none;
-    }
-    
-    .step-number {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background-color: var(--color-green-500);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: var(--font-weight-bold);
-    }
-    
-    .import-step.completed .step-number {
-      background-color: var(--color-green-700);
-    }
-    
-    .import-step.active .step-number {
-      box-shadow: 0 0 0 4px rgba(var(--color-green-rgb-500), 0.2);
-    }
-    
-    .marketplace-option {
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 2px solid transparent;
-    }
-    
-    .marketplace-option:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    
-    .marketplace-option.selected {
-      border-color: var(--color-green-500);
-    }
-    
-    .file-drop-area {
-      border: 2px dashed var(--color-neutral-300);
-      border-radius: var(--border-radius-lg);
-      transition: all 0.2s;
-    }
-    
-    .file-drop-area:hover,
-    .file-drop-area.dragover {
-      border-color: var(--color-green-500);
-      background-color: var(--color-green-50);
-    }
-    
-    .connecting-animation {
-      animation: pulse 1.5s infinite;
-    }
-    
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(var(--color-green-rgb-500), 0.7);
-      }
-      
-      70% {
-        box-shadow: 0 0 0 10px rgba(var(--color-green-rgb-500), 0);
-      }
-      
-      100% {
-        box-shadow: 0 0 0 0 rgba(var(--color-green-rgb-500), 0);
-      }
-    }
-    
-    /* Dark Mode Overrides */
-    @media (prefers-color-scheme: dark) {
-      .import-step:before {
-        background-color: var(--color-neutral-700);
-      }
-      
-      .file-drop-area {
-        border-color: var(--color-neutral-700);
-      }
-      
-      .file-drop-area:hover,
-      .file-drop-area.dragover {
-        background-color: var(--color-green-900);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Import Listings | AutoList Canada</title>
+    <link rel="icon" href="/assets/autolist-title.png" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/import.css">
 </head>
-<body>
-  <!-- Import Header Component -->
-  <div id="header-placeholder"></div>
-  <!-- Language Toggle Button -->
-  <div class="fixed top-4 right-4 z-50">
-    <button id="language-toggle" class="bg-orange-400 text-white rounded-full w-8 h-8 flex items-center justify-center font-medium hover:bg-orange-500 transition-colors shadow-md">EN</button>
-  </div>
-  
-  <div class="alc-container mx-auto py-6 px-4 md:px-6">
-    <div class="alc-page-header mb-8">
-      <h1 class="text-3xl font-bold mb-2" data-i18n="import.title">Import Listings</h1>
-      <p class="text-neutral-600 dark:text-neutral-400" data-i18n="import.description">Import listings from other marketplaces or via spreadsheet.</p>
-    </div>
-    
-    <div class="alc-content-wrapper">
-      <div class="bg-white dark:bg-neutral-800 shadow-md rounded-lg p-6 mb-8">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-xl font-semibold" data-i18n="import.wizard">Import Wizard</h2>
-          <button class="alc-button alc-button-outline-neutral">
-            <i class="fas fa-question-circle mr-2"></i> <span data-i18n="import.help">Help</span>
-          </button>
+<body class="min-h-screen font-sans text-[#28323a] bg-gradient-to-br from-[#fcf8f5] to-[#f5f0e8] flex overflow-x-hidden">
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-h-screen bg-slate-900 text-white">
+        <!-- Header -->
+        <header class="relative py-24 px-6 md:px-12 text-center organic-wash-dark">
+            <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pineGreen via-spruce to-cedar">Import Listings</h1>
+            <p class="text-slate-300 text-lg mt-2">Paste JSON data to add new listings to your inventory.</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Input Area -->
+                <div class="glass p-6 rounded-xl">
+                    <h2 class="text-2xl font-bold text-white mb-4">Paste JSON Data</h2>
+                    <textarea id="json-input" class="w-full h-96 bg-slate-800/50 text-slate-200 p-4 rounded-lg font-mono text-sm focus:ring-pineGreen focus:border-pineGreen" placeholder='[
+    {
+        "title": "My First Item",
+        "price": 99.99
+    }
+]'></textarea>
+                    <div class="mt-4 flex gap-4">
+                        <button id="preview-button" class="button primary-button w-full">Preview</button>
+                        <button id="clear-button" class="button secondary-button w-full">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Preview Area -->
+                <div class="glass p-6 rounded-xl">
+                    <h2 class="text-2xl font-bold text-white mb-4">Preview</h2>
+                    <div id="preview-area" class="h-96 overflow-y-auto bg-slate-800/50 p-4 rounded-lg"> 
+                        <p class="text-slate-400">Preview of normalized listings will appear here.</p>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                        <button id="save-button" class="button success-button w-full" disabled>Save to Store</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <!-- Import Steps -->
-        <div class="space-y-8">
-          <!-- Step 1: Choose Import Method -->
-          <div class="import-step active">
-            <div class="step-number">1</div>
-            <h3 class="text-lg font-medium mb-4" data-i18n="import.step1.title">Choose Import Method</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <!-- From Marketplace Option -->
-              <div class="marketplace-option selected bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex flex-col items-center text-center">
-                  <div class="mb-4 text-green-500">
-                    <i class="fas fa-store text-3xl"></i>
-                  </div>
-                  <h4 class="font-medium mb-2" data-i18n="import.step1.marketplace.title">From Marketplace</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400" data-i18n="import.step1.marketplace.desc">Import directly from connected marketplaces.</p>
-                </div>
-              </div>
-              
-              <!-- From Spreadsheet Option -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex flex-col items-center text-center">
-                  <div class="mb-4 text-green-500">
-                    <i class="fas fa-file-excel text-3xl"></i>
-                  </div>
-                  <h4 class="font-medium mb-2" data-i18n="import.step1.csv.title">CSV/Excel Import</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400" data-i18n="import.step1.csv.desc">Upload a CSV or Excel file with your listing data.</p>
-                </div>
-              </div>
-              
-              <!-- Manual Entry Option -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex flex-col items-center text-center">
-                  <div class="mb-4 text-green-500">
-                    <i class="fas fa-keyboard text-3xl"></i>
-                  </div>
-                  <h4 class="font-medium mb-2" data-i18n="import.step1.manual.title">Manual Entry</h4>
-                  <p class="text-sm text-neutral-600 dark:text-neutral-400" data-i18n="import.step1.manual.desc">Create listings one by one with our guided form.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Step 2: Connect Marketplace -->
-          <div class="import-step">
-            <div class="step-number">2</div>
-            <h3 class="text-lg font-medium mb-4" data-i18n="import.step2.title">Select Marketplace</h3>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <!-- eBay Marketplace -->
-              <div class="marketplace-option selected bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/ebay-logo.png" alt="eBay" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">eBay Canada</h4>
-                    <div class="flex items-center">
-                      <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 px-2 py-0.5 rounded">
-                        Connected
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Etsy Marketplace -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/etsy-logo.png" alt="Etsy" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">Etsy</h4>
-                    <span class="text-xs text-neutral-500">Click to connect</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Amazon Marketplace -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/amazon-logo.png" alt="Amazon" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">Amazon.ca</h4>
-                    <span class="text-xs text-neutral-500">Click to connect</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Facebook Marketplace -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/facebook-logo.png" alt="Facebook" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">Facebook Marketplace</h4>
-                    <span class="text-xs text-neutral-500">Click to connect</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Kijiji Marketplace -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/kijiji-logo.png" alt="Kijiji" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">Kijiji</h4>
-                    <span class="text-xs text-neutral-500">Click to connect</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Shopify Marketplace -->
-              <div class="marketplace-option bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-                <div class="flex items-center">
-                  <img src="/assets/shopify-logo.png" alt="Shopify" class="w-12 h-12 mr-4">
-                  <div>
-                    <h4 class="font-medium mb-1">Shopify</h4>
-                    <span class="text-xs text-neutral-500">Click to connect</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Step 3: Select Listings -->
-          <div class="import-step">
-            <div class="step-number">3</div>
-            <h3 class="text-lg font-medium mb-4">Select Listings</h3>
-            
-            <div class="bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-              <div class="flex justify-between items-center mb-4">
-                <div>
-                  <h4 class="font-medium">Available Listings from eBay Canada</h4>
-                  <p class="text-sm text-neutral-500">We found 42 active listings in your eBay store</p>
-                </div>
-                <div>
-                  <button class="alc-button alc-button-outline-primary mr-2">Refresh</button>
-                  <button class="alc-button alc-button-primary">Select All</button>
-                </div>
-              </div>
-              
-              <!-- Listings Table -->
-              <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-                  <thead>
-                    <tr>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                        <input type="checkbox" class="alc-checkbox">
-                      </th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                        Image
-                      </th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                        Title
-                      </th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                        Price
-                      </th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
-                    <!-- Listing 1 -->
-                    <tr>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <input type="checkbox" class="alc-checkbox" checked>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="w-12 h-12 bg-neutral-100 dark:bg-neutral-700 rounded-md overflow-hidden">
-                          <img src="https://images.example.com/nikon-f2-main.jpg" alt="Product" class="w-full h-full object-cover">
-                        </div>
-                      </td>
-                      <td class="px-4 py-3">
-                        <div class="text-sm font-medium">Vintage Nikon F2 Film Camera with 50mm f/1.4 Lens</div>
-                        <div class="text-xs text-neutral-500">SKU: VNF2-50MM-001</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="text-sm">$499.99 CAD</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">Active</span>
-                      </td>
-                    </tr>
-                    
-                    <!-- Listing 2 -->
-                    <tr>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <input type="checkbox" class="alc-checkbox" checked>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="w-12 h-12 bg-neutral-100 dark:bg-neutral-700 rounded-md overflow-hidden">
-                          <img src="https://images.example.com/cedar-paddle-main.jpg" alt="Product" class="w-full h-full object-cover">
-                        </div>
-                      </td>
-                      <td class="px-4 py-3">
-                        <div class="text-sm font-medium">Handmade Cedar Canoe Paddle - Traditional Canadian Craftsmanship</div>
-                        <div class="text-xs text-neutral-500">SKU: CEDAR-PADDLE-001</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="text-sm">$189.99 CAD</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">Active</span>
-                      </td>
-                    </tr>
-                    
-                    <!-- Listing 3 -->
-                    <tr>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <input type="checkbox" class="alc-checkbox">
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="w-12 h-12 bg-neutral-100 dark:bg-neutral-700 rounded-md overflow-hidden">
-                          <img src="https://images.example.com/hbc-blanket-main.jpg" alt="Product" class="w-full h-full object-cover">
-                        </div>
-                      </td>
-                      <td class="px-4 py-3">
-                        <div class="text-sm font-medium">Vintage Hudson's Bay Point Blanket - 4 Point - Multi Stripe</div>
-                        <div class="text-xs text-neutral-500">SKU: HBC-4PT-001</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <div class="text-sm">$329.99 CAD</div>
-                      </td>
-                      <td class="px-4 py-3 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">Active</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-              <div class="mt-4 flex justify-between items-center">
-                <div class="text-sm text-neutral-500">Showing 3 of 42 listings</div>
-                <div class="flex">
-                  <button class="alc-button alc-button-outline-neutral mr-2">Previous</button>
-                  <button class="alc-button alc-button-outline-neutral">Next</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Step 4: Template Matching -->
-          <div class="import-step">
-            <div class="step-number">4</div>
-            <h3 class="text-lg font-medium mb-4">Map to Templates</h3>
-            
-            <div class="bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-              <div class="mb-4">
-                <h4 class="font-medium mb-2">Template Matching</h4>
-                <p class="text-sm text-neutral-600 dark:text-neutral-400">AutoList will automatically match your listings to the most appropriate template based on category and details.</p>
-              </div>
-              
-              <div class="space-y-4">
-                <div class="flex items-start justify-between">
-                  <div>
-                    <h5 class="font-medium">Default Template Selection</h5>
-                    <p class="text-sm text-neutral-600 dark:text-neutral-400">Choose a default template for listings that don't match specific criteria</p>
-                  </div>
-                  <div>
-                    <select class="alc-select">
-                      <option value="" disabled>Select template...</option>
-                      <option value="vintage-home" selected>Vintage Home Goods</option>
-                      <option value="vintage-camera">Vintage Camera</option>
-                      <option value="handcrafted">Handcrafted Items</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div class="flex items-center">
-                  <input type="checkbox" id="auto-match" class="alc-checkbox" checked>
-                  <label for="auto-match" class="ml-2 text-sm">Use AI to automatically match templates based on item categories and descriptions</label>
-                </div>
-                
-                <!-- Template Matching Rules -->
-                <div class="border dark:border-neutral-700 rounded-lg p-4 mt-4">
-                  <h4 class="font-medium mb-2">Advanced Matching Rules</h4>
-                  <table class="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
-                    <thead>
-                      <tr>
-                        <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                          Condition
-                        </th>
-                        <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                          Template
-                        </th>
-                        <th class="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
-                      <tr>
-                        <td class="px-4 py-2">Category contains "Camera" or "Photography"</td>
-                        <td class="px-4 py-2">Vintage Camera</td>
-                        <td class="px-4 py-2">
-                          <button class="text-neutral-500 hover:text-red-500">
-                            <i class="fas fa-times-circle"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-4 py-2">Title contains "Handmade" or "Handcrafted"</td>
-                        <td class="px-4 py-2">Handcrafted Items</td>
-                        <td class="px-4 py-2">
-                          <button class="text-neutral-500 hover:text-red-500">
-                            <i class="fas fa-times-circle"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button class="alc-button alc-button-outline-primary mt-3">
-                    <i class="fas fa-plus mr-2"></i> Add Rule
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Step 5: Import Options -->
-          <div class="import-step">
-            <div class="step-number">5</div>
-            <h3 class="text-lg font-medium mb-4">Import Options</h3>
-            
-            <div class="bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-lg p-5 shadow-sm">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 class="font-medium mb-3">Import Settings</h4>
-                  
-                  <div class="space-y-3">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="import-images" class="alc-checkbox" checked>
-                      <label for="import-images" class="ml-2 text-sm">Import images (up to 30 per listing)</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="import-descriptions" class="alc-checkbox" checked>
-                      <label for="import-descriptions" class="ml-2 text-sm">Import descriptions</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="import-pricing" class="alc-checkbox" checked>
-                      <label for="import-pricing" class="ml-2 text-sm">Import pricing information</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="import-quantity" class="alc-checkbox" checked>
-                      <label for="import-quantity" class="ml-2 text-sm">Import quantity/inventory</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="auto-translate" class="alc-checkbox">
-                      <label for="auto-translate" class="ml-2 text-sm">Auto-translate titles and descriptions to French</label>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 class="font-medium mb-3">Post-Import Actions</h4>
-                  
-                  <div class="space-y-3">
-                    <div class="flex items-center">
-                      <input type="checkbox" id="analyze-listings" class="alc-checkbox" checked>
-                      <label for="analyze-listings" class="ml-2 text-sm">Run AI analysis on imported listings</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="suggest-improvements" class="alc-checkbox" checked>
-                      <label for="suggest-improvements" class="ml-2 text-sm">Suggest improvements for titles and descriptions</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="optimize-seo" class="alc-checkbox" checked>
-                      <label for="optimize-seo" class="ml-2 text-sm">Optimize SEO for Canadian marketplaces</label>
-                    </div>
-                    
-                    <div class="flex items-center">
-                      <input type="checkbox" id="analyze-pricing" class="alc-checkbox">
-                      <label for="analyze-pricing" class="ml-2 text-sm">Analyze pricing against market rates</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Action Buttons -->
-          <div class="flex justify-between items-center pt-4 border-t dark:border-neutral-700">
-            <button class="alc-button alc-button-outline-neutral">
-              <i class="fas fa-arrow-left mr-2"></i> <span data-i18n="import.back">Back</span>
-            </button>
-            <div>
-              <button class="alc-button alc-button-outline-neutral mr-2" data-i18n="import.saveProgress">Save Progress</button>
-              <button class="alc-button alc-button-primary">
-                <i class="fas fa-arrow-right mr-2"></i> <span data-i18n="import.continue">Continue</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Footer component placeholder -->
-  <div id="footer-placeholder"></div>
-  
-  <script src="./scripts/app.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Load header and footer components
-      fetch('./components/navigation/header.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('header-placeholder').innerHTML = data;
-        });
-      
-      // Marketplace selection
-      document.querySelectorAll('.marketplace-option').forEach(option => {
-        option.addEventListener('click', function() {
-          // If in Step 1, deselect all and select clicked
-          if (this.closest('.import-step').querySelector('.step-number').textContent === '1') {
-            document.querySelectorAll('.import-step:first-child .marketplace-option').forEach(opt => {
-              opt.classList.remove('selected');
-            });
-          }
-          this.classList.toggle('selected');
-        });
-      });
-      
-      // Checkbox functionality for "Select All" (simplified)
-      const selectAllBtn = document.querySelector('.alc-button-primary');
-      if (selectAllBtn) {
-        selectAllBtn.addEventListener('click', function() {
-          const checkboxes = document.querySelectorAll('tbody .alc-checkbox');
-          const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-          
-          checkboxes.forEach(checkbox => {
-            checkbox.checked = !allChecked;
-          });
-          
-          this.textContent = allChecked ? 'Select All' : 'Deselect All';
-        });
-      }
-    });
-  </script>
+    </main>
+
+    <!-- Core Scripts -->
+    <script src="./scripts/store.js" defer></script>
+    <script src="./scripts/normalize.js" defer></script>
+    <script src="./scripts/ui/sidebar.js" defer></script>
+    <script src="./scripts/import.js" defer></script>
 </body>
 </html>
