@@ -4,7 +4,12 @@
   "headers": [
     { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, preview" }] }
   ],
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" }
+  "routes": [
+    { "handle": "filesystem" },
+
+    { "src": "^/$", "dest": "/index.html" },
+    { "src": "^/(?:ai-tools|dashboard|listings|import)$", "dest": "/$1.html" },
+
+    { "src": "^/(?!.*\\.).*$", "dest": "/index.html" }
   ]
 }
