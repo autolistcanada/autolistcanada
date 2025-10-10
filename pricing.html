@@ -2,56 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore AutoList Canada's flexible pricing plans for Canadian resellers. From free starter tools to powerful AI and unlimited listings, find the perfect plan to grow your resale business.">
-
-  <title>AutoList Canada - Pricing</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 40px; background: #f4f4f4; }
-    <div class="topnav" style="background-color: #e05a13; overflow: hidden; display: flex; padding: 10px 20px; align-items: center;">
-  <div class="logo" style="font-weight: bold; color: white; margin-right: auto;">AutoList Canada</div>
-  <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Home</a>
-  <a href="dashboard.html" style="color: white; text-decoration: none; padding: 10px 15px;">Dashboard</a>
-  <a href="features.html" style="color: white; text-decoration: none; padding: 10px 15px;">Features</a>
-  <a href="pricing.html" style="color: white; text-decoration: none; padding: 10px 15px;">Pricing</a>
-  <a href="contact.html" style="color: white; text-decoration: none; padding: 10px 15px;">Contact</a>
-</div>
-
-    h1 { color: #205c40; }
-    .tier { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .tier h2 { margin-top: 0; color: #c04e2b; }
-    .price { font-size: 24px; color: #333; }
-  </style>
+  <title data-lang-key="title_pricing">Pricing - AutoList Canada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="styles/theme.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
 </head>
-<body>
-  <h1>AutoList Canada Pricing</h1>
+<body class="bg-background-dark font-sans text-text-primary">
 
-  <div class="tier">
-    <h2>Free - $0</h2>
-    <p class="price">10 listings per month, 5 AI generations</p>
-  </div>
+  <!-- Public Header -->
+  <header class="fixed top-0 left-0 right-0 z-30 bg-background-dark/80 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex-shrink-0">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img class="h-10 w-auto" src="./assets/images/logo/autolist-logo-notext.svg" alt="AutoList Canada Logo">
+                    <span class="text-xl font-bold text-text-primary">AutoList</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+                <a href="index.html#faq" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+                <a href="pricing.html" class="nav-link active" data-lang-key="nav_pricing">Pricing</a>
+                <div class="flex items-center space-x-1">
+                    <button id="lang-en" class="lang-toggle-btn active">EN</button>
+                    <button id="lang-fr" class="lang-toggle-btn">FR</button>
+                </div>
+                <button id="login-btn-main" class="btn-primary-glow" data-lang-key="login_signup">Login / Sign Up</button>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-text-primary p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden bg-background-dark/95 p-4">
+        <nav class="flex flex-col space-y-4">
+            <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+            <a href="index.html#faq" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+            <a href="pricing.html" class="nav-link active" data-lang-key="nav_pricing">Pricing</a>
+            <div class="flex items-center space-x-2">
+                <button id="lang-en-mobile" class="lang-toggle-btn active">EN</button>
+                <button id="lang-fr-mobile" class="lang-toggle-btn">FR</button>
+            </div>
+            <button id="login-btn-mobile" class="btn-primary-glow w-full" data-lang-key="login_signup">Login / Sign Up</button>
+        </nav>
+    </div>
+  </header>
 
-  <div class="tier">
-    <h2>Starter - $20/mo</h2>
-    <p class="price">250 crosslist actions, 50 AI credits, Delist Sync</p>
-  </div>
+  <!-- Main Content -->
+  <main class="pt-24 text-text-primary">
+    <section class="relative py-20">
+      <div class="absolute inset-0 w-full h-full bg-grid-pattern opacity-20"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark"></div>
+      <div class="relative container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-accent-teal mb-4" data-i18n="pricing_title">Find the Right Plan</h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto text-text-secondary mb-10" data-i18n="pricing_subtitle">Start for free, upgrade for growth. Simple, transparent pricing for Canadian sellers.</p>
+        
+        <div x-data="{ billing: 'monthly' }" class="flex justify-center items-center space-x-4 mb-12">
+          <span class="text-lg font-medium" data-i18n="monthly">Monthly</span>
+          <button @click="billing = billing === 'monthly' ? 'yearly' : 'monthly'" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors" :class="billing === 'yearly' ? 'bg-accent-purple' : 'bg-gray-600'">
+            <span :class="billing === 'yearly' ? 'translate-x-6' : 'translate-x-1'" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"></span>
+          </button>
+          <span class="text-lg font-medium" data-i18n="yearly">Yearly</span>
+          <span class="badge-glow-success" data-i18n="save_20">Save 20%</span>
+        </div>
 
-  <div class="tier">
-    <h2>Pro - $50/mo</h2>
-    <p class="price">400 listings, Bulk Actions, 200 AI credits, Analytics</p>
-  </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <!-- Free Tier -->
+          <div class="glass-card p-6 flex flex-col text-left">
+            <h2 class="text-2xl font-bold text-accent-green mb-2" data-i18n="tier_free_title">Hobbyist</h2>
+            <p class="text-text-secondary mb-4" data-i18n="tier_free_desc">For casual sellers testing the waters.</p>
+            <div class="text-4xl font-bold mb-4">$0</div>
+            <ul class="space-y-3 text-text-secondary flex-grow mb-6">
+              <li class="flex items-center"><span class="check-icon-green"></span><span data-i18n="feature_free_1">10 Listings / mo</span></li>
+              <li class="flex items-center"><span class="check-icon-green"></span><span data-i18n="feature_free_2">5 AI Generations</span></li>
+            </ul>
+            <button class="btn-secondary-glow w-full mt-auto" data-i18n="cta_get_started">Get Started</button>
+          </div>
 
-  <div class="tier">
-    <h2>Agency - $100+/mo</h2>
-    <p class="price">Multi-user access, White-label support, Unlimited listings</p>
-  </div>
- <footer style="background-color: #e05a13; padding: 20px; text-align: center; color: white;">
-    <a href="terms.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Terms of Use</a>
-    <a href="privacy.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Privacy Policy</a>
-    <a href="contact.html" style="color: #f5b748; text-decoration: none;">Contact</a>
-    <p style="margin-top: 10px; font-size: 0.8em;">&copy; 2025 AutoList Canada. All rights reserved.</p>
+          <!-- Starter Tier -->
+          <div class="glass-card p-6 flex flex-col text-left border-2 border-accent-purple shadow-lg">
+            <span class="badge-glow-purple self-start mb-2" data-i18n="most_popular">Most Popular</span>
+            <h2 class="text-2xl font-bold text-accent-purple mb-2" data-i18n="tier_starter_title">Reseller</h2>
+            <p class="text-text-secondary mb-4" data-i18n="tier_starter_desc">For growing sellers scaling their business.</p>
+            <div class="text-4xl font-bold mb-4">
+              <span x-show="billing === 'monthly'">$20</span>
+              <span x-show="billing === 'yearly'">$16</span>
+              <span class="text-lg font-normal text-text-secondary" data-i18n="per_month">/ month</span>
+            </div>
+            <ul class="space-y-3 text-text-secondary flex-grow mb-6">
+              <li class="flex items-center"><span class="check-icon-purple"></span><span data-i18n="feature_starter_1">250 Cross-list Actions</span></li>
+              <li class="flex items-center"><span class="check-icon-purple"></span><span data-i18n="feature_starter_2">50 AI Credits</span></li>
+              <li class="flex items-center"><span class="check-icon-purple"></span><span data-i18n="feature_starter_3">Delist & Relist Sync</span></li>
+            </ul>
+            <button class="btn-primary-glow w-full mt-auto" data-i18n="cta_choose_plan">Choose Plan</button>
+          </div>
+
+          <!-- Pro Tier -->
+          <div class="glass-card p-6 flex flex-col text-left">
+            <h2 class="text-2xl font-bold text-accent-orange mb-2" data-i18n="tier_pro_title">Pro Seller</h2>
+            <p class="text-text-secondary mb-4" data-i18n="tier_pro_desc">For established sellers optimizing their workflow.</p>
+            <div class="text-4xl font-bold mb-4">
+              <span x-show="billing === 'monthly'">$50</span>
+              <span x-show="billing === 'yearly'">$40</span>
+              <span class="text-lg font-normal text-text-secondary" data-i18n="per_month">/ month</span>
+            </div>
+            <ul class="space-y-3 text-text-secondary flex-grow mb-6">
+              <li class="flex items-center"><span class="check-icon-orange"></span><span data-i18n="feature_pro_1">Unlimited Listings</span></li>
+              <li class="flex items-center"><span class="check-icon-orange"></span><span data-i18n="feature_pro_2">200 AI Credits</span></li>
+              <li class="flex items-center"><span class="check-icon-orange"></span><span data-i18n="feature_pro_3">Sales Analytics</span></li>
+              <li class="flex items-center"><span class="check-icon-orange"></span><span data-i18n="feature_pro_4">Bulk Actions</span></li>
+            </ul>
+            <button class="btn-secondary-glow w-full mt-auto" data-i18n="cta_choose_plan">Choose Plan</button>
+          </div>
+
+          <!-- Agency Tier -->
+          <div class="glass-card p-6 flex flex-col text-left">
+            <h2 class="text-2xl font-bold text-accent-teal mb-2" data-i18n="tier_agency_title">Enterprise</h2>
+            <p class="text-text-secondary mb-4" data-i18n="tier_agency_desc">For teams and agencies managing multiple stores.</p>
+            <div class="text-4xl font-bold mb-4" data-i18n="contact_us">Contact Us</div>
+            <ul class="space-y-3 text-text-secondary flex-grow mb-6">
+              <li class="flex items-center"><span class="check-icon-teal"></span><span data-i18n="feature_agency_1">Multi-user Access</span></li>
+              <li class="flex items-center"><span class="check-icon-teal"></span><span data-i18n="feature_agency_2">White-label Support</span></li>
+              <li class="flex items-center"><span class="check-icon-teal"></span><span data-i18n="feature_agency_3">Dedicated Support</span></li>
+            </ul>
+            <button class="btn-secondary-glow w-full mt-auto" data-i18n="cta_contact_sales">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative pt-24 pb-12 text-center bg-white/5 mt-20">
+      <div class="max-w-6xl mx-auto px-6">
+          <nav class="flex justify-center gap-6 mb-8">
+              <a href="index.html" class="nav-link" data-lang-key="nav_home">Home</a>
+              <a href="#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+              <a href="#faq" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+              <a href="pricing.html" class="nav-link active" data-lang-key="nav_pricing">Pricing</a>
+          </nav>
+          <p class="text-text-secondary text-sm">&copy; 2024 AutoList Canada. All Rights Reserved.</p>
+          <p class="text-text-secondary text-xs mt-2"><a href="#" class="hover:text-accent-teal" data-lang-key="nav_privacy">Privacy Policy</a> | <a href="#" class="hover:text-accent-teal" data-lang-key="nav_terms">Terms of Service</a></p>
+      </div>
   </footer>
+
+  <script src="./js/app.js"></script>
+  <script src="./js/auth.js"></script>
 </body>
 </html>

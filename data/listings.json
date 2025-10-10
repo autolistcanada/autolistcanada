@@ -1,0 +1,79 @@
+[
+    {
+        "id": "ALC-001",
+        "title": "Vintage Maple Leaf Denim Jacket",
+        "sku": "SKU-CA-1001",
+        "price": 89.99,
+        "status": "active",
+        "imageUrl": "./assets/images/stock/jacket.jpg",
+        "platforms": {
+            "etsy": "synced",
+            "ebay": "synced",
+            "poshmark_ca": "error"
+        },
+        "stats": {
+            "views": 1204,
+            "likes": 256
+        }
+    },
+    {
+        "id": "ALC-002",
+        "title": "Hand-carved Cedar Soap Dish",
+        "sku": "SKU-CA-1002",
+        "price": 24.50,
+        "status": "active",
+        "imageUrl": "./assets/images/stock/soap-dish.jpg",
+        "platforms": {
+            "etsy": "synced",
+            "shopify": "synced"
+        },
+        "stats": {
+            "views": 850,
+            "likes": 150
+        }
+    },
+    {
+        "id": "ALC-003",
+        "title": "Abstract Rocky Mountain Print",
+        "sku": "SKU-CA-1003",
+        "price": 120.00,
+        "status": "draft",
+        "imageUrl": "./assets/images/stock/art-print.jpg",
+        "platforms": {},
+        "stats": {
+            "views": 0,
+            "likes": 0
+        }
+    },
+    {
+        "id": "ALC-004",
+        "title": "Classic Hudson's Bay Point Blanket",
+        "sku": "SKU-CA-1004",
+        "price": 250.00,
+        "status": "sold",
+        "imageUrl": "./assets/images/stock/blanket.jpg",
+        "platforms": {
+            "facebook_mp": "synced"
+        },
+        "stats": {
+            "views": 3400,
+            "likes": 890
+        }
+    },
+    {
+        "id": "ALC-005",
+        "title": "Nanaimo Bar Baking Mix",
+        "sku": "SKU-CA-1005",
+        "price": 15.00,
+        "status": "active",
+        "imageUrl": "./assets/images/stock/baking-mix.jpg",
+        "platforms": {
+            "shopify": "synced",
+            "etsy": "syncing"
+        },
+        "stats": {
+            "views": 650,
+            "likes": 95
+        }
+    }
+]
