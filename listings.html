@@ -1,302 +1,118 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-50">
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title data-i18n="listings.page.title">Listings Dashboard | AutoList Canada</title>
-    <link rel="icon" href="/assets/autolist-title.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="title_listings">Listings | AutoList Canada</title>
+    <link rel="icon" href="/assets/images/icons/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="description" content="AutoList Canada: Psychology-Driven Crosslisting Dashboard for Vintage & Resale Sellers" />
-    <script src="/scripts/i18n.js" defer></script>
-  </head>
-  <body class="min-h-screen font-sans text-gray-900 bg-gray-50 flex">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body id="listings-page" class="flex bg-[#060720] text-gray-200 font-sans" x-data="{ view: 'grid' }">
 
-    <!-- Sidebar -->
-    <aside class="relative w-64 min-h-screen flex flex-col justify-between bg-no-repeat bg-left-top bg-cover"
-           style="background-image: url('/assets/sidebar-background.png');">
-      <div>
-        <!-- Logo -->
-        <div class="flex items-center pl-6 pt-7 pb-8">
-          <img src="/assets/autolist-title.png" alt="AutoList Canada" class="h-10" />
-        </div>
-        <!-- Nav -->
-        <nav class="mt-2">
-          <ul class="space-y-2 pl-4 pr-3">
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.home">Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.dashboard">Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" aria-current="page"
-                 class="flex items-center px-3 py-2 rounded-lg text-base text-blue-600 font-semibold bg-white/70 shadow transition">
-                <span data-i18n="nav.listings">Listings</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.aiTools">AI Tools</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.howItWorks">How It Works</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.faq">FAQ</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.import">Import</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.terms">Terms</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex items-center px-3 py-2 rounded-lg text-base hover:bg-white/20 transition">
-                <span data-i18n="nav.privacy">Privacy</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <!-- Footer: Language Toggle & Badges -->
-      <div class="mb-8 px-6">
-        <!-- Language Toggle Button -->
-        <div class="flex items-center space-x-2 mb-5">
-          <button id="langToggle" aria-label="Toggle Language" class="fixed right-4 top-4 z-50 px-4 py-1 rounded-full bg-orange-500 text-white text-sm font-medium shadow-md hover:bg-orange-600 transition focus:outline-none focus:ring-2 focus:ring-orange-400">
-            EN
-          </button>
-        </div>
-        <div class="flex space-x-2 items-center">
-          <img src="/assets/canadian-owned-badge.png" alt="Canadian Owned" data-i18n-alt="badges.canadianOwned" class="h-8" />
-          <img src="/assets/ai-powered-tools-badge.png" alt="AI Powered Tools" data-i18n-alt="badges.aiPowered" class="h-8" />
-          <img src="/assets/privacy-first-badge.png" alt="Privacy First" data-i18n-alt="badges.privacyFirst" class="h-8" />
-        </div>
-      </div>
-    </aside>
+    <!-- Dynamic Sidebar -->
+    <div id="sidebar-container"></div>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col min-h-screen">
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 pl-[276px]">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-accent-teal tracking-tight" data-lang-key="listings_header_title">Your Listings</h1>
+                    <p class="mt-1 text-lg text-text-secondary" data-lang-key="listings_header_subtitle">Manage, optimize, and sync across all platforms.</p>
+                </div>
+                <div class="flex items-center space-x-2 mt-4 sm:mt-0">
+                    <button class="btn-primary-glow">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        <span data-lang-key="listings_new_listing_btn">New Listing</span>
+                    </button>
+                </div>
+            </header>
 
-      <!-- Filter Bar & Search -->
-      <section class="w-full border-b bg-white shadow-sm px-8 pt-6 pb-3">
-        <div class="flex flex-wrap items-center justify-between gap-y-2">
-          <!-- Filter Tabs -->
-          <nav class="flex space-x-1 mb-2 sm:mb-0" aria-label="Listing Status Tabs">
-            <button class="px-4 py-2 rounded-t-lg bg-blue-50 text-blue-700 font-semibold border-b-2 border-blue-600">All</button>
-            <button class="px-4 py-2 rounded-t-lg text-white bg-orange-500 hover:bg-orange-600 shadow" data-i18n="listings.filters.active">Active</button>
-            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100" data-i18n="listings.filters.draft">Draft</button>
-            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100">Unlisted</button>
-            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100" data-i18n="listings.filters.sold">Sold</button>
-            <button class="px-4 py-2 rounded-t-lg text-gray-600 hover:bg-gray-100" data-i18n="listings.filters.error">Error</button>
-          </nav>
-          <!-- Dropdowns & Search -->
-          <div class="flex items-center gap-3 flex-wrap">
-            <!-- Tone Multi-select -->
-            <div class="relative">
-              <select id="toneFilter" class="form-select min-w-[140px] appearance-none rounded border-gray-300 py-1.5 pl-3 pr-8 text-sm text-gray-700 focus:border-orange-500 focus:outline-none focus:ring-orange-500">
-                <option value="" data-i18n="listings.filters.allTones">All Tones</option>
-                <option value="cozy" data-i18n="tones.cozy">Cozy</option>
-                <option value="minimalist" data-i18n="tones.minimalist">Minimalist</option>
-                <option value="warm" data-i18n="tones.warm">Warm</option>
-                <option value="luxury" data-i18n="tones.luxury">Luxury</option>
-                <option value="budget" data-i18n="tones.budget">Budget</option>
-              </select>
-              <span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">&#9660;</span>
+            <!-- Filters & View Toggle -->
+            <div class="glass-card p-4 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <!-- Filter Controls -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <input type="search" id="listing-search" placeholder="Search by title, SKU..." data-lang-key="[placeholder]listings_search_placeholder" class="input-field-glass w-full sm:w-auto">
+                    <select id="filter-status" class="input-field-glass">
+                        <option value="all" data-lang-key="filter_status_all">All Statuses</option>
+                        <option value="active" data-lang-key="filter_status_active">Active</option>
+                        <option value="draft" data-lang-key="filter_status_draft">Draft</option>
+                        <option value="sold" data-lang-key="filter_status_sold">Sold</option>
+                    </select>
+                    <select id="filter-platform" class="input-field-glass">
+                        <option value="all" data-lang-key="filter_platform_all">All Platforms</option>
+                        <!-- Options to be populated by JS -->
+                    </select>
+                </div>
+
+                <!-- View Toggle -->
+                <div class="flex items-center bg-gray-900/50 rounded-full p-1">
+                    <button @click="view = 'grid'" :class="view === 'grid' ? 'btn-primary-glow' : 'btn-ghost'" class="p-2 rounded-full">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+                    </button>
+                    <button @click="view = 'list'" :class="view === 'list' ? 'btn-primary-glow' : 'btn-ghost'" class="p-2 rounded-full">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                    </button>
+                </div>
             </div>
-            <!-- Platform Multi-select -->
-            <div class="relative">
-              <select id="platformFilter" multiple class="block w-36 rounded border-gray-300 pr-8 text-sm focus:ring-blue-400 focus:border-blue-400" aria-label="Filter by Platform">
-                <option value="all">All Platforms</option>
-                <option value="ebay">eBay</option>
-                <option value="etsy">Etsy</option>
-                <option value="shopify">Shopify</option>
-                <option value="facebook">Facebook</option>
-                <option value="tiktok">TikTok</option>
-              </select>
-              <span class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">&#9660;</span>
+
+            <!-- Bulk Actions Bar (New: List Perfectly replication) -->
+            <div id="bulk-actions-bar" class="glass-card p-4 mb-6 hidden flex flex-wrap items-center gap-3">
+                <span class="text-sm font-medium text-accent-teal" id="bulk-count">0 selected</span>
+                <button id="bulk-crosslist-btn" class="btn-primary-glow text-sm">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Bulk Crosslist
+                </button>
+                <button id="bulk-delist-btn" class="btn-secondary-glow text-sm">
+                    Delist
+                </button>
+                <button id="bulk-relist-btn" class="btn-secondary-glow text-sm">
+                    Relist
+                </button>
+                <button id="bulk-mark-sold-btn" class="btn-secondary-glow text-sm">
+                    Mark Sold
+                </button>
+                <button id="bulk-clear-btn" class="btn-ghost text-sm">Clear Selection</button>
+                <!-- Integrate user idea: Psychology tone suggestion for bulk -->
+                <div class="ml-auto flex items-center gap-2">
+                    <span class="text-xs text-text-secondary">Suggested Tone:</span>
+                    <span id="bulk-tone" class="text-xs font-medium text-accent-purple">Cozy</span>
+                </div>
             </div>
-            <!-- Search Field -->
-            <label class="relative">
-              <span class="sr-only" data-i18n="listings.search.label">Search by title or SKU</span>
-              <input type="text" id="listingSearch"
-                     data-i18n-placeholder="listings.search.placeholder" placeholder="Search by title or SKU…"
-                     class="pl-9 pr-3 py-2 border border-gray-300 rounded w-56 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                     aria-label="Search listings"/>
-              <svg class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            </label>
-          </div>
-        </div>
-      </section>
 
-      <!-- Bulk Actions Bar -->
-      <section class="w-full bg-white px-8 py-3 border-b flex items-center gap-3">
-        <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded font-semibold shadow transition" onclick="// triggerBulkDelist()">
-          Bulk Delist
-        </button>
-        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold shadow transition" onclick="// triggerBulkRelist()">
-          Bulk Relist
-        </button>
-        <div class="relative">
-          <button class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded font-semibold shadow transition flex items-center gap-1" onclick="// openCrosslistDropdown()">
-            Crosslist to…
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <!-- Dropdown placeholder (not interactive) -->
-        </div>
-      </section>
+            <!-- Listings Container -->
+            <div id="listings-container">
+                <!-- Grid View -->
+                <div x-show="view === 'grid'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <!-- JS will populate this -->
+                </div>
 
-      <!-- Listings Table (Flex-based, not <table>) -->
-      <section class="px-8 py-6 flex-1 bg-gray-50 overflow-x-auto" id="listingsSection">
-        <!-- Table Headers -->
-        <div class="flex items-center gap-4 font-semibold text-gray-600 pb-2 border-b border-gray-200 text-sm">
-          <input type="checkbox" class="accent-blue-500" aria-label="Select all listings"/>
-          <span class="w-36"></span>
-          <span class="flex-1">Title</span>
-          <span class="w-28">SKU</span>
-          <span class="w-24">Price (CAD)</span>
-          <span class="w-36">AI Tools</span>
-          <span class="w-36">Tone</span>
-          <span class="w-44">Platforms</span>
-          <span class="w-32">Actions</span>
-        </div>
-        <!-- Listing Row 1 -->
-        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Vintage Hudson Bay Wool Blanket" data-tags="Cozy, Warm">
-          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
-          <img src="/assets/blanket-hudsonbay.jpg" alt="Vintage Hudson Bay Wool Blanket" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
-          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Vintage Hudson Bay Wool Blanket">
-            Vintage Hudson Bay Wool Blanket
-          </a>
-          <span class="w-28 text-gray-700">SKU-CA-1001</span>
-          <span class="w-24 text-gray-900 font-semibold">$145.00</span>
-          <div class="w-36 flex gap-2">
-            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1001')">💬</button>
-            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1001')">⚡</button>
-            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1001')">🏷️</button>
-          </div>
-          <div class="w-36 flex gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 text-pink-700 border border-pink-200">Cozy</span>
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700 border border-orange-200">Warm</span>
-          </div>
-          <div class="w-44 flex gap-2 items-center platforms">
-            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
-            <span aria-label="eBay Synced" class="text-green-600 text-lg">✅</span>
-            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
-            <span aria-label="Etsy Not Listed" class="text-red-500 text-lg">❌</span>
-            <img src="/assets/facebook-logo.png" alt="Facebook" title="Facebook" class="h-7 w-7 rounded border" />
-            <span aria-label="Facebook Syncing" class="text-yellow-500 text-lg">⏳</span>
-          </div>
-          <div class="w-32 flex gap-2 items-center">
-            <button class="p-2 rounded hover:bg-gray-100" aria-label="Edit" onclick="// editListing('SKU-CA-1001')">✏️</button>
-            <button class="p-2 rounded hover:bg-gray-100" aria-label="Copy" onclick="// copyListing('SKU-CA-1001')">📋</button>
-            <button class="p-2 rounded hover:bg-red-100 text-red-600" aria-label="Delete" onclick="// deleteListing('SKU-CA-1001')">🗑️</button>
-          </div>
-        </div>
-        <!-- Listing Row 2 -->
-        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Mid-Century Modern Teak Sideboard" data-tags="Minimalist, Luxury">
-          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
-          <img src="/assets/teak-sideboard.jpg" alt="Mid-Century Modern Teak Sideboard" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
-          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Mid-Century Modern Teak Sideboard">
-            Mid-Century Modern Teak Sideboard
-          </a>
-          <span class="w-28 text-gray-700">SKU-CA-1002</span>
-          <span class="w-24 text-gray-900 font-semibold">$1,299.00</span>
-          <div class="w-36 flex gap-2">
-            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1002')">💬</button>
-            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1002')">⚡</button>
-            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1002')">🏷️</button>
-          </div>
-          <div class="w-36 flex gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 border border-blue-200">Minimalist</span>
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200">Luxury</span>
-          </div>
-          <div class="w-44 flex gap-2 items-center platforms">
-            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
-            <span aria-label="eBay Not Listed" class="text-red-500 text-lg">❌</span>
-            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
-            <span aria-label="Etsy Synced" class="text-green-600 text-lg">✅</span>
-            <img src="/assets/shopify-logo.png" alt="Shopify" title="Shopify" class="h-7 w-7 rounded border" />
-            <span aria-label="Shopify Synced" class="text-green-600 text-lg">✅</span>
-            <img src="/assets/tiktok-logo.png" alt="TikTok" title="TikTok" class="h-7 w-7 rounded border" />
-            <span aria-label="TikTok Not Listed" class="text-red-500 text-lg">❌</span>
-          </div>
-          <div class="w-32 flex gap-2 items-center">
-            <button class="p-2 rounded hover:bg-gray-100" aria-label="Edit" onclick="// editListing('SKU-CA-1002')">✏️</button>
-            <button class="p-2 rounded hover:bg-gray-100" aria-label="Copy" onclick="// copyListing('SKU-CA-1002')">📋</button>
-            <button class="p-2 rounded hover:bg-red-100 text-red-600" aria-label="Delete" onclick="// deleteListing('SKU-CA-1002')">🗑️</button>
-          </div>
-        </div>
-        <!-- Listing Row 3 -->
-        <div class="listing flex items-center gap-4 py-4 border-b border-gray-100 hover:bg-white group transition" data-title="Retro Pyrex Gooseberry Mixing Bowl (Sold)" data-tags="Budget, Sold">
-          <input type="checkbox" class="accent-blue-500" aria-label="Select listing"/>
-          <img src="/assets/pyrex-gooseberry.jpg" alt="Retro Pyrex Gooseberry Mixing Bowl" class="w-20 h-20 object-cover rounded shadow" width="150" height="150"/>
-          <a href="#" class="flex-1 underline-offset-2 underline text-blue-700 hover:text-blue-900 font-medium transition" aria-label="View: Retro Pyrex Gooseberry Mixing Bowl">
-            Retro Pyrex Gooseberry Mixing Bowl <span class="ml-1 inline-block text-xs bg-gray-200 text-gray-600 rounded-full px-2 py-0.5">Sold</span>
-          </a>
-          <span class="w-28 text-gray-700">SKU-CA-1003</span>
-          <span class="w-24 text-gray-900 font-semibold">$34.50</span>
-          <div class="w-36 flex gap-2">
-            <button aria-label="Description Composer" class="p-2 rounded bg-blue-50 hover:bg-blue-100 text-blue-700" onclick="// triggerDescModal('SKU-CA-1003')">💬</button>
-            <button aria-label="Tone Optimizer" class="p-2 rounded bg-pink-50 hover:bg-pink-100 text-pink-600" onclick="// triggerBoostModal('SKU-CA-1003')">⚡</button>
-            <button aria-label="Tag Improver" class="p-2 rounded bg-yellow-50 hover:bg-yellow-100 text-yellow-700" onclick="// triggerTagModal('SKU-CA-1003')">🏷️</button>
-          </div>
-          <div class="w-36 flex gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200" data-i18n="tones.budget">Budget</span>
-            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-600 border border-gray-300" data-i18n="listings.status.sold">Sold</span>
-          </div>
-          <div class="w-44 flex gap-2 items-center platforms">
-            <img src="/assets/ebay-logo.png" alt="eBay" title="eBay" class="h-7 w-7 rounded border" />
-            <span aria-label="eBay Synced" class="text-green-600 text-lg">✅</span>
-            <img src="/assets/etsy-logo.png" alt="Etsy" title="Etsy" class="h-7 w-7 rounded border" />
-            <span aria-label="Etsy Not Listed" class="text-red-500 text-lg">❌</span>
-            <img src="/assets/facebook-logo.png" alt="Facebook" title="Facebook" class="h-7 w-7 rounded border" />
-            <span aria-label="Facebook Synced" class="text-green-600 text-lg">✅</span>
-          </div>
-          <div class="w-32 flex gap-2 items-center">
-            <button class="p-2 rounded hover:bg-gray-100" data-i18n-aria-label="listings.actions.edit" aria-label="Edit" onclick="// editListing('SKU-CA-1003')">✏️</button>
-            <button class="p-2 rounded hover:bg-gray-100" data-i18n-aria-label="listings.actions.copy" aria-label="Copy" onclick="// copyListing('SKU-CA-1003')">📋</button>
-            <button class="p-2 rounded hover:bg-red-100 text-red-600" data-i18n-aria-label="listings.actions.delete" aria-label="Delete" onclick="// deleteListing('SKU-CA-1003')">🗑️</button>
-          </div>
-        </div>
-      </section>
+                <!-- List View -->
+                <div x-show="view === 'list'" class="glass-card overflow-hidden">
+                    <div id="listings-list-container" class="divide-y divide-white/10">
+                        <!-- JS will populate this -->
+                    </div>
+                </div>
+            </div>
 
-      <!-- Buyer Psychology Map -->
-      <section class="w-full bg-white px-8 py-7 border-t">
-        <h2 class="text-xl font-bold mb-4 text-blue-900" data-i18n="listings.psychologyMap.title">Canadian Buyer Psychology Map</h2>
-        <div class="w-full h-56 bg-gradient-to-r from-blue-50 to-pink-50 rounded-lg flex items-center justify-center shadow-inner relative mb-5"
-             data-i18n-aria-label="listings.psychologyMap.ariaLabel" aria-label="Abstract Map of Canadian Buyer Psychology">
-          <!-- Abstract map placeholder (replace with actual map or SVG as needed) -->
-          <div class="w-4/5 h-40 bg-white/80 rounded-full blur-[2px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-          <div class="relative z-10 flex gap-5">
-            <span class="block w-8 h-8 rounded-full bg-pink-400 border-4 border-pink-200 shadow-lg" aria-label="Cozy"></span>
-            <span class="block w-8 h-8 rounded-full bg-orange-300 border-4 border-orange-100 shadow-lg" aria-label="Warm"></span>
-            <span class="block w-8 h-8 rounded-full bg-blue-400 border-4 border-blue-200 shadow-lg" aria-label="Minimalist"></span>
-            <span class="block w-8 h-8 rounded-full bg-yellow-300 border-4 border-yellow-100 shadow-lg" aria-label="Luxury"></span>
-            <span class="block w-8 h-8 rounded-full bg-green-300 border-4 border-green-100 shadow-lg" aria-label="Budget"></span>
-          </div>
+            <!-- Pagination -->
+            <div id="pagination-controls" class="mt-8 flex justify-center items-center space-x-2">
+                <!-- JS will populate this -->
+            </div>
         </div>
-        <!-- Legend -->
-        <div class="flex items-center gap-5 mb-2">
-          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-pink-400 inline-block"></span><span class="text-xs" data-i18n="tones.cozy">Cozy</span></div>
-          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-orange-300 inline-block"></span><span class="text-xs" data-i18n="tones.warm">Warm</span></div>
-          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-400 inline-block"></span><span class="text-xs" data-i18n="tones.minimalist">Minimalist</span></div>
-          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-300 inline-block"></span><span class="text-xs" data-i18n="tones.luxury">Luxury</span></div>
-          <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-300 inline-block"></span><span class="text-xs" data-i18n="tones.budget">Budget</span></div>
-        </div>
-        <div class="text-xs text-gray-500 mt-2 italic" data-i18n="listings.psychologyMap.poweredBy">Powered by AI + Buyer Science</div>
-      </section>
     </main>
-  </body>
+
+    <!-- AI Modal -->
+    <div id="ai-tool-modal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center">
+        <!-- Modal content will be loaded here by JS -->
+    </div>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/ai.js"></script>
+    <script src="./js/listings.js"></script>
+</body>
 </html>

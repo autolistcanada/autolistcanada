@@ -1,0 +1,43 @@
+[
+  {
+    "id": "ebay",
+    "name": "eBay",
+    "logo": "./assets/svg/platform-icon-ebay.svg",
+    "description_key": "platform_desc_ebay",
+    "apiEndpoint": "/api/ebay/connect",
+    "connected": false,
+    "listings": 1204
+  },
+  {
+    "id": "etsy",
+    "name": "Etsy",
+    "logo": "./assets/svg/platform-icon-etsy.svg",
+    "description_key": "platform_desc_etsy",
+    "apiEndpoint": "/api/etsy/connect",
+    "connected": false,
+    "listings": 350
+  },
+  {
+    "id": "poshmark",
+    "name": "Poshmark",
+    "logo": "./assets/svg/platform-icon-poshmark.svg",
+    "description_key": "platform_desc_poshmark",
+    "apiEndpoint": "/api/poshmark/connect",
+    "connected": false,
+    "listings": 89
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook Marketplace",
+    "logo": "./assets/svg/facebook-logo.svg",
+    "connected": false,
+    "listings": 0
+  },
+  {
+    "id": "shopify",
+    "name": "Shopify",
+    "logo": "./assets/svg/shopify-logo.svg",
+    "connected": false,
+    "listings": 0
+  }
+]

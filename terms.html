@@ -1,138 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Use – AutoList Canada</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter&display=swap" rel="stylesheet">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .section-card {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(6px);
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    }
-    .heading {
-      font-family: 'Playfair Display', serif;
-    }
-    .body-text {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="title_terms">Terms of Service | AutoList Canada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="styles/theme.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
 </head>
-<body class="bg-cover bg-fixed text-white" style="background-image: url('terms-background.png');">
+<body class="bg-background-dark font-sans text-text-primary">
 
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <div class="w-64 bg-[#012B27]/80 p-6 space-y-4 text-white font-semibold sticky top-0 h-screen hidden md:block">
-      <img src="logo.png" alt="AutoList Logo" class="mb-4 w-12">
-      <h1 class="text-2xl font-bold text-orange-300">AutoList Canada</h1>
-      <nav class="mt-6 space-y-2">
-        <a href="index.html" class="block hover:underline">Home</a>
-        <a href="dashboard.html" class="block hover:underline">Dashboard</a>
-        <a href="listings.html" class="block hover:underline">Listings</a>
-        <a href="ai-tools.html" class="block hover:underline">AI Tools</a>
-        <a href="faq.html" class="block hover:underline">FAQ</a>
-        <a href="#" class="block underline text-orange-200">Terms of Service</a>
-        <a href="privacy.html" class="block hover:underline">Privacy Policy</a>
-      </nav>
-    </div>
+    <!-- Public Header -->
+    <header class="fixed top-0 left-0 right-0 z-30 bg-background-dark/80 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <img class="h-10 w-auto" src="./assets/images/logo/autolist-logo-notext.svg" alt="AutoList Canada Logo">
+                        <span class="text-xl font-bold text-text-primary">AutoList</span>
+                    </a>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+                    <a href="faq.html" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+                    <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+                    <div class="flex items-center space-x-1">
+                        <button id="lang-en" class="lang-toggle-btn active">EN</button>
+                        <button id="lang-fr" class="lang-toggle-btn">FR</button>
+                    </div>
+                    <button id="login-btn-main" class="btn-primary-glow" data-lang-key="login_signup">Login / Sign Up</button>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-text-primary p-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-background-dark/95 p-4">
+            <nav class="flex flex-col space-y-4">
+                <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+                <a href="faq.html" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+                <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+                <div class="flex items-center space-x-2">
+                    <button id="lang-en-mobile" class="lang-toggle-btn active">EN</button>
+                    <button id="lang-fr-mobile" class="lang-toggle-btn">FR</button>
+                </div>
+                <button id="login-btn-mobile" class="btn-primary-glow w-full" data-lang-key="login_signup">Login / Sign Up</button>
+            </nav>
+        </div>
+    </header>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 md:p-12 space-y-12">
-      <header class="text-center">
-        <h2 class="text-4xl heading text-orange-200">AutoList Canada – Terms of Use</h2>
-        <p class="text-sm mt-2 text-white/80">Effective Date: May 2025</p>
-      </header>
-
-      <section class="section-card body-text" id="acceptance">
-        <h3 class="text-2xl font-bold text-amber-300 heading">1. Acceptance of Terms</h3>
-        <p class="mt-2">By accessing or using AutoList Canada ("the Service"), you agree to comply with these Terms. If you do not accept them, you may not use the platform. We may update the Terms occasionally, and your continued use constitutes acceptance.</p>
-      </section>
-
-      <section class="section-card body-text" id="eligibility">
-        <h3 class="text-2xl font-bold text-amber-300 heading">2. Eligibility</h3>
-        <p class="mt-2">You must be at least 18 and authorized to sell items you submit. Any misrepresentation of legal right, ownership, or authority may result in account suspension or removal.</p>
-      </section>
-
-      <section class="section-card body-text" id="description">
-        <h3 class="text-2xl font-bold text-amber-300 heading">3. Service Description</h3>
-        <p class="mt-2">AutoList Canada enables Canadian resellers to crosslist and enhance inventory using AI tools. Features include auto-descriptions, tags, pricing suggestions, and smart syncing across supported platforms.</p>
-      </section>
-
-      <section class="section-card body-text" id="responsibilities">
-        <h3 class="text-2xl font-bold text-amber-300 heading">4. User Responsibilities</h3>
-        <ul class="list-disc list-inside mt-2 space-y-1">
-          <li>Do not use the platform for unlawful activity.</li>
-          <li>Do not reverse-engineer, copy, or resell our tools or code.</li>
-          <li>Ensure content you submit is accurate, original, and not infringing on third-party rights.</li>
-        </ul>
-      </section>
-
-      <section class="section-card body-text" id="security">
-        <h3 class="text-2xl font-bold text-amber-300 heading">5. Account Security</h3>
-        <p class="mt-2">You are responsible for safeguarding your login. Use a strong password and enable 2FA if available. Any activity under your account is your responsibility, even if unauthorized access occurs.</p>
-      </section>
-
-      <section class="section-card body-text" id="ip">
-        <h3 class="text-2xl font-bold text-amber-300 heading">6. Intellectual Property</h3>
-        <p class="mt-2">Our workflows, sync logic, and backend structure are protected by Canadian copyright and startup defense law. Unauthorized use or duplication is prohibited and may lead to termination.</p>
-      </section>
-
-      <section class="section-card body-text" id="ai">
-        <h3 class="text-2xl font-bold text-amber-300 heading">7. AI Tool Use</h3>
-        <p class="mt-2">AI-generated content depends on your input. You are responsible for reviewing results before publishing. AutoList Canada makes no legal or financial guarantees based on AI content.</p>
-      </section>
-
-      <section class="section-card body-text" id="billing">
-        <h3 class="text-2xl font-bold text-amber-300 heading">8. Subscription & Payments</h3>
-        <p class="mt-2">Subscriptions are billed monthly or annually. Upgrades and downgrades can be managed in your dashboard. Refunds are not issued for time unused or early cancellations.</p>
-      </section>
-
-      <section class="section-card body-text" id="termination">
-        <h3 class="text-2xl font-bold text-amber-300 heading">9. Termination</h3>
-        <p class="mt-2">We may suspend or terminate access at any time if terms are violated. We’re not responsible for data recovery after a terminated account. Always backup your listings.</p>
-      </section>
-
-      <section class="section-card body-text" id="liability">
-        <h3 class="text-2xl font-bold text-amber-300 heading">10. Limitation of Liability</h3>
-        <p class="mt-2">AutoList Canada is offered “as-is.” We are not liable for data loss, downtime, errors, or any indirect damages. Use the platform at your own risk.</p>
-      </section>
-
-      <section class="section-card body-text" id="indemnify">
-        <h3 class="text-2xl font-bold text-amber-300 heading">11. Indemnification</h3>
-        <p class="mt-2">You agree to indemnify and hold harmless AutoList Canada from any legal claim, cost, or third-party action related to your use of our service or breach of these Terms.</p>
-      </section>
-
-      <section class="section-card body-text" id="law">
-        <h3 class="text-2xl font-bold text-amber-300 heading">12. Governing Law</h3>
-        <p class="mt-2">These Terms are governed by the laws of British Columbia, Canada. Any disputes will be handled locally unless another agreement is made in writing.</p>
-      </section>
-
-      <section class="section-card body-text" id="changes">
-        <h3 class="text-2xl font-bold text-amber-300 heading">13. Changes to Terms</h3>
-        <p class="mt-2">We may revise these Terms from time to time. Users will be notified via dashboard banners or email. Continued use of AutoList means acceptance of any changes.</p>
-      </section>
-
-      <section class="section-card body-text" id="contact">
-        <h3 class="text-2xl font-bold text-amber-300 heading">14. Contact</h3>
-        <p class="mt-2">For questions, email us at <a href="mailto:autolistcanada@myyahoo.com" class="text-blue-300 underline">autolistcanada@myyahoo.com</a>. We’re happy to help.</p>
-      </section>
-
-      <footer class="mt-16 text-sm text-center text-white/80">
-        <p>© 2025 AutoList Canada. Built in Canada. Powered by psychology-backed automation.<br />
-        <a href="#" class="underline mr-3">Terms of Use</a>
-        <a href="privacy.html" class="underline mr-3">Privacy Policy</a>
-        <a href="contact.html" class="underline">Contact</a>
-        </p>
-      </footer>
+    <main class="pt-24 text-text-primary">
+        <section class="relative py-20">
+            <div class="absolute inset-0 w-full h-full bg-grid-pattern opacity-20"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark"></div>
+            <div class="relative container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="glass-card p-8 md:p-12 text-left">
+                        <h1 class="text-3xl md:text-4xl font-bold text-accent-teal mb-6" data-lang-key="terms_title">Terms of Service</h1>
+                        <p class="text-sm text-text-secondary mb-8" data-lang-key="terms_last_updated">Last Updated: August 19, 2024</p>
+                        
+                        <div class="space-y-8 text-text-secondary terms-content">
+                            <div id="acceptance">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_acceptance">1. Acceptance of Terms</h2>
+                                <p data-lang-key="terms_p_acceptance">By accessing or using AutoList Canada ("the Service"), you agree to comply with these Terms. If you do not accept them, you may not use the platform.</p>
+                            </div>
+                            <div id="responsibilities">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_responsibilities">2. User Responsibilities</h2>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li data-lang-key="terms_li_resp_unlawful">Do not use the platform for unlawful activity.</li>
+                                    <li data-lang-key="terms_li_resp_reverse_engineer">Do not reverse-engineer, copy, or resell our tools or code.</li>
+                                    <li data-lang-key="terms_li_resp_content">Ensure content you submit is accurate and not infringing on third-party rights.</li>
+                                </ul>
+                            </div>
+                            <div id="ip">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_ip">3. Intellectual Property</h2>
+                                <p data-lang-key="terms_p_ip">Our workflows, sync logic, and platform architecture are proprietary. Unauthorized use or duplication is strictly prohibited.</p>
+                            </div>
+                            <div id="termination">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_termination">4. Termination</h2>
+                                <p data-lang-key="terms_p_termination">We may suspend or terminate access at any time if these terms are violated. We are not responsible for data recovery after account termination.</p>
+                            </div>
+                             <div id="liability">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_liability">5. Limitation of Liability</h2>
+                                <p data-lang-key="terms_p_liability">AutoList Canada is offered “as-is.” We are not liable for data loss, downtime, errors, or any indirect damages. Use the platform at your own risk.</p>
+                            </div>
+                            <div id="contact">
+                                <h2 class="text-xl font-semibold text-accent-green mb-3" data-lang-key="terms_h_contact">6. Contact Us</h2>
+                                <p data-lang-key="terms_p_contact">For questions regarding these terms, please contact us at <a href="mailto:support@autolist.ca" class="text-accent-teal hover:underline">support@autolist.ca</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-  </div>
 
+    <!-- Footer -->
+    <footer class="relative pt-24 pb-12 text-center bg-white/5 mt-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <nav class="flex justify-center gap-6 mb-8">
+                <a href="index.html" class="nav-link" data-lang-key="nav_home">Home</a>
+                <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+                <a href="contact.html" class="nav-link" data-lang-key="nav_contact">Contact</a>
+            </nav>
+            <p class="text-text-secondary text-sm">&copy; 2024 AutoList Canada. All Rights Reserved.</p>
+            <p class="text-text-secondary text-xs mt-2"><a href="privacy.html" class="hover:text-accent-teal nav-link" data-lang-key="nav_privacy">Privacy Policy</a> | <a href="terms.html" class="hover:text-accent-teal nav-link active" data-lang-key="nav_terms">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/auth.js"></script>
 </body>
 </html>

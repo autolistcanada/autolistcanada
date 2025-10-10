@@ -2,52 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact AutoList Canada for support, partnership inquiries, or general questions. We’re proudly Canadian, here to help, and ready to support your reselling journey.">
-
-  <title>Contact AutoList Canada</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 40px; background: #f4f4f4; }
-    <div class="topnav" style="background-color: #e05a13; overflow: hidden; display: flex; padding: 10px 20px; align-items: center;">
-  <div class="logo" style="font-weight: bold; color: white; margin-right: auto;">AutoList Canada</div>
-  <a href="index.html" style="color: white; text-decoration: none; padding: 10px 15px;">Home</a>
-  <a href="dashboard.html" style="color: white; text-decoration: none; padding: 10px 15px;">Dashboard</a>
-  <a href="features.html" style="color: white; text-decoration: none; padding: 10px 15px;">Features</a>
-  <a href="pricing.html" style="color: white; text-decoration: none; padding: 10px 15px;">Pricing</a>
-  <a href="contact.html" style="color: white; text-decoration: none; padding: 10px 15px;">Contact</a>
-</div>
-
-    h1 { color: #205c40; }
-    p { margin-bottom: 20px; }
-    a {
-      display: inline-block;
-      color: #e05a13;
-      text-decoration: none;
-      border: 1px solid #e05a13;
-      padding: 8px 16px;
-      border-radius: 4px;
-      margin-top: 20px;
-    }
-    a:hover {
-      background-color: #e05a13;
-      color: white;
-    }
-  </style>
+  <title data-lang-key="title_contact">Contact - AutoList Canada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="styles/theme.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js" defer></script>
 </head>
-<body>
-  <h1>Contact AutoList Canada</h1>
-  <p>We’d love to hear from you! Reach us anytime at:</p>
-  <p><strong>Email:</strong> <a href="mailto:autolistcanada@myyahoo.com">autolistcanada@myyahoo.com</a></p>
-  <p>We are working on adding a fully branded contact form soon. Stay tuned!</p>
-  <a href="index.html">Return to Home</a>
-  </html>
- <footer style="background-color: #e05a13; padding: 20px; text-align: center; color: white;">
-    <a href="terms.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Terms of Use</a>
-    <a href="privacy.html" style="color: #f5b748; margin-right: 15px; text-decoration: none;">Privacy Policy</a>
-    <a href="contact.html" style="color: #f5b748; text-decoration: none;">Contact</a>
-    <p style="margin-top: 10px; font-size: 0.8em;">&copy; 2025 AutoList Canada. All rights reserved.</p>
+<body class="bg-background-dark font-sans text-text-primary">
+
+  <!-- Public Header -->
+  <header class="fixed top-0 left-0 right-0 z-30 bg-background-dark/80 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex-shrink-0">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <img class="h-10 w-auto" src="./assets/images/logo/autolist-logo-notext.svg" alt="AutoList Canada Logo">
+                    <span class="text-xl font-bold text-text-primary">AutoList</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+                <a href="index.html#faq" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+                <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+                <a href="contact.html" class="nav-link active" data-lang-key="nav_contact">Contact</a>
+                <div class="flex items-center space-x-1">
+                    <button id="lang-en" class="lang-toggle-btn active">EN</button>
+                    <button id="lang-fr" class="lang-toggle-btn">FR</button>
+                </div>
+                <button id="login-btn-main" class="btn-primary-glow" data-lang-key="login_signup">Login / Sign Up</button>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-text-primary p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden bg-background-dark/95 p-4">
+        <nav class="flex flex-col space-y-4">
+            <a href="index.html#how-it-works" class="nav-link" data-lang-key="nav_how_it_works">How It Works</a>
+            <a href="index.html#faq" class="nav-link" data-lang-key="nav_faq">FAQ</a>
+            <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+            <a href="contact.html" class="nav-link active" data-lang-key="nav_contact">Contact</a>
+            <div class="flex items-center space-x-2">
+                <button id="lang-en-mobile" class="lang-toggle-btn active">EN</button>
+                <button id="lang-fr-mobile" class="lang-toggle-btn">FR</button>
+            </div>
+            <button id="login-btn-mobile" class="btn-primary-glow w-full" data-lang-key="login_signup">Login / Sign Up</button>
+        </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-24 text-text-primary">
+    <section class="relative py-20">
+      <div class="absolute inset-0 w-full h-full bg-grid-pattern opacity-20"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark"></div>
+      <div class="relative container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-accent-orange mb-4" data-i18n="contact_title">Get in Touch</h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto text-text-secondary mb-12" data-i18n="contact_subtitle">Questions, feedback, or partnership ideas? We'd love to hear from you.</p>
+        
+        <div class="max-w-2xl mx-auto">
+          <div class="glass-card p-8 text-left">
+            <form action="#" method="POST">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-text-secondary mb-2" data-i18n="form_name">Name</label>
+                  <input type="text" name="name" id="name" class="input-field-glass w-full">
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium text-text-secondary mb-2" data-i18n="form_email">Email</label>
+                  <input type="email" name="email" id="email" class="input-field-glass w-full">
+                </div>
+              </div>
+              <div class="mb-6">
+                <label for="subject" class="block text-sm font-medium text-text-secondary mb-2" data-i18n="form_subject">Subject</label>
+                <input type="text" name="subject" id="subject" class="input-field-glass w-full">
+              </div>
+              <div class="mb-6">
+                <label for="message" class="block text-sm font-medium text-text-secondary mb-2" data-i18n="form_message">Message</label>
+                <textarea id="message" name="message" rows="4" class="input-field-glass w-full"></textarea>
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn-primary-glow" data-i18n="form_send_message">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative pt-24 pb-12 text-center bg-white/5 mt-20">
+      <div class="max-w-6xl mx-auto px-6">
+          <nav class="flex justify-center gap-6 mb-8">
+              <a href="index.html" class="nav-link" data-lang-key="nav_home">Home</a>
+              <a href="pricing.html" class="nav-link" data-lang-key="nav_pricing">Pricing</a>
+              <a href="contact.html" class="nav-link active" data-lang-key="nav_contact">Contact</a>
+          </nav>
+          <p class="text-text-secondary text-sm">&copy; 2024 AutoList Canada. All Rights Reserved.</p>
+          <p class="text-text-secondary text-xs mt-2"><a href="#" class="hover:text-accent-teal" data-lang-key="nav_privacy">Privacy Policy</a> | <a href="#" class="hover:text-accent-teal" data-lang-key="nav_terms">Terms of Service</a></p>
+      </div>
   </footer>
+
+  <script src="./js/app.js"></script>
+  <script src="./js/auth.js"></script>
 </body>
 </html>

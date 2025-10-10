@@ -46,8 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Import to AutoList:', data);
   });
 
-  // Crosslist button logic
+  // Crosslist button logic with bulk selection
   crosslistBtn.addEventListener('click', () => {
+    const selectedPlatforms = Object.keys(checkboxes).filter(key => checkboxes[key].checked);
+    if (selectedPlatforms.length === 0) {
+      alert('Please select at least one platform.');
+      return;
+    }
     const urls = {
       ebay: 'https://www.ebay.ca/sl/sell',
       etsy: 'https://www.etsy.com/your/shops/me/listings/create',
@@ -55,13 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
       depop: 'https://www.depop.com/new',
       facebook: 'https://www.facebook.com/marketplace/create/item'
     };
-    Object.keys(checkboxes).forEach((key) => {
-      if (checkboxes[key].checked) {
-        chrome.tabs.create({ url: urls[key] });
-      }
+    selectedPlatforms.forEach(key => {
+      chrome.tabs.create({ url: urls[key] });
     });
+    // New: Log for analytics (preserves your psychology tracking)
+    console.log('Crosslisted to:', selectedPlatforms);
   });
-=======
+});
+
 // crosslist-pro-extension/popup.js
 
 const platforms = ["ebay", "poshmark", "etsy", "depop", "facebook", "mercari"];

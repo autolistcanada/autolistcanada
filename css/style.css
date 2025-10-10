@@ -1,0 +1,117 @@
+:root {
+    --brand-deep-blue: #060720;
+    --brand-dark-purple: #1b103e;
+    --brand-indigo: #4f46e5;
+    --brand-cyan: #22d3ee;
+    --brand-light-violet: #a78bfa;
+    --glass-bg: rgba(22, 22, 46, 0.5);
+    --glass-border: rgba(167, 139, 250, 0.2);
+    --glow-color: rgba(34, 211, 238, 0.5);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--brand-deep-blue);
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--glow-color);
+}
+
+.btn-primary {
+    background-color: var(--brand-indigo);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: #5a52f5;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6);
+}
+
+.btn-secondary {
+    background-color: var(--glass-bg);
+    color: var(--brand-cyan);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: 1px solid var(--brand-cyan);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--brand-cyan);
+    color: var(--brand-deep-blue);
+}
+
+/* Sidebar Styles */
+#sidebar {
+    transition: width 0.3s ease;
+}
+
+/* Aurora Background Animation */
+.aurora-background {
+    background: linear-gradient(-45deg, #060720, #1b103e, #4f46e5, #22d3ee);
+    background-size: 400% 400%;
+    animation: aurora 15s ease infinite;
+}
+
+@keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Modal Styles */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+/* Form Input Styles */
+.form-input {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--brand-cyan);
+    box-shadow: 0 0 10px var(--brand-cyan);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--brand-deep-blue);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--brand-indigo);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-cyan);
+}
